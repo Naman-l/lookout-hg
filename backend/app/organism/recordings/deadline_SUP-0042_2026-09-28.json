@@ -1,0 +1,1497 @@
+{
+ "recorded_at": "2026-10-12T09:04:16.089996+00:00",
+ "run_id": "run-recorded",
+ "item_key": "deadline:SUP-0042:2026-09-28",
+ "run": {
+  "status": "ok",
+  "model": "claude-sonnet-5-5",
+  "prompt_hash": "3619377322fd",
+  "toolset_hash": "bc9580c958cf",
+  "sdk_version": "0.2.165",
+  "cost_usd": 0.14201856,
+  "wall_ms": 33544,
+  "first_step_ms": 25,
+  "turns": 7,
+  "tool_calls": 13,
+  "denied_calls": 2
+ },
+ "shape": "tree",
+ "reviewer_mode": "after",
+ "events": [
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 1,
+   "ts": "2026-10-12T09:03:33.461740+00:00",
+   "t_ms": 24,
+   "type": "run.started",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Working deadline:SUP-0042:2026-09-28",
+   "refs": [],
+   "payload": {
+    "workflow": "work_item",
+    "item_key": "deadline:SUP-0042:2026-09-28",
+    "model": "claude-sonnet-5-5",
+    "prompt_hash": "3619377322fd",
+    "toolset_hash": "bc9580c958cf",
+    "specialist_prompts": {
+     "supply_planner": "9ca175b8efb5",
+     "buyers_clerk": "8df405748508"
+    },
+    "tool_count": 24,
+    "sdk_version": "0.2.165"
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 2,
+   "ts": "2026-10-12T09:03:33.462517+00:00",
+   "t_ms": 25,
+   "type": "tool.called",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Lookout reads the item",
+   "refs": [],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "args": {},
+    "gate": "allowed",
+    "gate_reason": "system step before the model runs",
+    "why": "Read what the system already worked out for this item: its finding, dates and figures."
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 3,
+   "ts": "2026-10-12T09:03:33.463239+00:00",
+   "t_ms": 25,
+   "type": "tool.result",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Read the item: Meiya closed Oct 1 to Oct 8: its last shipment before it is Sep 28. Owner Tom Albrecht.",
+   "refs": [
+    {
+     "type": "item",
+     "id": "deadline:SUP-0042:2026-09-28",
+     "label": "Meiya closed Oct 1 to Oct 8: its last shipment before it is Sep 28"
+    },
+    {
+     "type": "supplier",
+     "id": "SUP-0042",
+     "label": "Meiya"
+    },
+    {
+     "type": "message",
+     "id": "2026-09-15_Holiday_notice_National_Day_2026",
+     "label": "Holiday notice - National Day 2026"
+    },
+    {
+     "type": "po_line",
+     "id": "HPO-26-00524/10",
+     "label": "Cover, side left order (HPO-26-00524 line 10)"
+    },
+    {
+     "type": "po_line",
+     "id": "HPO-26-00524/20",
+     "label": "Cover, side right order (HPO-26-00524 line 20)"
+    },
+    {
+     "type": "po_line",
+     "id": "HPO-26-00599/40",
+     "label": "Light pipe, status bar order (HPO-26-00599 line 40)"
+    }
+   ],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "ok": true,
+    "numbers": [],
+    "unknowns": [],
+    "item_key": "deadline:SUP-0042:2026-09-28",
+    "item_kind": "deadline"
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 4,
+   "ts": "2026-10-12T09:03:35.807464+00:00",
+   "t_ms": 2369,
+   "type": "step.text",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Lookout is asking the supply side to map the open lines with Meiya before its 28 September last shipment.",
+   "refs": [],
+   "payload": {}
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 5,
+   "ts": "2026-10-12T09:03:37.295771+00:00",
+   "t_ms": 3858,
+   "type": "child.started",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01FCZc8uTY1WvWaWMccEWBU1",
+   "summary": "Map Meiya open lines",
+   "refs": [],
+   "payload": {
+    "child_run_id": "run-recorded.1",
+    "specialist": "supply_planner",
+    "question": "Map Meiya open lines",
+    "task": "Map Meiya open lines",
+    "asked_by": "lookout"
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 1,
+   "ts": "2026-10-12T09:03:37.296808+00:00",
+   "t_ms": 3859,
+   "type": "run.started",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": null,
+   "summary": "Supply planner started",
+   "refs": [],
+   "payload": {
+    "workflow": "specialist:supply_planner",
+    "item_key": "deadline:SUP-0042:2026-09-28"
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 2,
+   "ts": "2026-10-12T09:03:38.660259+00:00",
+   "t_ms": 5228,
+   "type": "tool.called",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01D4QML8AdEyA2X6tYqcQesS",
+   "summary": "Supply planner calls get_item",
+   "refs": [],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "args": {
+     "item_key": "deadline:SUP-0042:2026-09-28"
+    },
+    "gate": "allowed",
+    "gate_reason": "Read what the system already worked out for this item: its finding, dates and figures.",
+    "why": "Read what the system already worked out for this item: its finding, dates and figures."
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 3,
+   "ts": "2026-10-12T09:03:38.682649+00:00",
+   "t_ms": 5245,
+   "type": "run.status",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01D4QML8AdEyA2X6tYqcQesS",
+   "summary": "Supply planner: reading the item",
+   "refs": [],
+   "payload": {}
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 4,
+   "ts": "2026-10-12T09:03:38.802816+00:00",
+   "t_ms": 5365,
+   "type": "tool.called",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01Eu933EL6FCKpQpedA7r4V5",
+   "summary": "Supply planner calls open_supply",
+   "refs": [],
+   "payload": {
+    "tool": "open_supply",
+    "name": "open_supply",
+    "args": {
+     "supplier_id": "SUP-0042"
+    },
+    "gate": "allowed",
+    "gate_reason": "Find the open order lines with this supplier and which are due before the date that matters.",
+    "why": "Find the open order lines with this supplier and which are due before the date that matters."
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 5,
+   "ts": "2026-10-12T09:03:38.806060+00:00",
+   "t_ms": 5371,
+   "type": "run.status",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01Eu933EL6FCKpQpedA7r4V5",
+   "summary": "Supply planner: checking the open orders",
+   "refs": [],
+   "payload": {}
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 6,
+   "ts": "2026-10-12T09:03:38.828112+00:00",
+   "t_ms": 5390,
+   "type": "tool.result",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01D4QML8AdEyA2X6tYqcQesS",
+   "summary": "Item Meiya closed Oct 1 to Oct 8: its last shipment before it is Sep 28: 3 computed numbers, 0 open questions",
+   "refs": [],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "ok": true,
+    "numbers": [
+     {
+      "id": "item:deadline:SUP-0042:2026-09-28:at_stake",
+      "name": "Money at stake",
+      "value": "7477.47",
+      "unit": "USD",
+      "say": "$7,477.47"
+     },
+     {
+      "id": "item:deadline:SUP-0042:2026-09-28:closure_open_value:SUP-0042",
+      "name": "Open value of Meiya's lines due by Oct 8",
+      "value": "7477.47",
+      "unit": "USD",
+      "say": "$7,477.47"
+     },
+     {
+      "id": "item:deadline:SUP-0042:2026-09-28:days_left",
+      "name": "Days left to act",
+      "value": "3",
+      "unit": "days"
+     }
+    ],
+    "unknowns": []
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 6,
+   "ts": "2026-10-12T09:03:38.955855+00:00",
+   "t_ms": 5518,
+   "type": "step.text",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Lookout has started the supply-side check on Meiya's open lines. It covers which parts and builds they feed and what the 28 September date protects. The check is still running. The next step, the draft to Meiya, waits until it finishes.",
+   "refs": [],
+   "payload": {}
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 7,
+   "ts": "2026-10-12T09:03:38.962421+00:00",
+   "t_ms": 5524,
+   "type": "tool.result",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01Eu933EL6FCKpQpedA7r4V5",
+   "summary": "Open supply for Dongguan Meiya Mould & Plastics Co., Ltd.: 5 lines, 3,561 EA (0 EA on disrupted lines)",
+   "refs": [],
+   "payload": {
+    "tool": "open_supply",
+    "name": "open_supply",
+    "ok": true,
+    "numbers": [
+     {
+      "id": "supply:SUP-0042:open_lines",
+      "name": "Open PO lines for Dongguan Meiya Mould & Plastics Co., Ltd.",
+      "value": "5",
+      "unit": "lines"
+     },
+     {
+      "id": "supply:SUP-0042:open_qty",
+      "name": "Quantity on open orders for Dongguan Meiya Mould & Plastics Co., Ltd.",
+      "value": "3561",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:SUP-0042:stuck_qty",
+      "name": "Quantity on disrupted lines for Dongguan Meiya Mould & Plastics Co., Ltd.",
+      "value": "0",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:SUP-0042:unaffected_qty",
+      "name": "Quantity on open orders not disrupted for Dongguan Meiya Mould & Plastics Co., Ltd.",
+      "value": "3561",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:SUP-0042:HPO-26-00524/10:qty",
+      "name": "Quantity on HPO-26-00524/10",
+      "value": "168",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:SUP-0042:HPO-26-00524/20:qty",
+      "name": "Quantity on HPO-26-00524/20",
+      "value": "233",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:SUP-0042:HPO-26-00599/40:qty",
+      "name": "Quantity on HPO-26-00599/40",
+      "value": "2000",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:SUP-0042:HPO-26-00676/10:qty",
+      "name": "Quantity on HPO-26-00676/10",
+      "value": "570",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:SUP-0042:HPO-26-00676/20:qty",
+      "name": "Quantity on HPO-26-00676/20",
+      "value": "590",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:SUP-0042:open_value_usd",
+      "name": "Value still to arrive on open orders for Dongguan Meiya Mould & Plastics Co., Ltd. (USD, at finance's rate for each order's month)",
+      "value": "26959.57",
+      "unit": "USD",
+      "say": "$27K"
+     }
+    ],
+    "unknowns": []
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 8,
+   "ts": "2026-10-12T09:03:40.384375+00:00",
+   "t_ms": 6946,
+   "type": "tool.called",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_011Vi7Dg572ZpfLuMX1nxqFR",
+   "summary": "Supply planner calls shortage_for_parts",
+   "refs": [],
+   "payload": {
+    "tool": "shortage_for_parts",
+    "name": "shortage_for_parts",
+    "args": {
+     "part_numbers": [
+      "HR-73112",
+      "HR-73113",
+      "HR-73410"
+     ]
+    },
+    "gate": "allowed",
+    "gate_reason": "Work out, month by month, what the builds need against what is coming for 3 parts, and when each first runs short.",
+    "why": "Work out, month by month, what the builds need against what is coming for 3 parts, and when each first runs short."
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 9,
+   "ts": "2026-10-12T09:03:40.385745+00:00",
+   "t_ms": 6948,
+   "type": "run.status",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_011Vi7Dg572ZpfLuMX1nxqFR",
+   "summary": "Supply planner: checking what runs short",
+   "refs": [],
+   "payload": {}
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 10,
+   "ts": "2026-10-12T09:03:40.398143+00:00",
+   "t_ms": 6960,
+   "type": "tool.result",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_011Vi7Dg572ZpfLuMX1nxqFR",
+   "summary": "Shortage for 3 parts: HR-73112: none raised; HR-73113: none raised; HR-73410: none raised",
+   "refs": [],
+   "payload": {
+    "tool": "shortage_for_parts",
+    "name": "shortage_for_parts",
+    "ok": true,
+    "numbers": [],
+    "unknowns": [
+     {
+      "what": "on-hand stock",
+      "owner": "Tom",
+      "question": "What is on hand and on order outside the ERP for this part?",
+      "why_it_blocks": "the data has no inventory, safety stock or MRP output, so a projected balance cannot be stated"
+     },
+     {
+      "what": "on-hand stock",
+      "owner": "Tom",
+      "question": "What is on hand and on order outside the ERP for this part?",
+      "why_it_blocks": "the data has no inventory, safety stock or MRP output, so a projected balance cannot be stated"
+     },
+     {
+      "what": "on-hand stock",
+      "owner": "Tom",
+      "question": "What is on hand and on order outside the ERP for this part?",
+      "why_it_blocks": "the data has no inventory, safety stock or MRP output, so a projected balance cannot be stated"
+     }
+    ]
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 11,
+   "ts": "2026-10-12T09:03:40.544882+00:00",
+   "t_ms": 7107,
+   "type": "tool.called",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01MhbX19EivcqHGkSG3TfyJH",
+   "summary": "Supply planner calls where_used_for_parts",
+   "refs": [],
+   "payload": {
+    "tool": "where_used_for_parts",
+    "name": "where_used_for_parts",
+    "args": {
+     "part_numbers": [
+      "HR-73112",
+      "HR-73113",
+      "HR-73410"
+     ]
+    },
+    "gate": "allowed",
+    "gate_reason": "Find which robots use 3 parts, so the shortage is stated per build.",
+    "why": "Find which robots use 3 parts, so the shortage is stated per build."
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 12,
+   "ts": "2026-10-12T09:03:40.546544+00:00",
+   "t_ms": 7108,
+   "type": "run.status",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01MhbX19EivcqHGkSG3TfyJH",
+   "summary": "Supply planner: finding which builds use the part",
+   "refs": [],
+   "payload": {}
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 13,
+   "ts": "2026-10-12T09:03:40.558014+00:00",
+   "t_ms": 7120,
+   "type": "tool.result",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01MhbX19EivcqHGkSG3TfyJH",
+   "summary": "Where used: 3 parts checked",
+   "refs": [],
+   "payload": {
+    "tool": "where_used_for_parts",
+    "name": "where_used_for_parts",
+    "ok": true,
+    "numbers": [
+     {
+      "id": "bom:HR-73112:HR-90020:per_robot",
+      "name": "HR-73112 per Tern T2",
+      "value": "1",
+      "unit": "EA"
+     },
+     {
+      "id": "bom:HR-73113:HR-90020:per_robot",
+      "name": "HR-73113 per Tern T2",
+      "value": "1",
+      "unit": "EA"
+     }
+    ],
+    "unknowns": []
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 7,
+   "ts": "2026-10-12T09:03:42.299318+00:00",
+   "t_ms": 8861,
+   "type": "tool.called",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": "toolu_01E8eKCe4rXYAfK2gsS4VkYE",
+   "summary": "Lookout was refused StructuredOutput: wait for Buyer's clerk, Supply planner to hand off before you write the Recommendation",
+   "refs": [],
+   "payload": {
+    "tool": "StructuredOutput",
+    "name": "StructuredOutput",
+    "args": {
+     "finding": "The supply check on Meiya's open lines is still running; no decision can be made yet.",
+     "numbers": [],
+     "next_step": {
+      "who": "Lookout",
+      "what": "Finish the supply check, then draft the request to Meiya for Tom Albrecht to approve",
+      "by": ""
+     },
+     "points": [
+      {
+       "label": "Deadline",
+       "text": "Meiya closes 1 to 8 October; its last shipment before the closure is 28 September."
+      },
+      {
+       "label": "Status",
+       "text": "Lines, parts and builds affected are not yet confirmed."
+      }
+     ]
+    },
+    "gate": "denied",
+    "gate_reason": "wait for Buyer's clerk, Supply planner to hand off before you write the Recommendation"
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 8,
+   "ts": "2026-10-12T09:03:44.016805+00:00",
+   "t_ms": 10579,
+   "type": "step.text",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Lookout can't write the Recommendation yet. The supply-side check on Meiya's open lines hasn't finished, and the draft to Meiya comes after it. Lookout will write the Recommendation once both have finished.",
+   "refs": [],
+   "payload": {}
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 14,
+   "ts": "2026-10-12T09:03:45.054688+00:00",
+   "t_ms": 11617,
+   "type": "run.finished",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": null,
+   "summary": "Supply planner finished",
+   "refs": [],
+   "payload": {
+    "status": "ok",
+    "tool_calls": 4,
+    "first_step_ms": 5222
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 9,
+   "ts": "2026-10-12T09:03:45.056626+00:00",
+   "t_ms": 11618,
+   "type": "child.finished",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": null,
+   "summary": "Meiya closes 1 to 8 October, so Tom Albrecht needs Yang Xiu to ship what is late by 28 September (act-by date, 3 days left at 25 September). Three open lines fall due by 8 October and all three are already past due: HPO-26-00524/10 (168 EA of cover, side left, HR-73112, promised 27 August, 29 days late), HPO-26-00524/20 (233 EA of cover, side right, HR-73113, promised 28 August, 28 days late) and HPO-26-00599/40 (2,000 EA of light pipe, status bar, HR-73410, promised 24 September, 1 day late). Open value at stake is $7,477.47 (computed from the order lines); no Meiya line is under a force majeure or allocation notice.",
+   "refs": [],
+   "payload": {
+    "child_run_id": "run-recorded.1",
+    "status": "ok",
+    "handoff_ok": true
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 10,
+   "ts": "2026-10-12T09:03:45.283513+00:00",
+   "t_ms": 11845,
+   "type": "step.text",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Still waiting for Buyer's clerk to finish",
+   "refs": [],
+   "payload": {
+    "system": true
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 11,
+   "ts": "2026-10-12T09:03:46.584243+00:00",
+   "t_ms": 13146,
+   "type": "step.text",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Supply side is done; now the clerk drafts the request to Meiya.",
+   "refs": [],
+   "payload": {}
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 12,
+   "ts": "2026-10-12T09:03:48.319122+00:00",
+   "t_ms": 14881,
+   "type": "child.started",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01TjcFnynKnVebHTTPQ6tCjV",
+   "summary": "Draft Meiya request",
+   "refs": [],
+   "payload": {
+    "child_run_id": "run-recorded.2",
+    "specialist": "buyers_clerk",
+    "question": "Draft Meiya request",
+    "task": "Draft Meiya request",
+    "asked_by": "lookout"
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 1,
+   "ts": "2026-10-12T09:03:48.320344+00:00",
+   "t_ms": 14882,
+   "type": "run.started",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": null,
+   "summary": "Buyer's clerk started",
+   "refs": [],
+   "payload": {
+    "workflow": "specialist:buyers_clerk",
+    "item_key": "deadline:SUP-0042:2026-09-28"
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 2,
+   "ts": "2026-10-12T09:03:49.698743+00:00",
+   "t_ms": 16261,
+   "type": "tool.called",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_018kNEhbjZbKfrnVeeS7rHAx",
+   "summary": "Buyer's clerk calls get_handoffs",
+   "refs": [],
+   "payload": {
+    "tool": "get_handoffs",
+    "name": "get_handoffs",
+    "args": {},
+    "gate": "allowed",
+    "gate_reason": "Read what the earlier steps found, with the figures their lookups returned.",
+    "why": "Read what the earlier steps found, with the figures their lookups returned."
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 3,
+   "ts": "2026-10-12T09:03:49.700564+00:00",
+   "t_ms": 16262,
+   "type": "run.status",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_018kNEhbjZbKfrnVeeS7rHAx",
+   "summary": "Buyer's clerk: working",
+   "refs": [],
+   "payload": {}
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 4,
+   "ts": "2026-10-12T09:03:49.715532+00:00",
+   "t_ms": 16277,
+   "type": "tool.result",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_018kNEhbjZbKfrnVeeS7rHAx",
+   "summary": "Supply planner handed back their findings",
+   "refs": [],
+   "payload": {
+    "tool": "get_handoffs",
+    "name": "get_handoffs",
+    "ok": true,
+    "numbers": [],
+    "unknowns": []
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 5,
+   "ts": "2026-10-12T09:03:50.354500+00:00",
+   "t_ms": 16916,
+   "type": "tool.called",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01E6GgLWRYPfUB7Y7nNTCRiU",
+   "summary": "Buyer's clerk calls get_item",
+   "refs": [],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "args": {
+     "item_key": "deadline:SUP-0042:2026-09-28"
+    },
+    "gate": "allowed",
+    "gate_reason": "Read what the system already worked out for this item: its finding, dates and figures.",
+    "why": "Read what the system already worked out for this item: its finding, dates and figures."
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 6,
+   "ts": "2026-10-12T09:03:50.355317+00:00",
+   "t_ms": 16917,
+   "type": "run.status",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01E6GgLWRYPfUB7Y7nNTCRiU",
+   "summary": "Buyer's clerk: reading the item",
+   "refs": [],
+   "payload": {}
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 7,
+   "ts": "2026-10-12T09:03:50.356582+00:00",
+   "t_ms": 16918,
+   "type": "tool.called",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01RzPfohwWmLvtuVeUbXT3pZ",
+   "summary": "Buyer's clerk calls read_message",
+   "refs": [],
+   "payload": {
+    "tool": "read_message",
+    "name": "read_message",
+    "args": {
+     "message_id": "2026-09-15_Holiday_notice_National_Day_2026"
+    },
+    "gate": "allowed",
+    "gate_reason": "Read the supplier's message and its thread, with who sent it and what it changes.",
+    "why": "Read the supplier's message and its thread, with who sent it and what it changes."
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 8,
+   "ts": "2026-10-12T09:03:50.357272+00:00",
+   "t_ms": 16919,
+   "type": "run.status",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01RzPfohwWmLvtuVeUbXT3pZ",
+   "summary": "Buyer's clerk: reading the message",
+   "refs": [],
+   "payload": {}
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 9,
+   "ts": "2026-10-12T09:03:50.386963+00:00",
+   "t_ms": 16949,
+   "type": "tool.result",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01E6GgLWRYPfUB7Y7nNTCRiU",
+   "summary": "Item Meiya closed Oct 1 to Oct 8: its last shipment before it is Sep 28: 3 computed numbers, 0 open questions",
+   "refs": [],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "ok": true,
+    "numbers": [
+     {
+      "id": "item:deadline:SUP-0042:2026-09-28:at_stake",
+      "name": "Money at stake",
+      "value": "7477.47",
+      "unit": "USD",
+      "say": "$7,477.47"
+     },
+     {
+      "id": "item:deadline:SUP-0042:2026-09-28:closure_open_value:SUP-0042",
+      "name": "Open value of Meiya's lines due by Oct 8",
+      "value": "7477.47",
+      "unit": "USD",
+      "say": "$7,477.47"
+     },
+     {
+      "id": "item:deadline:SUP-0042:2026-09-28:days_left",
+      "name": "Days left to act",
+      "value": "3",
+      "unit": "days"
+     }
+    ],
+    "unknowns": []
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 10,
+   "ts": "2026-10-12T09:03:50.388806+00:00",
+   "t_ms": 16951,
+   "type": "tool.result",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01RzPfohwWmLvtuVeUbXT3pZ",
+   "summary": "Yang Xiu, 2026-09-15: Holiday notice - National Day 2026 (closure, auto)",
+   "refs": [],
+   "payload": {
+    "tool": "read_message",
+    "name": "read_message",
+    "ok": true,
+    "numbers": [],
+    "unknowns": []
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 13,
+   "ts": "2026-10-12T09:03:50.571565+00:00",
+   "t_ms": 17133,
+   "type": "step.text",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Lookout has already asked the clerk to draft the request to Meiya. It covers the three open lines and asks Meiya to ship what it can by 28 September and confirm promise dates for after the closure. The draft isn't finished yet. Lookout will read both answers and write the Recommendation once it is.",
+   "refs": [],
+   "payload": {}
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 14,
+   "ts": "2026-10-12T09:03:52.221286+00:00",
+   "t_ms": 18783,
+   "type": "tool.called",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": "toolu_015YpKesgLWQ6Pn17KBSv371",
+   "summary": "Lookout calls get_handoffs",
+   "refs": [],
+   "payload": {
+    "tool": "get_handoffs",
+    "name": "get_handoffs",
+    "args": {},
+    "gate": "allowed",
+    "gate_reason": "Read what the earlier steps found, with the figures their lookups returned.",
+    "why": "Read what the earlier steps found, with the figures their lookups returned."
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 15,
+   "ts": "2026-10-12T09:03:52.222072+00:00",
+   "t_ms": 18784,
+   "type": "run.status",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": "toolu_015YpKesgLWQ6Pn17KBSv371",
+   "summary": "Lookout: working",
+   "refs": [],
+   "payload": {}
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 16,
+   "ts": "2026-10-12T09:03:52.228986+00:00",
+   "t_ms": 18791,
+   "type": "tool.result",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": "toolu_015YpKesgLWQ6Pn17KBSv371",
+   "summary": "Supply planner handed back their findings",
+   "refs": [],
+   "payload": {
+    "tool": "get_handoffs",
+    "name": "get_handoffs",
+    "ok": true,
+    "numbers": [],
+    "unknowns": []
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 11,
+   "ts": "2026-10-12T09:03:53.809266+00:00",
+   "t_ms": 20371,
+   "type": "tool.called",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_018m91DBCqpNfewqbZK9U58z",
+   "summary": "Buyer's clerk calls draft_supplier_request",
+   "refs": [],
+   "payload": {
+    "tool": "draft_supplier_request",
+    "name": "draft_supplier_request",
+    "args": {
+     "supplier_id": "SUP-0042",
+     "subject": "Open lines before the National Day closure: HPO-26-00524 and HPO-26-00599",
+     "body": "Dear Yang Xiu,\n\nThank you for the holiday notice. We understand the factory is closed from 1 to 8 October and that the last shipment before the closure leaves on 28 September.\n\nThree of our lines are already past their promised dates:\n- HPO-26-00524 line 10, cover side left (HR-73112), 168 EA, promised 27 August\n- HPO-26-00524 line 20, cover side right (HR-73113), 233 EA, promised 28 August\n- HPO-26-00599 line 40, light pipe status bar (HR-73410), 2,000 EA, promised 24 September\n\nPlease ship whatever you can of these lines by 28 September, and tell us the quantity on each line that will go on that shipment. For any quantity that cannot ship by then, please confirm a firm promise date after the closure, as soon as you can.\n\nPlease also confirm the promise dates for your other open lines, HPO-26-00676 lines 10 and 20 (570 EA and 590 EA), given the closure.\n\nThank you and best regards,\nTom Albrecht"
+    },
+    "gate": "staged",
+    "gate_reason": "Prepare the request to the supplier for the buyer to approve. Nothing is sent.",
+    "why": "Prepare the request to the supplier for the buyer to approve. Nothing is sent."
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 12,
+   "ts": "2026-10-12T09:03:53.810196+00:00",
+   "t_ms": 20372,
+   "type": "run.status",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_018m91DBCqpNfewqbZK9U58z",
+   "summary": "Buyer's clerk: drafting the request",
+   "refs": [],
+   "payload": {}
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 13,
+   "ts": "2026-10-12T09:03:53.833347+00:00",
+   "t_ms": 20395,
+   "type": "tool.result",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_018m91DBCqpNfewqbZK9U58z",
+   "summary": "Draft to Yang Xiu awaiting approval: Open lines before the National Day closure: HPO-26-00524 and HPO-26-00599",
+   "refs": [],
+   "payload": {
+    "tool": "draft_supplier_request",
+    "name": "draft_supplier_request",
+    "ok": true,
+    "numbers": [],
+    "unknowns": []
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 14,
+   "ts": "2026-10-12T09:03:53.834156+00:00",
+   "t_ms": 20396,
+   "type": "action.staged",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_018m91DBCqpNfewqbZK9U58z",
+   "summary": "Buyer's clerk drafted: Open lines before the National Day closure: HPO-26-00524 and HPO-26-00599",
+   "refs": [
+    {
+     "type": "action",
+     "id": "A-fbdd1a84",
+     "label": "Open lines before the National Day closure: HPO-26-00524 and HPO-26-00599"
+    }
+   ],
+   "payload": {
+    "action_id": "A-fbdd1a84",
+    "action_type": "supplier_request",
+    "recipient": "yang.xiu@meiya-mould.example",
+    "payload_hash": "538ee61dafbe60ad497aa4e3346dd5ae0366681f44ad55e157da91f2ad5ae9d7",
+    "already_waiting": null
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 15,
+   "ts": "2026-10-12T09:03:56.483495+00:00",
+   "t_ms": 23045,
+   "type": "run.finished",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": null,
+   "summary": "Buyer's clerk finished",
+   "refs": [],
+   "payload": {
+    "status": "ok",
+    "tool_calls": 4,
+    "first_step_ms": 16261
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 17,
+   "ts": "2026-10-12T09:03:56.485640+00:00",
+   "t_ms": 23047,
+   "type": "child.finished",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": null,
+   "summary": "Staged a request to the supplier's contact on file, awaiting approval",
+   "refs": [],
+   "payload": {
+    "child_run_id": "run-recorded.2",
+    "status": "ok",
+    "handoff_ok": true
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 18,
+   "ts": "2026-10-12T09:03:57.015257+00:00",
+   "t_ms": 23577,
+   "type": "tool.called",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": "toolu_01BwmJpUA6ZmHHxnRvVvDYvV",
+   "summary": "Lookout was refused StructuredOutput: read Buyer's clerk's handoff first (get_handoffs), then write the Recommendation",
+   "refs": [],
+   "payload": {
+    "tool": "StructuredOutput",
+    "name": "StructuredOutput",
+    "args": {
+     "finding": "Have Meiya ship its three past-due lines by Monday 28 September, before it closes 1 to 8 October.",
+     "numbers": [
+      {
+       "id": "item:deadline:SUP-0042:2026-09-28:at_stake",
+       "value": 7477.47
+      },
+      {
+       "id": "item:deadline:SUP-0042:2026-09-28:days_left",
+       "value": 3
+      }
+     ],
+     "points": [
+      {
+       "label": "Lines",
+       "text": "HPO-26-00524/10 and /20 (covers, 29 and 28 days late) and HPO-26-00599/40 (light pipe, 1 day late) are all past due."
+      },
+      {
+       "label": "Build",
+       "text": "The two covers feed one per Tern T2; October needs 182 against 168 and 233 scheduled, so cover holds only if they ship."
+      },
+      {
+       "label": "Light pipe",
+       "text": "The light pipe is in no bill of materials, so no build is hit by that line."
+      },
+      {
+       "label": "Not affected",
+       "text": "Meiya's two November lines fall after the closure. No force majeure or allocation notice is on file."
+      }
+     ],
+     "next_step": {
+      "who": "Tom Albrecht",
+      "what": "Approve the draft to Meiya asking for shipment of the three lines and confirmed dates",
+      "by": "28 September"
+     },
+     "assumptions": [
+      "Stock on hand is unknown, so cover of the Tern T2 October build is not confirmed."
+     ],
+     "would_change": [
+      "Meiya confirming shipment of the three lines by 28 September",
+      "Tom Albrecht's stock count of the two covers"
+     ],
+     "open_questions": [
+      {
+       "what": "on-hand stock",
+       "why_it_blocks": "the data has no inventory, safety stock or MRP output, so a projected balance cannot be stated",
+       "owner": "Tom",
+       "question": "What is on hand and on order outside the ERP for this part?"
+      }
+     ]
+    },
+    "gate": "denied",
+    "gate_reason": "read Buyer's clerk's handoff first (get_handoffs), then write the Recommendation"
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 19,
+   "ts": "2026-10-12T09:03:58.215437+00:00",
+   "t_ms": 24777,
+   "type": "tool.called",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": "toolu_01MHQ2ZYUSCGQSzW5iApywqC",
+   "summary": "Lookout calls get_handoffs",
+   "refs": [],
+   "payload": {
+    "tool": "get_handoffs",
+    "name": "get_handoffs",
+    "args": {},
+    "gate": "allowed",
+    "gate_reason": "Read what the earlier steps found, with the figures their lookups returned.",
+    "why": "Read what the earlier steps found, with the figures their lookups returned."
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 20,
+   "ts": "2026-10-12T09:03:58.217135+00:00",
+   "t_ms": 24779,
+   "type": "run.status",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": "toolu_01MHQ2ZYUSCGQSzW5iApywqC",
+   "summary": "Lookout: working",
+   "refs": [],
+   "payload": {}
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 21,
+   "ts": "2026-10-12T09:03:58.244501+00:00",
+   "t_ms": 24806,
+   "type": "tool.result",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": "toolu_01MHQ2ZYUSCGQSzW5iApywqC",
+   "summary": "Supply planner and Buyer's clerk handed back their findings",
+   "refs": [],
+   "payload": {
+    "tool": "get_handoffs",
+    "name": "get_handoffs",
+    "ok": true,
+    "numbers": [],
+    "unknowns": []
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 22,
+   "ts": "2026-10-12T09:04:02.867273+00:00",
+   "t_ms": 29429,
+   "type": "verifier.result",
+   "agent": "verifier",
+   "agent_label": "Verifier",
+   "tool_use_id": null,
+   "summary": "2 of 2 numbers from tools · 1 open question with an owner",
+   "refs": [],
+   "payload": {
+    "passed": true,
+    "warnings": [
+     "prose: 'HPO-26-00524/10' is an id; say the name",
+     "prose: 'HPO-26-00599/40' is an id; say the name"
+    ],
+    "numbers_checked": 2,
+    "numbers_from_tools": 2,
+    "open_questions_with_owner": 1,
+    "reasons": [],
+    "unchecked": [],
+    "open_questions": 1,
+    "failures": []
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 23,
+   "ts": "2026-10-12T09:04:06.710408+00:00",
+   "t_ms": 33272,
+   "type": "step.text",
+   "agent": "reviewer",
+   "agent_label": "Reviewer",
+   "tool_use_id": null,
+   "summary": "The Reviewer read the drafted request: it commits Halden to nothing",
+   "refs": [],
+   "payload": {
+    "system": true
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 24,
+   "ts": "2026-10-12T09:04:07.010709+00:00",
+   "t_ms": 33572,
+   "type": "run.finished",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Run ok",
+   "refs": [],
+   "payload": {
+    "status": "ok",
+    "turns": 7,
+    "tool_calls": 13,
+    "cost_usd": 0.1404,
+    "wall_ms": 33544,
+    "first_step_ms": 25,
+    "first_token_ms": 2034,
+    "recommendation_id": "run-recorded",
+    "tokens_in": 296035,
+    "tokens_out": 5182,
+    "tokens_cache_read": 274466,
+    "tokens_cache_creation": 19954,
+    "tokens_by_agent": {
+     "supply_planner": {
+      "tokens": 13471,
+      "tool_uses": 5,
+      "duration_ms": 7779
+     },
+     "buyers_clerk": {
+      "tokens": 13100,
+      "tool_uses": 5,
+      "duration_ms": 8181
+     }
+    }
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 25,
+   "ts": "2026-10-12T09:04:16.084220+00:00",
+   "t_ms": 42646,
+   "type": "review.result",
+   "agent": "reviewer",
+   "agent_label": "Reviewer",
+   "tool_use_id": null,
+   "summary": "Reviewer 83/100: Clear finding and actions; fails to state what is lost if 28 September passes.",
+   "refs": [],
+   "payload": {
+    "score": 83,
+    "checks": [
+     {
+      "name": "answers the buyer's question",
+      "passed": true,
+      "critique": "",
+      "critical": false
+     },
+     {
+      "name": "assumptions are really assumptions",
+      "passed": true,
+      "critique": "",
+      "critical": false
+     },
+     {
+      "name": "nothing in it commits Halden",
+      "passed": true,
+      "critique": "",
+      "critical": true
+     },
+     {
+      "name": "what would change it is specific",
+      "passed": true,
+      "critique": "",
+      "critical": false
+     },
+     {
+      "name": "buyer's words",
+      "passed": true,
+      "critique": "",
+      "critical": false
+     },
+     {
+      "name": "says what the date protects",
+      "passed": false,
+      "critique": "Doesn't say what is lost if 28 September passes; loss implied only.",
+      "critical": false
+     }
+    ],
+    "failed": [
+     "says what the date protects: Doesn't say what is lost if 28 September passes; loss implied only."
+    ],
+    "cost_usd": 0.0016
+   }
+  }
+ ],
+ "recommendation": {
+  "finding": "Meiya must ship its three past-due lines by 28 September, before it closes 1 to 8 October.",
+  "next_step": {
+   "who": "Tom Albrecht",
+   "what": "Approve the draft to Meiya and confirm stock of the two covers",
+   "by": "28 September"
+  },
+  "done": [
+   {
+    "text": "Drafted a request to Yang Xiu: waiting for your approval",
+    "action_id": "A-fbdd1a84",
+    "stage": "proposed"
+   }
+  ],
+  "points": [
+   {
+    "label": "Lines",
+    "text": "HPO-26-00524/10 and /20 (covers) are 29 and 28 days late; HPO-26-00599/40 (light pipe) is 1 day late.",
+    "entities": [],
+    "added_by_code": false
+   },
+   {
+    "label": "Build",
+    "text": "Both covers feed one per Tern T2. October needs 182 against 168 and 233 scheduled, so no shortage is raised if they ship.",
+    "entities": [],
+    "added_by_code": false
+   },
+   {
+    "label": "Light pipe",
+    "text": "The light pipe is in no bill of materials, so that line hits no build.",
+    "entities": [],
+    "added_by_code": false
+   },
+   {
+    "label": "Asked of Meiya",
+    "text": "The draft asks Meiya to ship by 28 September and confirm dates after the closure, including the two November lines.",
+    "entities": [],
+    "added_by_code": false
+   }
+  ],
+  "answer_entities": [],
+  "recommendation_entities": [],
+  "numbers": [
+   {
+    "id": "item:deadline:SUP-0042:2026-09-28:at_stake",
+    "value": "7477.47",
+    "unit": "USD",
+    "name": "Money at stake",
+    "headline": true,
+    "say": "$7,477.47",
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": null,
+     "raw": null,
+     "inputs": [
+      {
+       "type": "po_line",
+       "id": "HPO-26-00524/10",
+       "label": null
+      },
+      {
+       "type": "po_line",
+       "id": "HPO-26-00524/20",
+       "label": null
+      },
+      {
+       "type": "po_line",
+       "id": "HPO-26-00599/40",
+       "label": null
+      }
+     ],
+     "rule": "open value of the supplier's lines due by the end of the closure (Oct 8), past due ones included",
+     "by": "attention.closure"
+    }
+   },
+   {
+    "id": "item:deadline:SUP-0042:2026-09-28:days_left",
+    "value": "3",
+    "unit": "days",
+    "name": "Days left to act",
+    "headline": true,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "action list",
+     "row": "deadline:SUP-0042:2026-09-28",
+     "raw": null,
+     "inputs": [],
+     "rule": "the act-by date minus the data date, 2026-09-25",
+     "by": "attention.service"
+    }
+   }
+  ],
+  "assumptions": [
+   "Stock on hand is unknown, so cover of the October Tern T2 build is not confirmed."
+  ],
+  "would_change": [
+   "Meiya confirming shipment of the three lines by 28 September",
+   "Tom Albrecht's count of covers on hand"
+  ],
+  "open_questions": [
+   {
+    "what": "on-hand stock",
+    "why_it_blocks": "the data has no inventory, safety stock or MRP output, so a projected balance cannot be stated",
+    "owner": "Tom",
+    "question": "What is on hand and on order outside the ERP for this part?",
+    "refs": []
+   }
+  ],
+  "action_ids": [
+   "A-fbdd1a84"
+  ],
+  "unchecked": [],
+  "findings": [],
+  "grade": {
+   "reviewer_score": 83,
+   "checks_passed": 5,
+   "checks_total": 6,
+   "summary": "Clear finding and actions; fails to state what is lost if 28 September passes.",
+   "revised": false,
+   "failed_checks": [
+    {
+     "name": "says what the date protects",
+     "reason": "Doesn't say what is lost if 28 September passes; loss implied only."
+    }
+   ]
+  }
+ },
+ "verifier": {
+  "passed": true,
+  "warnings": [
+   "prose: 'HPO-26-00524/10' is an id; say the name",
+   "prose: 'HPO-26-00599/40' is an id; say the name"
+  ],
+  "numbers_checked": 2,
+  "numbers_from_tools": 2,
+  "open_questions_with_owner": 1,
+  "reasons": [],
+  "unchecked": [],
+  "open_questions": 1,
+  "failures": []
+ },
+ "actions": [
+  {
+   "action_id": "A-fbdd1a84",
+   "type": "supplier_request",
+   "item_key": "deadline:SUP-0042:2026-09-28",
+   "target": {
+    "type": "supplier",
+    "id": "SUP-0042",
+    "label": null
+   },
+   "recipient": "yang.xiu@meiya-mould.example",
+   "subject": "Open lines before the National Day closure: HPO-26-00524 and HPO-26-00599",
+   "body": "Dear Yang Xiu,\n\nThank you for the holiday notice. We understand the factory is closed from 1 to 8 October and that the last shipment before the closure leaves on 28 September.\n\nThree of our lines are already past their promised dates:\n- HPO-26-00524 line 10, cover side left (HR-73112), 168 EA, promised 27 August\n- HPO-26-00524 line 20, cover side right (HR-73113), 233 EA, promised 28 August\n- HPO-26-00599 line 40, light pipe status bar (HR-73410), 2,000 EA, promised 24 September\n\nPlease ship whatever you can of these lines by 28 September, and tell us the quantity on each line that will go on that shipment. For any quantity that cannot ship by then, please confirm a firm promise date after the closure, as soon as you can.\n\nPlease also confirm the promise dates for your other open lines, HPO-26-00676 lines 10 and 20 (570 EA and 590 EA), given the closure.\n\nThank you and best regards,\nTom Albrecht\nHalden Robotics",
+   "change": null
+  }
+ ]
+}

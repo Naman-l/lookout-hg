@@ -1,0 +1,1947 @@
+{
+ "recorded_at": "2026-10-14T19:12:46.309483+00:00",
+ "as_of": "2026-09-25",
+ "run_id": "run-recorded",
+ "item_key": "deadline:SUP-0016:2026-12-31",
+ "run": {
+  "status": "ok",
+  "model": "claude-sonnet-5-5",
+  "prompt_hash": "708a897e68bf",
+  "toolset_hash": "8b686c9717a4",
+  "sdk_version": "0.2.165",
+  "cost_usd": 0.25774884000000003,
+  "wall_ms": 48229,
+  "first_step_ms": 13,
+  "turns": 5,
+  "tool_calls": 15,
+  "denied_calls": 1
+ },
+ "shape": "tree",
+ "reviewer_mode": "after",
+ "events": [
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 1,
+   "ts": "2026-10-14T19:11:49.895152+00:00",
+   "t_ms": 13,
+   "type": "run.started",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Working deadline:SUP-0016:2026-12-31",
+   "refs": [],
+   "payload": {
+    "workflow": "work_item",
+    "item_key": "deadline:SUP-0016:2026-12-31",
+    "model": "claude-sonnet-5-5",
+    "prompt_hash": "708a897e68bf",
+    "toolset_hash": "8b686c9717a4",
+    "specialist_prompts": {
+     "supply_planner": "586b71b9b9f1",
+     "buyers_clerk": "8736991ec3a7"
+    },
+    "tool_count": 27,
+    "sdk_version": "0.2.165"
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 2,
+   "ts": "2026-10-14T19:11:49.895799+00:00",
+   "t_ms": 13,
+   "type": "tool.called",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Lookout reads the item",
+   "refs": [],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "args": {},
+    "gate": "allowed",
+    "gate_reason": "system step before the model runs",
+    "why": "Read what the system already worked out for this item: its finding, dates and figures."
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 3,
+   "ts": "2026-10-14T19:11:49.896328+00:00",
+   "t_ms": 14,
+   "type": "tool.result",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Read the item: BCX (formerly Baycrest): old addresses forward only until Dec 31. Owner Priya Nair.",
+   "refs": [
+    {
+     "type": "item",
+     "id": "deadline:SUP-0016:2026-12-31",
+     "label": "BCX (formerly Baycrest): old addresses forward only until Dec 31"
+    },
+    {
+     "type": "supplier",
+     "id": "SUP-0016",
+     "label": "BCX Interconnect (formerly Baycrest)"
+    },
+    {
+     "type": "message",
+     "id": "2026-09-02_Baycrest_Connectors_is_now_BCX_Interconnect_-_2027_quotation_BCX-Q-2609",
+     "label": "Baycrest Connectors is now BCX Interconnect - 2027 quotation BCX-Q-2609"
+    }
+   ],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "ok": true,
+    "numbers": [],
+    "unknowns": [],
+    "item_key": "deadline:SUP-0016:2026-12-31",
+    "item_kind": "deadline"
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 4,
+   "ts": "2026-10-14T19:11:52.289962+00:00",
+   "t_ms": 2407,
+   "type": "step.text",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Lookout is checking the open lines with BCX first.",
+   "refs": [],
+   "payload": {},
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 5,
+   "ts": "2026-10-14T19:11:53.713450+00:00",
+   "t_ms": 3831,
+   "type": "child.started",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01BmaETDAqnJ38pWzx7xZD7v",
+   "summary": "Map open BCX lines",
+   "refs": [],
+   "payload": {
+    "child_run_id": "run-recorded.1",
+    "specialist": "supply_planner",
+    "question": "Map open BCX lines",
+    "task": "Map open BCX lines",
+    "asked_by": "lookout"
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 1,
+   "ts": "2026-10-14T19:11:53.714377+00:00",
+   "t_ms": 3832,
+   "type": "run.started",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": null,
+   "summary": "Supply planner started",
+   "refs": [],
+   "payload": {
+    "workflow": "specialist:supply_planner",
+    "item_key": "deadline:SUP-0016:2026-12-31"
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 6,
+   "ts": "2026-10-14T19:11:54.816937+00:00",
+   "t_ms": 4934,
+   "type": "step.text",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Lookout has sent the supply check on BCX's open lines. It is still running, and the request to BCX comes after it.",
+   "refs": [],
+   "payload": {},
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 2,
+   "ts": "2026-10-14T19:11:55.846244+00:00",
+   "t_ms": 5964,
+   "type": "tool.called",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01H8Tg2AEet1BvD1DCAUaknB",
+   "summary": "Supply planner calls get_item",
+   "refs": [],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "args": {
+     "item_key": "deadline:SUP-0016:2026-12-31"
+    },
+    "gate": "allowed",
+    "gate_reason": "Read what the system already worked out for this item: its finding, dates and figures.",
+    "why": "Read what the system already worked out for this item: its finding, dates and figures."
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 3,
+   "ts": "2026-10-14T19:11:55.847402+00:00",
+   "t_ms": 5965,
+   "type": "run.status",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01H8Tg2AEet1BvD1DCAUaknB",
+   "summary": "Supply planner: reading the item",
+   "refs": [],
+   "payload": {},
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 4,
+   "ts": "2026-10-14T19:11:55.859972+00:00",
+   "t_ms": 5977,
+   "type": "tool.result",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01H8Tg2AEet1BvD1DCAUaknB",
+   "summary": "Item BCX (formerly Baycrest): old addresses forward only until Dec 31: 1 computed numbers, 0 open questions",
+   "refs": [],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "ok": true,
+    "numbers": [
+     {
+      "id": "item:deadline:SUP-0016:2026-12-31:days_left",
+      "name": "Days left to act",
+      "value": "97",
+      "unit": "days"
+     }
+    ],
+    "unknowns": []
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 5,
+   "ts": "2026-10-14T19:11:55.965680+00:00",
+   "t_ms": 6083,
+   "type": "tool.called",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01K3JpLPzYpM1i94n7NS4bFB",
+   "summary": "Supply planner calls open_supply",
+   "refs": [],
+   "payload": {
+    "tool": "open_supply",
+    "name": "open_supply",
+    "args": {
+     "supplier_id": "SUP-0016"
+    },
+    "gate": "allowed",
+    "gate_reason": "Find the open order lines with this supplier and which are due before the date that matters.",
+    "why": "Find the open order lines with this supplier and which are due before the date that matters."
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 6,
+   "ts": "2026-10-14T19:11:55.966909+00:00",
+   "t_ms": 6084,
+   "type": "run.status",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01K3JpLPzYpM1i94n7NS4bFB",
+   "summary": "Supply planner: checking the open orders",
+   "refs": [],
+   "payload": {},
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 7,
+   "ts": "2026-10-14T19:11:55.976965+00:00",
+   "t_ms": 6094,
+   "type": "tool.result",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01K3JpLPzYpM1i94n7NS4bFB",
+   "summary": "Open supply for Baycrest Connectors, Inc.: 6 lines, 10,192 EA (0 EA on disrupted lines)",
+   "refs": [],
+   "payload": {
+    "tool": "open_supply",
+    "name": "open_supply",
+    "ok": true,
+    "numbers": [
+     {
+      "id": "supply:SUP-0016:open_lines",
+      "name": "Open PO lines for Baycrest Connectors, Inc.",
+      "value": "6",
+      "unit": "lines"
+     },
+     {
+      "id": "supply:SUP-0016:open_qty",
+      "name": "Quantity on open orders for Baycrest Connectors, Inc.",
+      "value": "10192",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:SUP-0016:stuck_qty",
+      "name": "Quantity on disrupted lines for Baycrest Connectors, Inc.",
+      "value": "0",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:SUP-0016:unaffected_qty",
+      "name": "Quantity on open orders not disrupted for Baycrest Connectors, Inc.",
+      "value": "10192",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:SUP-0016:HPO-26-00490/50:qty",
+      "name": "Quantity on HPO-26-00490/50",
+      "value": "3000",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:SUP-0016:HPO-26-00490/90:qty",
+      "name": "Quantity on HPO-26-00490/90",
+      "value": "260",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:SUP-0016:HPO-26-00490/100:qty",
+      "name": "Quantity on HPO-26-00490/100",
+      "value": "3700",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:SUP-0016:HPO-26-00490/110:qty",
+      "name": "Quantity on HPO-26-00490/110",
+      "value": "1192",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:SUP-0016:HPO-26-00490/80:qty",
+      "name": "Quantity on HPO-26-00490/80",
+      "value": "1500",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:SUP-0016:HPO-26-00591/40:qty",
+      "name": "Quantity on HPO-26-00591/40",
+      "value": "540",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:SUP-0016:open_value_usd",
+      "name": "Value still to arrive on open orders for Baycrest Connectors, Inc. (USD, at finance's rate for each order's month)",
+      "value": "24742.38",
+      "unit": "USD",
+      "say": "$25K"
+     }
+    ],
+    "unknowns": []
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 8,
+   "ts": "2026-10-14T19:11:58.058098+00:00",
+   "t_ms": 8175,
+   "type": "tool.called",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01VcG8zRViArdn6YKqa3Meo8",
+   "summary": "Supply planner calls get_phases",
+   "refs": [],
+   "payload": {
+    "tool": "get_phases",
+    "name": "get_phases",
+    "args": {
+     "po_line": "HPO-26-00490/50"
+    },
+    "gate": "allowed",
+    "gate_reason": "Show where the order or part stands between need and stock, and which steps no record can show.",
+    "why": "Show where the order or part stands between need and stock, and which steps no record can show."
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 9,
+   "ts": "2026-10-14T19:11:58.059381+00:00",
+   "t_ms": 8177,
+   "type": "run.status",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01VcG8zRViArdn6YKqa3Meo8",
+   "summary": "Supply planner: reading the build phases",
+   "refs": [],
+   "payload": {},
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 10,
+   "ts": "2026-10-14T19:11:58.075460+00:00",
+   "t_ms": 8193,
+   "type": "tool.result",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01VcG8zRViArdn6YKqa3Meo8",
+   "summary": "HPO-26-00490/50: 2 shown by the records, 3 expected, 8 unknown (no data), 1 not applicable",
+   "refs": [],
+   "payload": {
+    "tool": "get_phases",
+    "name": "get_phases",
+    "ok": true,
+    "numbers": [
+     {
+      "id": "phases:HPO-26-00490/50:done",
+      "name": "Stages of HPO-26-00490/50 that are done",
+      "value": "2",
+      "unit": "stages"
+     },
+     {
+      "id": "phases:HPO-26-00490/50:expected",
+      "name": "Stages of HPO-26-00490/50 that are expected",
+      "value": "3",
+      "unit": "stages"
+     },
+     {
+      "id": "phases:HPO-26-00490/50:unknown",
+      "name": "Stages of HPO-26-00490/50 that are unknown",
+      "value": "8",
+      "unit": "stages"
+     },
+     {
+      "id": "phases:HPO-26-00490/50:na",
+      "name": "Stages of HPO-26-00490/50 that are not applicable",
+      "value": "1",
+      "unit": "stages"
+     }
+    ],
+    "unknowns": [
+     {
+      "what": "Where HPO-26-00490/50 is in: quoted, acknowledged, being made, shipped, in transit",
+      "owner": "supplier",
+      "question": "Which quote did Baycrest Connectors, Inc. give for HR-20111? Has Baycrest Connectors, Inc. acknowledged HPO-26-00490 and confirmed the date? Where is HPO-26-00490 in production at Baycrest Connectors, Inc.? Has Baycrest Connectors, Inc. shipped HPO-26-00490? Ask for the packing list. Which carrier a",
+      "why_it_blocks": "the quote this order was placed on; whether the supplier acknowledged the order; how far the supplier has got making it; whether it has shipped; where it is in transit"
+     },
+     {
+      "what": "Where HPO-26-00490/50 is in: inspected, in stock, kitted",
+      "owner": "Priya",
+      "question": "Did HPO-26-00490 pass incoming inspection? How many of HR-20111 are on the shelf? Has it been kitted for the build?",
+      "why_it_blocks": "whether it passed incoming inspection; what is in stock; whether it has been kitted for a build"
+     }
+    ]
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 11,
+   "ts": "2026-10-14T19:11:58.177957+00:00",
+   "t_ms": 8295,
+   "type": "tool.called",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01EuXsXecGYEY4HqXtSRMRuQ",
+   "summary": "Supply planner calls get_phases",
+   "refs": [],
+   "payload": {
+    "tool": "get_phases",
+    "name": "get_phases",
+    "args": {
+     "po_line": "HPO-26-00490/90"
+    },
+    "gate": "allowed",
+    "gate_reason": "Show where the order or part stands between need and stock, and which steps no record can show.",
+    "why": "Show where the order or part stands between need and stock, and which steps no record can show."
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 12,
+   "ts": "2026-10-14T19:11:58.178811+00:00",
+   "t_ms": 8296,
+   "type": "run.status",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01EuXsXecGYEY4HqXtSRMRuQ",
+   "summary": "Supply planner: reading the build phases",
+   "refs": [],
+   "payload": {},
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 13,
+   "ts": "2026-10-14T19:11:58.187892+00:00",
+   "t_ms": 8305,
+   "type": "tool.result",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01EuXsXecGYEY4HqXtSRMRuQ",
+   "summary": "HPO-26-00490/90: 2 shown by the records, 3 expected, 8 unknown (no data), 1 not applicable",
+   "refs": [],
+   "payload": {
+    "tool": "get_phases",
+    "name": "get_phases",
+    "ok": true,
+    "numbers": [
+     {
+      "id": "phases:HPO-26-00490/90:done",
+      "name": "Stages of HPO-26-00490/90 that are done",
+      "value": "2",
+      "unit": "stages"
+     },
+     {
+      "id": "phases:HPO-26-00490/90:expected",
+      "name": "Stages of HPO-26-00490/90 that are expected",
+      "value": "3",
+      "unit": "stages"
+     },
+     {
+      "id": "phases:HPO-26-00490/90:unknown",
+      "name": "Stages of HPO-26-00490/90 that are unknown",
+      "value": "8",
+      "unit": "stages"
+     },
+     {
+      "id": "phases:HPO-26-00490/90:na",
+      "name": "Stages of HPO-26-00490/90 that are not applicable",
+      "value": "1",
+      "unit": "stages"
+     }
+    ],
+    "unknowns": [
+     {
+      "what": "Where HPO-26-00490/90 is in: quoted, acknowledged, being made, shipped, in transit",
+      "owner": "supplier",
+      "question": "Which quote did Baycrest Connectors, Inc. give for HR-20135? Has Baycrest Connectors, Inc. acknowledged HPO-26-00490 and confirmed the date? Where is HPO-26-00490 in production at Baycrest Connectors, Inc.? Has Baycrest Connectors, Inc. shipped HPO-26-00490? Ask for the packing list. Which carrier a",
+      "why_it_blocks": "the quote this order was placed on; whether the supplier acknowledged the order; how far the supplier has got making it; whether it has shipped; where it is in transit"
+     },
+     {
+      "what": "Where HPO-26-00490/90 is in: inspected, in stock, kitted",
+      "owner": "Priya",
+      "question": "Did HPO-26-00490 pass incoming inspection? How many of HR-20135 are on the shelf? Has it been kitted for the build?",
+      "why_it_blocks": "whether it passed incoming inspection; what is in stock; whether it has been kitted for a build"
+     }
+    ]
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 14,
+   "ts": "2026-10-14T19:11:58.325211+00:00",
+   "t_ms": 8443,
+   "type": "tool.called",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01QwGbXkAYRMkVo7WsULDT9X",
+   "summary": "Supply planner calls get_phases",
+   "refs": [],
+   "payload": {
+    "tool": "get_phases",
+    "name": "get_phases",
+    "args": {
+     "po_line": "HPO-26-00490/100"
+    },
+    "gate": "allowed",
+    "gate_reason": "Show where the order or part stands between need and stock, and which steps no record can show.",
+    "why": "Show where the order or part stands between need and stock, and which steps no record can show."
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 15,
+   "ts": "2026-10-14T19:11:58.327404+00:00",
+   "t_ms": 8445,
+   "type": "run.status",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01QwGbXkAYRMkVo7WsULDT9X",
+   "summary": "Supply planner: reading the build phases",
+   "refs": [],
+   "payload": {},
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 16,
+   "ts": "2026-10-14T19:11:58.406412+00:00",
+   "t_ms": 8524,
+   "type": "tool.result",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01QwGbXkAYRMkVo7WsULDT9X",
+   "summary": "HPO-26-00490/100: 2 shown by the records, 3 expected, 8 unknown (no data), 1 not applicable",
+   "refs": [],
+   "payload": {
+    "tool": "get_phases",
+    "name": "get_phases",
+    "ok": true,
+    "numbers": [
+     {
+      "id": "phases:HPO-26-00490/100:done",
+      "name": "Stages of HPO-26-00490/100 that are done",
+      "value": "2",
+      "unit": "stages"
+     },
+     {
+      "id": "phases:HPO-26-00490/100:expected",
+      "name": "Stages of HPO-26-00490/100 that are expected",
+      "value": "3",
+      "unit": "stages"
+     },
+     {
+      "id": "phases:HPO-26-00490/100:unknown",
+      "name": "Stages of HPO-26-00490/100 that are unknown",
+      "value": "8",
+      "unit": "stages"
+     },
+     {
+      "id": "phases:HPO-26-00490/100:na",
+      "name": "Stages of HPO-26-00490/100 that are not applicable",
+      "value": "1",
+      "unit": "stages"
+     }
+    ],
+    "unknowns": [
+     {
+      "what": "Where HPO-26-00490/100 is in: quoted, acknowledged, being made, shipped, in transit",
+      "owner": "supplier",
+      "question": "Which quote did Baycrest Connectors, Inc. give for HR-20140? Has Baycrest Connectors, Inc. acknowledged HPO-26-00490 and confirmed the date? Where is HPO-26-00490 in production at Baycrest Connectors, Inc.? Has Baycrest Connectors, Inc. shipped HPO-26-00490? Ask for the packing list. Which carrier a",
+      "why_it_blocks": "the quote this order was placed on; whether the supplier acknowledged the order; how far the supplier has got making it; whether it has shipped; where it is in transit"
+     },
+     {
+      "what": "Where HPO-26-00490/100 is in: inspected, in stock, kitted",
+      "owner": "Priya",
+      "question": "Did HPO-26-00490 pass incoming inspection? How many of HR-20140 are on the shelf? Has it been kitted for the build?",
+      "why_it_blocks": "whether it passed incoming inspection; what is in stock; whether it has been kitted for a build"
+     }
+    ]
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 17,
+   "ts": "2026-10-14T19:11:58.487938+00:00",
+   "t_ms": 8605,
+   "type": "tool.called",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01WqTRbiBRnusn7D8FTi6WVR",
+   "summary": "Supply planner calls get_phases",
+   "refs": [],
+   "payload": {
+    "tool": "get_phases",
+    "name": "get_phases",
+    "args": {
+     "po_line": "HPO-26-00490/110"
+    },
+    "gate": "allowed",
+    "gate_reason": "Show where the order or part stands between need and stock, and which steps no record can show.",
+    "why": "Show where the order or part stands between need and stock, and which steps no record can show."
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 18,
+   "ts": "2026-10-14T19:11:58.489303+00:00",
+   "t_ms": 8607,
+   "type": "run.status",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01WqTRbiBRnusn7D8FTi6WVR",
+   "summary": "Supply planner: reading the build phases",
+   "refs": [],
+   "payload": {},
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 19,
+   "ts": "2026-10-14T19:11:58.508520+00:00",
+   "t_ms": 8626,
+   "type": "tool.result",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01WqTRbiBRnusn7D8FTi6WVR",
+   "summary": "HPO-26-00490/110: 2 shown by the records, 3 expected, 8 unknown (no data), 1 not applicable",
+   "refs": [],
+   "payload": {
+    "tool": "get_phases",
+    "name": "get_phases",
+    "ok": true,
+    "numbers": [
+     {
+      "id": "phases:HPO-26-00490/110:done",
+      "name": "Stages of HPO-26-00490/110 that are done",
+      "value": "2",
+      "unit": "stages"
+     },
+     {
+      "id": "phases:HPO-26-00490/110:expected",
+      "name": "Stages of HPO-26-00490/110 that are expected",
+      "value": "3",
+      "unit": "stages"
+     },
+     {
+      "id": "phases:HPO-26-00490/110:unknown",
+      "name": "Stages of HPO-26-00490/110 that are unknown",
+      "value": "8",
+      "unit": "stages"
+     },
+     {
+      "id": "phases:HPO-26-00490/110:na",
+      "name": "Stages of HPO-26-00490/110 that are not applicable",
+      "value": "1",
+      "unit": "stages"
+     }
+    ],
+    "unknowns": [
+     {
+      "what": "Where HPO-26-00490/110 is in: quoted, acknowledged, being made, shipped, in transit",
+      "owner": "supplier",
+      "question": "Which quote did Baycrest Connectors, Inc. give for HR-21125? Has Baycrest Connectors, Inc. acknowledged HPO-26-00490 and confirmed the date? Where is HPO-26-00490 in production at Baycrest Connectors, Inc.? Has Baycrest Connectors, Inc. shipped HPO-26-00490? Ask for the packing list. Which carrier a",
+      "why_it_blocks": "the quote this order was placed on; whether the supplier acknowledged the order; how far the supplier has got making it; whether it has shipped; where it is in transit"
+     },
+     {
+      "what": "Where HPO-26-00490/110 is in: inspected, in stock, kitted",
+      "owner": "Priya",
+      "question": "Did HPO-26-00490 pass incoming inspection? How many of HR-21125 are on the shelf? Has it been kitted for the build?",
+      "why_it_blocks": "whether it passed incoming inspection; what is in stock; whether it has been kitted for a build"
+     }
+    ]
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 20,
+   "ts": "2026-10-14T19:11:58.654149+00:00",
+   "t_ms": 8771,
+   "type": "tool.called",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_018vw2id4FV9hroveLpZqFFn",
+   "summary": "Supply planner calls get_phases",
+   "refs": [],
+   "payload": {
+    "tool": "get_phases",
+    "name": "get_phases",
+    "args": {
+     "po_line": "HPO-26-00490/80"
+    },
+    "gate": "allowed",
+    "gate_reason": "Show where the order or part stands between need and stock, and which steps no record can show.",
+    "why": "Show where the order or part stands between need and stock, and which steps no record can show."
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 21,
+   "ts": "2026-10-14T19:11:58.655944+00:00",
+   "t_ms": 8773,
+   "type": "run.status",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_018vw2id4FV9hroveLpZqFFn",
+   "summary": "Supply planner: reading the build phases",
+   "refs": [],
+   "payload": {},
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 22,
+   "ts": "2026-10-14T19:11:58.680134+00:00",
+   "t_ms": 8797,
+   "type": "tool.result",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_018vw2id4FV9hroveLpZqFFn",
+   "summary": "HPO-26-00490/80: 2 shown by the records, 3 expected, 8 unknown (no data), 1 not applicable",
+   "refs": [],
+   "payload": {
+    "tool": "get_phases",
+    "name": "get_phases",
+    "ok": true,
+    "numbers": [
+     {
+      "id": "phases:HPO-26-00490/80:done",
+      "name": "Stages of HPO-26-00490/80 that are done",
+      "value": "2",
+      "unit": "stages"
+     },
+     {
+      "id": "phases:HPO-26-00490/80:expected",
+      "name": "Stages of HPO-26-00490/80 that are expected",
+      "value": "3",
+      "unit": "stages"
+     },
+     {
+      "id": "phases:HPO-26-00490/80:unknown",
+      "name": "Stages of HPO-26-00490/80 that are unknown",
+      "value": "8",
+      "unit": "stages"
+     },
+     {
+      "id": "phases:HPO-26-00490/80:na",
+      "name": "Stages of HPO-26-00490/80 that are not applicable",
+      "value": "1",
+      "unit": "stages"
+     }
+    ],
+    "unknowns": [
+     {
+      "what": "Where HPO-26-00490/80 is in: quoted, acknowledged, being made, shipped, in transit",
+      "owner": "supplier",
+      "question": "Which quote did Baycrest Connectors, Inc. give for HR-20133? Has Baycrest Connectors, Inc. acknowledged HPO-26-00490 and confirmed the date? Where is HPO-26-00490 in production at Baycrest Connectors, Inc.? Has Baycrest Connectors, Inc. shipped HPO-26-00490? Ask for the packing list. Which carrier a",
+      "why_it_blocks": "the quote this order was placed on; whether the supplier acknowledged the order; how far the supplier has got making it; whether it has shipped; where it is in transit"
+     },
+     {
+      "what": "Where HPO-26-00490/80 is in: inspected, in stock, kitted",
+      "owner": "Priya",
+      "question": "Did HPO-26-00490 pass incoming inspection? How many of HR-20133 are on the shelf? Has it been kitted for the build?",
+      "why_it_blocks": "whether it passed incoming inspection; what is in stock; whether it has been kitted for a build"
+     }
+    ]
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 23,
+   "ts": "2026-10-14T19:11:58.764647+00:00",
+   "t_ms": 8882,
+   "type": "tool.called",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01KGE4T4CDRXQTFc9ZC63Aw3",
+   "summary": "Supply planner calls get_phases",
+   "refs": [],
+   "payload": {
+    "tool": "get_phases",
+    "name": "get_phases",
+    "args": {
+     "po_line": "HPO-26-00591/40"
+    },
+    "gate": "allowed",
+    "gate_reason": "Show where the order or part stands between need and stock, and which steps no record can show.",
+    "why": "Show where the order or part stands between need and stock, and which steps no record can show."
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 24,
+   "ts": "2026-10-14T19:11:58.765515+00:00",
+   "t_ms": 8883,
+   "type": "run.status",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01KGE4T4CDRXQTFc9ZC63Aw3",
+   "summary": "Supply planner: reading the build phases",
+   "refs": [],
+   "payload": {},
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 25,
+   "ts": "2026-10-14T19:11:58.775462+00:00",
+   "t_ms": 8893,
+   "type": "tool.result",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01KGE4T4CDRXQTFc9ZC63Aw3",
+   "summary": "HPO-26-00591/40: 2 shown by the records, 3 expected, 8 unknown (no data), 1 not applicable",
+   "refs": [],
+   "payload": {
+    "tool": "get_phases",
+    "name": "get_phases",
+    "ok": true,
+    "numbers": [
+     {
+      "id": "phases:HPO-26-00591/40:done",
+      "name": "Stages of HPO-26-00591/40 that are done",
+      "value": "2",
+      "unit": "stages"
+     },
+     {
+      "id": "phases:HPO-26-00591/40:expected",
+      "name": "Stages of HPO-26-00591/40 that are expected",
+      "value": "3",
+      "unit": "stages"
+     },
+     {
+      "id": "phases:HPO-26-00591/40:unknown",
+      "name": "Stages of HPO-26-00591/40 that are unknown",
+      "value": "8",
+      "unit": "stages"
+     },
+     {
+      "id": "phases:HPO-26-00591/40:na",
+      "name": "Stages of HPO-26-00591/40 that are not applicable",
+      "value": "1",
+      "unit": "stages"
+     }
+    ],
+    "unknowns": [
+     {
+      "what": "Where HPO-26-00591/40 is in: quoted, acknowledged, being made, shipped, in transit",
+      "owner": "supplier",
+      "question": "Which quote did Baycrest Connectors, Inc. give for HR-20137? Has Baycrest Connectors, Inc. acknowledged HPO-26-00591 and confirmed the date? Where is HPO-26-00591 in production at Baycrest Connectors, Inc.? Has Baycrest Connectors, Inc. shipped HPO-26-00591? Ask for the packing list. Which carrier a",
+      "why_it_blocks": "the quote this order was placed on; whether the supplier acknowledged the order; how far the supplier has got making it; whether it has shipped; where it is in transit"
+     },
+     {
+      "what": "Where HPO-26-00591/40 is in: inspected, in stock, kitted",
+      "owner": "Priya",
+      "question": "Did HPO-26-00591 pass incoming inspection? How many of HR-20137 are on the shelf? Has it been kitted for the build?",
+      "why_it_blocks": "whether it passed incoming inspection; what is in stock; whether it has been kitted for a build"
+     }
+    ]
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 7,
+   "ts": "2026-10-14T19:11:59.108770+00:00",
+   "t_ms": 9226,
+   "type": "tool.called",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": "toolu_01MkZmunz6N8hJw9uPN1CFit",
+   "summary": "Lookout was refused StructuredOutput: wait for Buyer's clerk, Supply planner to hand off before you write the Recommendation",
+   "refs": [],
+   "payload": {
+    "tool": "StructuredOutput",
+    "name": "StructuredOutput",
+    "args": {
+     "finding": "BCX's old Baycrest addresses forward mail only until Dec 31; open lines not yet mapped.",
+     "numbers": [],
+     "next_step": {
+      "what": "Wait for the supply check on BCX's open lines, then approve the request",
+      "who": "Priya Nair",
+      "by": "Dec 31"
+     },
+     "assumptions": [
+      "The supply check on BCX's open lines has not finished, so no line, build or value is stated."
+     ],
+     "would_change": [
+      "The list of open BCX lines and the robots they feed from the supply check."
+     ]
+    },
+    "gate": "denied",
+    "gate_reason": "wait for Buyer's clerk, Supply planner to hand off before you write the Recommendation"
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 8,
+   "ts": "2026-10-14T19:12:00.264146+00:00",
+   "t_ms": 10381,
+   "type": "step.text",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "The supply check on BCX's open lines is still running, so the Recommendation can't be written yet. Lookout will write it once the supply check has finished and the supplier request has been drafted.",
+   "refs": [],
+   "payload": {},
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 26,
+   "ts": "2026-10-14T19:12:06.035186+00:00",
+   "t_ms": 16152,
+   "type": "run.finished",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": null,
+   "summary": "Supply planner finished",
+   "refs": [],
+   "payload": {
+    "status": "ok",
+    "tool_calls": 8,
+    "first_step_ms": 5964
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 9,
+   "ts": "2026-10-14T19:12:06.037624+00:00",
+   "t_ms": 16155,
+   "type": "child.finished",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": null,
+   "summary": "BCX Interconnect (formerly Baycrest, SUP-0016) has 6 open PO lines, 10,192 EA, about $24.7K (computed at finance's monthly rate); none are stale, none are disrupted, and none are past due as of 25 Sep 2026. The four lines promised 25 to 30 Sep (HPO-26-00490/50, /90, /100, /110, /80) and the Oct 1 line HPO-26-00591/40 are all still ahead of or on the data date, but none show a supplier acknowledgement, shipment or carrier data, so the supplier should confirm dates now.",
+   "refs": [],
+   "payload": {
+    "child_run_id": "run-recorded.1",
+    "status": "ok",
+    "handoff_ok": true
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 10,
+   "ts": "2026-10-14T19:12:06.060756+00:00",
+   "t_ms": 16178,
+   "type": "step.text",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Still waiting for Buyer's clerk to finish",
+   "refs": [],
+   "payload": {
+    "system": true
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 11,
+   "ts": "2026-10-14T19:12:07.295208+00:00",
+   "t_ms": 17412,
+   "type": "step.text",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Next step: the clerk drafts the request to BCX.",
+   "refs": [],
+   "payload": {},
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 12,
+   "ts": "2026-10-14T19:12:09.163832+00:00",
+   "t_ms": 19281,
+   "type": "child.started",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01GyntzGF2ztGSits2aXC7hZ",
+   "summary": "Draft BCX request",
+   "refs": [],
+   "payload": {
+    "child_run_id": "run-recorded.2",
+    "specialist": "buyers_clerk",
+    "question": "Draft BCX request",
+    "task": "Draft BCX request",
+    "asked_by": "lookout"
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 1,
+   "ts": "2026-10-14T19:12:09.165161+00:00",
+   "t_ms": 19282,
+   "type": "run.started",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": null,
+   "summary": "Buyer's clerk started",
+   "refs": [],
+   "payload": {
+    "workflow": "specialist:buyers_clerk",
+    "item_key": "deadline:SUP-0016:2026-12-31"
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 2,
+   "ts": "2026-10-14T19:12:10.638666+00:00",
+   "t_ms": 20756,
+   "type": "tool.called",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01JsVxxpPJiBNszbY4Kxs2di",
+   "summary": "Buyer's clerk calls get_handoffs",
+   "refs": [],
+   "payload": {
+    "tool": "get_handoffs",
+    "name": "get_handoffs",
+    "args": {},
+    "gate": "allowed",
+    "gate_reason": "Read what the earlier steps found, with the figures their lookups returned.",
+    "why": "Read what the earlier steps found, with the figures their lookups returned."
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 3,
+   "ts": "2026-10-14T19:12:10.639641+00:00",
+   "t_ms": 20757,
+   "type": "run.status",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01JsVxxpPJiBNszbY4Kxs2di",
+   "summary": "Buyer's clerk: working",
+   "refs": [],
+   "payload": {},
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 4,
+   "ts": "2026-10-14T19:12:10.649945+00:00",
+   "t_ms": 20767,
+   "type": "tool.result",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01JsVxxpPJiBNszbY4Kxs2di",
+   "summary": "Supply planner handed back their findings",
+   "refs": [],
+   "payload": {
+    "tool": "get_handoffs",
+    "name": "get_handoffs",
+    "ok": true,
+    "numbers": [],
+    "unknowns": []
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 5,
+   "ts": "2026-10-14T19:12:10.662695+00:00",
+   "t_ms": 20780,
+   "type": "tool.called",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_015BcdR4xPEaZRayyNbJYr7Y",
+   "summary": "Buyer's clerk calls get_item",
+   "refs": [],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "args": {
+     "item_key": "deadline:SUP-0016:2026-12-31"
+    },
+    "gate": "allowed",
+    "gate_reason": "Read what the system already worked out for this item: its finding, dates and figures.",
+    "why": "Read what the system already worked out for this item: its finding, dates and figures."
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 6,
+   "ts": "2026-10-14T19:12:10.663608+00:00",
+   "t_ms": 20781,
+   "type": "run.status",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_015BcdR4xPEaZRayyNbJYr7Y",
+   "summary": "Buyer's clerk: reading the item",
+   "refs": [],
+   "payload": {},
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 7,
+   "ts": "2026-10-14T19:12:10.682569+00:00",
+   "t_ms": 20800,
+   "type": "tool.result",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_015BcdR4xPEaZRayyNbJYr7Y",
+   "summary": "Item BCX (formerly Baycrest): old addresses forward only until Dec 31: 1 computed numbers, 0 open questions",
+   "refs": [],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "ok": true,
+    "numbers": [
+     {
+      "id": "item:deadline:SUP-0016:2026-12-31:days_left",
+      "name": "Days left to act",
+      "value": "97",
+      "unit": "days"
+     }
+    ],
+    "unknowns": []
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 8,
+   "ts": "2026-10-14T19:12:11.317294+00:00",
+   "t_ms": 21434,
+   "type": "tool.called",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01AUWgcRwdSaj3NHjz8wPcgj",
+   "summary": "Buyer's clerk calls read_message",
+   "refs": [],
+   "payload": {
+    "tool": "read_message",
+    "name": "read_message",
+    "args": {
+     "message_id": "2026-09-02_Baycrest_Connectors_is_now_BCX_Interconnect_-_2027_quotation_BCX-Q-2609"
+    },
+    "gate": "allowed",
+    "gate_reason": "Read the supplier's message and its thread, with who sent it and what it changes.",
+    "why": "Read the supplier's message and its thread, with who sent it and what it changes."
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 9,
+   "ts": "2026-10-14T19:12:11.318385+00:00",
+   "t_ms": 21436,
+   "type": "run.status",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01AUWgcRwdSaj3NHjz8wPcgj",
+   "summary": "Buyer's clerk: reading the message",
+   "refs": [],
+   "payload": {},
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 10,
+   "ts": "2026-10-14T19:12:11.368505+00:00",
+   "t_ms": 21486,
+   "type": "tool.result",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01AUWgcRwdSaj3NHjz8wPcgj",
+   "summary": "Brian Tanaka, 2026-09-02: Baycrest Connectors is now BCX Interconnect - 2027 quotation BCX-Q-2609 (quote, review); 11 offers read from it",
+   "refs": [],
+   "payload": {
+    "tool": "read_message",
+    "name": "read_message",
+    "ok": true,
+    "numbers": [
+     {
+      "id": "offer:6:price_each_usd",
+      "name": "BCX Interconnect, Inc.: HR-20103 per piece",
+      "value": "0.24058",
+      "unit": "USD",
+      "say": "$0.2406"
+     },
+     {
+      "id": "offer:7:price_each_usd",
+      "name": "BCX Interconnect, Inc.: HR-20104 per piece",
+      "value": "0.28543",
+      "unit": "USD",
+      "say": "$0.2854"
+     },
+     {
+      "id": "offer:8:price_each_usd",
+      "name": "BCX Interconnect, Inc.: HR-20110 per piece",
+      "value": "0.11474",
+      "unit": "USD",
+      "say": "$0.1147"
+     },
+     {
+      "id": "offer:9:price_each_usd",
+      "name": "BCX Interconnect, Inc.: HR-20111 per piece",
+      "value": "0.13992",
+      "unit": "USD",
+      "say": "$0.1399"
+     },
+     {
+      "id": "offer:10:price_each_usd",
+      "name": "BCX Interconnect, Inc.: HR-20115 per piece",
+      "value": "0.01921",
+      "unit": "USD",
+      "say": "$0.0192"
+     },
+     {
+      "id": "offer:11:price_each_usd",
+      "name": "BCX Interconnect, Inc.: HR-20140 per piece",
+      "value": "1.53693",
+      "unit": "USD",
+      "say": "$1.54"
+     },
+     {
+      "id": "offer:12:price_each_usd",
+      "name": "BCX Interconnect, Inc.: HR-20136 per piece",
+      "value": "9.1",
+      "unit": "USD",
+      "say": "$9.10"
+     },
+     {
+      "id": "offer:13:price_each_usd",
+      "name": "BCX Interconnect, Inc.: HR-20137 per piece",
+      "value": "13.24",
+      "unit": "USD",
+      "say": "$13.24"
+     },
+     {
+      "id": "offer:14:price_each_usd",
+      "name": "BCX Interconnect, Inc.: HR-20133 per piece",
+      "value": "4.14",
+      "unit": "USD",
+      "say": "$4.14"
+     },
+     {
+      "id": "offer:15:price_each_usd",
+      "name": "BCX Interconnect, Inc.: HR-20134 per piece",
+      "value": "7.25",
+      "unit": "USD",
+      "say": "$7.25"
+     },
+     {
+      "id": "offer:16:price_each_usd",
+      "name": "BCX Interconnect, Inc.: HR-20135 per piece",
+      "value": "11.9",
+      "unit": "USD",
+      "say": "$11.90"
+     }
+    ],
+    "unknowns": []
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 13,
+   "ts": "2026-10-14T19:12:11.473980+00:00",
+   "t_ms": 21591,
+   "type": "step.text",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "The clerk is drafting the request to BCX now. Lookout will write the Recommendation once the clerk finishes.",
+   "refs": [],
+   "payload": {},
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 14,
+   "ts": "2026-10-14T19:12:12.900250+00:00",
+   "t_ms": 23017,
+   "type": "tool.called",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": "toolu_01CUtmf2fWum1BawHN4jHnTo",
+   "summary": "Lookout calls get_handoffs",
+   "refs": [],
+   "payload": {
+    "tool": "get_handoffs",
+    "name": "get_handoffs",
+    "args": {},
+    "gate": "allowed",
+    "gate_reason": "Read what the earlier steps found, with the figures their lookups returned.",
+    "why": "Read what the earlier steps found, with the figures their lookups returned."
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 15,
+   "ts": "2026-10-14T19:12:12.901423+00:00",
+   "t_ms": 23019,
+   "type": "run.status",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": "toolu_01CUtmf2fWum1BawHN4jHnTo",
+   "summary": "Lookout: working",
+   "refs": [],
+   "payload": {},
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 11,
+   "ts": "2026-10-14T19:12:19.581504+00:00",
+   "t_ms": 29699,
+   "type": "tool.called",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01ViBfWLoE5KMstwuiKifbEK",
+   "summary": "Buyer's clerk calls draft_supplier_request",
+   "refs": [],
+   "payload": {
+    "tool": "draft_supplier_request",
+    "name": "draft_supplier_request",
+    "args": {
+     "supplier_id": "SUP-0016",
+     "subject": "Open orders under the BCX Interconnect name",
+     "lines": [
+      "HPO-26-00490/50",
+      "HPO-26-00490/90",
+      "HPO-26-00490/100",
+      "HPO-26-00490/110",
+      "HPO-26-00490/80",
+      "HPO-26-00591/40"
+     ],
+     "body": "Dear BCX Interconnect team,\n\nThank you for your note of 2 September about the change of name from Baycrest Connectors to BCX Interconnect. We are updating our records and would like to confirm a few things on our open orders.\n\nPlease acknowledge the six open lines below under the BCX Interconnect name and confirm the promised date on each:\n\nHPO-26-00490/50 · HR-20111 · 3000 EA\nHPO-26-00490/90 · HR-20135 · 260 EA\nHPO-26-00490/100 · HR-20140 · 3700 EA\nHPO-26-00490/110 · HR-21125 · 1192 EA\nHPO-26-00490/80 · HR-20133 · 1500 EA\nHPO-26-00591/40 · HR-20137 · 540 EA\n\nPlease also tell us where each line stands (being made, shipped, or in transit), and send the packing list and carrier once a line ships.\n\nPlease confirm that orders@bcxinterconnect.example is the right address for purchase orders, order acknowledgements and ship notices from now on, and that the delivery terms on these orders are unchanged. Please also tell us the name and address we should use for your accounts and remittance contact, so we can update our records before the old addresses stop forwarding on 31 December.\n\nPlease reply as soon as you can.\n\nBest regards,\nPriya Nair"
+    },
+    "gate": "staged",
+    "gate_reason": "Prepare the request to the supplier for the buyer to approve. Nothing is sent.",
+    "why": "Prepare the request to the supplier for the buyer to approve. Nothing is sent."
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 12,
+   "ts": "2026-10-14T19:12:19.582984+00:00",
+   "t_ms": 29700,
+   "type": "run.status",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01ViBfWLoE5KMstwuiKifbEK",
+   "summary": "Buyer's clerk: drafting the request",
+   "refs": [],
+   "payload": {},
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 13,
+   "ts": "2026-10-14T19:12:19.610877+00:00",
+   "t_ms": 29728,
+   "type": "tool.result",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01ViBfWLoE5KMstwuiKifbEK",
+   "summary": "Draft to Brian Tanaka awaiting approval: Open orders under the BCX Interconnect name",
+   "refs": [],
+   "payload": {
+    "tool": "draft_supplier_request",
+    "name": "draft_supplier_request",
+    "ok": true,
+    "numbers": [],
+    "unknowns": []
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 14,
+   "ts": "2026-10-14T19:12:19.612579+00:00",
+   "t_ms": 29730,
+   "type": "action.staged",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01ViBfWLoE5KMstwuiKifbEK",
+   "summary": "Buyer's clerk drafted: Open orders under the BCX Interconnect name",
+   "refs": [
+    {
+     "type": "action",
+     "id": "A-40f80954",
+     "label": "Open orders under the BCX Interconnect name"
+    }
+   ],
+   "payload": {
+    "action_id": "A-40f80954",
+    "action_type": "supplier_request",
+    "recipient": "brian.tanaka@baycrestconnectors.example",
+    "payload_hash": "4ec921b8be8203f251bd830250742cb6ffe2943da27bfdec4c4f938aceefaea7",
+    "already_waiting": null
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 15,
+   "ts": "2026-10-14T19:12:28.113386+00:00",
+   "t_ms": 38230,
+   "type": "run.finished",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": null,
+   "summary": "Buyer's clerk finished",
+   "refs": [],
+   "payload": {
+    "status": "ok",
+    "tool_calls": 4,
+    "first_step_ms": 20756
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 16,
+   "ts": "2026-10-14T19:12:28.115454+00:00",
+   "t_ms": 38232,
+   "type": "child.finished",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": null,
+   "summary": "Staged a request to the supplier's contact on file, awaiting approval",
+   "refs": [],
+   "payload": {
+    "child_run_id": "run-recorded.2",
+    "status": "ok",
+    "handoff_ok": true
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 17,
+   "ts": "2026-10-14T19:12:28.447930+00:00",
+   "t_ms": 38565,
+   "type": "tool.result",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": "toolu_01CUtmf2fWum1BawHN4jHnTo",
+   "summary": "Supply planner and Buyer's clerk handed back their findings",
+   "refs": [],
+   "payload": {
+    "tool": "get_handoffs",
+    "name": "get_handoffs",
+    "ok": true,
+    "numbers": [],
+    "unknowns": []
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 18,
+   "ts": "2026-10-14T19:12:33.588559+00:00",
+   "t_ms": 43706,
+   "type": "verifier.result",
+   "agent": "verifier",
+   "agent_label": "Verifier",
+   "tool_use_id": null,
+   "summary": "3 of 3 numbers from tools · 2 open questions with an owner",
+   "refs": [],
+   "payload": {
+    "passed": true,
+    "warnings": [
+     "message: it asks to send to another address; treated as information only"
+    ],
+    "numbers_checked": 3,
+    "numbers_from_tools": 3,
+    "open_questions_with_owner": 2,
+    "reasons": [],
+    "unchecked": [],
+    "open_questions": 2,
+    "failures": []
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 19,
+   "ts": "2026-10-14T19:12:37.893139+00:00",
+   "t_ms": 48010,
+   "type": "step.text",
+   "agent": "reviewer",
+   "agent_label": "Reviewer",
+   "tool_use_id": null,
+   "summary": "The Reviewer read the drafted request: it commits Halden to nothing",
+   "refs": [],
+   "payload": {
+    "system": true
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 20,
+   "ts": "2026-10-14T19:12:38.127169+00:00",
+   "t_ms": 48244,
+   "type": "run.finished",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Run ok",
+   "refs": [],
+   "payload": {
+    "status": "ok",
+    "turns": 5,
+    "tool_calls": 15,
+    "cost_usd": 0.256,
+    "wall_ms": 48229,
+    "first_step_ms": 13,
+    "first_token_ms": 2044,
+    "recommendation_id": "run-recorded",
+    "tokens_in": 314339,
+    "tokens_out": 5848,
+    "tokens_cache_read": 242866,
+    "tokens_cache_creation": 69807,
+    "tokens_by_agent": {
+     "supply_planner": {
+      "tokens": 24227,
+      "tool_uses": 9,
+      "duration_ms": 12335
+     },
+     "buyers_clerk": {
+      "tokens": 23250,
+      "tool_uses": 5,
+      "duration_ms": 18971
+     }
+    }
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 21,
+   "ts": "2026-10-14T19:12:46.298908+00:00",
+   "t_ms": 56416,
+   "type": "review.result",
+   "agent": "reviewer",
+   "agent_label": "Reviewer",
+   "tool_use_id": null,
+   "summary": "Reviewer 67/100: Two failures: a known fact listed as an assumption, and the loss at Dec 31 is vague.",
+   "refs": [],
+   "payload": {
+    "score": 67,
+    "checks": [
+     {
+      "name": "answers the buyer's question",
+      "passed": true,
+      "critique": "",
+      "critical": false
+     },
+     {
+      "name": "assumptions are really assumptions",
+      "passed": false,
+      "critique": "Second clause, that the 2 September message came from the wrong sender, is a known fact, not an assumption.",
+      "critical": false
+     },
+     {
+      "name": "nothing in it commits Halden",
+      "passed": true,
+      "critique": "",
+      "critical": true
+     },
+     {
+      "name": "what would change it is specific",
+      "passed": true,
+      "critique": "",
+      "critical": false
+     },
+     {
+      "name": "buyer's words",
+      "passed": true,
+      "critique": "",
+      "critical": false
+     },
+     {
+      "name": "says what the date protects",
+      "passed": false,
+      "critique": "Says $25K is 'at risk' but never states what Halden loses if Dec 31 passes.",
+      "critical": false
+     }
+    ],
+    "failed": [
+     "assumptions are really assumptions: Second clause, that the 2 September message came from the wrong sender, is a known fact, not an assumption.",
+     "says what the date protects: Says $25K is 'at risk' but never states what Halden loses if Dec 31 passes."
+    ],
+    "cost_usd": 0.0017
+   },
+   "stage": null
+  }
+ ],
+ "recommendation": {
+  "finding": "BCX's old addresses stop forwarding Dec 31; 6 open lines, $25K, at risk.",
+  "next_step": {
+   "who": "Priya Nair",
+   "what": "Approve the email to Brian Tanaka (BCX Interconnect)",
+   "by": "Dec 31"
+  },
+  "done": [
+   {
+    "text": "Drafted a request to Brian Tanaka: waiting for your approval",
+    "action_id": "A-40f80954",
+    "stage": "proposed"
+   }
+  ],
+  "points": [],
+  "answer_entities": [],
+  "recommendation_entities": [],
+  "numbers": [
+   {
+    "id": "item:deadline:SUP-0016:2026-12-31:days_left",
+    "value": "97",
+    "unit": "days",
+    "name": "Days left to act",
+    "headline": true,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "action list",
+     "row": "deadline:SUP-0016:2026-12-31",
+     "raw": null,
+     "inputs": [],
+     "rule": "the act-by date minus the data date, 2026-09-25",
+     "by": "attention.service"
+    }
+   },
+   {
+    "id": "supply:SUP-0016:open_lines",
+    "value": "6",
+    "unit": "lines",
+    "name": "Open PO lines for Baycrest Connectors, Inc.",
+    "headline": false,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": "supply:SUP-0016:open_lines",
+     "raw": null,
+     "inputs": [],
+     "rule": "Open PO lines for Baycrest Connectors, Inc.",
+     "by": "agent tools"
+    }
+   },
+   {
+    "id": "supply:SUP-0016:open_value_usd",
+    "value": "24742.38",
+    "unit": "USD",
+    "name": "Value still to arrive on open orders for Baycrest Connectors, Inc. (USD, at finance's rate for each order's month)",
+    "headline": false,
+    "say": "$25K",
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": "supply:SUP-0016:open_value_usd",
+     "raw": null,
+     "inputs": [],
+     "rule": "Value still to arrive on open orders for Baycrest Connectors, Inc. (USD, at finance's rate for each order's month)",
+     "by": "agent tools"
+    }
+   }
+  ],
+  "assumptions": [
+   "Relies on BCX's own statement that Baycrest is now BCX; the 2 September message did not come from the contact on file."
+  ],
+  "would_change": [
+   "BCX's reply, from the contact on file, confirming the rename and acknowledging the six open lines."
+  ],
+  "open_questions": [
+   {
+    "what": "Where HPO-26-00490/50 is in: quoted, acknowledged, being made, shipped, in transit (and 5 like it)",
+    "why_it_blocks": "the quote this order was placed on; whether the supplier acknowledged the order; how far the supplier has got making it; whether it has shipped; where it is in transit",
+    "owner": "supplier",
+    "question": "Which quote did Baycrest Connectors, Inc. give for HR-20111? Has Baycrest Connectors, Inc. acknowledged HPO-26-00490 and confirmed the date? Where is HPO-26-00490 in production at Baycrest Connectors, Inc.? Has Baycrest Connectors, Inc. shipped HPO-26-00490? Ask for the packing list. Which carrier a",
+    "refs": [
+     {
+      "type": "po_line",
+      "id": "HPO-26-00490/50",
+      "label": null
+     },
+     {
+      "type": "po_line",
+      "id": "HPO-26-00490/90",
+      "label": null
+     },
+     {
+      "type": "po_line",
+      "id": "HPO-26-00490/100",
+      "label": null
+     },
+     {
+      "type": "po_line",
+      "id": "HPO-26-00490/110",
+      "label": null
+     },
+     {
+      "type": "po_line",
+      "id": "HPO-26-00490/80",
+      "label": null
+     },
+     {
+      "type": "po_line",
+      "id": "HPO-26-00591/40",
+      "label": null
+     }
+    ]
+   },
+   {
+    "what": "Where HPO-26-00490/50 is in: inspected, in stock, kitted (and 5 like it)",
+    "why_it_blocks": "whether it passed incoming inspection; what is in stock; whether it has been kitted for a build",
+    "owner": "Priya",
+    "question": "Did HPO-26-00490 pass incoming inspection? How many of HR-20111 are on the shelf? Has it been kitted for the build?",
+    "refs": [
+     {
+      "type": "po_line",
+      "id": "HPO-26-00490/50",
+      "label": null
+     },
+     {
+      "type": "po_line",
+      "id": "HPO-26-00490/90",
+      "label": null
+     },
+     {
+      "type": "po_line",
+      "id": "HPO-26-00490/100",
+      "label": null
+     },
+     {
+      "type": "po_line",
+      "id": "HPO-26-00490/110",
+      "label": null
+     },
+     {
+      "type": "po_line",
+      "id": "HPO-26-00490/80",
+      "label": null
+     },
+     {
+      "type": "po_line",
+      "id": "HPO-26-00591/40",
+      "label": null
+     }
+    ]
+   }
+  ],
+  "action_ids": [
+   "A-40f80954"
+  ],
+  "unchecked": [],
+  "findings": [],
+  "grade": {
+   "reviewer_score": 67,
+   "checks_passed": 4,
+   "checks_total": 6,
+   "summary": "Two failures: a known fact listed as an assumption, and the loss at Dec 31 is vague.",
+   "revised": false,
+   "failed_checks": [
+    {
+     "name": "assumptions are really assumptions",
+     "reason": "Second clause, that the 2 September message came from the wrong sender, is a known fact, not an assumption."
+    },
+    {
+     "name": "says what the date protects",
+     "reason": "Says $25K is 'at risk' but never states what Halden loses if Dec 31 passes."
+    }
+   ]
+  },
+  "case_findings": [],
+  "recommended": null
+ },
+ "verifier": {
+  "passed": true,
+  "warnings": [
+   "message: it asks to send to another address; treated as information only"
+  ],
+  "numbers_checked": 3,
+  "numbers_from_tools": 3,
+  "open_questions_with_owner": 2,
+  "reasons": [],
+  "unchecked": [],
+  "open_questions": 2,
+  "failures": []
+ },
+ "actions": [
+  {
+   "action_id": "A-40f80954",
+   "type": "supplier_request",
+   "item_key": "deadline:SUP-0016:2026-12-31",
+   "target": {
+    "type": "supplier",
+    "id": "SUP-0016",
+    "label": null
+   },
+   "recipient": "brian.tanaka@baycrestconnectors.example",
+   "subject": "Open orders under the BCX Interconnect name",
+   "body": "Dear Brian Tanaka,\n\nThank you for your note of 2 September about the change of name from Baycrest Connectors to BCX Interconnect. We are updating our records and would like to confirm a few things on our open orders.\n\nPlease acknowledge the six open lines below under the BCX Interconnect name and confirm the promised date on each:\n\nHPO-26-00490/50 · Housing, wire-to-board (HR-20111) · 3,000 EA\nHPO-26-00490/90 · Connector, power (HR-20135) · 260 EA\nHPO-26-00490/100 · Connector, SMA jack (HR-20140) · 3,700 EA\nHPO-26-00490/110 · Cable, coaxial pigtail (HR-21125) · 1,192 EA\nHPO-26-00490/80 · Connector, power (HR-20133) · 1,500 EA\nHPO-26-00591/40 · Charging contact plate, 120 A (HR-20137) · 540 EA\n\nPlease tell us where each line stands (being made, shipped, or in transit), and send the packing list and carrier once a line ships.\n\nPlease confirm that orders@bcxinterconnect.example is the right address for purchase orders, order acknowledgements and ship notices from now on, and that the delivery terms on these orders are unchanged. Please also tell us the name and address we should use for your accounts and remittance contact, so we can update our records before the old addresses stop forwarding on 31 December.\n\nPlease reply as soon as you can.\n\nBest regards,\nPriya Nair\nHalden Robotics",
+   "change": {
+    "owner": "Priya Nair"
+   }
+  }
+ ]
+}

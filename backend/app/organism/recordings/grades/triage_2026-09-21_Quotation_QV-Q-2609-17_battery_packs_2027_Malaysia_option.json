@@ -1,0 +1,63 @@
+{
+ "graded_at": "2026-10-12T00:03:14.472455+00:00",
+ "reviewer_model": "claude-haiku-5-5",
+ "recorded_at": "2026-10-11T23:23:03.898720+00:00",
+ "grade": {
+  "reviewer_score": 60,
+  "checks_passed": 3,
+  "checks_total": 5,
+  "summary": "Clear finding and next step; fails on certainty of genuineness and a role title.",
+  "revised": false,
+  "failed_checks": [
+   {
+    "name": "assumptions are really assumptions",
+    "reason": "States the quote as genuine, though only absence of trust flags supports it."
+   },
+   {
+    "name": "buyer's words",
+    "reason": "Uses the teammate title 'planning lead' for the battery-packs owner."
+   }
+  ]
+ },
+ "review_summary": "Reviewer 60/100: Clear finding and next step; fails on certainty of genuineness and a role title.",
+ "review_payload": {
+  "score": 60,
+  "checks": [
+   {
+    "name": "answers the buyer's question",
+    "passed": true,
+    "critique": "",
+    "critical": false
+   },
+   {
+    "name": "assumptions are really assumptions",
+    "passed": false,
+    "critique": "States the quote as genuine, though only absence of trust flags supports it.",
+    "critical": false
+   },
+   {
+    "name": "nothing in it commits Halden",
+    "passed": true,
+    "critique": "",
+    "critical": true
+   },
+   {
+    "name": "what would change it is specific",
+    "passed": true,
+    "critique": "",
+    "critical": false
+   },
+   {
+    "name": "buyer's words",
+    "passed": false,
+    "critique": "Uses the teammate title 'planning lead' for the battery-packs owner.",
+    "critical": false
+   }
+  ],
+  "failed": [
+   "assumptions are really assumptions: States the quote as genuine, though only absence of trust flags supports it.",
+   "buyer's words: Uses the teammate title 'planning lead' for the battery-packs owner."
+  ],
+  "cost_usd": 0.0016
+ }
+}

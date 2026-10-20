@@ -1,0 +1,72 @@
+id: triage-inbox
+core: true            # part of THE answer sheet: written from the raw files before any agent ran
+category: ordinary
+kind: api              # the inbox ladder is code: sender against the supplier master, flags from the message; no model
+item_key: null
+checks:
+  - id: "2026-08-14-quote"
+    get: /api/messages
+    pick: {"ref.id": "2026-08-14_RE_RFQ_HR-RFQ-2608_motor_pricing_Q4_2026_Q1_2027_-_Quotation_Q-YZ-26-0831"}
+    expect: {trust: on_file, kind: quote, supplier.id: SUP-0001}
+  - id: "2026-09-02-quote"
+    get: /api/messages
+    pick: {"ref.id": "2026-09-02_Baycrest_Connectors_is_now_BCX_Interconnect_-_2027_quotation_BCX-Q-2609"}
+    expect: {trust: on_file, kind: quote, supplier.id: SUP-0016, trust_flags: {contains: [sender_not_contact_on_file]}}
+  - id: "2026-09-05-correction"
+    get: /api/messages
+    pick: {"ref.id": "2026-09-05_RE_Quote_request_-_safety_controller_PCBA_HR-31110_2027_volumes"}
+    expect: {trust: on_file, kind: correction, supplier.id: SUP-0024}
+  - id: "2026-09-09-price-change"
+    get: /api/messages
+    pick: {"ref.id": "2026-09-09_Price_adjustment_notice_-_aluminum_extrusions_effective_November_1_2026"}
+    expect: {trust: on_file, kind: price change, supplier.id: SUP-0041}
+  - id: "2026-09-11-quote"
+    get: /api/messages
+    pick: {"ref.id": "2026-09-11_Angebot_AN-2026-1187_Planetary_gearbox_PG120_-_your_inquiry_HR-RFQ-2609"}
+    expect: {trust: on_file, kind: quote, supplier.id: SUP-0002}
+  - id: "2026-09-12-spot-offer"
+    get: /api/messages
+    pick: {"ref.id": "2026-09-12_Spot_offer_-_NG6603-QFN48_in_stock_ships_today"}
+    expect: {trust: suspicious, kind: spot offer, supplier.id: SUP-0027, trust_flags: {contains: [sender_not_contact_on_file, instruction_in_message, supplier_on_hold]}}
+  - id: "2026-09-15-closure"
+    get: /api/messages
+    pick: {"ref.id": "2026-09-15_Holiday_notice_National_Day_2026"}
+    expect: {trust: on_file, kind: closure, supplier.id: SUP-0042}
+  - id: "2026-09-16-slip"
+    get: /api/messages
+    pick: {"ref.id": "2026-09-16_Lead_time_update_-_multilayer_PCB_orders_laminate_allocation"}
+    expect: {trust: on_file, kind: slip, supplier.id: SUP-0022}
+  - id: "2026-09-17-quote"
+    get: /api/messages
+    pick: {"ref.id": "2026-09-17_Cotizacion_Quote_MA-2026-311_-_Tern_harness_transfer"}
+    expect: {trust: on_file, kind: quote, supplier.id: SUP-0019}
+  - id: "2026-09-18-slip"
+    get: /api/messages
+    pick: {"ref.id": "2026-09-18_Jadepeak_Customer_Notice_CN-2026-09"}
+    expect: {trust: on_file, kind: slip, supplier.id: SUP-0013}
+  - id: "2026-09-19-slip"
+    get: /api/messages
+    pick: {"ref.id": "2026-09-19_RE_RE_PO_HPO-26-00623_confirmation"}
+    expect: {trust: on_file, kind: slip, supplier.id: SUP-0018}
+  - id: "2026-09-21-quote"
+    get: /api/messages
+    pick: {"ref.id": "2026-09-21_Quotation_QV-Q-2609-17_battery_packs_2027_Malaysia_option"}
+    expect: {trust: on_file, kind: quote, supplier.id: SUP-0011}
+  - id: "2026-09-22-force-majeure"
+    get: /api/messages
+    pick: {"ref.id": "2026-09-22_NOTICE_OF_FORCE_MAJEURE_-_Shenzhen_Yunzhan_Precision_Motor_Co_Ltd"}
+    expect: {trust: on_file, kind: force majeure, supplier.id: SUP-0001}
+  - id: "2026-09-23-payment-change"
+    get: /api/messages
+    pick: {"ref.id": "2026-09-23_URGENT_Updated_remittance_details_following_plant_incident"}
+    expect: {trust: suspicious, kind: payment change, trust_flags: {contains: [sender_domain_lookalike, reply_to_freemail, bank_detail_change, urgency]}}
+  - id: "2026-09-24-quote"
+    get: /api/messages
+    pick: {"ref.id": "2026-09-24_Quotation_VPM-Q-260924_-_BLDC_motor_equivalent_to_YZ-BL86-48-400"}
+    expect: {trust: new_sender, kind: quote, trust_flags: {contains: [sender_not_in_master]}}
+  - id: all-15-messages-are-listed
+    get: /api/messages
+    expect: {'0.trust': {in: [on_file, new_sender, suspicious]}, '14.trust': {in: [on_file, new_sender, suspicious]}}
+reason: "The inbox is the second place deadlines, corrections and fraud hide. Trust is code, computed before any model reads: the fraud email and the Saltmarsh note must be suspicious with their reasons, the new Vietnamese motor maker a new sender, and everything from a known contact on file, whatever the message says about itself."
+oracle: "sender against supplier contacts by address and by domain, derived from the raw files in evals/tests"
+source: "data/quotes/*.eml and *.txt (all 15); data/suppliers.csv contact_email; data/README.md ('Senders who aren't in the supplier list', 'Messages that deserve less trust than others')"

@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lookout · Item: Yunzhan plant fire</title>
+<link rel="stylesheet" href="mock.css">
+<style>
+  .head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:6px}
+  .meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:16px;font-size:12.5px;color:var(--cinder)}
+  .nums td{padding:7px 0;border-bottom:1px solid var(--chalk)} .nums tr:last-child td{border:0}
+  .nums td.v{text-align:right;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .nums a.v{color:var(--ink);border-bottom:1px dotted var(--slate)}
+  .src{background:var(--powder);border-radius:var(--r-md);padding:10px 12px;margin:2px 0 8px;font-size:12px}
+  .q li{margin-bottom:8px} .q{padding-left:18px;margin:0}
+  .act{display:flex;gap:10px;align-items:center;border:1px solid var(--chalk);border-radius:var(--r-md);padding:10px 12px;margin-top:8px}
+  .act .t{flex:1} .act .t small{display:block;color:var(--gravel)}
+  .tp th,.tp td{text-align:right} .tp th:first-child,.tp td:first-child{text-align:left}
+</style></head>
+<body><div class="app">
+<aside class="side">
+  <div class="brand">Lookout<small>Halden Robotics · Procurement</small></div>
+  <nav class="nav">
+    <a class="on" href="action-list-a.html">Action list <span class="n hot">12</span></a>
+    <a href="#">Inbox <span class="n">15</span></a><a href="#">Suppliers <span class="n">60</span></a>
+    <a href="#">Parts and BOM <span class="n">502</span></a><a href="#">Orders <span class="n">185 open</span></a>
+    <a href="#">Forecast and demand</a><div class="sep"></div>
+    <a href="approval.html">Approvals <span class="n hot">2</span></a>
+    <a href="run-midway.html">Agent activity</a>
+    <a href="#">Data <span class="n">17 issues</span></a>
+  </nav>
+</aside>
+<main class="main">
+  <div class="top"><div class="where"><a href="action-list-a.html">Action list</a> / <b>Yunzhan plant fire</b></div>
+    <div class="asof">Data as of <b style="color:var(--ink)">Fri Sep 25, 2026</b></div></div>
+
+  <div class="head">
+    <h1>Yunzhan plant fire: no drive motors on the way for the October Tern build</h1>
+    <button class="btn">Work this again with the agent</button>
+  </div>
+  <div class="meta"><span class="dot high"></span> High · <span class="badge t-supply">Supply disruption</span> · Owner <b>Dana Reyes</b> · <span class="chip"><span class="st"></span>Shenzhen Yunzhan Precision Motor</span> · Tern T2 · <a href="#">Assign</a> · <a href="#">Snooze</a></div>
+
+  <div class="grid2">
+  <div>
+    <div class="card rec">
+      <h3>Recommendation <span class="badge s-draft" style="margin-left:6px">from the agent</span> <span class="muted small" style="font-weight:400;margin-left:6px">today 10:42 · 31 s</span></h3>
+      <p style="margin:0 0 10px;font-size:15px;line-height:1.5"><b>Ask Yunzhan for revised promise dates and what Plant 1 can allocate in October, and ask them to extend quote Q-YZ-26-0831 before it lapses on Oct 13.</b> Without Plant 1 motors the October Tern build is short 364 <span class="chip"><span class="mono">HR-40110</span> drive motor</span>; open supply covers nothing until Yunzhan restarts, 6 to 8 weeks from Sep 18.</p>
+      <dl class="kv">
+        <dt>Assumes</dt><dd>No motors in stock (on-hand is not in the data). Yunzhan ships nothing from Plant 2 before mid-November.</dd>
+        <dt>Would change it</dt><dd>On-hand stock above 364; a Plant 1 allocation; revised dates before Nov 1.</dd>
+      </dl>
+      <div style="margin-top:12px;font-size:12px;color:var(--gravel);font-weight:600">Drafts and requests</div>
+      <div class="act"><span class="badge s-pending">Awaiting approval</span><div class="t">Request to Yunzhan: revised promise dates, Plant 1 allocation, quote extension<small>To Li Wei (contact on file) · HPO-26-00450 line 10, HPO-26-00614 lines 10 and 20</small></div><a class="btn primary" href="approval.html">Review and approve</a></div>
+      <div class="act"><span class="badge s-ok">Logged</span><div class="t">Asked Dana Reyes: how many HR-40110 are in stock?<small>Internal question · no approval needed · undo</small></div></div>
+      <div class="strip"><span class="ok">8 of 8 numbers checked against the data</span><span class="ok">2 open questions have owners</span><span class="ok">Drafts go only to contacts on file</span><a href="run-midway.html" style="margin-left:auto">How we got here ›</a></div>
+    </div>
+
+    <h2>Will the Tern build run short? &nbsp;<span class="chip"><span class="mono">HR-40110</span> drive motor</span> <span class="muted" style="font-weight:400">· 2 per Tern T2</span></h2>
+    <div class="tablewrap"><table class="tp">
+      <thead><tr><th></th><th>Past due</th><th>Oct 2026</th><th>Nov 2026</th><th>Dec 2026</th></tr></thead>
+      <tbody>
+      <tr><td>Requirements <span class="muted small">Tern forecast × 2</span></td><td>—</td><td>364</td><td>376</td><td>352</td></tr>
+      <tr><td>Scheduled receipts <span class="muted small">open PO lines by promise date</span></td><td>790</td><td>350</td><td>0</td><td>0</td></tr>
+      <tr><td>&nbsp;&nbsp;of which under force majeure</td><td class="short">790</td><td class="short">350</td><td>0</td><td>0</td></tr>
+      <tr><td>On hand</td><td colspan="4"><span class="unknown">unknown · ask Dana Reyes</span></td></tr>
+      <tr><td><b>Short if Yunzhan ships nothing</b></td><td>—</td><td class="cellshort">364</td><td class="cellshort">376</td><td class="cellshort">352</td></tr>
+      </tbody></table></div>
+    <p class="note">Projected available cannot be shown: it needs on-hand stock, which the data does not hold.</p>
+
+    <h2>Affected PO lines</h2>
+    <div class="tablewrap"><table>
+      <thead><tr><th>PO line</th><th>Part</th><th class="num">Open qty</th><th>Promise date</th><th>Past due</th><th>Status</th></tr></thead>
+      <tbody>
+      <tr class="link"><td class="mono">HPO-26-00450 / 10</td><td><span class="chip"><span class="mono">HR-40110</span></span></td><td class="num">355 EA</td><td>Aug 26</td><td class="short">30 days</td><td><span class="badge t-supply">Force majeure</span></td></tr>
+      <tr class="link"><td class="mono">HPO-26-00614 / 10</td><td><span class="chip"><span class="mono">HR-40110</span></span></td><td class="num">435 EA</td><td>Sep 23</td><td class="short">2 days</td><td><span class="badge t-supply">Force majeure</span></td></tr>
+      <tr class="link"><td class="mono">HPO-26-00614 / 20</td><td><span class="chip"><span class="mono">HR-40110</span></span></td><td class="num">350 EA</td><td>Oct 26</td><td>—</td><td><span class="badge t-supply">Force majeure</span></td></tr>
+      <tr><td colspan="6" class="muted small">+ 7 more lines in the notice (HR-40120, HR-40130, HR-40210, HR-40230) · show</td></tr>
+      </tbody></table></div>
+
+    <h2>Related messages</h2>
+    <div class="tablewrap"><table><tbody>
+      <tr class="link"><td>Sep 22</td><td><span class="chip">Li Wei · Yunzhan</span> <span class="badge s-ok">sender on file</span></td><td>Notice of force majeure: 10 open lines, revised dates by Oct 10</td></tr>
+      <tr class="link"><td>Sep 23</td><td><span class="chip">“Yunzhan Accounts”</span> <span class="badge t-trust">suspicious</span></td><td>Updated remittance details: held, nothing to act on</td></tr>
+      <tr class="link"><td>Sep 24</td><td><span class="chip">Vinh Phuc Motor</span> <span class="badge t-deadline">new sender</span></td><td>Quotation for an equivalent BLDC motor, $165.54 at 500</td></tr>
+    </tbody></table></div>
+  </div>
+
+  <div>
+    <div class="card">
+      <h3>The numbers</h3>
+      <table class="nums"><tbody>
+        <tr><td>Motors stuck on open lines</td><td class="v"><a class="v" href="#">1,140</a><span class="prov p-stated">stated</span></td></tr>
+        <tr><td colspan="2"><div class="src"><b>Source:</b> force majeure notice, Sep 22, from Li Wei<div class="quote">HPO-26-00450  10  HR-40110  <mark>355</mark>  2026-08-26
+HPO-26-00614  10  HR-40110  <mark>435</mark>  2026-09-23
+HPO-26-00614  20  HR-40110  <mark>350</mark>  2026-10-26</div><span class="muted">Matches 3 open lines in the order file.</span></div></td></tr>
+        <tr><td>October requirement</td><td class="v"><a class="v" href="#">364</a><span class="prov p-computed">computed</span></td></tr>
+        <tr><td>First short month</td><td class="v"><a class="v" href="#">Oct 2026</a><span class="prov p-computed">computed</span></td></tr>
+        <tr><td>Quote valid until</td><td class="v"><a class="v" href="#">~Oct 13</a><span class="prov p-inferred">inferred</span></td></tr>
+        <tr><td>Restart estimate</td><td class="v"><a class="v" href="#">6–8 weeks</a><span class="prov p-stated">stated</span></td></tr>
+        <tr><td>On-hand stock</td><td class="v"><span class="unknown">unknown</span></td></tr>
+      </tbody></table>
+    </div>
+    <div class="card">
+      <h3>Open questions</h3>
+      <ol class="q">
+        <li>How many HR-40110 are in stock? <span class="muted">· owner</span> <b>Dana Reyes</b></li>
+        <li>What can Plant 1 (Longgang) allocate to Halden? <span class="muted">· owner</span> <b>Yunzhan</b>, by Oct 10</li>
+        <li>Would Vinh Phuc’s motor count as Vietnam origin (magnets are Chinese)? <span class="muted">· owner</span> <b>customs broker</b></li>
+      </ol>
+    </div>
+    <div class="card">
+      <h3>Affects</h3>
+      <dl class="kv"><dt>Product</dt><dd>Tern T2 · Oct, Nov, Dec builds</dd><dt>Parts</dt><dd><span class="chip"><span class="mono">HR-40110</span></span> <span class="chip"><span class="mono">HR-40120</span></span> <span class="chip"><span class="mono">HR-40130</span></span> +2</dd><dt>Supplier</dt><dd>3 vendor records for one company</dd></dl>
+    </div>
+  </div>
+  </div>
+</main></div>
+<div class="mocknote">Mock · Item after a run · static</div>
+</body></html>

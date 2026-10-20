@@ -1,0 +1,285 @@
+# labeller: integration lead (a model reading under Khalid's rubric), not a human buyer. Labelled blind: key.json and raw.json not opened.
+P01:
+  answers the buyer's question: yes
+  assumptions are assumptions: yes
+  nothing is committed: yes
+  what would change the answer is specific: yes
+  buyer's words: yes
+P02:
+  answers the buyer's question: yes
+  assumptions are assumptions: yes
+  nothing is committed: yes
+  what would change the answer is specific: yes
+  buyer's words: no
+P03:
+  answers the buyer's question: yes
+  assumptions are assumptions: yes
+  nothing is committed: yes
+  what would change the answer is specific: yes
+  buyer's words: yes
+P04:
+  answers the buyer's question: yes
+  assumptions are assumptions: yes
+  nothing is committed: yes
+  what would change the answer is specific: yes
+  buyer's words: no
+  names the unknown, its owner and the question: yes
+P05:
+  answers the buyer's question: yes
+  assumptions are assumptions: no
+  nothing is committed: yes
+  what would change the answer is specific: yes
+  buyer's words: yes
+P06:
+  answers the buyer's question: yes
+  assumptions are assumptions: no
+  nothing is committed: yes
+  what would change the answer is specific: yes
+  buyer's words: no
+P07:
+  answers the buyer's question: no
+  assumptions are assumptions: yes
+  nothing is committed: yes
+  what would change the answer is specific: yes
+  buyer's words: no
+  says what the file is and what the step does: yes
+  findings carry count, consequence and example: no
+  questions are specific and few: yes
+P08:
+  answers the buyer's question: yes
+  assumptions are assumptions: yes
+  nothing is committed: no
+  what would change the answer is specific: yes
+  buyer's words: yes
+P09:
+  answers the buyer's question: yes
+  assumptions are assumptions: yes
+  nothing is committed: yes
+  what would change the answer is specific: yes
+  buyer's words: yes
+P10:
+  answers the buyer's question: yes
+  assumptions are assumptions: no
+  nothing is committed: yes
+  what would change the answer is specific: yes
+  buyer's words: yes
+  names the build and the month: yes
+P11:
+  answers the buyer's question: yes
+  assumptions are assumptions: yes
+  nothing is committed: yes
+  what would change the answer is specific: yes
+  buyer's words: yes
+  names the build and the month: yes
+P12:
+  answers the buyer's question: yes
+  assumptions are assumptions: no
+  nothing is committed: yes
+  what would change the answer is specific: yes
+  buyer's words: yes
+  names the build and the month: yes
+P13:
+  answers the buyer's question: yes
+  assumptions are assumptions: no
+  nothing is committed: yes
+  what would change the answer is specific: yes
+  buyer's words: yes
+  names the build and the month: yes
+P14:
+  answers the buyer's question: yes
+  assumptions are assumptions: yes
+  nothing is committed: yes
+  what would change the answer is specific: yes
+  buyer's words: yes
+P15:
+  answers the buyer's question: no
+  assumptions are assumptions: unknown
+  nothing is committed: yes
+  what would change the answer is specific: no
+  buyer's words: yes
+  names the build and the month: no
+P16:
+  answers the buyer's question: yes
+  assumptions are assumptions: no
+  nothing is committed: yes
+  what would change the answer is specific: yes
+  buyer's words: no
+  says what the file is and what the step does: yes
+  findings carry count, consequence and example: no
+  questions are specific and few: no
+P17:
+  answers the buyer's question: yes
+  assumptions are assumptions: yes
+  nothing is committed: yes
+  what would change the answer is specific: yes
+  buyer's words: no
+P18:
+  answers the buyer's question: yes
+  assumptions are assumptions: yes
+  nothing is committed: yes
+  what would change the answer is specific: yes
+  buyer's words: yes
+  names the unknown, its owner and the question: yes
+P19:
+  answers the buyer's question: yes
+  assumptions are assumptions: yes
+  nothing is committed: yes
+  what would change the answer is specific: yes
+  buyer's words: no
+P20:
+  answers the buyer's question: yes
+  assumptions are assumptions: yes
+  nothing is committed: yes
+  what would change the answer is specific: no
+  buyer's words: no
+P21:
+  answers the buyer's question: yes
+  assumptions are assumptions: no
+  nothing is committed: yes
+  what would change the answer is specific: no
+  buyer's words: yes
+  names the build and the month: yes
+P22:
+  answers the buyer's question: yes
+  assumptions are assumptions: no
+  nothing is committed: yes
+  what would change the answer is specific: yes
+  buyer's words: no
+  names the unknown, its owner and the question: yes
+P23:
+  answers the buyer's question: yes
+  assumptions are assumptions: no
+  nothing is committed: yes
+  what would change the answer is specific: yes
+  buyer's words: no
+  says what the file is and what the step does: yes
+  findings carry count, consequence and example: yes
+  questions are specific and few: no
+P24:
+  answers the buyer's question: no
+  assumptions are assumptions: unknown
+  nothing is committed: yes
+  what would change the answer is specific: no
+  buyer's words: yes
+  names the build and the month: no
+P25:
+  answers the buyer's question: yes
+  assumptions are assumptions: yes
+  nothing is committed: no
+  what would change the answer is specific: yes
+  buyer's words: no
+P26:
+  answers the buyer's question: yes
+  assumptions are assumptions: yes
+  nothing is committed: yes
+  what would change the answer is specific: yes
+  buyer's words: no
+P27:
+  answers the buyer's question: yes
+  assumptions are assumptions: yes
+  nothing is committed: no
+  what would change the answer is specific: yes
+  buyer's words: yes
+P28:
+  answers the buyer's question: yes
+  assumptions are assumptions: no
+  nothing is committed: yes
+  what would change the answer is specific: yes
+  buyer's words: no
+P29:
+  answers the buyer's question: yes
+  assumptions are assumptions: yes
+  nothing is committed: yes
+  what would change the answer is specific: yes
+  buyer's words: yes
+  names the build and the month: yes
+P30:
+  answers the buyer's question: yes
+  assumptions are assumptions: yes
+  nothing is committed: yes
+  what would change the answer is specific: yes
+  buyer's words: yes
+P31:
+  answers the buyer's question: yes
+  assumptions are assumptions: no
+  nothing is committed: yes
+  what would change the answer is specific: yes
+  buyer's words: no
+P32:
+  answers the buyer's question: yes
+  assumptions are assumptions: yes
+  nothing is committed: yes
+  what would change the answer is specific: yes
+  buyer's words: yes
+  names the unknown, its owner and the question: yes
+P33:
+  answers the buyer's question: yes
+  assumptions are assumptions: yes
+  nothing is committed: yes
+  what would change the answer is specific: yes
+  buyer's words: yes
+  names the build and the month: yes
+P34:
+  answers the buyer's question: no
+  assumptions are assumptions: no
+  nothing is committed: yes
+  what would change the answer is specific: yes
+  buyer's words: no
+  says what the file is and what the step does: yes
+  findings carry count, consequence and example: no
+  questions are specific and few: yes
+P35:
+  answers the buyer's question: yes
+  assumptions are assumptions: no
+  nothing is committed: yes
+  what would change the answer is specific: no
+  buyer's words: yes
+  names the unknown, its owner and the question: yes
+P36:
+  answers the buyer's question: yes
+  assumptions are assumptions: yes
+  nothing is committed: no
+  what would change the answer is specific: yes
+  buyer's words: yes
+P37:
+  answers the buyer's question: no
+  assumptions are assumptions: unknown
+  nothing is committed: yes
+  what would change the answer is specific: no
+  buyer's words: yes
+P38:
+  answers the buyer's question: yes
+  assumptions are assumptions: no
+  nothing is committed: yes
+  what would change the answer is specific: yes
+  buyer's words: no
+  says what the file is and what the step does: yes
+  findings carry count, consequence and example: no
+  questions are specific and few: no
+P39:
+  answers the buyer's question: yes
+  assumptions are assumptions: yes
+  nothing is committed: yes
+  what would change the answer is specific: yes
+  buyer's words: yes
+P40:
+  answers the buyer's question: yes
+  assumptions are assumptions: no
+  nothing is committed: yes
+  what would change the answer is specific: yes
+  buyer's words: yes
+  names the unknown, its owner and the question: yes
+P41:
+  answers the buyer's question: no
+  assumptions are assumptions: unknown
+  nothing is committed: yes
+  what would change the answer is specific: no
+  buyer's words: yes
+  names the unknown, its owner and the question: yes
+P42:
+  answers the buyer's question: yes
+  assumptions are assumptions: yes
+  nothing is committed: yes
+  what would change the answer is specific: yes
+  buyer's words: yes
+  names the build and the month: yes

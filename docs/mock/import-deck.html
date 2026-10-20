@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lookout · Import files (questions)</title>
+<link rel="stylesheet" href="mock.css"></head>
+<body class="v2"><svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></symbol>
+<symbol id="i-inbox" viewBox="0 0 24 24"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></symbol>
+<symbol id="i-bld" viewBox="0 0 24 24"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4M10 10h4M10 14h4M10 18h4"/></symbol>
+<symbol id="i-pkg" viewBox="0 0 24 24"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></symbol>
+<symbol id="i-file" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8M16 13H8M16 17H8"/></symbol>
+<symbol id="i-trend" viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></symbol>
+<symbol id="i-act" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></symbol>
+<symbol id="i-db" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="M12 8v4M12 16h.01"/></symbol>
+</defs></svg><div class="app">
+<aside class="side">
+  <div class="brand">Lookout<small>Halden Robotics</small></div>
+  <nav class="nav">
+    <a href="action-list-a2.html"><svg class="ic"><use href="#i-list"/></svg>Action list <span class="n hot">12</span></a>
+    <a href="#"><svg class="ic"><use href="#i-inbox"/></svg>Inbox <span class="n">15</span></a><a href="#"><svg class="ic"><use href="#i-bld"/></svg>Suppliers</a>
+    <a href="#"><svg class="ic"><use href="#i-pkg"/></svg>Parts and BOM</a><a href="#"><svg class="ic"><use href="#i-file"/></svg>Orders</a>
+    <a href="#"><svg class="ic"><use href="#i-trend"/></svg>Forecast and demand</a><div class="sep"></div>
+    <a href="approval.html"><svg class="ic"><use href="#i-check"/></svg>Approvals <span class="n hot">1</span></a>
+    <a href="run-midway2.html"><svg class="ic"><use href="#i-act"/></svg>Agent activity</a>
+    <a class="on" href="#"><svg class="ic"><use href="#i-db"/></svg>Data</a>
+  </nav>
+</aside>
+<main class="main">
+  <div class="top"><span></span><div class="asof">Data as of Fri Sep 25, 2026</div></div>
+  <h1>Import files</h1>
+  <p class="steps2"><span class="done">Files</span><span class="sep">›</span><span class="done">Profile</span><span class="sep">›</span><span class="now">Questions</span><span class="sep">›</span><span>Dry run</span><span class="sep">›</span><span>Approve</span></p>
+  <div class="imp">
+    <div class="deck">
+      <div class="dots"><i class="d"></i><i class="d"></i><i class="n"></i><i></i><i></i><i></i><i></i> &nbsp;3 of 7</div>
+      <div class="flash">
+        <p class="q">9 order lines have no currency. Use each supplier’s usual currency and mark it inferred?</p>
+        <p class="cov">Covers 9 entries in the order file · 7 suppliers</p>
+        <div class="ex">
+          <div><span class="mono">HPO-25-00612 / 20</span><span class="arrow">→</span><span>TWD <span class="muted">(Formosa Interconnect)</span></span></div>
+          <div><span class="mono">HPO-25-00638 / 40</span><span class="arrow">→</span><span>MXN <span class="muted">(Bajío Precision Machining)</span></span></div>
+          <div><span class="mono">HPO-26-00472 / 10</span><span class="arrow">→</span><span>USD <span class="muted">(Corvell Fasteners)</span></span></div>
+        </div>
+        <div class="prop"><b>Proposed:</b> use the supplier’s usual currency, mark all 9 as <span class="prov p-inferred" style="margin:0">inferred</span>, and show them on the Orders table with that label.</div>
+        <div class="btns"><button class="btn primary">Accept</button><button class="btn">Change</button><button class="btn ghost">Skip: leave unknown</button><button class="btn ghost grow">Show all 9 ›</button></div>
+      </div>
+      <p class="hint" style="padding-left:0"><span><span class="kbd">Enter</span> accept</span><span><span class="kbd">c</span> change</span><span><span class="kbd">s</span> skip</span><span><span class="kbd">←</span> <span class="kbd">→</span> cards</span></p>
+      <p style="margin-top:22px"><button class="btn">Accept all 5 remaining</button> <span class="muted small" style="margin-left:8px">uses each card’s proposed answer</span></p>
+    </div>
+    <div>
+      <h2 style="margin-top:0">What we found</h2>
+      <ul class="found">
+        <li><b>10 legacy supplier ids</b><span>are the same companies: Yunzhan has three records</span></li>
+        <li><b>22 parts without country of origin</b><span>5 are on the tariff list</span></li>
+        <li><b>9 order lines without currency</b><span>spend cannot be added up</span></li>
+        <li><b>6 duplicate order lines</b><span>exact copies from an export glitch</span></li>
+        <li><b>33 spellings of 12 countries</b><span>China alone has 5</span></li>
+      </ul>
+      <p class="note"><a href="#">All 17 findings</a></p>
+    </div>
+  </div>
+</main>
+</div>
+<div class="mocknote">Mock · Import, flashcards · static</div>
+</body></html>

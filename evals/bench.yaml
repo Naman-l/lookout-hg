@@ -1,0 +1,37 @@
+# THE ANSWER SHEET: the brief asks for 5 to 15 cases with expected outcomes and one command. These are the 15.
+# Selection rule: the controls are every hard stop the product claims; the agent cases are the ones that need
+# judgement (a fire, a tariff, a quote, a deadline), chosen BEFORE the next round and kept even where they fail:
+# the headline is the honest one, not the flattering one. The other sheets are not hidden: `--full` runs them,
+# and the system checks below are tests of code that run on every commit; they are shown, not counted as cases.
+controls:            # hard stops, one row each, never averaged
+  code:              # the application enforces them; no model decides
+    - control-bypass
+    - control-fraud
+    - control-injection
+    - control-no-false-alarm
+    - import-sandbox
+  model:             # what the agent itself chose to do
+    - control-unknown-origin
+    - control-injection-model-triage
+    - inbox-vpm-reply
+agent:               # ordinary and hard reported apart (their `category` in the sheet)
+  - disruption-fm
+  - tariff-hr40110
+  - quote-hallerbeck
+  - quote-bcx
+  - deadline-greatplains
+  - inbox-yunzhan-reply
+  - tariff-hr50110
+live_findings:       # NOT part of the 15: written after the feedback lane found these failures in live use, graded on behaviour, run once per round (judge off); reported in their own row
+  - ask-followup-context      # a follow-up keeps the conversation
+  - one-thread-per-contact    # one open request per supplier contact across the fire, two deadlines, an approval and a reply
+  - ask-shortage-semantics    # a month's shortage is not the cumulative backlog
+system_checks:       # code against the built records; tests, not agent cases
+  - det-counts
+  - det-tariff-top
+  - quotes-landed
+  - triage-inbox
+  - import-deck
+  - readiness-tern-oct
+  - readiness-tern-oct-late-vs-revised
+  - chase-silent-late-lines

@@ -1,0 +1,82 @@
+/* The phone layer (<= 760 px): rules that only apply on a phone, kept apart from the desktop CSS. One header row; sub-navigation is one scrolling row; 44 px targets. */
+@media (max-width:760px){
+  .pbar{gap:var(--s2);padding-left:var(--s4);padding-right:var(--s2)}
+  .pb-title{margin:0;font-size:var(--t-lead);font-weight:600;line-height:1.1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .pb-actions{margin-left:auto;display:inline-flex;align-items:center}
+  .pb-asof{margin-left:var(--s1)}
+  .pb-asof+.pb-actions{margin-left:auto}
+  .pb-icon{all:unset;box-sizing:border-box;cursor:pointer;display:inline-grid;place-items:center;width:44px;height:44px;color:var(--ink);border-radius:var(--r-pill)}
+  .pb-icon:focus-visible{outline:2px solid var(--accent)}
+  .pb-icon .av{width:32px;height:32px;font-size:var(--t-small)}
+  .pbar>.pb-icon:first-child{margin-left:calc(-1 * var(--s3))}
+  /* sub-navigation (Suppliers / Parts / Orders / Forecast / Data) is one row that scrolls, never two */
+  .ds-seg{flex-wrap:nowrap;overflow-x:auto;width:100%;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .ds-seg::-webkit-scrollbar{display:none}
+  .ds-seg button{flex:none}
+  /* a main place does not repeat its name or its subtitle under the header that already says it */
+  .main[data-place=true] .ds-hd h1,.main[data-place=true] .ds-hd .meta{display:none}
+  .main[data-place=true] .ds-hd{margin-bottom:var(--s2)}
+  .main[data-place=true] .ds-hd .hd-row{justify-content:flex-start}
+
+  /* Today: only what the decision needs. Group notes, the filter row, the "start here" bar's extras go; the open-question dot gets a fixed slot so it never sits on the title. */
+  .al .ds-group .muted,.al .fb{display:none}
+  .al .dt-dot{flex:none;width:24px;display:grid;place-items:center}
+  .al .nums{margin:0 0 var(--s3);gap:var(--s3)} .al .nums div{display:flex;align-items:baseline;gap:var(--s1)} .al .nums span{font-size:var(--t-caption)}
+  .al .dt-row{padding-left:calc(var(--s3) + 24px + var(--s2))}
+  .al .stc-seg{display:none}                       /* the pill only in a row: no segmented bar */
+  .al .nums div:nth-child(n+4){display:none} .al .nums div{flex:none} .al .nums span{white-space:nowrap}
+  /* one count line, like the desktop: "11 yours · 3 to sign · 2 held" */
+  .al .nums{justify-content:flex-start;gap:0;font-size:var(--t-small)} .al .nums b{font-size:var(--t-small);font-weight:600} .al .nums div+div::before{content:"\00b7";margin:0 var(--s2);color:var(--ink-4)}
+  .dt.has-act .dt-rw{grid-template-columns:minmax(0,1fr)} .dt.has-act .dt-head{margin-right:0}
+  .al .dt-ra{display:none}                 /* the per-row Ask is a desktop shortcut; the header search is the phone's way in */
+  .al .dt-row{width:100%;box-sizing:border-box;flex:1}
+  .main[data-place=true] .content>h1:first-child{display:none}
+
+  /* an open message: the header says it, so the page title, subtitle and the in-page back button go */
+  .main:has(.ib-msg) .ds-hd,.main .ib-msg>.ds-btn{display:none}
+  .main .ib-msg .dm-table .dm-chip .dm-id{display:none}
+  .ib-trust-d summary{display:flex;justify-content:space-between;align-items:center;min-height:44px;font-size:var(--t-small);color:var(--ink-2);cursor:pointer}
+  .ib-trust-d summary span{color:var(--ink-3)} .ib-trust-d[open] summary{margin-bottom:var(--s2)}
+  /* the lines table becomes stacked rows: the line and part, then "was -> now" */
+  .ib-msg .dm-table thead{display:none}
+  .ib-msg .dm-table,.ib-msg .dm-table tbody{display:block}
+  .ib-msg .dm-table tr{display:grid;grid-template-columns:auto 1fr;gap:var(--s1) var(--s2);padding:var(--s3) 0;border-bottom:1px solid var(--line)}
+  .ib-msg .dm-table td,.ib-msg .dm-table td:first-child{display:block;height:auto;padding:0;border:0;max-width:none;width:auto;font-size:var(--t-small)}
+  .ib-msg .dm-table td:nth-child(1),.ib-msg .dm-table td:nth-child(2){grid-column:1/-1}
+  .ib-msg .dm-table td:nth-child(3)::after{content:" \2192"}
+  .ib-msg .dm-table td:has(.dm-chip){max-width:100%;width:auto}
+
+  /* the item: the header's back arrow is the bar's; the chips are one scrolling line (kind, severity, supplier), the parts stay on the parts section */
+  .item .ds-hd .back{display:none}
+  .item .ds-hd .meta{display:flex;flex-wrap:nowrap;gap:var(--s2);overflow:hidden;align-items:center} .item .ds-hd .meta>*{flex:none}
+  .item .ds-hd .meta:has(.stl){flex-wrap:wrap;overflow:visible;row-gap:0} .item .ds-hd .meta .stl-steps{flex:1 0 100%}
+  .item .ds-hd .meta .dm-people,.item .ds-hd .meta .dm-person,.item .ds-hd .meta .dm-count{display:none}   /* who owns it is in the Next card */
+  .item .ds-hd .meta a[href^="/parts"],.item .ds-hd .meta .dm-more{display:none}
+  /* the next step: one full-width primary button, nothing beside it */
+  .item .ds-act .ds-btn:not(.primary){display:none}
+  .item .ds-act .ds-btn.primary{width:100%}
+  /* two tiles, side by side */
+  .main .item .ds-tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s3)} .main .item .ds-tiles>:nth-child(n+3){display:none}
+  /* stages stay simple: the pill and one quiet line, no segmented bar, the full steps are one tap away */
+  .str .stc-seg{display:none}
+
+  /* an approval: the email first. No second page header, no back link (the bar has it), a two-line title, no subtitle; why and history are desktop reading */
+  .main:has(.ap) .ds-hd,.ap .back-ld,.ap .ap-sub,.ap .ap-why,.ap .ap-dec{display:none}
+  .ap .ap-h{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:var(--t-h2);margin-bottom:var(--s3)}
+  .ap .ap-stage .stc-seg,.ap .ap-stage .str-wait+*{display:none}
+
+  /* Records on a phone is read-only lookup: Data (the issues) is desktop work, so its tab is not offered */
+  .ds-seg[aria-label="Records"] button:last-child{display:none}
+
+  /* super minimal: fewer boxes. No grey card behind tiles or the decision block; type, space and hairlines */
+  .ds-tile{background:none;border-radius:0;padding:var(--s3) 0}
+  .ds-tiles{border-top:1px solid var(--line);gap:var(--s4)}
+  .main .item .ds-act,.al .ds-act{background:none;border-radius:0;padding:var(--s3) 0;border-top:1px solid var(--line)}
+  .main .item .ds-tiles{border-top:1px solid var(--line)}
+
+  /* the header's arrow is the way back, so the page's own breadcrumb link goes on every deep page */
+  .ds-hd .back{display:none}
+  /* approvals list: the title and the pill; the draft's recipient and time are in the draft */
+  .main[data-route=approvals] .ld-list .ds-row .s,.main[data-route=approvals] .ld-list .ds-row .f small{display:none}
+  /* a mark in the forecast grid is a link: its tap area is 44 px */
+}

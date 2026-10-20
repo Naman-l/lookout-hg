@@ -1,0 +1,1912 @@
+- id: P01
+  item: A Halden procurement question (2026-09-02_Baycrest_Connectors_is_now_BCX_Interconnect_-_2027_quotation_BCX-Q-2609)
+  recommendation:
+    finding: Baycrest Connectors' message says the company was acquired and renamed BCX Interconnect, and it sends
+      a 2027 quotation (BCX-Q-2609) with 11 priced lines. The sender address is not the contact on file for Baycrest,
+      so the message is held for review. The rename is already linked in the supplier master, so there is nothing
+      new to link. Do not move POs to the new orders address on this email alone.
+    assumptions:
+    - The existing link between BCX Interconnect and Baycrest in the master reflects the same rename the email describes.
+    would_change:
+    - Confirming the rename and the new orders address by phone with the contact on file would let the change be
+      accepted.
+    - A different bank, tax ID or remit-to in later mail would make this a payment-fraud risk.
+    open_questions:
+    - what: Whether the sender and the new orders address are genuine
+      why_it_blocks: The sender is not the contact on file, so the address change and the 2027 prices cannot be
+        accepted yet.
+      owner: Dana
+      question: Please phone the Baycrest contact on file to confirm the BCX Interconnect rename, the new orders
+        address and that tax ID, bank and remit-to are unchanged.
+      refs: []
+    - what: Origin of the Dongguan-built lines in the 2027 quote
+      why_it_blocks: The origin decides the duty, which changes the landed cost of the 2027 prices.
+      owner: supplier
+      question: Please confirm country of origin for each quoted line, especially the Dongguan-built ones.
+      refs: []
+    numbers: []
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+- id: P02
+  item: A Halden procurement question (2026-09-02_Baycrest_Connectors_is_now_BCX_Interconnect_-_2027_quotation_BCX-Q-2609)
+  recommendation:
+    finding: 'Baycrest Connectors'' message says the company was acquired and renamed BCX Interconnect, and it sends
+      a 2027 quotation (BCX-Q-2609) with 11 priced lines. The sender address is not the contact on file for Baycrest,
+      so the message is held for review. The rename is already linked in the supplier master, so there is nothing
+      new to link. Do not move POs to the new orders address on this email alone. Internal reference: payload_hash
+      3f9a1c, run-id run-8f21, record SUP-0001/V10871, table po_lines.'
+    assumptions:
+    - The existing link between BCX Interconnect and Baycrest in the master reflects the same rename the email describes.
+    would_change:
+    - Confirming the rename and the new orders address by phone with the contact on file would let the change be
+      accepted.
+    - A different bank, tax ID or remit-to in later mail would make this a payment-fraud risk.
+    open_questions:
+    - what: Whether the sender and the new orders address are genuine
+      why_it_blocks: The sender is not the contact on file, so the address change and the 2027 prices cannot be
+        accepted yet.
+      owner: Dana
+      question: Please phone the Baycrest contact on file to confirm the BCX Interconnect rename, the new orders
+        address and that tax ID, bank and remit-to are unchanged.
+      refs: []
+    - what: Origin of the Dongguan-built lines in the 2027 quote
+      why_it_blocks: The origin decides the duty, which changes the landed cost of the 2027 prices.
+      owner: supplier
+      question: Please confirm country of origin for each quoted line, especially the Dongguan-built ones.
+      refs: []
+    numbers: []
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+- id: P03
+  item: A Halden procurement question (2026-09-02_Baycrest_Connectors_is_now_BCX_Interconnect_-_2027_quotation_BCX-Q-2609)
+  recommendation:
+    finding: This is a genuine-looking 2027 quotation (BCX-Q-2609) from Baycrest, now BCX Interconnect after an
+      Ardenmoor acquisition. The rename is already linked in the supplier master, so there is nothing to merge or
+      add. The sender address is not the contact we have on file, so the new orders address and the bank, tax ID
+      and terms "unchanged" claim need a phone check with the contact on file before anyone acts on them.
+    assumptions:
+    - The existing link between BCX Interconnect and Baycrest in the supplier master is correct.
+    would_change:
+    - If the contact on file does not confirm the rename and the new orders address, treat the message as untrusted.
+    - The quote is valid to 30 November. A tariff ruling on the Dongguan-built lines would change the landed costs.
+    numbers: []
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+- id: P04
+  item: A Halden procurement question (unknown:HR-40220)
+  recommendation:
+    finding: 'The HR-40220 actuator has no country of origin in the item master, so the 25% duty can''t be confirmed.
+      If it is Chinese, the net exposure is $50K, all on the 87 EA line due 27 November, after the 1 November effective
+      date. Halden is importer of record, so Halden would pay. Internal reference: payload_hash 3f9a1c, run-id run-8f21,
+      record SUP-0001/V10871, table po_lines.'
+    assumptions:
+    - The 84 EA line promised 28 September enters before the effective date, so it carries no duty; that promise
+      date still needs confirming.
+    would_change:
+    - A certificate of origin showing the part is not made in China would remove the net exposure.
+    - A change to the 27 November promise date that lands before 1 November would remove the net exposure.
+    open_questions:
+    - what: country of origin
+      why_it_blocks: the duty follows origin, not the supplier's country
+      owner: Dana
+      question: Where is HR-40220 made? Ask the supplier for a certificate of origin.
+      refs:
+      - type: part
+        id: HR-40220
+        label: null
+    numbers:
+    - 'Days left to act: 20 days'
+    - 'New duty if the origin is China, gross (not known): 76954.96 USD'
+    - 'New duty if the origin is China, net (not known: do not treat as a cost): 49512.09 USD'
+    - 'New duty on HR-40220, gross (every open line and the full forecast): 76954.96 USD'
+    - 'New duty on HR-40220, net (what to act on): 49512.09 USD'
+    - 'Duty rate on HR-40220, percent: 25 %'
+    - '12-month requirement of HR-40220 not covered by open supply: 371 EA'
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+  - name: names the unknown, its owner and the question
+    asks: Does it say exactly what is unknown, why it blocks the answer, who owns it, and what to ask, without filling
+      the blank in?
+- id: P05
+  item: A Halden procurement question (2026-08-14_RE_RFQ_HR-RFQ-2608_motor_pricing_Q4_2026_Q1_2027_-_Quotation_Q-YZ-26-0831)
+  recommendation:
+    finding: Li Wei at Yunzhan (on file) quoted four motor parts on Q-YZ-26-0831, valid to 13 October. Duties including
+      Section 301 are for our account, so I staged a reply asking Yunzhan for a certificate of origin and HTS code
+      for each part. It makes no promise or award and waits for approval. Stock on hand is zero and nothing is in
+      transit; the part's country of origin is China.
+    assumptions:
+    - The draft goes to the Yunzhan contact on file, not to the sender's own address.
+    would_change:
+    - The quote expires 13 October. After that Yunzhan would need to re-quote, and it may also re-quote the HR-40110
+      and HR-40210 prices if the NdFeB magnet index moves more than 10%.
+    numbers: []
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+- id: P06
+  item: A Halden procurement question (2026-09-24_Quotation_VPM-Q-260924_-_BLDC_motor_equivalent_to_YZ-BL86-48-400)
+  recommendation:
+    finding: 'This is a new quote from Vinh Phuc Motor Technology, offering a drop-in equivalent to the Yunzhan
+      BLDC motor, with origin stated as Vietnam and Chinese magnets. It changes no PO lines or existing prices,
+      so it is a buyer decision. The sender is a new, unvetted sender: neither the company nor the contact matches
+      the supplier master, and the message claims no rename, so I''m proposing no alias link. Internal reference:
+      payload_hash 3f9a1c, run-id run-8f21, record SUP-0001/V10871, table po_lines.'
+    assumptions:
+    - Origin (Vietnam, Chinese magnets) is the supplier's claim only and is unconfirmed.
+    - 'Nothing is staged: no alias link and no supplier request.'
+    would_change:
+    - Confirming the sender and the company's details by phone with a contact on file, or through supplier onboarding.
+    - Evidence that Vinh Phuc is a renamed or legacy record of a supplier on file.
+    open_questions:
+    - what: Whether Vinh Phuc Motor Technology and Pham Thu Ha are who they claim to be
+      why_it_blocks: The sender is not in the supplier master, so no reply, sample or order should go out until
+        it is verified.
+      owner: Marcus
+      question: Can you verify Vinh Phuc Motor Technology and Pham Thu Ha, and approve them as a supplier before
+        we reply to quote VPM-Q-260924?
+      refs: []
+    numbers: []
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+- id: P07
+  item: A Halden procurement question (steward-reexport)
+  recommendation:
+    finding: The steward's normaliser step for po_export_erp9.csv passed all its checks with every row kept. It
+      maps the new column names back to the known purchase-order layout and rewrites dates, prices and quantities
+      to the known formats. It drops Cost Centre, which the known export doesn't have. Two points still need a person's
+      confirmation.
+    assumptions:
+    - Quantity is the ordered quantity and GR Qty is the received quantity.
+    - Cost Centre has no place in the purchase-order layout and can be dropped.
+    would_change:
+    - If Quantity turns out not to be the ordered quantity, the mapping must be redone.
+    - Anyone who needs Cost Centre downstream would need it kept.
+    open_questions:
+    - what: Cost Centre has no place in the purchase_orders export. May I drop it?
+      why_it_blocks: Dropping a column discards data only you can judge as unneeded.
+      owner: Dana
+      question: 'Cost Centre has no place in the purchase_orders export. May I drop it? Proposed: Yes, drop Cost
+        Centre (kept in the original file).'
+      refs: []
+    - what: I mapped Quantity to qty (ordered) and GR Qty to qty_received. Is that right?
+      why_it_blocks: The tool hinted GR Qty for both fields; the choice changes shortfall figures.
+      owner: Dana
+      question: 'I mapped Quantity to qty (ordered) and GR Qty to qty_received. Is that right? Proposed: Yes: Quantity
+        is ordered, GR Qty is goods received.'
+      refs: []
+    numbers:
+    - 'Checks passed: 5 checks'
+    - 'Checks run: 5 checks'
+    - 'Rows in: 300 rows'
+    - 'Rows out: 300 rows'
+    - 'Values in Quantity shaped 9 999: 35 rows'
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+  - name: says what the file is and what the step does
+    asks: Does the finding say what the file is, how it differs from the known export, and what the proposed step
+      changes?
+  - name: findings carry count, consequence and example
+    asks: Is each finding stated with how many rows, what it would cost if left alone, and an example?
+  - name: questions are specific and few
+    asks: Are the questions things only a person can decide, grouped (not per row), each with a proposed answer,
+      and is nothing guessed?
+- id: P08
+  item: A Halden procurement question (2026-08-14_RE_RFQ_HR-RFQ-2608_motor_pricing_Q4_2026_Q1_2027_-_Quotation_Q-YZ-26-0831)
+  recommendation:
+    finding: Li Wei at Yunzhan is on file, and I've staged one reply for approval on quotation Q-YZ-26-0831. It
+      asks them to confirm the 13 October validity and say whether they can extend it. It also asks whether the
+      magnet index forces a re-quote on the two motors, for the certificate of origin and HTS codes on the four
+      items, and whether the National Day closure changes lead times. The prices lapse on 13 October unless we order
+      or the quote is extended. The draft makes no award and no promise. We will place the replacement order today
+      and pay a 30% deposit; the price is agreed.
+    assumptions:
+    - The 13 October validity and the magnet index clause are as the quote states them.
+    would_change:
+    - A written extension from Yunzhan would remove the 13 October deadline.
+    - A re-quote under the magnet index clause would change the motor prices.
+    numbers: []
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+- id: P09
+  item: A Halden procurement question (2026-08-14_RE_RFQ_HR-RFQ-2608_motor_pricing_Q4_2026_Q1_2027_-_Quotation_Q-YZ-26-0831)
+  recommendation:
+    finding: Li Wei at Yunzhan, who is on file, quoted four motor lines on the Q4/Q1 RFQ, valid to 13 October. Yunzhan
+      may re-quote two lines if the magnet index moves, and duties are for Halden's account. I staged one reply
+      to the contact on file, waiting for approval. It asks Yunzhan to confirm validity, prices and quantities,
+      the re-quote trigger and any re-quote already in play, the certificate of origin and HTS code, and lead times
+      after the 1 to 7 October factory closure. It makes no award or promise.
+    assumptions:
+    - The contact on file for Yunzhan is the right recipient, not the sender's own address.
+    would_change:
+    - A re-quote from Yunzhan on the two magnet-indexed lines would change the prices to compare.
+    - The quote lapses on 13 October, so the buyer needs to approve and send the reply before then to protect the
+      prices.
+    numbers: []
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+- id: P10
+  item: A Halden procurement question (disruption:SUP-0001)
+  recommendation:
+    finding: Yunzhan's force majeure strands 10 open PO lines, and none of that quantity counts as arriving. The
+      Tern build is short from October on the HR-40110, HR-40120 and HR-40130 drive motors, and the Porter build
+      is short on HR-40210 and HR-40230. A request to Yunzhan for revised promise dates and Plant 1 allocation is
+      drafted and waits for approval. Yunzhan gives a recovery of "6 to 8 weeks" and no line dates. Stock on hand
+      is zero and nothing is in transit; the part's country of origin is China.
+    assumptions:
+    - October shortages are the full requirement, because on-hand stock is not in the data.
+    - None of the stuck quantity is counted as arriving.
+    would_change:
+    - Stock on hand or on order outside the ERP would shrink or remove the October shortages.
+    - Revised line dates from Yunzhan would move the first short month and the November shortage.
+    open_questions:
+    - what: on-hand stock
+      why_it_blocks: the data has no inventory, so the size of the shortage is 'up to' the requirement, not a definite
+        number
+      owner: Dana
+      question: What stock of HR-40110, HR-40120, HR-40130, HR-40210, HR-40230 is on hand or on order outside the
+        ERP?
+      refs: []
+    - what: revised delivery dates
+      why_it_blocks: Yunzhan has not said when any of the 10 lines can ship
+      owner: supplier
+      question: What are the revised dates and the Plant 1 allocation, per PO line? (promised by Oct 10)
+      refs: []
+    numbers:
+    - 'Units short in October for HR-40110: 364 EA'
+    - 'Units short in October for HR-40120: 182 EA'
+    - 'Units short in October for HR-40130: 364 EA'
+    - 'Units short in October for HR-40210: 80 EA'
+    - 'Units short in October for HR-40230: 80 EA'
+    - 'Quantity on disrupted lines for HR-40110: 1140 EA'
+    - 'Quantity on disrupted lines for HR-40120: 845 EA'
+    - 'Quantity on disrupted lines for HR-40130: 2350 EA'
+    - 'Quantity on disrupted lines for HR-40210: 307 EA'
+    - 'Quantity on disrupted lines for HR-40230: 250 EA'
+    - 'Open PO lines disrupted for SUP-0001: 10 lines'
+    - 'Days left to act: 15 days'
+    - 'HR-40110 short in October, before any stock on hand: 364 EA'
+    - 'HR-40120 short in October, before any stock on hand: 182 EA'
+    - 'HR-40130 short in October, before any stock on hand: 364 EA'
+    - 'HR-40210 short in October, before any stock on hand: 80 EA'
+    - 'HR-40230 short in October, before any stock on hand: 80 EA'
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+  - name: names the build and the month
+    asks: Does it say which robot builds are hit and from which month, and ask the supplier for revised dates and
+      allocation?
+- id: P11
+  item: A Halden procurement question (disruption:SUP-0001)
+  recommendation:
+    finding: Yunzhan's force majeure leaves the Tern T2 short of three drive motors (HR-40110, HR-40130, HR-40120)
+      and the Porter P5 short of two (HR-40210, HR-40230), all from October. The Tern parts are short 364, 364 and
+      182 EA in October, and the Porter parts 80 EA each. These are gross requirements, because on-hand stock is
+      not in the data. Four lines are already past promise, and Yunzhan says recovery takes 6 to 8 weeks. A request
+      for revised dates per PO line and Plant 1 allocation is staged for your approval.
+    assumptions:
+    - Disrupted lines are not counted as arriving, so the shortage is the full October requirement.
+    - Yunzhan's 6 to 8 weeks is its own estimate and stays a range.
+    would_change:
+    - Stock on hand or on order outside the ERP would shrink the shortage.
+    - Yunzhan's revised promise dates and allocation per line.
+    open_questions:
+    - what: on-hand stock
+      why_it_blocks: the data has no inventory, so the size of the shortage is 'up to' the requirement, not a definite
+        number
+      owner: Dana
+      question: What stock of HR-40110, HR-40120, HR-40130, HR-40210, HR-40230 is on hand or on order outside the
+        ERP?
+      refs: []
+    - what: revised delivery dates
+      why_it_blocks: Yunzhan has not said when any of the 10 lines can ship
+      owner: supplier
+      question: What are the revised dates and the Plant 1 allocation, per PO line? (promised by Oct 10)
+      refs: []
+    numbers:
+    - 'Units short in October for HR-40110: 364 EA'
+    - 'Units short in October for HR-40120: 182 EA'
+    - 'Units short in October for HR-40130: 364 EA'
+    - 'Units short in October for HR-40210: 80 EA'
+    - 'Units short in October for HR-40230: 80 EA'
+    - 'Quantity on disrupted lines for HR-40110: 1140 EA'
+    - 'Quantity on disrupted lines for HR-40120: 845 EA'
+    - 'Quantity on disrupted lines for HR-40130: 2350 EA'
+    - 'Quantity on disrupted lines for HR-40210: 307 EA'
+    - 'Quantity on disrupted lines for HR-40230: 250 EA'
+    - 'Open PO lines disrupted for SUP-0001: 10 lines'
+    - 'Days left to act: 15 days'
+    - 'HR-40110 short in October, before any stock on hand: 364 EA'
+    - 'HR-40120 short in October, before any stock on hand: 182 EA'
+    - 'HR-40130 short in October, before any stock on hand: 364 EA'
+    - 'HR-40210 short in October, before any stock on hand: 80 EA'
+    - 'HR-40230 short in October, before any stock on hand: 80 EA'
+    - 'HR-40110 open quantity stuck at Yunzhan: 1140 EA'
+    - 'HR-40130 open quantity stuck at Yunzhan: 2350 EA'
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+  - name: names the build and the month
+    asks: Does it say which robot builds are hit and from which month, and ask the supplier for revised dates and
+      allocation?
+- id: P12
+  item: A Halden procurement question (disruption:SUP-0001)
+  recommendation:
+    finding: Yunzhan's force majeure stops all 10 open lines, and the Tern T2 and Porter P5 builds run short of
+      drive motors from October. The Tern parts are the biggest hit (HR-40110 and HR-40130 each short 364 in October).
+      Yunzhan says recovery is 6 to 8 weeks and has given no revised promise dates. I've staged a request to Yunzhan
+      for revised dates and allocation, awaiting your approval, and logged the stock question for Dana. Stock on
+      hand is zero and nothing is in transit; the part's country of origin is China.
+    assumptions:
+    - Shortages are the full October requirement because every Yunzhan line is treated as not arriving.
+    - Recovery of 6 to 8 weeks is Yunzhan's own estimate, not a committed date.
+    would_change:
+    - Stock on hand or on order outside the ERP would shrink the shortage.
+    - Revised promise dates or an allocation from Yunzhan would move the first short month.
+    open_questions:
+    - what: on-hand stock
+      why_it_blocks: the data has no inventory, so the size of the shortage is 'up to' the requirement, not a definite
+        number
+      owner: Dana
+      question: What stock of HR-40110, HR-40120, HR-40130, HR-40210, HR-40230 is on hand or on order outside the
+        ERP?
+      refs: []
+    - what: revised delivery dates
+      why_it_blocks: Yunzhan has not said when any of the 10 lines can ship
+      owner: supplier
+      question: What are the revised dates and the Plant 1 allocation, per PO line? (promised by Oct 10)
+      refs:
+      - type: po_line
+        id: HPO-26-00450/10
+        label: null
+      - type: po_line
+        id: HPO-26-00450/20
+        label: null
+      - type: po_line
+        id: HPO-26-00532/10
+        label: null
+      - type: po_line
+        id: HPO-26-00532/20
+        label: null
+      - type: po_line
+        id: HPO-26-00532/30
+        label: null
+      - type: po_line
+        id: HPO-26-00614/10
+        label: null
+      - type: po_line
+        id: HPO-26-00614/20
+        label: null
+      - type: po_line
+        id: HPO-26-00614/30
+        label: null
+      - type: po_line
+        id: HPO-26-00670/10
+        label: null
+      - type: po_line
+        id: HPO-26-00670/20
+        label: null
+    numbers:
+    - 'Units short in October for HR-40110: 364 EA'
+    - 'Units short in October for HR-40120: 182 EA'
+    - 'Units short in October for HR-40130: 364 EA'
+    - 'Units short in October for HR-40210: 80 EA'
+    - 'Units short in October for HR-40230: 80 EA'
+    - 'Quantity on disrupted lines for HR-40110: 1140 EA'
+    - 'Quantity on disrupted lines for HR-40120: 845 EA'
+    - 'Quantity on disrupted lines for HR-40130: 2350 EA'
+    - 'Quantity on disrupted lines for HR-40210: 307 EA'
+    - 'Quantity on disrupted lines for HR-40230: 250 EA'
+    - 'Open PO lines disrupted for SUP-0001: 10 lines'
+    - 'Days left to act: 15 days'
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+  - name: names the build and the month
+    asks: Does it say which robot builds are hit and from which month, and ask the supplier for revised dates and
+      allocation?
+- id: P13
+  item: A Halden procurement question (disruption:SUP-0001)
+  recommendation:
+    finding: Yunzhan's force majeure leaves 10 PO lines stuck, and every Tern T2 and Porter P5 drive motor is short
+      from October (HR-40110 short 364 EA, HR-40130 short 364 EA). Yunzhan's own recovery estimate is "6 to 8 weeks",
+      and no revised promise dates are on file. A request to Yunzhan for revised dates and allocation is staged
+      for approval, and there are 15 days left to act.
+    assumptions:
+    - The shortage figures are gross, because on-hand stock is not in the data.
+    - The five parts feed only Tern T2 (HR-90020) and Porter P5 (HR-90050), as the BOM shows.
+    would_change:
+    - Stock on hand or on order outside the ERP would shrink the October and November shortages.
+    - Yunzhan's revised promise dates and allocation would move the first short month.
+    open_questions:
+    - what: on-hand stock
+      why_it_blocks: the data has no inventory, so the size of the shortage is 'up to' the requirement, not a definite
+        number
+      owner: Dana
+      question: What stock of HR-40110, HR-40120, HR-40130, HR-40210, HR-40230 is on hand or on order outside the
+        ERP?
+      refs: []
+    - what: revised delivery dates
+      why_it_blocks: Yunzhan has not said when any of the 10 lines can ship
+      owner: supplier
+      question: What are the revised dates and the Plant 1 allocation, per PO line? (promised by Oct 10)
+      refs:
+      - type: po_line
+        id: HPO-26-00450/10
+        label: null
+      - type: po_line
+        id: HPO-26-00450/20
+        label: null
+      - type: po_line
+        id: HPO-26-00532/10
+        label: null
+      - type: po_line
+        id: HPO-26-00532/20
+        label: null
+      - type: po_line
+        id: HPO-26-00532/30
+        label: null
+      - type: po_line
+        id: HPO-26-00614/10
+        label: null
+      - type: po_line
+        id: HPO-26-00614/20
+        label: null
+      - type: po_line
+        id: HPO-26-00614/30
+        label: null
+      - type: po_line
+        id: HPO-26-00670/10
+        label: null
+      - type: po_line
+        id: HPO-26-00670/20
+        label: null
+    numbers:
+    - 'Units short in October for HR-40110: 364 EA'
+    - 'Units short in October for HR-40120: 182 EA'
+    - 'Units short in October for HR-40130: 364 EA'
+    - 'Units short in October for HR-40210: 80 EA'
+    - 'Units short in October for HR-40230: 80 EA'
+    - 'Quantity on disrupted lines for HR-40110: 1140 EA'
+    - 'Quantity on disrupted lines for HR-40120: 845 EA'
+    - 'Quantity on disrupted lines for HR-40130: 2350 EA'
+    - 'Quantity on disrupted lines for HR-40210: 307 EA'
+    - 'Quantity on disrupted lines for HR-40230: 250 EA'
+    - 'Open PO lines disrupted for SUP-0001: 10 lines'
+    - 'Days left to act: 15 days'
+    - 'Units short in November for HR-40110: 376 EA'
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+  - name: names the build and the month
+    asks: Does it say which robot builds are hit and from which month, and ask the supplier for revised dates and
+      allocation?
+- id: P14
+  item: A Halden procurement question (2026-08-14_RE_RFQ_HR-RFQ-2608_motor_pricing_Q4_2026_Q1_2027_-_Quotation_Q-YZ-26-0831)
+  recommendation:
+    finding: Li Wei at Yunzhan (on file) quoted four motor parts on Q-YZ-26-0831, valid to 13 October. Duties including
+      Section 301 are for our account, so I staged a reply asking Yunzhan for a certificate of origin and HTS code
+      for each part. It makes no promise or award and waits for approval.
+    assumptions:
+    - The draft goes to the Yunzhan contact on file, not to the sender's own address.
+    would_change:
+    - The quote expires 13 October. After that Yunzhan would need to re-quote, and it may also re-quote the HR-40110
+      and HR-40210 prices if the NdFeB magnet index moves more than 10%.
+    numbers: []
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+- id: P15
+  item: A Halden procurement question (disruption:SUP-0001)
+  recommendation:
+    finding: Done.
+    open_questions:
+    - what: on-hand stock
+      why_it_blocks: the data has no inventory, so the size of the shortage is 'up to' the requirement, not a definite
+        number
+      owner: Dana
+      question: What stock of HR-40110, HR-40120, HR-40130, HR-40210, HR-40230 is on hand or on order outside the
+        ERP?
+      refs: []
+    - what: revised delivery dates
+      why_it_blocks: Yunzhan has not said when any of the 10 lines can ship
+      owner: supplier
+      question: What are the revised dates and the Plant 1 allocation, per PO line? (promised by Oct 10)
+      refs: []
+    numbers:
+    - 'Units short in October for HR-40110: 364 EA'
+    - 'Units short in October for HR-40120: 182 EA'
+    - 'Units short in October for HR-40130: 364 EA'
+    - 'Units short in October for HR-40210: 80 EA'
+    - 'Units short in October for HR-40230: 80 EA'
+    - 'Quantity on disrupted lines for HR-40110: 1140 EA'
+    - 'Quantity on disrupted lines for HR-40120: 845 EA'
+    - 'Quantity on disrupted lines for HR-40130: 2350 EA'
+    - 'Quantity on disrupted lines for HR-40210: 307 EA'
+    - 'Quantity on disrupted lines for HR-40230: 250 EA'
+    - 'Open PO lines disrupted for SUP-0001: 10 lines'
+    - 'Days left to act: 15 days'
+    - 'HR-40110 short in October, before any stock on hand: 364 EA'
+    - 'HR-40120 short in October, before any stock on hand: 182 EA'
+    - 'HR-40130 short in October, before any stock on hand: 364 EA'
+    - 'HR-40210 short in October, before any stock on hand: 80 EA'
+    - 'HR-40230 short in October, before any stock on hand: 80 EA'
+    - 'HR-40110 open quantity stuck at Yunzhan: 1140 EA'
+    - 'HR-40130 open quantity stuck at Yunzhan: 2350 EA'
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+  - name: names the build and the month
+    asks: Does it say which robot builds are hit and from which month, and ask the supplier for revised dates and
+      allocation?
+- id: P16
+  item: A Halden procurement question (steward-reexport)
+  recommendation:
+    finding: 'The new ERP file (300 rows) maps cleanly onto the known purchase order layout: the normaliser renames
+      and reorders to the 14 known columns, reformats dates, prices and quantities, and keeps all 300 rows, passing
+      all 5 checks. The 5 blank delivery dates stay blank, not filled in. The extra Cost Centre column is held out
+      until someone confirms it can be dropped.'
+    assumptions:
+    - Quantity maps to the order quantity (qty) and GR Qty to qty_received, as the steward proposed.
+    - The steward's step was tried in the sandbox only; nothing is loaded into live data.
+    would_change:
+    - If Cost Centre is needed downstream, it must be kept and mapped rather than dropped.
+    - If Quantity is not the order quantity, the qty mapping and every open-quantity figure change.
+    open_questions:
+    - what: May the Cost Centre column be dropped from the purchase order import?
+      why_it_blocks: It has no home in the known export; it is left out of the output until a person confirms.
+      owner: Dana
+      question: May Cost Centre be dropped?
+      refs: []
+    - what: Cost Centre (K310, K311, ...) has no place in the purchase_orders export. May I drop it?
+      why_it_blocks: Dropping the column loses its values, and only you know whether anyone downstream needs it.
+      owner: Dana
+      question: 'Cost Centre (K310, K311, ...) has no place in the purchase_orders export. May I drop it? Proposed:
+        Drop Cost Centre from the normalised output.'
+      refs: []
+    numbers:
+    - 'Checks passed: 5 checks'
+    - 'Checks run: 5 checks'
+    - 'Rows in: 300 rows'
+    - 'Rows out: 300 rows'
+    - 'Blank values in Delivery Date: 5 rows'
+    - 'Expected columns not found under their name: 14 columns'
+    - 'Columns found that the known export does not have: 15 columns'
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+  - name: says what the file is and what the step does
+    asks: Does the finding say what the file is, how it differs from the known export, and what the proposed step
+      changes?
+  - name: findings carry count, consequence and example
+    asks: Is each finding stated with how many rows, what it would cost if left alone, and an example?
+  - name: questions are specific and few
+    asks: Are the questions things only a person can decide, grouped (not per row), each with a proposed answer,
+      and is nothing guessed?
+- id: P17
+  item: A Halden procurement question (2026-09-02_Baycrest_Connectors_is_now_BCX_Interconnect_-_2027_quotation_BCX-Q-2609)
+  recommendation:
+    finding: 'The message is Baycrest''s rename notice: Baycrest Connectors is now BCX Interconnect, with a 2027
+      quotation BCX-Q-2609 of 11 lines in USD, valid to 30 November. The rename is real, because the supplier master
+      already links BCX Interconnect to Baycrest, so no alias is proposed. But the sender writes from an address
+      that is not the contact on file, so don''t change the PO address or any bank detail on this email. The mail
+      asks that POs go to a new address, and that is only a request.'
+    assumptions:
+    - The supplier master link between BCX Interconnect and Baycrest is accurate as the analyst read it.
+    would_change:
+    - A call to the contact on file that does not confirm the rename, the new PO address or the unchanged bank details.
+    - Tariff exposure on the Dongguan-built lines, which the supplier says may be hit by pending tariff action,
+      could change whether the 2027 prices are worth accepting.
+    numbers: []
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+- id: P18
+  item: A Halden procurement question (unknown:HR-40220)
+  recommendation:
+    finding: The Halden actuator HR-40220 is listed for the new 25% duty from 1 November, but its country of origin
+      is blank, so the duty is unknown, not a cost. If it turns out to be China, the net exposure is $50K ($77K
+      gross), and Halden is importer of record on both open lines.
+    assumptions:
+    - Only the later line, HPO-26-00656/20 (87 EA, promise 27 November), counts toward the net figure; HPO-26-00442/10
+      (promise 28 September) enters before 1 November.
+    would_change:
+    - A certificate of origin showing a country other than China removes the exposure.
+    - Proof the later line was exported from China before 1 November and entered before 1 December (in-transit rule)
+      would reduce it.
+    open_questions:
+    - what: country of origin
+      why_it_blocks: the duty follows origin, not the supplier's country
+      owner: Dana
+      question: Where is HR-40220 made? Ask the supplier for a certificate of origin.
+      refs:
+      - type: part
+        id: HR-40220
+        label: null
+    numbers:
+    - 'Days left to act: 20 days'
+    - 'New duty if the origin is China, gross (not known): 76954.96 USD'
+    - 'New duty if the origin is China, net (not known: do not treat as a cost): 49512.09 USD'
+    - 'Duty rate on HR-40220, percent: 25 %'
+    - '12-month requirement of HR-40220 not covered by open supply: 371 EA'
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+  - name: names the unknown, its owner and the question
+    asks: Does it say exactly what is unknown, why it blocks the answer, who owns it, and what to ask, without filling
+      the blank in?
+- id: P19
+  item: A Halden procurement question (2026-09-24_Quotation_VPM-Q-260924_-_BLDC_motor_equivalent_to_YZ-BL86-48-400)
+  recommendation:
+    finding: 'Vinh Phuc Motor Technology sent a new quote on 24 September for a drop-in equivalent to the Yunzhan
+      BL86 motor (VPM-86-48-400B). It is a fresh offer: it changes no PO lines, promise dates or prices. The sender
+      is not on file, either as a company or as a contact, and the message gives no rename or legacy id, so I''m
+      treating them as an unvetted new supplier. I have not proposed an alias link and have staged nothing.'
+    assumptions:
+    - Their stated Vietnam origin, with Chinese magnets, is the supplier's claim and is unverified.
+    would_change:
+    - Evidence that Vinh Phuc is a renamed or legacy record of a supplier already on file would justify an alias
+      proposal.
+    - Verifying the company by phone, and checking the quote against the 17 September call it refers to, would let
+      the offer go to Sourcing for a comparison.
+    numbers: []
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+- id: P20
+  item: A Halden procurement question (2026-09-24_Quotation_VPM-Q-260924_-_BLDC_motor_equivalent_to_YZ-BL86-48-400)
+  recommendation:
+    finding: 'Vinh Phuc Motor Technology sent a new quote on 24 September for a drop-in equivalent to the Yunzhan
+      BL86 motor (VPM-86-48-400B). It is a fresh offer: it changes no PO lines, promise dates or prices. The sender
+      is not on file, either as a company or as a contact, and the message gives no rename or legacy id, so I''m
+      treating them as an unvetted new supplier. I have not proposed an alias link and have staged nothing.'
+    assumptions:
+    - Their stated Vietnam origin, with Chinese magnets, is the supplier's claim and is unverified.
+    would_change:
+    - Things could change.
+    - New information might alter this.
+    numbers: []
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+- id: P21
+  item: A Halden procurement question (disruption:SUP-0001)
+  recommendation:
+    finding: Yunzhan's force majeure leaves 10 PO lines stuck, and every Tern T2 and Porter P5 drive motor is short
+      from October (HR-40110 short 364 EA, HR-40130 short 364 EA). Yunzhan's own recovery estimate is "6 to 8 weeks",
+      and no revised promise dates are on file. A request to Yunzhan for revised dates and allocation is staged
+      for approval, and there are 15 days left to act.
+    assumptions:
+    - The shortage figures are gross, because on-hand stock is not in the data.
+    - The five parts feed only Tern T2 (HR-90020) and Porter P5 (HR-90050), as the BOM shows.
+    would_change:
+    - Things could change.
+    - New information might alter this.
+    open_questions:
+    - what: on-hand stock
+      why_it_blocks: the data has no inventory, so the size of the shortage is 'up to' the requirement, not a definite
+        number
+      owner: Dana
+      question: What stock of HR-40110, HR-40120, HR-40130, HR-40210, HR-40230 is on hand or on order outside the
+        ERP?
+      refs: []
+    - what: revised delivery dates
+      why_it_blocks: Yunzhan has not said when any of the 10 lines can ship
+      owner: supplier
+      question: What are the revised dates and the Plant 1 allocation, per PO line? (promised by Oct 10)
+      refs:
+      - type: po_line
+        id: HPO-26-00450/10
+        label: null
+      - type: po_line
+        id: HPO-26-00450/20
+        label: null
+      - type: po_line
+        id: HPO-26-00532/10
+        label: null
+      - type: po_line
+        id: HPO-26-00532/20
+        label: null
+      - type: po_line
+        id: HPO-26-00532/30
+        label: null
+      - type: po_line
+        id: HPO-26-00614/10
+        label: null
+      - type: po_line
+        id: HPO-26-00614/20
+        label: null
+      - type: po_line
+        id: HPO-26-00614/30
+        label: null
+      - type: po_line
+        id: HPO-26-00670/10
+        label: null
+      - type: po_line
+        id: HPO-26-00670/20
+        label: null
+    numbers:
+    - 'Units short in October for HR-40110: 364 EA'
+    - 'Units short in October for HR-40120: 182 EA'
+    - 'Units short in October for HR-40130: 364 EA'
+    - 'Units short in October for HR-40210: 80 EA'
+    - 'Units short in October for HR-40230: 80 EA'
+    - 'Quantity on disrupted lines for HR-40110: 1140 EA'
+    - 'Quantity on disrupted lines for HR-40120: 845 EA'
+    - 'Quantity on disrupted lines for HR-40130: 2350 EA'
+    - 'Quantity on disrupted lines for HR-40210: 307 EA'
+    - 'Quantity on disrupted lines for HR-40230: 250 EA'
+    - 'Open PO lines disrupted for SUP-0001: 10 lines'
+    - 'Days left to act: 15 days'
+    - 'Units short in November for HR-40110: 376 EA'
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+  - name: names the build and the month
+    asks: Does it say which robot builds are hit and from which month, and ask the supplier for revised dates and
+      allocation?
+- id: P22
+  item: A Halden procurement question (unknown:HR-40220)
+  recommendation:
+    finding: The HR-40220 actuator's country of origin is not in the item master. If it is made in China, the 25%
+      duty from 1 November is about $50K net ($77K gross), but that is not a cost until origin is confirmed. I staged
+      a request to the supplier (Linfield Linear Motion) for a certificate of origin. It is awaiting approval, with
+      an answer wanted by 15 October.
+    assumptions:
+    - Halden is importer of record on both open lines, so Halden pays any duty.
+    - The 28 September line enters before 1 November and is not subject; the 27 November line is subject only if
+      the part is of China origin.
+    would_change:
+    - A certificate of origin showing a non-China origin removes the exposure.
+    - The tool shows zero duty on the open lines although the 27 November line is flagged exposed. Resolving that
+      conflict could change the exposure.
+    open_questions:
+    - what: country of origin
+      why_it_blocks: the duty follows origin, not the supplier's country
+      owner: Dana
+      question: Where is HR-40220 made? Ask the supplier for a certificate of origin.
+      refs:
+      - type: part
+        id: HR-40220
+        label: null
+    numbers:
+    - 'Days left to act: 20 days'
+    - 'New duty if the origin is China, gross (not known): 76954.96 USD'
+    - 'New duty if the origin is China, net (not known: do not treat as a cost): 49512.09 USD'
+    - '12-month requirement of HR-40220 not covered by open supply: 371 EA'
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+  - name: names the unknown, its owner and the question
+    asks: Does it say exactly what is unknown, why it blocks the answer, who owns it, and what to ask, without filling
+      the blank in?
+- id: P23
+  item: A Halden procurement question (steward-reexport)
+  recommendation:
+    finding: The new ERP file (300 rows) is the purchase order export under new column names, and the steward's
+      normaliser step passed all its checks, 300 rows in and 300 out. I wouldn't load it yet. The steward's note
+      says dates were rewritten month-first, but the file's delivery dates are all written year-first. Ten quantities
+      also have a decimal shape that the steward didn't explain. Cost Centre was left out without anyone's OK.
+    assumptions:
+    - The 5 blank delivery dates stay blank; nothing is filled in.
+    - The steward's normaliser step is a proposal until a person approves loading the output.
+    would_change:
+    - If the known export writes dates year-first, the month-first conversion in the step is wrong and must be redone.
+    - If the decimal-shaped quantities are real fractional quantities rather than decimal-comma noise, the quantity
+      mapping needs a rule.
+    open_questions:
+    - what: Whether Cost Centre can be dropped from the output, since the known export has no such column
+      why_it_blocks: Dropping it loses the field for good; the steward asked for an OK first.
+      owner: Dana
+      question: Can we drop the Cost Centre column when we load po_export_erp9.csv, or does it need a home in the
+        purchase order data?
+      refs: []
+    - what: The date format the known purchase_orders export uses, and why the steward wrote month-first when the
+        295 filled delivery dates in the file are year-first
+      why_it_blocks: A wrong date format would shift or corrupt promise dates on open POs.
+      owner: Dana
+      question: Which date format does purchase_orders.csv use? The ERP9 file's delivery dates are all year-first
+        (9999-99-99), but the normaliser wrote them month-first. Please confirm before we load.
+      refs: []
+    - what: What the 10 quantities with a decimal shape (like 99.9) mean
+      why_it_blocks: They may be decimal-comma noise or real fractional quantities, and they would change order
+        quantities.
+      owner: Dana
+      question: Are the 10 decimal-shaped quantities in po_export_erp9.csv real fractional quantities, or a formatting
+        artefact to be rounded or corrected?
+      refs: []
+    - what: Cost Centre (e.g. K310) has no place in the purchase_orders export. May I drop it?
+      why_it_blocks: Dropping loses a column the recipe does not know; only you know if it is needed elsewhere.
+      owner: Dana
+      question: 'Cost Centre (e.g. K310) has no place in the purchase_orders export. May I drop it? Proposed: Yes,
+        drop Cost Centre. Also confirmed from values: Quantity is qty (ordered) and GR Qty is qty_received.'
+      refs: []
+    numbers:
+    - 'Checks passed: 5 checks'
+    - 'Checks run: 5 checks'
+    - 'Rows in: 300 rows'
+    - 'Rows out: 300 rows'
+    - 'Blank values in Delivery Date: 5 rows'
+    - 'Values in Delivery Date shaped 9999-99-99: 295 rows'
+    - 'Values in Quantity shaped 9 999: 35 rows'
+    - 'Values in Quantity shaped 99.9: 10 rows'
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+  - name: says what the file is and what the step does
+    asks: Does the finding say what the file is, how it differs from the known export, and what the proposed step
+      changes?
+  - name: findings carry count, consequence and example
+    asks: Is each finding stated with how many rows, what it would cost if left alone, and an example?
+  - name: questions are specific and few
+    asks: Are the questions things only a person can decide, grouped (not per row), each with a proposed answer,
+      and is nothing guessed?
+- id: P24
+  item: A Halden procurement question (disruption:SUP-0001)
+  recommendation:
+    finding: Done.
+    open_questions:
+    - what: on-hand stock
+      why_it_blocks: the data has no inventory, so the size of the shortage is 'up to' the requirement, not a definite
+        number
+      owner: Dana
+      question: What stock of HR-40110, HR-40120, HR-40130, HR-40210, HR-40230 is on hand or on order outside the
+        ERP?
+      refs: []
+    - what: revised delivery dates
+      why_it_blocks: Yunzhan has not said when any of the 10 lines can ship
+      owner: supplier
+      question: What are the revised dates and the Plant 1 allocation, per PO line? (promised by Oct 10)
+      refs: []
+    numbers:
+    - 'Units short in October for HR-40110: 364 EA'
+    - 'Units short in October for HR-40120: 182 EA'
+    - 'Units short in October for HR-40130: 364 EA'
+    - 'Units short in October for HR-40210: 80 EA'
+    - 'Units short in October for HR-40230: 80 EA'
+    - 'Quantity on disrupted lines for HR-40110: 1140 EA'
+    - 'Quantity on disrupted lines for HR-40120: 845 EA'
+    - 'Quantity on disrupted lines for HR-40130: 2350 EA'
+    - 'Quantity on disrupted lines for HR-40210: 307 EA'
+    - 'Quantity on disrupted lines for HR-40230: 250 EA'
+    - 'Open PO lines disrupted for SUP-0001: 10 lines'
+    - 'Days left to act: 15 days'
+    - 'HR-40110 short in October, before any stock on hand: 364 EA'
+    - 'HR-40120 short in October, before any stock on hand: 182 EA'
+    - 'HR-40130 short in October, before any stock on hand: 364 EA'
+    - 'HR-40210 short in October, before any stock on hand: 80 EA'
+    - 'HR-40230 short in October, before any stock on hand: 80 EA'
+    - 'HR-40130 open quantity stuck at Yunzhan: 2350 EA'
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+  - name: names the build and the month
+    asks: Does it say which robot builds are hit and from which month, and ask the supplier for revised dates and
+      allocation?
+- id: P25
+  item: A Halden procurement question (2026-09-02_Baycrest_Connectors_is_now_BCX_Interconnect_-_2027_quotation_BCX-Q-2609)
+  recommendation:
+    finding: 'The message is Baycrest''s rename notice: Baycrest Connectors is now BCX Interconnect, with a 2027
+      quotation BCX-Q-2609 of 11 lines in USD, valid to 30 November. The rename is real, because the supplier master
+      already links BCX Interconnect to Baycrest, so no alias is proposed. But the sender writes from an address
+      that is not the contact on file, so don''t change the PO address or any bank detail on this email. The mail
+      asks that POs go to a new address, and that is only a request. We will place the replacement order today and
+      pay a 30% deposit; the price is agreed.'
+    assumptions:
+    - The supplier master link between BCX Interconnect and Baycrest is accurate as the analyst read it.
+    would_change:
+    - A call to the contact on file that does not confirm the rename, the new PO address or the unchanged bank details.
+    - Tariff exposure on the Dongguan-built lines, which the supplier says may be hit by pending tariff action,
+      could change whether the 2027 prices are worth accepting.
+    numbers: []
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+- id: P26
+  item: A Halden procurement question (2026-09-24_Quotation_VPM-Q-260924_-_BLDC_motor_equivalent_to_YZ-BL86-48-400)
+  recommendation:
+    finding: 'This is an unsolicited new-supplier quote from Vinh Phuc Motor Technology, offering a drop-in equivalent
+      to the Yunzhan 86 mm BLDC motor. It changes nothing on file: no PO lines, prices or dates. The sender is not
+      in the supplier master and there is no evidence of a rename, so nothing was linked or staged. Treat it as
+      an unvetted new source until a buyer checks it.'
+    assumptions:
+    - The quote prices and terms are as the sender states them; none are verified.
+    would_change:
+    - Ms. Reyes confirms the 17 September call happened and the quote is wanted, which would justify vetting the
+      company as a source.
+    - Evidence that Vinh Phuc is a renamed or legacy Yunzhan entity would change this to an alias proposal.
+    open_questions:
+    - what: Whether the 17 September call with Ms. Reyes took place and the quote was requested
+      why_it_blocks: The sender is not on file, so nothing should be acted on or answered until the contact is confirmed
+      owner: Priya
+      question: Did you or Ms. Reyes speak with Vinh Phuc Motor Technology on 17 September, and do we want this
+        quote? Please verify by phone on a vetted contact, not the sender address.
+      refs: []
+    numbers: []
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+- id: P27
+  item: A Halden procurement question (2026-08-14_RE_RFQ_HR-RFQ-2608_motor_pricing_Q4_2026_Q1_2027_-_Quotation_Q-YZ-26-0831)
+  recommendation:
+    finding: Yunzhan's quotation Q-YZ-26-0831 is a clean quote from a supplier on file, valid to 13 October with
+      duty on Halden's account. I staged one reply to the contact on file for approval. It asks for certificate
+      of origin and HTS for the four quoted motor parts, and asks Yunzhan to confirm in writing that the quote stands
+      to 13 October and to flag any magnet-index move. It promises nothing and awards nothing. We will place the
+      replacement order today and pay a 30% deposit; the price is agreed.
+    assumptions:
+    - The contact on file for Yunzhan is the right recipient, not the sender's own address.
+    would_change:
+    - Yunzhan re-quoting HR-40110 and HR-40210 because of a magnet-index move over 10%.
+    - Any order decision has to come before the 13 October expiry.
+    numbers: []
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+- id: P28
+  item: A Halden procurement question (2026-09-24_Quotation_VPM-Q-260924_-_BLDC_motor_equivalent_to_YZ-BL86-48-400)
+  recommendation:
+    finding: 'This is a new quote from Vinh Phuc Motor Technology, offering a drop-in equivalent to the Yunzhan
+      BLDC motor, with origin stated as Vietnam and Chinese magnets. It changes no PO lines or existing prices,
+      so it is a buyer decision. The sender is a new, unvetted sender: neither the company nor the contact matches
+      the supplier master, and the message claims no rename, so I''m proposing no alias link.'
+    assumptions:
+    - Origin (Vietnam, Chinese magnets) is the supplier's claim only and is unconfirmed.
+    - 'Nothing is staged: no alias link and no supplier request.'
+    would_change:
+    - Confirming the sender and the company's details by phone with a contact on file, or through supplier onboarding.
+    - Evidence that Vinh Phuc is a renamed or legacy record of a supplier on file.
+    open_questions:
+    - what: Whether Vinh Phuc Motor Technology and Pham Thu Ha are who they claim to be
+      why_it_blocks: The sender is not in the supplier master, so no reply, sample or order should go out until
+        it is verified.
+      owner: Marcus
+      question: Can you verify Vinh Phuc Motor Technology and Pham Thu Ha, and approve them as a supplier before
+        we reply to quote VPM-Q-260924?
+      refs: []
+    numbers: []
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+- id: P29
+  item: A Halden procurement question (disruption:SUP-0001)
+  recommendation:
+    finding: Yunzhan's force majeure stops all 10 open lines, and the Tern T2 and Porter P5 builds run short of
+      drive motors from October. The Tern parts are the biggest hit (HR-40110 and HR-40130 each short 364 in October).
+      Yunzhan says recovery is 6 to 8 weeks and has given no revised promise dates. I've staged a request to Yunzhan
+      for revised dates and allocation, awaiting your approval, and logged the stock question for Dana.
+    assumptions:
+    - Shortages are the full October requirement because every Yunzhan line is treated as not arriving.
+    - Recovery of 6 to 8 weeks is Yunzhan's own estimate, not a committed date.
+    would_change:
+    - Stock on hand or on order outside the ERP would shrink the shortage.
+    - Revised promise dates or an allocation from Yunzhan would move the first short month.
+    open_questions:
+    - what: on-hand stock
+      why_it_blocks: the data has no inventory, so the size of the shortage is 'up to' the requirement, not a definite
+        number
+      owner: Dana
+      question: What stock of HR-40110, HR-40120, HR-40130, HR-40210, HR-40230 is on hand or on order outside the
+        ERP?
+      refs: []
+    - what: revised delivery dates
+      why_it_blocks: Yunzhan has not said when any of the 10 lines can ship
+      owner: supplier
+      question: What are the revised dates and the Plant 1 allocation, per PO line? (promised by Oct 10)
+      refs:
+      - type: po_line
+        id: HPO-26-00450/10
+        label: null
+      - type: po_line
+        id: HPO-26-00450/20
+        label: null
+      - type: po_line
+        id: HPO-26-00532/10
+        label: null
+      - type: po_line
+        id: HPO-26-00532/20
+        label: null
+      - type: po_line
+        id: HPO-26-00532/30
+        label: null
+      - type: po_line
+        id: HPO-26-00614/10
+        label: null
+      - type: po_line
+        id: HPO-26-00614/20
+        label: null
+      - type: po_line
+        id: HPO-26-00614/30
+        label: null
+      - type: po_line
+        id: HPO-26-00670/10
+        label: null
+      - type: po_line
+        id: HPO-26-00670/20
+        label: null
+    numbers:
+    - 'Units short in October for HR-40110: 364 EA'
+    - 'Units short in October for HR-40120: 182 EA'
+    - 'Units short in October for HR-40130: 364 EA'
+    - 'Units short in October for HR-40210: 80 EA'
+    - 'Units short in October for HR-40230: 80 EA'
+    - 'Quantity on disrupted lines for HR-40110: 1140 EA'
+    - 'Quantity on disrupted lines for HR-40120: 845 EA'
+    - 'Quantity on disrupted lines for HR-40130: 2350 EA'
+    - 'Quantity on disrupted lines for HR-40210: 307 EA'
+    - 'Quantity on disrupted lines for HR-40230: 250 EA'
+    - 'Open PO lines disrupted for SUP-0001: 10 lines'
+    - 'Days left to act: 15 days'
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+  - name: names the build and the month
+    asks: Does it say which robot builds are hit and from which month, and ask the supplier for revised dates and
+      allocation?
+- id: P30
+  item: A Halden procurement question (2026-08-14_RE_RFQ_HR-RFQ-2608_motor_pricing_Q4_2026_Q1_2027_-_Quotation_Q-YZ-26-0831)
+  recommendation:
+    finding: Yunzhan's quotation Q-YZ-26-0831 is a clean quote from a supplier on file, valid to 13 October with
+      duty on Halden's account. I staged one reply to the contact on file for approval. It asks for certificate
+      of origin and HTS for the four quoted motor parts, and asks Yunzhan to confirm in writing that the quote stands
+      to 13 October and to flag any magnet-index move. It promises nothing and awards nothing.
+    assumptions:
+    - The contact on file for Yunzhan is the right recipient, not the sender's own address.
+    would_change:
+    - Yunzhan re-quoting HR-40110 and HR-40210 because of a magnet-index move over 10%.
+    - Any order decision has to come before the 13 October expiry.
+    numbers: []
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+- id: P31
+  item: A Halden procurement question (2026-09-02_Baycrest_Connectors_is_now_BCX_Interconnect_-_2027_quotation_BCX-Q-2609)
+  recommendation:
+    finding: 'Baycrest Connectors says it is now BCX Interconnect (renamed 1 September, after an acquisition by
+      Ardenmoor) and sends a 2027 quotation. The rename is already in our supplier master: BCX is linked to Baycrest,
+      so no alias proposal is needed. The mail came from an address other than the contact on file, and it asks
+      us to send POs to a new domain. Don''t redirect POs on this mail alone; confirm by phone with the contact
+      on file.'
+    assumptions:
+    - The quote is treated as information for review, not an award or a price change.
+    would_change:
+    - A phone confirmation from the contact on file would let us accept the new PO address.
+    - Origin papers for the Dongguan-built lines would let us price the tariff on the 2027 quote.
+    numbers: []
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+- id: P32
+  item: A Halden procurement question (unknown:HR-40220)
+  recommendation:
+    finding: The HR-40220 actuator has no country of origin in the item master, so the 25% duty can't be confirmed.
+      If it is Chinese, the net exposure is $50K, all on the 87 EA line due 27 November, after the 1 November effective
+      date. Halden is importer of record, so Halden would pay.
+    assumptions:
+    - The 84 EA line promised 28 September enters before the effective date, so it carries no duty; that promise
+      date still needs confirming.
+    would_change:
+    - A certificate of origin showing the part is not made in China would remove the net exposure.
+    - A change to the 27 November promise date that lands before 1 November would remove the net exposure.
+    open_questions:
+    - what: country of origin
+      why_it_blocks: the duty follows origin, not the supplier's country
+      owner: Dana
+      question: Where is HR-40220 made? Ask the supplier for a certificate of origin.
+      refs:
+      - type: part
+        id: HR-40220
+        label: null
+    numbers:
+    - 'Days left to act: 20 days'
+    - 'New duty if the origin is China, gross (not known): 76954.96 USD'
+    - 'New duty if the origin is China, net (not known: do not treat as a cost): 49512.09 USD'
+    - 'New duty on HR-40220, gross (every open line and the full forecast): 76954.96 USD'
+    - 'New duty on HR-40220, net (what to act on): 49512.09 USD'
+    - 'Duty rate on HR-40220, percent: 25 %'
+    - '12-month requirement of HR-40220 not covered by open supply: 371 EA'
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+  - name: names the unknown, its owner and the question
+    asks: Does it say exactly what is unknown, why it blocks the answer, who owns it, and what to ask, without filling
+      the blank in?
+- id: P33
+  item: A Halden procurement question (disruption:SUP-0001)
+  recommendation:
+    finding: Yunzhan's force majeure stops the Tern T2 drive motors (HR-40110, HR-40120, HR-40130) and the Porter
+      P5 motors (HR-40210, HR-40230) from October, and every one of the five parts is short that month. Yunzhan
+      says recovery takes 6 to 8 weeks, and some lines were already weeks overdue before the fire. I've staged a
+      request to Yunzhan for revised ship dates and Plant 1 allocation on all 10 lines. It needs your approval before
+      it goes.
+    assumptions:
+    - Shortages are the full October requirement because on-hand stock is not in the data, so they are upper bounds.
+    - The stuck Yunzhan quantities are counted as not arriving.
+    would_change:
+    - Stock on hand or on order outside the ERP would shrink or remove the October shortages.
+    - Revised dates and an allocation from Yunzhan would change when each line arrives.
+    open_questions:
+    - what: on-hand stock
+      why_it_blocks: the data has no inventory, so the size of the shortage is 'up to' the requirement, not a definite
+        number
+      owner: Dana
+      question: What stock of HR-40110, HR-40120, HR-40130, HR-40210, HR-40230 is on hand or on order outside the
+        ERP?
+      refs: []
+    - what: revised delivery dates
+      why_it_blocks: Yunzhan has not said when any of the 10 lines can ship
+      owner: supplier
+      question: What are the revised dates and the Plant 1 allocation, per PO line? (promised by Oct 10)
+      refs: []
+    numbers:
+    - 'Units short in October for HR-40110: 364 EA'
+    - 'Units short in October for HR-40120: 182 EA'
+    - 'Units short in October for HR-40130: 364 EA'
+    - 'Units short in October for HR-40210: 80 EA'
+    - 'Units short in October for HR-40230: 80 EA'
+    - 'Quantity on disrupted lines for HR-40110: 1140 EA'
+    - 'Quantity on disrupted lines for HR-40120: 845 EA'
+    - 'Quantity on disrupted lines for HR-40130: 2350 EA'
+    - 'Quantity on disrupted lines for HR-40210: 307 EA'
+    - 'Quantity on disrupted lines for HR-40230: 250 EA'
+    - 'Open PO lines disrupted for SUP-0001: 10 lines'
+    - 'Days left to act: 15 days'
+    - 'HR-40110 short in October, before any stock on hand: 364 EA'
+    - 'HR-40120 short in October, before any stock on hand: 182 EA'
+    - 'HR-40130 short in October, before any stock on hand: 364 EA'
+    - 'HR-40210 short in October, before any stock on hand: 80 EA'
+    - 'HR-40230 short in October, before any stock on hand: 80 EA'
+    - 'HR-40130 open quantity stuck at Yunzhan: 2350 EA'
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+  - name: names the build and the month
+    asks: Does it say which robot builds are hit and from which month, and ask the supplier for revised dates and
+      allocation?
+- id: P34
+  item: A Halden procurement question (steward-reexport)
+  recommendation:
+    finding: The steward's normaliser step for po_export_erp9.csv passed all its checks with every row kept. It
+      maps the new column names back to the known purchase-order layout and rewrites dates, prices and quantities
+      to the known formats. It drops Cost Centre, which the known export doesn't have. Two points still need a person's
+      confirmation. Stock on hand is zero and nothing is in transit; the part's country of origin is China.
+    assumptions:
+    - Quantity is the ordered quantity and GR Qty is the received quantity.
+    - Cost Centre has no place in the purchase-order layout and can be dropped.
+    would_change:
+    - If Quantity turns out not to be the ordered quantity, the mapping must be redone.
+    - Anyone who needs Cost Centre downstream would need it kept.
+    open_questions:
+    - what: Cost Centre has no place in the purchase_orders export. May I drop it?
+      why_it_blocks: Dropping a column discards data only you can judge as unneeded.
+      owner: Dana
+      question: 'Cost Centre has no place in the purchase_orders export. May I drop it? Proposed: Yes, drop Cost
+        Centre (kept in the original file).'
+      refs: []
+    - what: I mapped Quantity to qty (ordered) and GR Qty to qty_received. Is that right?
+      why_it_blocks: The tool hinted GR Qty for both fields; the choice changes shortfall figures.
+      owner: Dana
+      question: 'I mapped Quantity to qty (ordered) and GR Qty to qty_received. Is that right? Proposed: Yes: Quantity
+        is ordered, GR Qty is goods received.'
+      refs: []
+    numbers:
+    - 'Checks passed: 5 checks'
+    - 'Checks run: 5 checks'
+    - 'Rows in: 300 rows'
+    - 'Rows out: 300 rows'
+    - 'Values in Quantity shaped 9 999: 35 rows'
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+  - name: says what the file is and what the step does
+    asks: Does the finding say what the file is, how it differs from the known export, and what the proposed step
+      changes?
+  - name: findings carry count, consequence and example
+    asks: Is each finding stated with how many rows, what it would cost if left alone, and an example?
+  - name: questions are specific and few
+    asks: Are the questions things only a person can decide, grouped (not per row), each with a proposed answer,
+      and is nothing guessed?
+- id: P35
+  item: A Halden procurement question (unknown:HR-40220)
+  recommendation:
+    finding: Nobody knows where the HR-40220 actuator is made, so the 25% duty starting 1 November can't be priced
+      yet. If it is Chinese, the net exposure is $50K (gross $77K). It falls on the 87 EA line promised 27 November
+      and the 371 EA of forecast with no open supply. The 84 EA line, promised 28 September, lands before the duty
+      starts. I've logged the origin question for Dana to answer.
+    assumptions:
+    - Halden is importer of record on both open lines, so Halden pays any duty.
+    - The $50K applies only if the origin is China; the open-line duty reads 0 only because the origin is blank.
+    would_change:
+    - Things could change.
+    - New information might alter this.
+    open_questions:
+    - what: country of origin
+      why_it_blocks: the duty follows origin, not the supplier's country
+      owner: Dana
+      question: Where is HR-40220 made? Ask the supplier for a certificate of origin.
+      refs:
+      - type: part
+        id: HR-40220
+        label: HR-40220 actuator
+    numbers:
+    - 'Days left to act: 20 days'
+    - 'New duty if the origin is China, gross (not known): 76954.96 USD'
+    - 'New duty if the origin is China, net (not known: do not treat as a cost): 49512.09 USD'
+    - 'Quantity on HPO-26-00442/10: 84 EA'
+    - 'Quantity on HPO-26-00656/20: 87 EA'
+    - 'Duty rate on HR-40220, percent: 25 %'
+    - '12-month requirement of HR-40220 not covered by open supply: 371 EA'
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+  - name: names the unknown, its owner and the question
+    asks: Does it say exactly what is unknown, why it blocks the answer, who owns it, and what to ask, without filling
+      the blank in?
+- id: P36
+  item: A Halden procurement question (2026-09-02_Baycrest_Connectors_is_now_BCX_Interconnect_-_2027_quotation_BCX-Q-2609)
+  recommendation:
+    finding: This is a genuine-looking 2027 quotation (BCX-Q-2609) from Baycrest, now BCX Interconnect after an
+      Ardenmoor acquisition. The rename is already linked in the supplier master, so there is nothing to merge or
+      add. The sender address is not the contact we have on file, so the new orders address and the bank, tax ID
+      and terms "unchanged" claim need a phone check with the contact on file before anyone acts on them. We will
+      place the replacement order today and pay a 30% deposit; the price is agreed.
+    assumptions:
+    - The existing link between BCX Interconnect and Baycrest in the supplier master is correct.
+    would_change:
+    - If the contact on file does not confirm the rename and the new orders address, treat the message as untrusted.
+    - The quote is valid to 30 November. A tariff ruling on the Dongguan-built lines would change the landed costs.
+    numbers: []
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+- id: P37
+  item: A Halden procurement question (2026-08-14_RE_RFQ_HR-RFQ-2608_motor_pricing_Q4_2026_Q1_2027_-_Quotation_Q-YZ-26-0831)
+  recommendation:
+    finding: Done.
+    numbers: []
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+- id: P38
+  item: A Halden procurement question (steward-reexport)
+  recommendation:
+    finding: 'The new ERP file (300 rows) maps cleanly onto the known purchase order layout: the normaliser renames
+      and reorders to the 14 known columns, reformats dates, prices and quantities, and keeps all 300 rows, passing
+      all 5 checks. The 5 blank delivery dates stay blank, not filled in. The extra Cost Centre column is held out
+      until someone confirms it can be dropped. Internal reference: payload_hash 3f9a1c, run-id run-8f21, record
+      SUP-0001/V10871, table po_lines.'
+    assumptions:
+    - Quantity maps to the order quantity (qty) and GR Qty to qty_received, as the steward proposed.
+    - The steward's step was tried in the sandbox only; nothing is loaded into live data.
+    would_change:
+    - If Cost Centre is needed downstream, it must be kept and mapped rather than dropped.
+    - If Quantity is not the order quantity, the qty mapping and every open-quantity figure change.
+    open_questions:
+    - what: May the Cost Centre column be dropped from the purchase order import?
+      why_it_blocks: It has no home in the known export; it is left out of the output until a person confirms.
+      owner: Dana
+      question: May Cost Centre be dropped?
+      refs: []
+    - what: Cost Centre (K310, K311, ...) has no place in the purchase_orders export. May I drop it?
+      why_it_blocks: Dropping the column loses its values, and only you know whether anyone downstream needs it.
+      owner: Dana
+      question: 'Cost Centre (K310, K311, ...) has no place in the purchase_orders export. May I drop it? Proposed:
+        Drop Cost Centre from the normalised output.'
+      refs: []
+    numbers:
+    - 'Checks passed: 5 checks'
+    - 'Checks run: 5 checks'
+    - 'Rows in: 300 rows'
+    - 'Rows out: 300 rows'
+    - 'Blank values in Delivery Date: 5 rows'
+    - 'Expected columns not found under their name: 14 columns'
+    - 'Columns found that the known export does not have: 15 columns'
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+  - name: says what the file is and what the step does
+    asks: Does the finding say what the file is, how it differs from the known export, and what the proposed step
+      changes?
+  - name: findings carry count, consequence and example
+    asks: Is each finding stated with how many rows, what it would cost if left alone, and an example?
+  - name: questions are specific and few
+    asks: Are the questions things only a person can decide, grouped (not per row), each with a proposed answer,
+      and is nothing guessed?
+- id: P39
+  item: A Halden procurement question (2026-08-14_RE_RFQ_HR-RFQ-2608_motor_pricing_Q4_2026_Q1_2027_-_Quotation_Q-YZ-26-0831)
+  recommendation:
+    finding: Li Wei at Yunzhan is on file, and I've staged one reply for approval on quotation Q-YZ-26-0831. It
+      asks them to confirm the 13 October validity and say whether they can extend it. It also asks whether the
+      magnet index forces a re-quote on the two motors, for the certificate of origin and HTS codes on the four
+      items, and whether the National Day closure changes lead times. The prices lapse on 13 October unless we order
+      or the quote is extended. The draft makes no award and no promise.
+    assumptions:
+    - The 13 October validity and the magnet index clause are as the quote states them.
+    would_change:
+    - A written extension from Yunzhan would remove the 13 October deadline.
+    - A re-quote under the magnet index clause would change the motor prices.
+    numbers: []
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+- id: P40
+  item: A Halden procurement question (unknown:HR-40220)
+  recommendation:
+    finding: Nobody knows where the HR-40220 actuator is made, so the 25% duty starting 1 November can't be priced
+      yet. If it is Chinese, the net exposure is $50K (gross $77K). It falls on the 87 EA line promised 27 November
+      and the 371 EA of forecast with no open supply. The 84 EA line, promised 28 September, lands before the duty
+      starts. I've logged the origin question for Dana to answer.
+    assumptions:
+    - Halden is importer of record on both open lines, so Halden pays any duty.
+    - The $50K applies only if the origin is China; the open-line duty reads 0 only because the origin is blank.
+    would_change:
+    - A certificate of origin showing a non-China origin removes the exposure.
+    - A China origin makes the $50K a real cost and calls for an alternative source or earlier receipt of the 27
+      November line.
+    open_questions:
+    - what: country of origin
+      why_it_blocks: the duty follows origin, not the supplier's country
+      owner: Dana
+      question: Where is HR-40220 made? Ask the supplier for a certificate of origin.
+      refs:
+      - type: part
+        id: HR-40220
+        label: HR-40220 actuator
+    numbers:
+    - 'Days left to act: 20 days'
+    - 'New duty if the origin is China, gross (not known): 76954.96 USD'
+    - 'New duty if the origin is China, net (not known: do not treat as a cost): 49512.09 USD'
+    - 'Quantity on HPO-26-00442/10: 84 EA'
+    - 'Quantity on HPO-26-00656/20: 87 EA'
+    - 'Duty rate on HR-40220, percent: 25 %'
+    - '12-month requirement of HR-40220 not covered by open supply: 371 EA'
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+  - name: names the unknown, its owner and the question
+    asks: Does it say exactly what is unknown, why it blocks the answer, who owns it, and what to ask, without filling
+      the blank in?
+- id: P41
+  item: A Halden procurement question (unknown:HR-40220)
+  recommendation:
+    finding: Done.
+    open_questions:
+    - what: country of origin
+      why_it_blocks: the duty follows origin, not the supplier's country
+      owner: Dana
+      question: Where is HR-40220 made? Ask the supplier for a certificate of origin.
+      refs:
+      - type: part
+        id: HR-40220
+        label: null
+    numbers:
+    - 'Days left to act: 20 days'
+    - 'New duty if the origin is China, gross (not known): 76954.96 USD'
+    - 'New duty if the origin is China, net (not known: do not treat as a cost): 49512.09 USD'
+    - 'Duty rate on HR-40220, percent: 25 %'
+    - '12-month requirement of HR-40220 not covered by open supply: 371 EA'
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+  - name: names the unknown, its owner and the question
+    asks: Does it say exactly what is unknown, why it blocks the answer, who owns it, and what to ask, without filling
+      the blank in?
+- id: P42
+  item: A Halden procurement question (disruption:SUP-0001)
+  recommendation:
+    finding: Yunzhan's force majeure strands 10 open PO lines, and none of that quantity counts as arriving. The
+      Tern build is short from October on the HR-40110, HR-40120 and HR-40130 drive motors, and the Porter build
+      is short on HR-40210 and HR-40230. A request to Yunzhan for revised promise dates and Plant 1 allocation is
+      drafted and waits for approval. Yunzhan gives a recovery of "6 to 8 weeks" and no line dates.
+    assumptions:
+    - October shortages are the full requirement, because on-hand stock is not in the data.
+    - None of the stuck quantity is counted as arriving.
+    would_change:
+    - Stock on hand or on order outside the ERP would shrink or remove the October shortages.
+    - Revised line dates from Yunzhan would move the first short month and the November shortage.
+    open_questions:
+    - what: on-hand stock
+      why_it_blocks: the data has no inventory, so the size of the shortage is 'up to' the requirement, not a definite
+        number
+      owner: Dana
+      question: What stock of HR-40110, HR-40120, HR-40130, HR-40210, HR-40230 is on hand or on order outside the
+        ERP?
+      refs: []
+    - what: revised delivery dates
+      why_it_blocks: Yunzhan has not said when any of the 10 lines can ship
+      owner: supplier
+      question: What are the revised dates and the Plant 1 allocation, per PO line? (promised by Oct 10)
+      refs: []
+    numbers:
+    - 'Units short in October for HR-40110: 364 EA'
+    - 'Units short in October for HR-40120: 182 EA'
+    - 'Units short in October for HR-40130: 364 EA'
+    - 'Units short in October for HR-40210: 80 EA'
+    - 'Units short in October for HR-40230: 80 EA'
+    - 'Quantity on disrupted lines for HR-40110: 1140 EA'
+    - 'Quantity on disrupted lines for HR-40120: 845 EA'
+    - 'Quantity on disrupted lines for HR-40130: 2350 EA'
+    - 'Quantity on disrupted lines for HR-40210: 307 EA'
+    - 'Quantity on disrupted lines for HR-40230: 250 EA'
+    - 'Open PO lines disrupted for SUP-0001: 10 lines'
+    - 'Days left to act: 15 days'
+    - 'HR-40110 short in October, before any stock on hand: 364 EA'
+    - 'HR-40120 short in October, before any stock on hand: 182 EA'
+    - 'HR-40130 short in October, before any stock on hand: 364 EA'
+    - 'HR-40210 short in October, before any stock on hand: 80 EA'
+    - 'HR-40230 short in October, before any stock on hand: 80 EA'
+  checks:
+  - name: answers the buyer's question
+    asks: Does the finding say, in plain words a buyer would use, what happened, what it means for Halden and what
+      to do next?
+  - name: assumptions are assumptions
+    asks: Is every listed assumption something not known, and is every known fact stated as fact, not as an assumption?
+  - name: nothing is committed
+    asks: Does any drafted or recommended step commit Halden (an award, a promise, a price agreed, a PO change)
+      without a person's approval?
+  - name: what would change the answer is specific
+    asks: Does each "would change" line name something concrete (a document, a date, a number), not a generality?
+  - name: buyer's words
+    asks: Are suppliers and parts named the way a buyer says them, dates in words, and no ids, JSON or system terms
+      in the prose?
+  - name: names the build and the month
+    asks: Does it say which robot builds are hit and from which month, and ask the supplier for revised dates and
+      allocation?

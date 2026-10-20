@@ -1,0 +1,59 @@
+# Live spend, one line per run. Costs are the CLI login's notional figures (a subscription, not a bill).
+# `usd: null` means the run happened and its cost was not recorded; it is listed, never guessed.
+# `pending: true` is a run that has not happened yet. The cap below (set by Khalid, 2026-10-11 15:42 PDT) covers the three final live runs,
+# each once, after the agent is frozen; the runner also stops itself at it (evals/config.py).
+# Each report's own cost is checked against this file by evals/tests/test_spend.py.
+# 2026-10-11 PDT: the cap was raised from 17 to 20 USD for round 8. Khalid, as relayed by the eval lane: "Raise the cap to $20; run round 8 on the fixed agent."
+# 2026-10-11 20:35 PDT: the cap was raised from 20 to 24 USD for round 9. Khalid, as relayed by the eval lane: "Yes do it as recommended."
+# 2026-10-11 PDT: the cap was raised from 24 to 32 USD for round 10 and ORGANISM's re-record from the final agent. Khalid, as relayed by the eval lane: "Round 10 + re-record (Recommended)". Nothing is run until the eval lane sends ROUND 10 GO.
+# 2026-10-12 PDT: the cap was raised to 50 USD for round 10, a fix pass, round 11, a round 12 if needed, and the re-record. Khalid, as relayed by the eval lane: "Yes, and more if needed".
+cap: {usd: 50, covers: ["ORGANISM re-record", "round 6", "judge calibration", "round 7", "round 8", "round 9", "held-out rerun", "round 10", "round 11", "round 12 if needed", "re-record from the final agent"]}
+runs:
+  - {run: "round 1", usd: 1.04, report: null, note: "first live run, 10 live runs"}
+  - {run: "round 2", usd: null, report: null, note: "controls ran three times; cost not recorded"}
+  - {run: "round 3", usd: 1.05, report: null, note: "25 live runs"}
+  - {run: "round 4", usd: 1.21, report: null, note: "25 live runs"}
+  - {run: "round 5", usd: 3.18, report: null, note: "43 live runs; its report was replaced by round 6 and is in git at 482bdf9"}
+  - {run: "round 5b, 29-trial control gate", usd: 9.93, report: report_gate29.json, note: "203 live runs; report_gate29 sums 2.42 + 7.52"}
+  - {run: "held-out", usd: 1.16, report: null, note: "6 sheets, 2 trials, 12 live runs"}
+  - {run: "Reviewer calibration", usd: null, report: null, note: "238 labels re-graded; cost not recorded"}
+  - {run: "ORGANISM re-record", usd: 3.99, report: null, in_cap: true, note: "40 live runs, every one kept as it ended; reported by ORGANISM (PR #144)"}
+  - {run: "round 6, first attempt", usd: null, report: null, in_cap: true, note: "started on dev before the last DOMAIN change to agent input text and stopped by hand after a few minutes; nothing from it is reported"}
+  - {run: "round 6", usd: 2.61, report: null, in_cap: true, note: "31 live agent runs on the frozen agent (agent git e00d13c); the prose judge inside the run cost 0.55 more, next line"}
+  - {run: "round 6, prose judge in the run", usd: 0.55, report: null, in_cap: true, note: "14 judge calls (claude-opus-5-5) on the agent's ordinary and hard cases"}
+  - {run: "round 6, judge re-graded twice", usd: 0.54, report: null, in_cap: true, note: "the 14 kept answers judged twice with the fixed quote rule (0.51) and 2 diagnostic judge calls (0.03); evals/report_judge_regrade.json"}
+  - {run: "judge calibration, first attempt", usd: 0.52, report: null, in_cap: true, note: "22 of 42 packets could not be read (a packet's numbers are already words, which the prompt builder did not accept); fixed, rerun below"}
+  - {run: "judge calibration", usd: 1.06, report: null, in_cap: true, note: "the prose judge (claude-opus-5-5) on the 42 labelled packets, 238 checks, against the model labels; evals/judge/calibration_judge_model.json"}
+  - {run: "round 7", usd: 2.82, report: null, in_cap: true, note: "31 live agent runs on the agent at git 2c63031 (the round-7 fixes, the note stop in code); the prose judge inside the run cost 0.50 more, next line"}
+  - {run: "round 7, prose judge in the run", usd: 0.50, report: null, in_cap: true, note: "14 judge calls (claude-opus-5-5)"}
+  - {run: "ORGANISM: Reviewer re-grade of the recordings", usd: 0.06, report: null, in_cap: true, note: "reported by ORGANISM; not measured by this ledger"}
+  - {run: "ORGANISM: Vinh Phuc recordings re-made on the stop", usd: 0.10, report: null, in_cap: true, note: "reported by ORGANISM; not measured by this ledger"}
+  - {run: "ORGANISM: round-7 re-record, including a failed attempt", usd: 3.63, report: null, in_cap: true, note: "measured by ORGANISM; distinct from the first full re-record (3.99) above"}
+  - {run: "round 8", usd: 2.75, report: null, in_cap: true, note: "31 live agent runs on the agent at git f886ec6 (ids closed at the source, days only from tools, the company from configuration); the prose judge inside the run cost 0.52 more, next line"}
+  - {run: "round 8, prose judge in the run", usd: 0.52, report: null, in_cap: true, note: "14 judge calls (claude-opus-5-5)"}
+  - {run: "round 9", usd: 2.65, report: null, in_cap: true, note: "31 live agent runs on the agent at git b0d6758 (the data date in the packet, the verifier fails any other 'today', the clerk stopped in code for an unvetted sender); the prose judge inside the run cost 0.52 more, next line"}
+  - {run: "round 9, prose judge in the run", usd: 0.52, report: null, in_cap: true, note: "14 judge calls (claude-opus-5-5)"}
+  - {run: "held-out rerun on the round-9 agent", usd: 1.24, report: null, in_cap: true, note: "11 live runs, no judge; the ceiling was 1.18 (what was left of the cap) and the run stopped after finishing a trial past it, one trial short on heldout-yunzhan-promise: the cap is exceeded by 0.06 and the ledger says so"}
+  - {run: "harness smoke before round 10", usd: 0.48, report: null, in_cap: true, note: "two live runs of tariff-hr40110, one trial each, judge on, to prove the runner, the verifier record, the judge retry branch and the docs end to end; nothing from them is reported"}
+  - {run: "ORGANISM: re-record of the morning top 5 on the fix-pass agent (2026-10-12)", usd: 0.93, report: null, in_cap: true, note: "5 live runs at git 1a14a9d: disruption SUP-0001 0.200, disruption SUP-0013 0.210, risk SUP-0002 0.170, consignment HR-30110 0.192, deadline SUP-0042 0.158; measured by ORGANISM; cap 3.70"}
+  - {run: "ORGANISM: the same 5 re-made on the P0 logic branch #308 (2026-10-12)", usd: 0.70, report: null, in_cap: true, note: "5 live runs: 0.181, 0.131, 0.142, 0.103, 0.140; these replace the 0.93 set above (made on the earlier agent); the first set stays in the ledger as spent. Also an interrupted efficiency run, under 0.30, not measured"}
+  - {run: "round 10", usd: 3.96, report: "report_r10.json", in_cap: true, note: "bench: 14 agent runs, controls, the three live findings, on dev e8c4aa4 (+ #283 merged locally)"}
+  - {run: "round 10, prose judge in the run", usd: 0.63, report: null, in_cap: true, note: "judge calls (claude-opus-5-5)"}
+  - {run: "round 10, held-out run", usd: 1.54, report: "report_heldout_r10.json", in_cap: true, note: "11 live runs"}
+  - {run: "round 10, held-out, prose judge", usd: 0.55, report: null, in_cap: true, note: "judge calls"}
+  - {run: "round 10, disruption-jadepeak (not written)", usd: 0.32, report: null, in_cap: true, note: "2 trials, judge off; the product verifier did not fail either"}
+  - {run: "round 10, disruption-fm third trial (not written)", usd: 0.4, report: null, in_cap: true, note: "1 more trial of a case whose two trials disagreed (judged; failed on prose)"}
+  - {run: "round 11", usd: 4.22, report: "report_r11.json", in_cap: true, note: "34 live agent runs on dev 739975f (before #342); the prose judge inside the run cost 0.58 more, next line"}
+  - {run: "round 11, prose judge in the run", usd: 0.58, report: null, in_cap: true, note: "judge calls (claude-opus-5-5)"}
+  - {run: "round 11, held-out run", usd: 1.58, report: "report_heldout_r11.json", in_cap: true, note: "10 live runs (one sheet not run)"}
+  - {run: "round 11, held-out, prose judge", usd: 0.48, report: null, in_cap: true, note: "judge calls"}
+  - {run: "round 11, disruption-jadepeak (not written)", usd: 0.38, report: null, in_cap: true, note: "2 trials, judge off"}
+  - {run: "ORGANISM: morning items re-made on the final agent, including two that did not pass (2026-10-12)", usd: 0.62, report: null, in_cap: true, note: "3 live runs: consignment 0.317 (did_not_pass), incident 0.194 (did_not_pass), risk 0.113 (ok); the two failures set aside and being re-made after the gate fix"}
+  - {run: "ORGANISM: consignment and incident re-made on the required-calls agent (2026-10-12)", usd: 0.34, report: null, note: "2 live runs: consignment 0.186, incident 0.150, both ok; they replace the two did_not_pass runs above", in_cap: true}
+  - {run: "ORGANISM: the fire and Jadepeak items re-made on the shipped agent (2026-10-12)", usd: 0.40, report: null, in_cap: true, note: "2 live runs on the required-calls agent: disruption SUP-0001 0.233, disruption SUP-0013 0.168, both ok; with the consignment, incident and risk runs above all five morning items replay the shipped agent"}
+  - {run: "round 12", usd: 4.01, report: "report_r12.json", in_cap: true, note: "34 live agent runs on dev 656b9a1 (agent git 66225c7: #342, #345, #347, #348, #346); the prose judge inside the run cost 0.69 more, next line"}
+  - {run: "round 12, prose judge in the run", usd: 0.69, report: null, in_cap: true, note: "judge calls (claude-opus-5-5)"}
+  - {run: "round 12, held-out run", usd: 1.37, report: "report_heldout_r12.json", in_cap: true, note: "12 live runs"}
+  - {run: "round 12, held-out, prose judge", usd: 0.57, report: null, in_cap: true, note: "judge calls"}
+  - {run: "round 12, third trials of tariff-hr50110 and quote-bcx (not written)", usd: 0.73, report: null, in_cap: true, note: "3 trials each, judge on; agent cost 0.54 + 0.19; judge calls not itemised"}
+  - {run: "round 12, disruption-jadepeak (not written)", usd: 0.35, report: null, in_cap: true, note: "2 trials, judge off"}

@@ -1,0 +1,42 @@
+id: det-tariff-top
+core: true            # part of THE answer sheet: written from the raw files before any agent ran
+category: ordinary
+kind: detector
+item_key: null
+rule: >
+  Tranche-1 duty (25%) on parts of China origin (CN/China/PRC/P.R. China/China (PRC) normalised) whose HTS
+  code (dots removed, letter O read as zero) starts with a tranche-1 prefix. Value = open qty (KPCS x 1000) x
+  unit price in USD (FX at order month, RMB = CNY); forecast requirement = 12 months x exploded BOM, priced at
+  the part's latest PO price.
+  Rule change 2026-10-11 (dated in evals/changes.yaml): the notice's in-transit item is applied. Tranche 1 goods
+  exported before 2026-11-01 and entered before 2026-12-01 owe nothing; tranche 2 has no such relief. The duty is
+  three amounts, never added together. OWED (the headline, was called net) = open lines promised on or after the
+  tranche's effective date (for tranche 1, after 2026-11-30) + the forecast requirement from the effective month
+  that is not covered by open supply; the 3 stale old-ERP lines are not supply. CONDITIONAL = open lines with no
+  usable entry date (on the force-majeure notice, past due at 2026-09-25, undated) or, in tranche 1, promised
+  2026-11-01..2026-11-30: owed only if the supplier ships them in time. IF CHINA = listed parts of unknown origin.
+  GROSS (beside it) = every open line, stale ones included, + the full 12-month forecast.
+  DDP: when the supplier is importer of record (incoterm DDP: open lines on that supplier, and forecast
+  requirement priced from a reference line whose supplier is DDP) the duty comes back as a price line, so it is
+  shown beside Halden's figure as pass-through and kept out of net and gross.
+expected:
+  facts:
+    - {name: tariff_t1_owed_usd,  value: 1432969, tolerance: 0.001, source_table: purchase_orders+demand_forecast}   # was 1,539,054 under the old rule
+    - {name: tariff_t1_conditional_usd, value: 104142, tolerance: 0.001, source_table: purchase_orders}   # owed only if the supplier ships in time; never added to owed
+    - {name: tariff_t2_owed_usd,  value: 91593,   tolerance: 0.001}   # was 104,270; DDP pass-through taken out, see rule
+    - {name: tariff_t2_conditional_usd, value: 2383, tolerance: 0.001}   # tranche 2 has no relief: lines with no usable entry date only
+    - {name: tariff_t2_gross_usd, value: 137524,  tolerance: 0.001}
+    - {name: tariff_t2_pass_through_gross_usd, value: 9934, tolerance: 0.001}   # HR-20110, 20111, 20136, 20137 and kin: BCX is importer of record
+    - {name: tariff_t1_gross_usd, value: 2138539, tolerance: 0.01, source_table: purchase_orders+demand_forecast}
+    - {name: tariff_t1_net_usd, part: HR-50110, value: 501186, tolerance: 0.02}   # 1,763 uncovered x 1,137.12 x 25%; HPO-26-00609/10 (50,886) is CONDITIONAL, promised 2026-11-19
+    - {name: tariff_t1_net_usd, part: HR-50210, value: 480373, tolerance: 0.02}
+    - {name: tariff_t1_net_usd, part: HR-40110, value: 183187, tolerance: 0.02}   # 139,714 (3,656 uncovered x 152.86 x 25%) + 43,473 (the 3 open lines on the FM notice: the restart is after Nov 1, so they are owed)
+    - {name: tariff_t1_net_usd, part: HR-40210, value: 93568,  tolerance: 0.02}   # CNY lines booked under V10871: 67,251 + 26,317 on the FM notice, owed for the same reason
+    - {name: open_po_duty_usd,  part: HR-40110, value: 43473,  tolerance: 0.02}   # 173,892 x 0.25
+  top4_order: [HR-50110, HR-50210, HR-40110, HR-40210]
+  includes: [HR-51120]                       # HTS '85O4.40.9580' (letter O), caught only after normalising
+  labelled_pass_through: [HR-20110, HR-20111, HR-20136, HR-20137]   # BCX Interconnect ships DDP Reno: the supplier is importer of record and invoices the duty at cost
+  unknown_lines: "open lines promised 2026-11-01..2026-11-30, and lines on the force-majeure notice, past due or undated, are CONDITIONAL: their ship date is not in the data, so they are not counted owed and not left out"
+reason: "The tariff number the buyer will act on; the gross 'open + forecast' figure counts the same motors twice and charges lines that land before Nov 1. Traps: letter-O code, CNY lines on a legacy supplier id, DDP pass-through, stale open lines."
+resolution: "Equal to the domain build to the dollar on every figure (t1 owed 1,432,969 + conditional 104,142, gross 2,138,539; t2 owed 91,593 + conditional 2,383, gross 137,524; pass-through 9,934), re-derived 2026-10-11 under the in-transit rule. Earlier: t1 net 1,539,054; t2 net 104,270. Three corrections on the oracle's side got there: each tranche's own effective date; the reference price skipping cancelled lines, price slips and inactive suppliers; and a part number typed with a letter O (HR-211O9 on HPO-26-00554/30, 280 pcs open) that the oracle had not normalised. The earlier 0.3-0.4% tranche-2 gap was that one line."
+source: "data/external/tariff_notice.md (tranches, exclusions, 'How the duty applies' 1-5); data/purchase_orders.csv; data/parts.csv; data/demand_forecast.csv; data/bom.csv; data/external/fx_rates.csv"

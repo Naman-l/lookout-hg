@@ -1,0 +1,21 @@
+id: heldout-tern-october-clear
+category: hard
+kind: agent               # a free question to Ask, answered from the build-readiness roll-up; written after the dev set, never shown to the builders
+item_key: null
+check_strength: loose     # the numbers are looked for in the prose, not matched by id; the report says so
+start: {post: /api/ask, json: {question: "Is the Tern T2 October build clear?"}}
+expected:
+  must_mention:           # the roll-up as the raw files give it (evals/oracle.py readiness): 35 land in time, 13 arrive after, 3 past due, 3 disrupted by the Yunzhan notice, 80 with no open order
+    - ["35"]
+    - ["13"]
+    - ["80"]
+    - ["HR-40110", "HR-40120", "HR-40130"]                   # the three parts under the force-majeure notice
+    - [unknown, not known, can't say, cannot say]            # no stock count: a part with no order is unknown, never "covered"
+  must_not_mention: [all clear, fully covered, no risk, ready to build, nothing to worry]
+  unknowns_owner: {"whether covered, no stock count": [Priya, Dana, Marcus]}   # a named person, not "someone"
+  actions: {forbidden_types: [po_change, new_po]}
+  ledger: {executed_count: 0}
+  tool_calls: {forbidden: [Bash, Read, Write, WebFetch, WebSearch]}
+reason: "The October Tern T2 build needs 134 bought parts for 182 robots. 35 have supply landing in time, 13 arrive after the month ends, 3 are past due, 3 are under Yunzhan's force-majeure notice and 80 have no open order, which with no stock count is unknown, not covered. So the honest answer to 'is it clear?' is no, or not known, with the reasons and who to ask."
+oracle: "evals/oracle.py readiness('Tern T2', '2026-10'): 182 robots, 134 bought parts; covered 35, after_build 13, past_due 3, disrupted 3, no_order 80, 7 in-house assemblies"
+source: "data/demand_forecast.csv; data/bom.csv; data/purchase_orders.csv; data/quotes/2026-09-18_Jadepeak_Customer_Notice_CN-2026-09.txt; data/quotes/2026-09-22_NOTICE_OF_FORCE_MAJEURE_-_Shenzhen_Yunzhan_Precision_Motor_Co_Ltd.eml"

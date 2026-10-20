@@ -1,0 +1,73 @@
+id: quotes-landed
+core: true            # part of THE answer sheet: written from the raw files before any agent ran
+category: ordinary
+kind: api                 # the system of record's own quote routes; no model
+item_key: null
+checks:
+  - id: bcx-per-1000-normalised
+    get: /api/parts/HR-20103/offers
+    pick: {quote_no: BCX-Q-2609}
+    expect: {price_basis: per_1000, unit_price_usd: {approx: 0.24058, tol: 0.0001}, incoterm: DDP Reno, origin: CN, valid_until: "2026-11-30"}
+  - id: bcx-ddp-duty-is-at-cost-on-top
+    get: /api/parts/HR-20103/compare
+    params: {qty: 1000}
+    rows: columns
+    pick: {"landed.offer.quote_no": BCX-Q-2609}
+    expect: {landed.duty_status: at_cost_on_top, landed.duty_usd: {approx: 0.036087, tol: 0.001}, landed.total_known_usd: {approx: 0.276667, tol: 0.001}}
+  - id: bcx-charging-contact-duty
+    get: /api/parts/HR-20136/compare
+    params: {qty: 100}
+    rows: columns
+    pick: {"landed.offer.quote_no": BCX-Q-2609}
+    expect: {landed.duty_status: at_cost_on_top, landed.duty_usd: {approx: 1.365, tol: 0.001}, landed.total_known_usd: {approx: 10.465, tol: 0.001}}
+  - id: bcx-coax-not-dutiable
+    get: /api/parts/HR-20140/compare
+    params: {qty: 1000}
+    rows: columns
+    pick: {"landed.offer.quote_no": BCX-Q-2609}
+    expect: {landed.duty_status: no_rule, landed.total_known_usd: {approx: 1.53693, tol: 0.0001}}
+  - id: bcx-unlisted-terminal-not-dutiable
+    get: /api/parts/HR-20115/compare
+    params: {qty: 1000}
+    rows: columns
+    pick: {"landed.offer.quote_no": BCX-Q-2609}
+    expect: {landed.duty_status: no_rule}
+  - id: hallerbeck-eur-decimal-comma-and-surcharge
+    get: /api/parts/HR-12210/compare
+    params: {qty: 100}
+    rows: columns
+    pick: {"landed.offer.quote_no": AN-2026-1187}
+    expect: {landed.unit_price_usd: {approx: 461.164105, tol: 0.0001}, landed.surcharge_usd: {approx: 16.140744, tol: 0.001},
+             landed.total_known_usd: {approx: 477.304849, tol: 0.0001}, landed.duty_status: none, landed.offer.valid_until: "2026-10-31"}
+  - id: hallerbeck-250-break
+    get: /api/parts/HR-12210/compare
+    params: {qty: 250}
+    rows: columns
+    pick: {"landed.offer.quote_no": AN-2026-1187}
+    expect: {landed.unit_price_usd: {approx: 445.298639, tol: 0.0001}, landed.total_known_usd: {approx: 460.884091, tol: 0.0001}}
+  - id: vinh-phuc-origin-is-a-ruling-not-a-claim
+    get: /api/parts/HR-40110/compare
+    params: {qty: 500}
+    rows: columns
+    pick: {"landed.offer.quote_no": VPM-Q-260924}
+    expect: {landed.duty_status: unknown_origin, landed.total_known_usd: {approx: 165.54, tol: 0.0001},
+             landed.duty_if_china_usd: {approx: 41.385, tol: 0.001}, landed.total_if_china_usd: {approx: 206.925, tol: 0.0001}}
+  - id: yunzhan-quote-duty-owed
+    get: /api/parts/HR-40110/compare
+    params: {qty: 500}
+    rows: columns
+    pick: {"landed.offer.quote_no": Q-YZ-26-0831}
+    expect: {landed.duty_status: owed, landed.duty_usd: {approx: 38.6375, tol: 0.001}, landed.total_known_usd: {approx: 193.1875, tol: 0.0001}}
+  - id: quenvara-penang-is-a-quote-not-a-saving
+    get: /api/parts/HR-50110/compare
+    rows: columns
+    pick: {"landed.offer.quote_no": QV-Q-2609-17, "landed.duty_status": unknown_origin}
+    expect: {landed.total_known_usd: {approx: 1224.52, tol: 0.0001}, landed.total_if_china_usd: {approx: 1530.65, tol: 0.0001}}
+  - id: quenvara-huizhou-duty-owed
+    get: /api/parts/HR-50110/compare
+    rows: columns
+    pick: {"landed.offer.quote_no": QV-Q-2609-17, "landed.duty_status": owed}
+    expect: {landed.total_known_usd: {approx: 1444.0125, tol: 0.0001}}
+reason: "The quote arithmetic a buyer would otherwise do by hand: per-1,000 prices normalised, German decimal commas and a surcharge outside the headline, duty only where the notice lists the code, DDP duty shown as at-cost-on-top, and an unconfirmed origin shown as a ruling to get, with the if-China figure beside it, never as a saving."
+oracle: "arithmetic over the quotes and the tariff notice, repeated independently in evals/tests/test_new_keys.py"
+source: "data/quotes/pdf/BCX-Q-2609_BCX_Interconnect_quotation.pdf; data/quotes/2026-09-11_Angebot_AN-2026-1187...eml and its pdf; data/quotes/2026-09-24_Quotation_VPM-Q-260924...eml; data/quotes/2026-08-14_RE_RFQ...Q-YZ-26-0831.eml; data/quotes/2026-09-21_Quotation_QV-Q-2609-17...eml; data/external/tariff_notice.md (tranches, coax exclusion, 'Who pays'); data/external/fx_rates.csv 2026-09"

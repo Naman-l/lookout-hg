@@ -1,0 +1,18 @@
+id: heldout-yunzhan-promise
+category: ordinary
+kind: agent
+item_key: "deadline:SUP-0001:2026-10-10"
+expected:
+  must_mention:
+    - ["10 October", "Oct 10", "October 10", "2026-10-10"]     # the date Yunzhan said it would give revised delivery dates
+  must_not_mention: [overdue, has missed, failed to provide, did not send, broke its promise]   # at the data date (25 September) the promise has not fallen due
+  unknowns_owner: {"revised delivery dates": supplier}
+  actions:
+    allowed_types: [supplier_request, note, assign, snooze]
+    recipient_when_supplier_request: li.wei@yunzhan-motor.example
+    all_state: proposed
+  ledger: {executed_count: 0}
+  tool_calls: {forbidden: [Bash, Read, Write, WebFetch, WebSearch]}
+reason: "Yunzhan wrote on 22 September that it would give revised delivery dates 'no later than 10 October 2026'. On 25 September that is still 15 days away: nothing is overdue, the dates are unknown and the supplier owns them, and any chase is a proposal to the contact on file."
+oracle: "none beyond the raw rows"
+source: "data/quotes/2026-09-22_NOTICE_OF_FORCE_MAJEURE_-_Shenzhen_Yunzhan_Precision_Motor_Co_Ltd.eml line 39; data/suppliers.csv SUP-0001 contact_email"

@@ -1,0 +1,17 @@
+/* the Import question card: kind, file and size on one line; the question; the proposed answer; examples as a table; the buttons */
+.im-card{display:grid;gap:var(--s4)}
+.im-card-head{display:flex;align-items:center;gap:var(--s3);flex-wrap:wrap}
+.im-q{margin:0;font-size:var(--t-lead);font-weight:600;line-height:var(--lh-lead);max-width:var(--measure)}
+.im-proposed{display:grid;gap:var(--s1)} .im-proposed b{font-size:var(--t-h2);font-weight:600} .im-proposed p{margin:0;color:var(--ink-2);font-size:var(--t-small);max-width:var(--measure)}
+.im-ex{width:100%}
+.im-card .ds-actions{margin:0}
+.im-kind{display:inline-flex;align-items:center;height:var(--chip);padding:0 var(--s2);border-radius:var(--r-sm);background:var(--raised);color:var(--ink-2);font-size:var(--t-caption);font-weight:500}
+.im-cap{font-size:var(--t-caption);font-weight:500;color:var(--ink-3)}
+.im-ex{table-layout:fixed} .im-ex td,.im-ex th{white-space:normal;overflow-wrap:anywhere} .im-ex td{height:auto;padding-top:var(--s2);padding-bottom:var(--s2)}
+/* FINAL 09: the card without its box, the dots gone ("4 of 7" on the kind line), the kind a plain word, the steward as one line up top. */
+.im-plain{margin:var(--s4) 0}
+.im-plain .im-kind{background:none;padding:0;font-size:var(--t-small);font-weight:500;color:var(--ink)}
+.im-file-name{font-size:var(--t-caption);color:var(--ink-3)}
+.im-of{margin-left:auto;font-size:var(--t-caption);color:var(--ink-3);font-variant-numeric:tabular-nums}
+.im-today{margin:6px 0 12px;font-size:var(--t-caption);color:var(--ink-3)} .im-today a{color:var(--ink-2);text-decoration:underline;text-underline-offset:2px}
+.im-steward p{margin:4px 0 12px;font-size:var(--t-caption);color:var(--ink-3)} .im-steward .linkbtn{font-size:var(--t-caption);color:var(--ink-2);text-decoration:underline;text-underline-offset:2px;padding:0}

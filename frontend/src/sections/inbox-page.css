@@ -1,0 +1,68 @@
+/* Inbox (FINAL 04): title + Yours/Everyone, kind tabs (Everyone only), a line, then list 420 | a line | the message; one at a time below 1200 px. No boxes, no buttons.
+   On a desktop the page never moves: the header is fixed, the list and the message each scroll in their own column, both ending above the Ask dock. A phone scrolls the page as before. */
+.ix{padding-bottom:var(--s4)}
+.ix-head{border-bottom:1px solid var(--line);padding-bottom:var(--s2)} .ix-head:has(.ix-tabs){padding-bottom:0}
+.ix-list{padding-top:var(--s3)} .ix-dscroll{padding-top:var(--s3)}
+.ix-grid.wide>.ix-list{padding-right:24px} .ix-grid.wide>.ix-dscroll{border-left:1px solid var(--line);padding-left:32px}
+.ix-title{display:flex;justify-content:space-between;align-items:center;gap:var(--s4);margin-top:var(--s1)}
+.ix-title h1{font-size:var(--t-h2);line-height:1.2;margin:0;font-weight:600;letter-spacing:-.01em}
+.ix-seg{display:inline-flex;background:var(--raised);border-radius:var(--r-sm);padding:3px}
+.ix-seg button{padding:5px 10px;border:0;background:none;border-radius:var(--r-sm);font:inherit;font-size:var(--t-small);color:var(--ink-3);display:inline-flex;gap:6px;align-items:center;cursor:pointer}
+.ix-seg button.on{background:var(--surface);color:var(--ink);box-shadow:0 0 0 1px var(--line);font-weight:500}
+.ix em{font-style:normal;color:var(--ink-3);font-size:var(--t-small);font-weight:400;font-variant-numeric:tabular-nums}
+.ix-tabs{display:flex;gap:22px;margin:var(--s3) 0 0;flex-wrap:wrap;row-gap:0}
+.ix-tabs button{padding:8px 0;border:0;background:none;font:inherit;font-size:var(--t-body);color:var(--ink-3);border-bottom:2px solid transparent;margin-bottom:-1px;cursor:pointer;display:inline-flex;gap:6px;align-items:center;white-space:nowrap}
+.ix-tabs button:hover{color:var(--ink)} .ix-tabs button.on{color:var(--ink);border-bottom-color:var(--ink);font-weight:500}
+.ix-grid{display:flex;flex-direction:column;gap:var(--s5)}
+.ix-grid.wide{display:grid;grid-template-columns:420px minmax(0,1fr);gap:0;align-items:start}
+.ix-q{width:100%;height:32px;border-radius:var(--r-sm);padding:0 10px;font:inherit;font-size:var(--t-small);color:var(--ink);background:var(--raised);border:0;margin-bottom:var(--s2)}
+.ix-q::placeholder{color:var(--ink-3)} .ix-q:focus{outline:2px solid var(--accent);outline-offset:0}
+/* a row: company, kind · size; robots and the status word on the right */
+.ix-row{display:grid;grid-template-columns:minmax(0,1fr) 84px;grid-template-rows:auto auto;column-gap:10px;row-gap:2px;min-height:58px;padding:8px 8px;border-bottom:1px solid var(--line);cursor:pointer;outline:0}
+.ix-row:hover{background:var(--row-hover)} .ix-row.on{background:var(--raised);border-radius:var(--r-sm);border-bottom-color:transparent}
+.ix-row:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.ix-l1{grid-column:1;display:flex;align-items:baseline;gap:8px;min-width:0}
+.ix-l1 b{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis} .ix-row.read .ix-l1 b{font-weight:500}
+.ix-new{font-size:var(--t-caption);color:var(--ink-3);white-space:nowrap}
+.ix-when{margin-left:auto;font-size:var(--t-caption);color:var(--ink-3);white-space:nowrap}
+.ix-l2{grid-column:1;font-size:var(--t-small);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink)} .ix-l2 .k{color:var(--ink-3)} .ix-row.read .ix-l2 .f{color:var(--ink-2)}
+.ix-side{grid-column:2;grid-row:1 / span 2;display:flex;flex-direction:column;gap:4px;align-items:flex-start;padding-top:2px}
+.ix-rb{display:inline-flex;gap:4px} .ix-rb i{width:22px;height:22px;display:inline-grid;place-items:center;color:var(--robot-off)} .ix-rb .robot-ic{color:inherit}
+.ix-rb i.on.r-1{color:var(--robot-1)} .ix-rb i.on.r-2{color:var(--robot-2)} .ix-rb i.on.r-3{color:var(--robot-3)}
+.ix .w{font-size:var(--t-caption);text-decoration:none;color:var(--ink-2)} .ix a.w:hover{text-decoration:underline}
+.ix .w.k-you{color:var(--accent);font-weight:500} .ix .w.k-start{color:var(--ink)} .ix .w.k-oth{color:var(--ink-3)} .ix .w.k-held{color:var(--critical);font-weight:500} .ix .w.k-none{color:var(--ink-4)}
+.ix-empty{color:var(--ink-3);margin:var(--s3) 0}
+.ix-sk{display:flex;flex-direction:column;gap:6px;padding:12px 8px;border-bottom:1px solid var(--line)} .ix-sk i{display:block;height:10px;border-radius:var(--r-xs);background:var(--skel);width:60%} .ix-sk i+i{width:85%}
+/* the detail */
+.ix-d{min-width:0;padding-bottom:104px}
+.ix-back{margin-bottom:var(--s2)}
+.ix-meta{display:flex;justify-content:space-between;gap:var(--s3);font-size:var(--t-small);flex-wrap:wrap}
+.ix-meta .ix-co{font-weight:500;color:var(--ink);text-decoration:none} .ix-meta a.ix-co:hover{text-decoration:underline} .ix-meta .m{color:var(--ink-3)} .ix-meta .la{color:var(--ink-2)} .ix-meta .kd{white-space:nowrap}
+.ix-h{font-size:var(--t-h2);font-weight:600;margin:8px 0 var(--s3);line-height:1.3}
+.ix-held-line{color:var(--ink-2);margin:0 0 var(--s3)}
+.ix-case{display:flex;align-items:center;gap:12px;background:var(--raised);border-radius:var(--r-sm);padding:10px 12px;color:var(--ink);text-decoration:none}
+.ix-case:hover{background:var(--hover);text-decoration:none} .ix-case:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.ix-case .t{flex:1;min-width:0;font-weight:500;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden} .ix-case .t small{font-weight:400;color:var(--ink-3);font-size:var(--t-caption)}
+.ix-case .w{font-size:var(--t-small)}
+.ix-why{margin-top:var(--s5)} .ix-why ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.ix-why li{display:flex;gap:8px;align-items:baseline} .ix-why li svg{color:var(--ink-3);flex:none;transform:translateY(2px)} .ix-why .m{color:var(--ink-3)}
+.ix-why u.swap{text-decoration:underline solid var(--critical);text-decoration-thickness:1.5px;text-underline-offset:3px}
+.ix-raw{margin-top:var(--s5);border-top:1px solid var(--line);padding-top:var(--s3)}
+.ix-raw summary{cursor:pointer;color:var(--ink-2);font-size:var(--t-small);list-style:none} .ix-raw summary::-webkit-details-marker{display:none} .ix-raw summary::before{content:"› "} .ix-raw[open] summary::before{content:"⌄ "}
+.ix-hd{display:grid;grid-template-columns:72px minmax(0,1fr);row-gap:4px;font-size:var(--t-small);margin:var(--s3) 0} .ix-hd dt{color:var(--ink-3)} .ix-hd dd{margin:0}
+/* a quote's terms, one row each, between the comparison and the price table */
+.ix-terms{display:grid;grid-template-columns:80px minmax(0,1fr);gap:6px var(--s3);margin:var(--s3) 0 0;padding:var(--s3) 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-size:var(--t-small)}
+.ix-terms dt{color:var(--ink-3)} .ix-terms dd{margin:0;color:var(--ink-2)} .ix-terms b{color:var(--ink);font-weight:600}
+/* desktop: fixed header, two scroll columns (last, so it wins over the base rules above) */
+@media (min-width:761px){
+  .main[data-route=inbox]{height:100dvh;min-height:0;overflow:hidden}
+  .main[data-route=inbox]>.content{display:flex;flex-direction:column;min-height:0;padding-bottom:0}
+  .ix{flex:1;min-height:0;display:flex;flex-direction:column;padding-bottom:0}
+  .ix-head{flex:none}
+  .ix-grid,.ix-grid.wide{flex:1;min-height:0;margin-top:0}
+  .ix-grid.wide{align-items:stretch;grid-template-rows:minmax(0,1fr)}
+  .ix-list{display:flex;flex-direction:column;min-height:0;flex:1}
+  .ix-lscroll{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain}
+  .ix-dscroll{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain}
+  .ix-d{padding-bottom:var(--s5)}
+}

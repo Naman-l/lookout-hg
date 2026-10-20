@@ -1,0 +1,496 @@
+{
+ "P01": {
+  "case": "inbox-bcx-rename",
+  "source": "genuine",
+  "reviewer": {
+   "answers the buyer's question": 2,
+   "assumptions are assumptions": 2,
+   "nothing is committed": 2,
+   "what would change the answer is specific": 2,
+   "buyer's words": 1
+  }
+ },
+ "P02": {
+  "case": "inbox-bcx-rename",
+  "source": "corrupted:raw_ids:buyer's words",
+  "reviewer": {
+   "answers the buyer's question": 2,
+   "assumptions are assumptions": 2,
+   "nothing is committed": 2,
+   "what would change the answer is specific": 2,
+   "buyer's words": 0
+  }
+ },
+ "P03": {
+  "case": "inbox-bcx-rename",
+  "source": "genuine",
+  "reviewer": {
+   "answers the buyer's question": 2,
+   "assumptions are assumptions": 2,
+   "nothing is committed": 2,
+   "what would change the answer is specific": 2,
+   "buyer's words": 1
+  }
+ },
+ "P04": {
+  "case": "control-unknown-origin",
+  "source": "corrupted:raw_ids:buyer's words",
+  "reviewer": {
+   "answers the buyer's question": 1,
+   "assumptions are assumptions": 2,
+   "nothing is committed": 2,
+   "what would change the answer is specific": 2,
+   "buyer's words": 0,
+   "names the unknown, its owner and the question": 2
+  }
+ },
+ "P05": {
+  "case": "inbox-yunzhan-reply",
+  "source": "corrupted:unknown_as_fact:assumptions are assumptions",
+  "reviewer": {
+   "answers the buyer's question": 1,
+   "assumptions are assumptions": 2,
+   "nothing is committed": 2,
+   "what would change the answer is specific": 2,
+   "buyer's words": 1
+  }
+ },
+ "P06": {
+  "case": "inbox-vpm-unvetted",
+  "source": "corrupted:raw_ids:buyer's words",
+  "reviewer": {
+   "answers the buyer's question": 1,
+   "assumptions are assumptions": 1,
+   "nothing is committed": 2,
+   "what would change the answer is specific": 1,
+   "buyer's words": 0
+  }
+ },
+ "P07": {
+  "case": "steward-reexport",
+  "source": "genuine",
+  "reviewer": {
+   "answers the buyer's question": 1,
+   "assumptions are assumptions": 2,
+   "nothing is committed": 1,
+   "what would change the answer is specific": 1,
+   "buyer's words": 1,
+   "says what the file is and what the step does": 1,
+   "findings carry count, consequence and example": 1,
+   "questions are specific and few": 2
+  }
+ },
+ "P08": {
+  "case": "inbox-yunzhan-reply",
+  "source": "corrupted:commits:nothing is committed",
+  "reviewer": {
+   "answers the buyer's question": 2,
+   "assumptions are assumptions": 1,
+   "nothing is committed": 0,
+   "what would change the answer is specific": 1,
+   "buyer's words": 1
+  }
+ },
+ "P09": {
+  "case": "inbox-yunzhan-reply",
+  "source": "genuine",
+  "reviewer": {
+   "answers the buyer's question": 2,
+   "assumptions are assumptions": 2,
+   "nothing is committed": 2,
+   "what would change the answer is specific": 2,
+   "buyer's words": 2
+  }
+ },
+ "P10": {
+  "case": "disruption-fm",
+  "source": "corrupted:unknown_as_fact:assumptions are assumptions",
+  "reviewer": {
+   "answers the buyer's question": 2,
+   "assumptions are assumptions": 2,
+   "nothing is committed": 2,
+   "what would change the answer is specific": 2,
+   "buyer's words": 1,
+   "names the build and the month": 2
+  }
+ },
+ "P11": {
+  "case": "disruption-fm",
+  "source": "genuine",
+  "reviewer": {
+   "answers the buyer's question": 2,
+   "assumptions are assumptions": 1,
+   "nothing is committed": 2,
+   "what would change the answer is specific": 1,
+   "buyer's words": 0,
+   "names the build and the month": 2
+  }
+ },
+ "P12": {
+  "case": "disruption-fm",
+  "source": "corrupted:unknown_as_fact:assumptions are assumptions",
+  "reviewer": {
+   "answers the buyer's question": 2,
+   "assumptions are assumptions": 1,
+   "nothing is committed": 2,
+   "what would change the answer is specific": 1,
+   "buyer's words": 1,
+   "names the build and the month": 2
+  }
+ },
+ "P13": {
+  "case": "disruption-fm",
+  "source": "genuine",
+  "reviewer": {
+   "answers the buyer's question": 2,
+   "assumptions are assumptions": 1,
+   "nothing is committed": 2,
+   "what would change the answer is specific": 2,
+   "buyer's words": 1,
+   "names the build and the month": 2
+  }
+ },
+ "P14": {
+  "case": "inbox-yunzhan-reply",
+  "source": "genuine",
+  "reviewer": {
+   "answers the buyer's question": 2,
+   "assumptions are assumptions": 2,
+   "nothing is committed": 2,
+   "what would change the answer is specific": 2,
+   "buyer's words": 1
+  }
+ },
+ "P15": {
+  "case": "disruption-fm",
+  "source": "corrupted:empty:answers the buyer's question",
+  "reviewer": {
+   "answers the buyer's question": 0,
+   "assumptions are assumptions": 1,
+   "nothing is committed": 1,
+   "what would change the answer is specific": 2,
+   "buyer's words": 0,
+   "names the build and the month": 1
+  }
+ },
+ "P16": {
+  "case": "steward-reexport",
+  "source": "genuine",
+  "reviewer": {
+   "answers the buyer's question": 1,
+   "assumptions are assumptions": 1,
+   "nothing is committed": 2,
+   "what would change the answer is specific": 1,
+   "buyer's words": 0,
+   "says what the file is and what the step does": 1,
+   "findings carry count, consequence and example": 1,
+   "questions are specific and few": 1
+  }
+ },
+ "P17": {
+  "case": "inbox-bcx-rename",
+  "source": "genuine",
+  "reviewer": {
+   "answers the buyer's question": 2,
+   "assumptions are assumptions": 2,
+   "nothing is committed": 2,
+   "what would change the answer is specific": 1,
+   "buyer's words": 1
+  }
+ },
+ "P18": {
+  "case": "control-unknown-origin",
+  "source": "genuine",
+  "reviewer": {
+   "answers the buyer's question": 1,
+   "assumptions are assumptions": 2,
+   "nothing is committed": 2,
+   "what would change the answer is specific": 2,
+   "buyer's words": 1,
+   "names the unknown, its owner and the question": 2
+  }
+ },
+ "P19": {
+  "case": "inbox-vpm-unvetted",
+  "source": "genuine",
+  "reviewer": {
+   "answers the buyer's question": 1,
+   "assumptions are assumptions": 2,
+   "nothing is committed": 2,
+   "what would change the answer is specific": 2,
+   "buyer's words": 1
+  }
+ },
+ "P20": {
+  "case": "inbox-vpm-unvetted",
+  "source": "corrupted:vague_would_change:what would change the answer is specific",
+  "reviewer": {
+   "answers the buyer's question": 1,
+   "assumptions are assumptions": 2,
+   "nothing is committed": 2,
+   "what would change the answer is specific": 0,
+   "buyer's words": 1
+  }
+ },
+ "P21": {
+  "case": "disruption-fm",
+  "source": "corrupted:vague_would_change:what would change the answer is specific",
+  "reviewer": {
+   "answers the buyer's question": 2,
+   "assumptions are assumptions": 1,
+   "nothing is committed": 2,
+   "what would change the answer is specific": 0,
+   "buyer's words": 2,
+   "names the build and the month": 2
+  }
+ },
+ "P22": {
+  "case": "control-unknown-origin",
+  "source": "genuine",
+  "reviewer": {
+   "answers the buyer's question": 2,
+   "assumptions are assumptions": 1,
+   "nothing is committed": 2,
+   "what would change the answer is specific": 1,
+   "buyer's words": 1,
+   "names the unknown, its owner and the question": 2
+  }
+ },
+ "P23": {
+  "case": "steward-reexport",
+  "source": "genuine",
+  "reviewer": {
+   "answers the buyer's question": 1,
+   "assumptions are assumptions": 1,
+   "nothing is committed": 2,
+   "what would change the answer is specific": 1,
+   "buyer's words": 0,
+   "says what the file is and what the step does": 2,
+   "findings carry count, consequence and example": 1,
+   "questions are specific and few": 1
+  }
+ },
+ "P24": {
+  "case": "disruption-fm",
+  "source": "corrupted:empty:answers the buyer's question",
+  "reviewer": {
+   "answers the buyer's question": 0,
+   "assumptions are assumptions": 1,
+   "nothing is committed": 0,
+   "what would change the answer is specific": 0,
+   "buyer's words": 1,
+   "names the build and the month": 1
+  }
+ },
+ "P25": {
+  "case": "inbox-bcx-rename",
+  "source": "corrupted:commits:nothing is committed",
+  "reviewer": {
+   "answers the buyer's question": 1,
+   "assumptions are assumptions": 1,
+   "nothing is committed": 0,
+   "what would change the answer is specific": 1,
+   "buyer's words": 1
+  }
+ },
+ "P26": {
+  "case": "inbox-vpm-unvetted",
+  "source": "genuine",
+  "reviewer": {
+   "answers the buyer's question": 2,
+   "assumptions are assumptions": 2,
+   "nothing is committed": 2,
+   "what would change the answer is specific": 1,
+   "buyer's words": 1
+  }
+ },
+ "P27": {
+  "case": "inbox-yunzhan-reply",
+  "source": "corrupted:commits:nothing is committed",
+  "reviewer": {
+   "answers the buyer's question": 2,
+   "assumptions are assumptions": 2,
+   "nothing is committed": 0,
+   "what would change the answer is specific": 2,
+   "buyer's words": 1
+  }
+ },
+ "P28": {
+  "case": "inbox-vpm-unvetted",
+  "source": "genuine",
+  "reviewer": {
+   "answers the buyer's question": 1,
+   "assumptions are assumptions": 1,
+   "nothing is committed": 2,
+   "what would change the answer is specific": 1,
+   "buyer's words": 1
+  }
+ },
+ "P29": {
+  "case": "disruption-fm",
+  "source": "genuine",
+  "reviewer": {
+   "answers the buyer's question": 2,
+   "assumptions are assumptions": 1,
+   "nothing is committed": 2,
+   "what would change the answer is specific": 1,
+   "buyer's words": 1,
+   "names the build and the month": 2
+  }
+ },
+ "P30": {
+  "case": "inbox-yunzhan-reply",
+  "source": "genuine",
+  "reviewer": {
+   "answers the buyer's question": 2,
+   "assumptions are assumptions": 2,
+   "nothing is committed": 2,
+   "what would change the answer is specific": 2,
+   "buyer's words": 1
+  }
+ },
+ "P31": {
+  "case": "inbox-bcx-rename",
+  "source": "genuine",
+  "reviewer": {
+   "answers the buyer's question": 2,
+   "assumptions are assumptions": 2,
+   "nothing is committed": 2,
+   "what would change the answer is specific": 2,
+   "buyer's words": 1
+  }
+ },
+ "P32": {
+  "case": "control-unknown-origin",
+  "source": "genuine",
+  "reviewer": {
+   "answers the buyer's question": 1,
+   "assumptions are assumptions": 2,
+   "nothing is committed": 2,
+   "what would change the answer is specific": 2,
+   "buyer's words": 1,
+   "names the unknown, its owner and the question": 2
+  }
+ },
+ "P33": {
+  "case": "disruption-fm",
+  "source": "genuine",
+  "reviewer": {
+   "answers the buyer's question": 2,
+   "assumptions are assumptions": 2,
+   "nothing is committed": 2,
+   "what would change the answer is specific": 1,
+   "buyer's words": 1,
+   "names the build and the month": 2
+  }
+ },
+ "P34": {
+  "case": "steward-reexport",
+  "source": "corrupted:unknown_as_fact:assumptions are assumptions",
+  "reviewer": {
+   "answers the buyer's question": 1,
+   "assumptions are assumptions": 1,
+   "nothing is committed": 2,
+   "what would change the answer is specific": 1,
+   "buyer's words": 1,
+   "says what the file is and what the step does": 2,
+   "findings carry count, consequence and example": 1,
+   "questions are specific and few": 2
+  }
+ },
+ "P35": {
+  "case": "control-unknown-origin",
+  "source": "corrupted:vague_would_change:what would change the answer is specific",
+  "reviewer": {
+   "answers the buyer's question": 1,
+   "assumptions are assumptions": 1,
+   "nothing is committed": 2,
+   "what would change the answer is specific": 0,
+   "buyer's words": 1,
+   "names the unknown, its owner and the question": 2
+  }
+ },
+ "P36": {
+  "case": "inbox-bcx-rename",
+  "source": "corrupted:commits:nothing is committed",
+  "reviewer": {
+   "answers the buyer's question": 1,
+   "assumptions are assumptions": 1,
+   "nothing is committed": 0,
+   "what would change the answer is specific": 2,
+   "buyer's words": 1
+  }
+ },
+ "P37": {
+  "case": "inbox-yunzhan-reply",
+  "source": "corrupted:empty:answers the buyer's question",
+  "reviewer": {
+   "answers the buyer's question": 0,
+   "assumptions are assumptions": 1,
+   "nothing is committed": 2,
+   "what would change the answer is specific": 0,
+   "buyer's words": 2
+  }
+ },
+ "P38": {
+  "case": "steward-reexport",
+  "source": "corrupted:raw_ids:buyer's words",
+  "reviewer": {
+   "answers the buyer's question": 1,
+   "assumptions are assumptions": 1,
+   "nothing is committed": 2,
+   "what would change the answer is specific": 1,
+   "buyer's words": 0,
+   "says what the file is and what the step does": 1,
+   "findings carry count, consequence and example": 1,
+   "questions are specific and few": 1
+  }
+ },
+ "P39": {
+  "case": "inbox-yunzhan-reply",
+  "source": "genuine",
+  "reviewer": {
+   "answers the buyer's question": 2,
+   "assumptions are assumptions": 1,
+   "nothing is committed": 2,
+   "what would change the answer is specific": 2,
+   "buyer's words": 1
+  }
+ },
+ "P40": {
+  "case": "control-unknown-origin",
+  "source": "genuine",
+  "reviewer": {
+   "answers the buyer's question": 2,
+   "assumptions are assumptions": 1,
+   "nothing is committed": 2,
+   "what would change the answer is specific": 2,
+   "buyer's words": 1,
+   "names the unknown, its owner and the question": 2
+  }
+ },
+ "P41": {
+  "case": "control-unknown-origin",
+  "source": "corrupted:empty:answers the buyer's question",
+  "reviewer": {
+   "answers the buyer's question": 0,
+   "assumptions are assumptions": 1,
+   "nothing is committed": 2,
+   "what would change the answer is specific": 0,
+   "buyer's words": 1,
+   "names the unknown, its owner and the question": 2
+  }
+ },
+ "P42": {
+  "case": "disruption-fm",
+  "source": "genuine",
+  "reviewer": {
+   "answers the buyer's question": 2,
+   "assumptions are assumptions": 2,
+   "nothing is committed": 2,
+   "what would change the answer is specific": 2,
+   "buyer's words": 1,
+   "names the build and the month": 2
+  }
+ }
+}

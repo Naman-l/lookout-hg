@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lookout · Approval: request to Yunzhan</title>
+<link rel="stylesheet" href="mock.css">
+<style>
+  .mail{border:1px solid var(--chalk);border-radius:var(--r-card);overflow:hidden;background:#fff;box-shadow:var(--shadow-subtle-2)}
+  .mail .h{padding:12px 16px;border-bottom:1px solid var(--chalk);background:var(--powder);font-size:13px}
+  .mail .h div{display:grid;grid-template-columns:70px 1fr;gap:8px;padding:2px 0}
+  .mail .h span.k{color:var(--gravel)}
+  .mail .b{padding:16px 18px;font-size:14px;line-height:1.6;white-space:pre-wrap}
+  .bar{display:flex;gap:10px;align-items:center;margin:16px 0 4px}
+  .life{display:flex;gap:8px;align-items:center;font-size:12.5px;color:var(--gravel);flex-wrap:wrap}
+  .life b{color:var(--ink);font-weight:600}
+  .life .arrow{color:var(--fog)}
+  .tabs{display:flex;gap:4px;margin-bottom:16px;border-bottom:1px solid var(--chalk)}
+  .tabs a{padding:7px 12px;color:var(--cinder);font-size:13px;border-bottom:2px solid transparent;margin-bottom:-1px}
+  .tabs a.on{color:var(--ink);border-color:var(--ink);font-weight:500}
+</style></head>
+<body><div class="app">
+<aside class="side">
+  <div class="brand">Lookout<small>Halden Robotics · Procurement</small></div>
+  <nav class="nav">
+    <a href="action-list-a.html">Action list <span class="n hot">12</span></a>
+    <a href="#">Inbox <span class="n">15</span></a><a href="#">Suppliers <span class="n">60</span></a>
+    <a href="#">Parts and BOM <span class="n">502</span></a><a href="#">Orders <span class="n">185 open</span></a>
+    <a href="#">Forecast and demand</a><div class="sep"></div>
+    <a class="on" href="approval.html">Approvals <span class="n hot">2</span></a>
+    <a href="run-midway.html">Agent activity</a>
+    <a href="#">Data <span class="n">17 issues</span></a>
+  </nav>
+</aside>
+<main class="main">
+  <div class="top"><div class="where"><a href="#">Approvals</a> / <b>Request to Yunzhan</b></div>
+    <div class="asof">Data as of <b style="color:var(--ink)">Fri Sep 25, 2026</b></div></div>
+  <div class="tabs"><a class="on" href="#">Awaiting approval 2</a><a href="#">Sent (simulated) 0</a><a href="#">Rejected 0</a></div>
+
+  <h1>Request to Yunzhan: revised promise dates, Plant 1 allocation, quote extension</h1>
+  <div class="life" style="margin-bottom:18px"><span class="badge s-pending">Awaiting approval</span> <b>Drafted</b> by the Buyer’s clerk, 10:42 <span class="arrow">→</span> <span>Approved</span> <span class="arrow">→</span> <span>Sent (simulated)</span> · for <a href="item-yunzhan.html">Yunzhan plant fire</a> · <a href="run-midway.html">How we got here</a></div>
+
+  <div class="grid2">
+  <div>
+    <h2 style="margin-top:0">This is exactly what will happen</h2>
+    <p style="margin:0 0 12px">When you approve, this email goes to the Outbox exactly as shown. <span class="muted">Sending is simulated in this workspace: nothing leaves the computer.</span></p>
+    <div class="mail">
+      <div class="h">
+        <div><span class="k">To</span><span>Li Wei &lt;li.wei@yunzhan-motor.example&gt; <span class="badge s-ok">contact on file</span> <span class="muted small">vendor record SUP-0001</span></span></div>
+        <div><span class="k">From</span><span>Dana Reyes &lt;dana.reyes@haldenrobotics.example&gt;</span></div>
+        <div><span class="k">Subject</span><span><b>HPO-26-00450 / HPO-26-00614: revised promise dates and Plant 1 allocation</b></span></div>
+      </div>
+<div class="b">Dear Li Wei,
+
+Thank you for your force majeure notice of September 22. To plan our builds we need the following by October 10:
+
+1. Revised promise dates for all 10 open lines in your notice, including HPO-26-00450 line 10 (355 pcs HR-40110), HPO-26-00614 line 10 (435 pcs) and line 20 (350 pcs).
+2. The quantity of HR-40110 that Plant 1 (Longgang) can allocate to Halden in October and November.
+3. An extension of quotation Q-YZ-26-0831, which expires around October 13, by 60 days.
+
+Our October build needs 364 pcs of HR-40110.
+
+Best regards,
+Dana Reyes
+Buyer, Halden Robotics</div>
+    </div>
+    <div class="bar">
+      <button class="btn primary">Approve and send (simulated)</button>
+      <button class="btn">Edit draft</button>
+      <button class="btn ghost">Reject with reason…</button>
+    </div>
+    <p class="note">Approval covers this exact text and recipient. If either changes, the draft returns here for approval again.</p>
+  </div>
+
+  <div>
+    <div class="card">
+      <h3>Checks</h3>
+      <ul style="margin:0;padding-left:18px;font-size:13px;line-height:1.7">
+        <li>Recipient is the contact on Yunzhan’s vendor record</li>
+        <li>Not the address in the Sep 23 payment-change email (<span class="mono">yunzhan-rnotor.example</span>), which is flagged</li>
+        <li>No price, award or payment commitment in the text</li>
+        <li>Every PO line and quantity matches the order file</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Affects</h3>
+      <dl class="kv"><dt>PO lines</dt><dd class="mono" style="font-size:12px">HPO-26-00450 / 10<br>HPO-26-00614 / 10, 20<br>+7 in the notice</dd><dt>Part</dt><dd><span class="chip"><span class="mono">HR-40110</span> drive motor</span></dd><dt>Build</dt><dd>Tern T2, October</dd></dl>
+    </div>
+    <div class="card">
+      <h3>Why</h3>
+      <p style="margin:0;font-size:13px">Recommendation for <a href="item-yunzhan.html">Yunzhan plant fire</a>: October is short 364 drive motors unless Plant 1 allocates or stock exists; the only quote expires Oct 13.</p>
+    </div>
+  </div>
+  </div>
+</main></div>
+<div class="mocknote">Mock · Approval · static</div>
+</body></html>

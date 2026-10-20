@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lookout · Action list (calm)</title>
+<link rel="stylesheet" href="mock.css"></head>
+<body class="v2"><svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></symbol>
+<symbol id="i-inbox" viewBox="0 0 24 24"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></symbol>
+<symbol id="i-bld" viewBox="0 0 24 24"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4M10 10h4M10 14h4M10 18h4"/></symbol>
+<symbol id="i-pkg" viewBox="0 0 24 24"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></symbol>
+<symbol id="i-file" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8M16 13H8M16 17H8"/></symbol>
+<symbol id="i-trend" viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></symbol>
+<symbol id="i-act" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></symbol>
+<symbol id="i-db" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="M12 8v4M12 16h.01"/></symbol>
+</defs></svg><div class="app">
+<aside class="side">
+  <div class="brand">Lookout<small>Halden Robotics</small></div>
+  <nav class="nav">
+    <a class="on" href="action-list-a2.html"><svg class="ic"><use href="#i-list"/></svg>Action list <span class="n hot">12</span></a>
+    <a href="#"><svg class="ic"><use href="#i-inbox"/></svg>Inbox <span class="n">15</span></a><a href="#"><svg class="ic"><use href="#i-bld"/></svg>Suppliers</a>
+    <a href="#"><svg class="ic"><use href="#i-pkg"/></svg>Parts and BOM</a><a href="#"><svg class="ic"><use href="#i-file"/></svg>Orders</a>
+    <a href="#"><svg class="ic"><use href="#i-trend"/></svg>Forecast and demand</a><div class="sep"></div>
+    <a href="approval.html"><svg class="ic"><use href="#i-check"/></svg>Approvals <span class="n hot">1</span></a>
+    <a href="run-midway2.html"><svg class="ic"><use href="#i-act"/></svg>Agent activity</a>
+    <a href="#"><svg class="ic"><use href="#i-db"/></svg>Data</a>
+  </nav>
+</aside>
+<main class="main">
+  <div class="top"><span></span><div class="asof">Data as of Fri Sep 25, 2026 <span class="fchip">All buyers ▾</span></div></div>
+  <h1>Action list</h1>
+  <p class="sub1">12 items · 4 need a decision this month</p>
+
+  <div class="quiet"><svg class="ic"><use href="#i-shield"/></svg>2 suspicious messages are held: nothing can be approved from them. <a href="#">Review</a></div>
+
+  <div class="colh"><span></span><span>Item</span><span>At stake</span><span>Act by</span><span>Owner</span><span>Next</span></div>
+
+  <div class="glabel">Supply disruption</div>
+  <ul class="rows">
+    <li><a class="r focus" href="item-yunzhan2.html"><span class="dot high"></span><span class="t">Yunzhan plant fire: no drive motors for the October Tern build</span><span class="m">364 <small>motors short</small></span><span class="d soon"><span style="display:flex;align-items:center;gap:8px">Oct 10<span class="dl hot"><i><b style="width:50%"></b></i></span></span></span><span class="o">Dana Reyes</span><span class="n">Request revised promise →</span></a></li>
+    <li><a class="r" href="#"><span class="dot med"></span><span class="t">Jadepeak power modules slip to November and January</span><span class="m">5 <small>PO lines</small></span><span class="dNone"><span style="display:flex;align-items:center;gap:8px">Nov 1</span></span><span class="o">Marcus Chen</span><span class="n">Draft expedite →</span></a></li>
+  </ul>
+
+  <div class="glabel">Deadline</div>
+  <ul class="rows">
+    <li><a class="r" href="#"><span class="dot high"></span><span class="t">Yunzhan quote Q-YZ-26-0831 expires</span><span class="m">$154.55 <small>/ unit</small></span><span class="d soon"><span style="display:flex;align-items:center;gap:8px">Oct 13<span class="dl hot"><i><b style="width:40%"></b></i></span></span></span><span class="o">Dana Reyes</span><span class="n">Request extension →</span></a></li>
+    <li><a class="r" href="#"><span class="dot high"></span><span class="t">Great Plains price rise: lock today’s price</span><span class="m">+8.5% <small>extrusions</small></span><span class="d soon"><span style="display:flex;align-items:center;gap:8px">Oct 15<span class="dl warm"><i><b style="width:33%"></b></i></span></span></span><span class="o">Tom Albrecht</span><span class="n">Place orders →</span></a></li>
+    <li><a class="r" href="#"><span class="dot low"></span><span class="t">Ruilian ships 58 of 115 later than promised</span><span class="m">58 <small>units</small></span><span class="dNone"><span style="display:flex;align-items:center;gap:8px">Oct 30</span></span><span class="o">Priya Nair</span><span class="n">Propose push out →</span></a></li>
+    <li><a class="r" href="#"><span class="dot med"></span><span class="t">Hallerbeck gearbox quote expires; 30% prepayment</span><span class="m">€38,950</span><span class="dNone"><span style="display:flex;align-items:center;gap:8px">Oct 31</span></span><span class="o">Dana Reyes</span><span class="n">Review with finance →</span></a></li>
+  </ul>
+
+  <div class="glabel">Tariff exposure</div>
+  <ul class="rows">
+    <li><a class="r" href="#"><span class="dot high"></span><span class="t">New 25% duty on China-origin parts from Nov 1</span><span class="m">$1.54M <small>net · $2.14M gross</small></span><span class="dNone"><span style="display:flex;align-items:center;gap:8px">Nov 1</span></span><span class="o">Dana Reyes +3</span><span class="n">Request COO certificate →</span></a></li>
+  </ul>
+
+  <div class="glabel">Open question</div>
+  <ul class="rows">
+    <li><a class="r" href="#"><span class="dot med"></span><span class="t">5 tariff-listed parts have no country of origin</span><span class="m"><span class="unknown">unknown</span></span><span class="dNone"><span style="display:flex;align-items:center;gap:8px">Nov 1</span></span><span class="o">Dana, Priya, Tom</span><span class="n">Ask the owner →</span></a></li>
+    <li><a class="r" href="#"><span class="dot low"></span><span class="t">On-hand stock is not in the data</span><span class="m"><span class="unknown">unknown</span></span><span class="d">—</span><span class="o">Dana Reyes</span><span class="n">Ask the owner →</span></a></li>
+  </ul>
+  <p class="hint"><span><span class="kbd">j</span> <span class="kbd">k</span> move</span><span><span class="kbd">Enter</span> open</span><span><span class="kbd">/</span> filter</span></p>
+  <p class="end">That is everything that needs a person. Lower-priority items (2) · show</p>
+
+  <h2 style="margin-top:44px">States</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+    <div><div class="glabel" style="padding-left:12px">Loading</div>
+      <div class="r" style="display:grid"><span class="dot" style="background:var(--chalk)"></span><span class="skel" style="width:70%"></span><span class="skel" style="width:60%;justify-self:end"></span><span class="skel" style="width:50px"></span><span class="skel" style="width:80px"></span><span></span></div></div>
+    <div><div class="glabel" style="padding-left:12px">Empty (filtered to Sofia Marino)</div>
+      <p style="color:var(--cinder);padding:10px 12px;margin:0">Nothing needs Sofia right now.</p></div>
+  </div>
+</main></div>
+<div class="mocknote">Mock A2 · calm · static</div>
+</body></html>

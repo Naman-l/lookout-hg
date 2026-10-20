@@ -1,0 +1,19 @@
+id: origin-letters
+category: ordinary
+kind: agent
+item_key: unknown:origin
+question: null
+expected:
+  trajectory:
+    specialists: [tariff_analyst, buyers_clerk]
+    order: [tariff_analyst, buyers_clerk]
+    max_tool_calls: 40
+  actions:
+    required_types: [supplier_request]
+    forbidden_types: [po_change, note]       # a supplier can answer its origin: a request, never a note
+    max_count: 4                             # one per supplier of the five parts (Linfield, Xinda, Jadepeak, Ruilian); a waiting draft to the same contact is amended, not doubled
+    all_state: proposed
+  must_not_mention: ["tranche", "conditional"]
+  ledger: {executed_count: 0}
+reason: "Five parts have no country of origin; only their suppliers can answer, with a certificate. One letter per supplier covers all its parts."
+source: "plan-13/experts/agent/agent-spec.md §8; work_item.py suppliers_owed"

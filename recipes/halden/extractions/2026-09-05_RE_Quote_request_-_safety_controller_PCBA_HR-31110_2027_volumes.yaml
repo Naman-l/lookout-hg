@@ -1,0 +1,41 @@
+message: 2026-09-05_RE_Quote_request_-_safety_controller_PCBA_HR-31110_2027_volumes
+by: transcribed
+note: typed once from the document by the earlier hand-written step 22; every price is checked against its cited line on every build
+offers:
+- source: email
+  line: '1,000/yr: $188.75 ea'
+  line_ref: L17 (quoted)
+  part_number: HR-31110
+  qty_break: 1000
+  price_raw: '188.75'
+  price: 188.75
+  lead_time: 6 weeks
+  lead_time_condition: from receipt of consigned material
+  lead_time_days: 42
+  conditions: 'With Halden-consigned bare PCB (HR-30110) and MCU. Rev C (HR-30180) needs a new stencil and ICT fixture: NRE USD 4,200.'
+- source: email
+  line: 'Correction to my note below: the unit price at 2,500/yr should read $183.36, not $138.36.'
+  line_ref: L18 (quoted)
+  part_number: HR-31110
+  qty_break: 2500
+  price_raw: '138.36'
+  price: 138.36
+  lead_time: 6 weeks
+  lead_time_condition: from receipt of consigned material
+  lead_time_days: 42
+  conditions: 'With Halden-consigned bare PCB (HR-30110) and MCU. Rev C (HR-30180) needs a new stencil and ICT fixture: NRE USD 4,200.'
+  superseded_by:
+    part_number: HR-31110
+    qty_break: 2500
+    price_raw: '183.36'
+- source: email
+  line: 'Correction to my note below: the unit price at 2,500/yr should read $183.36, not $138.36.'
+  line_ref: L3 (correction)
+  part_number: HR-31110
+  qty_break: 2500
+  price_raw: '183.36'
+  price: 183.36
+  lead_time: 6 weeks
+  lead_time_condition: from receipt of consigned material
+  lead_time_days: 42
+  conditions: Corrects the 138.36. quoted at 2,500/yr. Everything else stands.

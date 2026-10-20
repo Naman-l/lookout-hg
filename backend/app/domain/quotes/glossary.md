@@ -1,0 +1,5 @@
+<!-- tables: offers -->
+- An **offer** is one price for one part at one quantity break, with the conditions that come with it: unit (each or per thousand), currency, validity date, lead time and the event it waits on ("60 days after approval"), minimum order, tooling, surcharge, payment terms, Incoterm and the origin the supplier claims. Keep the conditions attached to the price.
+- Offers are read from quotes by **extraction records**, each citing the exact line it came from; the build checks every price against that line. A quote with no record is not an offer, and is listed as not extracted. A record the model proposed is not used until a person has reviewed it.
+- A later message that corrects a number **supersedes** the quoted original: the correction counts, the original stays as history.
+- An offer from a message the inbox blocked is kept and never compared. Compare **landed cost** (price, surcharge, duty by origin and Incoterm, tooling per unit), and keep what is unknown (freight, an origin only the broker can rule) apart from what is known.

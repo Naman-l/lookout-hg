@@ -1,0 +1,26 @@
+id: det-counts
+core: true            # part of THE answer sheet: written from the raw files before any agent ran
+category: ordinary
+kind: detector            # code only; runs with --no-model
+item_key: null
+expected:
+  counts:
+    # The build must land these from the raw files (as of 2026-09-25).
+    po_rows_raw: 2622
+    po_exact_duplicate_rows_dropped: 6        # whole-row repeats, e.g. PO-10624 line 2, HPO-25-00251 line 10
+    po_lines_open_or_partial: 185             # OPEN 172 + PARTIAL 13, after dropping duplicates
+    po_lines_past_due_raw: 29                 # OPEN/PARTIAL, promised_date < 2026-09-25 (AS_OF)
+    po_lines_stale_unknown: [PO-10710/1, PO-10711/1, PO-10788/1]   # old-ERP lines 490+ days late: one Unknown each, owned by the buyer on the line (PO-10710/1 Marcus Chen; PO-10711/1 and PO-10788/1 Dana Reyes), excluded from open supply
+    po_lines_past_due: 26                     # 29 minus the 3 stale lines; 4 of the 26 are force-majeure lines
+    force_majeure_lines_matched: 10           # every line in the Yunzhan notice resolves to a PO line
+    force_majeure_lines_supplier: SUP-0001    # HPO-26-00532 is booked under V10871; the alias must resolve
+    force_majeure_open_qty: 4892
+    force_majeure_hr40110_open_qty: 1140      # 355 + 435 + 350
+    unknown_origin_on_listed_codes: [HR-13103, HR-21106, HR-40220, HR-40320, HR-51130]
+    unknown_hts_china_origin_tariff_category: [HR-12120, HR-50310]   # gearbox and battery with blank HTS
+    yunzhan_supplier_records: [SUP-0001, V10233, V10871]   # one company, three records
+  items:
+    present: [disruption:SUP-0001, unknown:HR-40220, trust:2026-09-23_URGENT_Updated_remittance_details_following_plant_incident, trust:2026-09-12_Spot_offer_-_NG6603-QFN48_in_stock_ships_today]
+reason: "The floor under every agent case: if the build miscounts open lines or misses an alias, every packet built on it is wrong however good the prose."
+resolution: "Agreed with the domain build's blind recomputation: the 3 stale old-ERP lines are Unknowns (may not really be open), not past-due noise, so 26 past due plus 3 stale Unknowns; both counts are graded."
+source: "data/purchase_orders.csv (status, promised_date, qty_received); data/quotes/2026-09-22_NOTICE_OF_FORCE_MAJEURE...eml table; data/suppliers.csv rows SUP-0001, V10233, V10871; data/parts.csv country_of_origin, hts_code"

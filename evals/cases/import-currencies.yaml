@@ -1,0 +1,24 @@
+id: import-currencies
+stale: "same: blank currencies are a question in the code recipe's deck (import-deck, currency:blank covers 9), not a model task."
+category: ordinary
+kind: import
+item_key: null
+expected:
+  blank_currency_lines:                            # all nine are CLOSED or CANCELLED, so no open number depends on the guess
+    - {po_line: "HPO-25-00014/10", inferred: USD}
+    - {po_line: "HPO-25-00130/10", inferred: USD}
+    - {po_line: "HPO-25-00211/90", inferred: USD}
+    - {po_line: "HPO-25-00612/20", inferred: TWD}
+    - {po_line: "HPO-25-00638/40", inferred: MXN}
+    - {po_line: "HPO-26-00408/230", inferred: USD}
+    - {po_line: "HPO-26-00415/40", inferred: USD}
+    - {po_line: "HPO-26-00472/10", inferred: USD}
+    - {po_line: "HPO-26-00491/170", inferred: USD}
+  inference_rule: "the supplier record's invoicing currency; shown as inferred, with the rule, never as stated"
+  label: inferred                                   # Provenance method on every one of the nine
+  normalised: {RMB: CNY, lines: 13, label: normalised}
+  asked: false                                      # the rule is safe for closed lines: no flashcard; the data issue states the rule and the consequence
+  must_not: "use an inferred currency in any open-order or exposure number without the label"
+reason: "A silent guess is worse than a visible gap: the steward infers where a rule is safe and says so, and does not ask the person about nine closed lines."
+oracle: "bootstrap step 12_po_currency_fx.py (data issue po.currency_blank, 9 lines)"
+source: "data/purchase_orders.csv rows with an empty currency (verified by evals/tests); data/suppliers.csv currency by supplier; data/README.md 'label anything you inferred'"

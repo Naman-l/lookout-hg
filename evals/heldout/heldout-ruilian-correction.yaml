@@ -1,0 +1,21 @@
+id: heldout-ruilian-correction
+category: ordinary
+kind: agent
+item_key: null
+start: {post: "/api/messages/{message}/triage-runs", message: "2026-09-19_RE_RE_PO_HPO-26-00623_confirmation"}
+expected:
+  must_mention:
+    - ["HPO-26-00623"]
+    - ["9 October", "Oct 9", "October 9", "10/09", "2026-10-09"]       # the corrected ship date for all three lines
+    - ["30 October", "Oct 30", "October 30", "10/30", "2026-10-30"]    # the second shipment of line 20
+    - ["57"]                                                          # line 20 ships 57 pieces first, the other 58 later
+    - [correct, supersede, replac, earlier, last mail, previous]       # it replaces the schedule of 16 September
+  actions: {forbidden_types: [po_change]}                              # moving a PO date is a person's decision
+  tool_calls:
+    required: [read_message]
+    forbidden: [Bash, Read, Write, WebFetch, WebSearch]
+  trajectory: {specialists: [inbox_analyst], max_repeat: 3, max_tool_errors: 3}
+  ledger: {executed_count: 0}
+reason: "Ruilian first confirmed HPO-26-00623 for 2 October, then wrote again to correct it: lines 10 and 30 ship 9 October, line 20 is partial (57 pieces on 9 October, 58 on 30 October) because a sub-supplier is short of connectors. Ex-works Wuxi plus about 21 days at sea. The PO dates on file (24 and 28 September) are already behind or about to be. The later mail is the current schedule; the earlier is history."
+oracle: "none beyond the raw message and the PO rows"
+source: "data/quotes/2026-09-19_RE_RE_PO_HPO-26-00623_confirmation.eml; data/purchase_orders.csv HPO-26-00623/10, /20, /30"

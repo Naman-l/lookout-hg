@@ -1,0 +1,64 @@
+message: 2026-09-21_Quotation_QV-Q-2609-17_battery_packs_2027_Malaysia_option
+by: transcribed
+note: typed once from the document by the earlier hand-written step 22; every price is checked against its cited line on every build
+offers:
+- source: email
+  line: HR-50110 QV-48L30-HR Tern pack USD 1,155.21 USD 1,224.52
+  line_ref: L7
+  quote_no: QV-Q-2609-17
+  part_number: HR-50110
+  supplier_model: QV-48L30-HR
+  price_raw: 1,155.21
+  price: 1155.21
+  incoterm_place: Shenzhen
+  origin_claim: China (Huizhou)
+  origin_iso: CN
+  lead_time: 45 days
+  lead_time_days: 45
+  validity_date: '2026-11-05'
+- source: email
+  line: HR-50110 QV-48L30-HR Tern pack USD 1,155.21 USD 1,224.52
+  line_ref: L7
+  quote_no: QV-Q-2609-17
+  part_number: HR-50110
+  supplier_model: QV-48L30-HR
+  price_raw: 1,224.52
+  price: 1224.52
+  incoterm_place: Penang
+  origin_claim: Malaysia (Penang assembly; cells from the Huizhou plant)
+  lead_time: 60 days
+  lead_time_condition: available from February 2027, after Halden qualifies the new site (UN38.3, UL 2271)
+  lead_time_days: 60
+  validity_date: '2026-11-05'
+  conditions: 'Origin of the Penang pack is a customs-broker determination, not the supplier''s: cells are made in China.'
+  available_from: '2027-02-01'
+- source: email
+  line: HR-50210 QV-48L60-HR Porter pack USD 2,111.81 USD 2,238.52
+  line_ref: L8
+  quote_no: QV-Q-2609-17
+  part_number: HR-50210
+  supplier_model: QV-48L60-HR
+  price_raw: 2,111.81
+  price: 2111.81
+  incoterm_place: Shenzhen
+  origin_claim: China (Huizhou)
+  origin_iso: CN
+  lead_time: 45 days
+  lead_time_days: 45
+  validity_date: '2026-11-05'
+- source: email
+  line: HR-50210 QV-48L60-HR Porter pack USD 2,111.81 USD 2,238.52
+  line_ref: L8
+  quote_no: QV-Q-2609-17
+  part_number: HR-50210
+  supplier_model: QV-48L60-HR
+  price_raw: 2,238.52
+  price: 2238.52
+  incoterm_place: Penang
+  origin_claim: Malaysia (Penang assembly; cells from the Huizhou plant)
+  lead_time: 60 days
+  lead_time_condition: available from February 2027, after Halden qualifies the new site (UN38.3, UL 2271)
+  lead_time_days: 60
+  validity_date: '2026-11-05'
+  conditions: 'Origin of the Penang pack is a customs-broker determination, not the supplier''s: cells are made in China.'
+  available_from: '2027-02-01'

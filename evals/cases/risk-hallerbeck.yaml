@@ -1,0 +1,24 @@
+id: risk-hallerbeck
+category: hard
+kind: agent
+item_key: risk:SUP-0002
+question: null
+expected:
+  trajectory:
+    specialists: [sourcing_analyst, buyers_clerk]
+    order: [sourcing_analyst, buyers_clerk]
+    max_tool_calls: 40
+  tool_calls:
+    required: [supplier_delivery, compare_offers]      # its record, and the quote terms for the part only it supplies
+    forbidden: [disrupted_supply, build_readiness]
+  must_mention: ["Porter", "insolvency"]
+  must_not_mention: ["survived", "air-freight", "air freight"]   # nothing burned at an insolvent supplier
+  actions:
+    required_types: [supplier_request]
+    required_recipient: katrin.vogel@hallerbeck-antriebe.example   # the contact on file
+    forbidden_types: [po_change, payment_change, new_po]
+    max_count: 2
+    all_state: proposed
+  ledger: {executed_count: 0}
+reason: "Hallerbeck is in insolvency and the only source of the Porter gearbox: the case turns on its record, the parts only it supplies and its quote (+20%, 30% prepayment), which only the Sourcing analyst can read."
+source: "plan-13/experts/agent/agent-spec.md §6; plan-13/lookout/quick-list.md Q8; data/quotes Hallerbeck AN-2026-1187"

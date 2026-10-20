@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lookout · Halden design language</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#000;--cinder:#57534e;--gravel:#777169;--slate:#a59f97;--fog:#b1b0b0;--chalk:#e5e5e5;--powder:#f5f3f1;--canvas:#fff;
+  --signal:#0447ff;--risk-high:#e11d48;--risk-med:#f59e0b;--risk-low:#059669;
+  --caution-surface:oklch(98.7% .022 95.277);--caution-ink:oklch(55.5% .163 48.998);
+  --critical-surface:oklch(96.9% .015 12.422);--critical-ink:oklch(51.4% .222 16.935);
+  --positive-surface:oklch(97.9% .021 166.113);--positive-ink:oklch(50.8% .118 165.612);
+  --suggested-surface:oklch(96.9% .016 293.756);--suggested-ink:oklch(49.1% .27 292.581);
+  --info-surface:oklch(97.7% .013 236.62);--info-ink:oklch(50% .134 242.749);
+  --halden:#0b7a85;--halden-surface:oklch(96.5% .02 205);--halden-ink:oklch(42% .08 205);
+  --a-lookout:#0b7a85;--a-planner:#4f6fa6;--a-clerk:#4f8a5b;--a-tariff:#a8813f;--a-sourcing:#7a6a9e;--a-verifier:#5f6b73;
+  --font-ui:"Inter",-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif;
+  --font-mono:"JetBrains Mono","Geist Mono","SF Mono",ui-monospace,Menlo,monospace;
+  --r:12px;--r-card:16px;--shadow:0 0 0 1px #0000000f,0 1px 2px #0000000a,0 2px 4px #0000000a;--dur:.15s;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);font:14px/1.43 var(--font-ui);letter-spacing:.1px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto;padding:40px 32px 80px}
+.mono,.num{font-family:var(--font-mono);font-variant-numeric:tabular-nums;letter-spacing:0}
+.u{color:var(--slate);font-weight:400}
+h1{font:600 22px/1.3 var(--font-ui);margin:0 0 4px;letter-spacing:-.2px}
+h2{font:600 11px/1 var(--font-ui);letter-spacing:.9px;text-transform:uppercase;color:var(--gravel);margin:0 0 14px;display:flex;align-items:center;gap:10px}
+h2::after{content:"";flex:1;height:1px;background:repeating-linear-gradient(90deg,var(--chalk) 0 1px,transparent 1px 8px)}
+section{margin:44px 0 0}
+.lede{color:var(--cinder);max-width:620px;margin:0 0 6px}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:32px}
+.ic{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.note{font-size:12px;color:var(--gravel)}
+/* type */
+.t20{font:600 20px/1.4 var(--font-ui);letter-spacing:-.1px} .t14{font-size:14px} .t13{font-size:13px} .t115{font-size:11.5px;color:var(--gravel)}
+.cap{font:600 10.5px/1 var(--font-ui);letter-spacing:.8px;text-transform:uppercase;color:var(--gravel)}
+.row{display:grid;grid-template-columns:110px 1fr;gap:12px;align-items:baseline;padding:8px 0;border-top:1px solid var(--chalk)}
+.row .k{font-size:11.5px;color:var(--gravel)}
+table.fig{border-collapse:collapse;width:100%;font-size:13px} table.fig td,table.fig th{padding:7px 0;border-top:1px solid var(--chalk)} table.fig th{font-weight:500;font-size:11.5px;color:var(--gravel);text-align:left}
+table.fig td.num,table.fig th.num{text-align:right}
+.neg{color:var(--critical-ink)}
+/* colour */
+.sw{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.sw div{border:1px solid var(--chalk);border-radius:var(--r);overflow:hidden;font-size:11.5px} .sw i{display:block;height:36px} .sw span{display:block;padding:6px 10px;color:var(--cinder)} .sw b{display:block;color:var(--ink);font-weight:500}
+/* icons */
+.icons{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px 16px} .icons li{display:flex;gap:10px;align-items:center;font-size:13px;padding:6px 0;border-top:1px solid var(--chalk)} .icons .ic{color:var(--cinder)}
+/* tags */
+.tag{display:inline-flex;align-items:stretch;border:1px solid var(--chalk);border-radius:8px;overflow:hidden;font-size:12px;line-height:20px;background:#fff;white-space:nowrap}
+.tag .l{font:600 9.5px/20px var(--font-ui);letter-spacing:.7px;text-transform:uppercase;color:var(--gravel);background:var(--powder);padding:0 6px;border-right:1px solid var(--chalk)}
+.tag .v{font:500 12px/20px var(--font-mono);padding:0 7px;letter-spacing:0}
+.tag:hover{border-color:var(--fog)}
+.build{display:inline-flex;align-items:center;gap:6px;background:var(--halden-surface);color:var(--halden-ink);border-radius:8px;padding:0 8px;font-size:12px;line-height:22px;font-weight:500}
+.build .ic{width:14px;height:14px}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--chalk);border-radius:8px;padding:0 8px;font-size:12.5px;line-height:20px;background:#fff}
+.st{width:6px;height:6px;border-radius:50%;background:var(--risk-low)} .st.hold{background:var(--risk-med)} .st.off{background:var(--fog)}
+.list{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+/* marks */
+.mark{width:24px;height:24px;border-radius:7px;display:inline-grid;place-items:center;color:#fff;flex:none} .mark .ic{width:14px;height:14px;stroke-width:1.75}
+.m-lookout{background:var(--a-lookout)} .m-planner{background:var(--a-planner)} .m-clerk{background:var(--a-clerk)} .m-tariff{background:var(--a-tariff)} .m-sourcing{background:var(--a-sourcing)} .m-verifier{background:var(--a-verifier)}
+.agents{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px} .agent{display:flex;gap:10px;align-items:center;font-size:13px} .agent small{display:block;color:var(--gravel);font-size:11.5px}
+/* controls */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:9999px;border:1px solid var(--chalk);background:#fff;color:var(--ink);font:500 13px var(--font-ui);box-shadow:var(--shadow);cursor:pointer;transition:background var(--dur),box-shadow var(--dur),transform var(--dur)}
+.btn:hover,.btn.h{background:var(--powder)} .btn:active,.btn.p{transform:translateY(1px);box-shadow:none} .btn:focus-visible,.btn.f{outline:2px solid var(--signal);outline-offset:2px}
+.btn.primary{background:#000;color:#fff;border-color:#000} .btn.primary:hover,.btn.primary.h{background:#262626}
+.btn.ghost{box-shadow:none;border-color:transparent;background:transparent;color:var(--cinder)} .btn.ghost:hover,.btn.ghost.h{background:var(--powder)}
+.btn[disabled],.btn.d{opacity:.4;cursor:not-allowed;pointer-events:none}
+.states{display:grid;grid-template-columns:90px repeat(5,auto);gap:10px 14px;align-items:center;justify-content:start} .states .k{font-size:11.5px;color:var(--gravel)}
+.in{font:13px var(--font-ui);padding:7px 14px;border:1px solid var(--chalk);border-radius:9999px;box-shadow:var(--shadow);width:240px} .in:focus{outline:2px solid var(--signal);outline-offset:2px}
+.badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:9999px;display:inline-block}
+.b-pend{background:var(--caution-surface);color:var(--caution-ink)} .b-ok{background:var(--positive-surface);color:var(--positive-ink)} .b-bad{background:var(--critical-surface);color:var(--critical-ink)} .b-draft{background:var(--suggested-surface);color:var(--suggested-ink)} .b-info{background:var(--info-surface);color:var(--info-ink)}
+.prov{font:600 10px/1 var(--font-ui);padding:2px 6px;border-radius:9999px;margin-left:6px}
+.unknown{display:inline-flex;align-items:center;gap:5px;color:var(--suggested-ink);background:var(--suggested-surface);border-radius:9999px;padding:1px 9px;font-size:12px;font-weight:500} .unknown .ic{width:13px;height:13px}
+/* ticks and bars */
+.ruler{position:relative;height:28px;margin:6px 0 0;border-bottom:1px solid var(--fog);background:repeating-linear-gradient(90deg,var(--fog) 0 1px,transparent 1px 12px) bottom/100% 5px no-repeat,repeating-linear-gradient(90deg,var(--slate) 0 1px,transparent 1px 84px) bottom/100% 9px no-repeat}
+.ruler span{position:absolute;top:0;font:500 10.5px var(--font-mono);color:var(--gravel);transform:translateX(-1px)}
+.dl span{white-space:nowrap}.dl{display:flex;align-items:center;gap:10px;font:500 12.5px var(--font-mono)} .dl .bar{position:relative;width:96px;height:6px;border-radius:3px;background:var(--chalk);background-image:repeating-linear-gradient(90deg,transparent 0 12px,#ffffffaa 12px 13px)} .dl .bar b{position:absolute;inset:0 auto 0 0;border-radius:3px}
+/* live */
+.pulse{width:8px;height:8px;border-radius:50%;background:var(--signal);position:relative;display:inline-block} .pulse::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:1.5px solid var(--signal);opacity:.5;animation:ring 1.6s ease-out infinite}
+@keyframes ring{from{transform:scale(.5);opacity:.6}to{transform:scale(1.5);opacity:0}}
+.ticks li{list-style:none;display:flex;gap:8px;align-items:center;font-size:13px;color:var(--cinder);opacity:0;animation:tick .4s ease forwards} .ticks li:nth-child(1){animation-delay:.3s} .ticks li:nth-child(2){animation-delay:1s} .ticks li:nth-child(3){animation-delay:1.7s}
+.ticks{padding:0;margin:0;display:grid;gap:6px} .ticks .ic{color:var(--positive-ink)}
+@keyframes tick{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+/* composites */
+.panel{border:1px solid var(--chalk);border-radius:var(--r-card);padding:6px 18px;background:#fff;box-shadow:var(--shadow)}
+.alrow{display:grid;grid-template-columns:16px minmax(0,1fr) 140px 210px 110px;gap:16px;align-items:center;padding:12px 0;border-bottom:1px solid var(--chalk)} .alrow:last-child{border:0}
+.alrow .t{font-weight:500} .alrow .t small{display:block;color:var(--gravel);font-weight:400;font-size:12px;margin-top:2px}
+.alrow .m{text-align:right;font:600 14px var(--font-mono)} .alrow .m small{font-weight:400;color:var(--slate);font-size:11px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--risk-high)}
+.step{display:grid;grid-template-columns:24px 1fr auto;gap:12px;align-items:start;padding:12px 0;border-bottom:1px solid var(--chalk)} .step:last-child{border:0}
+.step .w{font-size:13.5px} .step .w small{display:block;color:var(--gravel);font-size:12.5px;margin-top:2px}
+.step .ms{font:500 12px var(--font-mono);color:var(--slate);font-variant-numeric:tabular-nums}
+.del{display:inline-flex;align-items:center;gap:6px;color:var(--gravel);font-size:12px;margin:0 0 2px} .del .ic{width:13px;height:13px}
+.live{color:var(--signal)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important} .ticks li{opacity:1}}
+</style></head>
+<body><svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-factory" viewBox="0 0 24 24"><path d="M12 16h.01"/><path d="M16 16h.01"/><path d="M3 19a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5a.5.5 0 0 0-.769-.422l-4.462 2.844A.5.5 0 0 1 15 10.5v-2a.5.5 0 0 0-.769-.422L9.77 10.922A.5.5 0 0 1 9 10.5V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z"/><path d="M8 16h.01"/></symbol>
+<symbol id="i-truck" viewBox="0 0 24 24"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></symbol>
+<symbol id="i-package" viewBox="0 0 24 24"><path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/><path d="M12 22V12"/><polyline points="3.29 7 12 12 20.71 7"/><path d="m7.5 4.27 9 5.15"/></symbol>
+<symbol id="i-cpu" viewBox="0 0 24 24"><path d="M12 20v2"/><path d="M12 2v2"/><path d="M17 20v2"/><path d="M17 2v2"/><path d="M2 12h2"/><path d="M2 17h2"/><path d="M2 7h2"/><path d="M20 12h2"/><path d="M20 17h2"/><path d="M20 7h2"/><path d="M7 20v2"/><path d="M7 2v2"/><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="8" y="8" width="8" height="8" rx="1"/></symbol>
+<symbol id="i-battery" viewBox="0 0 24 24"><path d="M 22 14 L 22 10"/><rect x="2" y="6" width="16" height="12" rx="2"/></symbol>
+<symbol id="i-cog" viewBox="0 0 24 24"><path d="M11 10.27 7 3.34"/><path d="m11 13.73-4 6.93"/><path d="M12 22v-2"/><path d="M12 2v2"/><path d="M14 12h8"/><path d="m17 20.66-1-1.73"/><path d="m17 3.34-1 1.73"/><path d="M2 12h2"/><path d="m20.66 17-1.73-1"/><path d="m20.66 7-1.73 1"/><path d="m3.34 17 1.73-1"/><path d="m3.34 7 1.73 1"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="12" r="8"/></symbol>
+<symbol id="i-file-text" viewBox="0 0 24 24"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></symbol>
+<symbol id="i-shield-alert" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="M12 8v4"/><path d="M12 16h.01"/></symbol>
+<symbol id="i-git-branch" viewBox="0 0 24 24"><path d="M15 6a9 9 0 0 0-9 9V3"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/></symbol>
+<symbol id="i-circle-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16 9-5.5 5.5L8 12"/></symbol>
+<symbol id="i-circle-question-mark" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></symbol>
+<symbol id="i-radar" viewBox="0 0 24 24"><path d="M19.07 4.93A10 10 0 0 0 6.99 3.34"/><path d="M4 6h.01"/><path d="M2.29 9.62A10 10 0 1 0 21.31 8.35"/><path d="M16.24 7.76A6 6 0 1 0 8.23 16.67"/><path d="M12 18h.01"/><path d="M17.99 11.66A6 6 0 0 1 15.77 16.67"/><circle cx="12" cy="12" r="2"/><path d="m13.41 10.59 5.66-5.66"/></symbol>
+<symbol id="i-binoculars" viewBox="0 0 24 24"><path d="M10 10h4"/><path d="M19 7V4a1 1 0 0 0-1-1h-2a1 1 0 0 0-1 1v3"/><path d="M20 21a2 2 0 0 0 2-2v-3.851c0-1.39-2-2.962-2-4.829V8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v11a2 2 0 0 0 2 2z"/><path d="M 22 16 L 2 16"/><path d="M4 21a2 2 0 0 1-2-2v-3.851c0-1.39 2-2.962 2-4.829V8a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v11a2 2 0 0 1-2 2z"/><path d="M9 7V4a1 1 0 0 0-1-1H6a1 1 0 0 0-1 1v3"/></symbol>
+<symbol id="i-boxes" viewBox="0 0 24 24"><path d="M2.97 12.92A2 2 0 0 0 2 14.63v3.24a2 2 0 0 0 .97 1.71l3 1.8a2 2 0 0 0 2.06 0L12 19v-5.5l-5-3-4.03 2.42Z"/><path d="m7 16.5-4.74-2.85"/><path d="m7 16.5 5-3"/><path d="M7 16.5v5.17"/><path d="M12 13.5V19l3.97 2.38a2 2 0 0 0 2.06 0l3-1.8a2 2 0 0 0 .97-1.71v-3.24a2 2 0 0 0-.97-1.71L17 10.5l-5 3Z"/><path d="m17 16.5-5-3"/><path d="m17 16.5 4.74-2.85"/><path d="M17 16.5v5.17"/><path d="M7.97 4.42A2 2 0 0 0 7 6.13v4.37l5 3 5-3V6.13a2 2 0 0 0-.97-1.71l-3-1.8a2 2 0 0 0-2.06 0l-3 1.8Z"/><path d="M12 8 7.26 5.15"/><path d="m12 8 4.74-2.85"/><path d="M12 13.5V8"/></symbol>
+<symbol id="i-file-pen-line" viewBox="0 0 24 24"><path d="M14.364 13.634a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506l4.013-4.009a1 1 0 0 0-3.004-3.004z"/><path d="M14.487 7.858A1 1 0 0 1 14 7V2"/><path d="M20 19.645V20a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l2.516 2.516"/><path d="M8 18h1"/></symbol>
+<symbol id="i-badge-check" viewBox="0 0 24 24"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m16 9-5.5 5.5L8 12"/></symbol>
+<symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 3v18"/><path d="m19 8 3 8a5 5 0 0 1-6 0zV7"/><path d="M3 7h1a17 17 0 0 0 8-2 17 17 0 0 0 8 2h1"/><path d="m5 8 3 8a5 5 0 0 1-6 0zV7"/><path d="M7 21h10"/></symbol>
+<symbol id="i-landmark" viewBox="0 0 24 24"><path d="M10 18v-7"/><path d="M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z"/><path d="M14 18v-7"/><path d="M18 18v-7"/><path d="M3 22h18"/><path d="M6 18v-7"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+<symbol id="i-timer" viewBox="0 0 24 24"><line x1="10" x2="14" y1="2" y2="2"/><line x1="12" x2="15" y1="14" y2="11"/><circle cx="12" cy="14" r="8"/></symbol>
+<symbol id="i-ship" viewBox="0 0 24 24"><path d="M12 2v2"/><path d="M12 9.189V13"/><path d="M19 12V6a2 2 0 00-2-2H7a2 2 0 00-2 2v6"/><path d="M19.38 19A11.6 11.6 0 0021 13l-8.188-3.639a2 2 0 00-1.624 0L3 13.001a11.6 11.6 0 002.81 7.76"/><path d="M2 20c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1s1.2 1 2.5 1c2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></symbol>
+<symbol id="i-container" viewBox="0 0 24 24"><path d="M22 7.7c0-.6-.4-1.2-.8-1.5l-6.3-3.9a1.72 1.72 0 0 0-1.7 0l-10.3 6c-.5.2-.9.8-.9 1.4v6.6c0 .5.4 1.2.8 1.5l6.3 3.9a1.72 1.72 0 0 0 1.7 0l10.3-6c.5-.3.9-1 .9-1.5Z"/><path d="M10 21.9V14L2.1 9.1"/><path d="m10 14 11.9-6.9"/><path d="M14 19.8v-8.1"/><path d="M18 17.5V9.4"/></symbol>
+<symbol id="i-list" viewBox="0 0 24 24"><path d="M3 5h.01"/><path d="M3 12h.01"/><path d="M3 19h.01"/><path d="M8 5h13"/><path d="M8 12h13"/><path d="M8 19h13"/></symbol>
+<symbol id="i-inbox" viewBox="0 0 24 24"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></symbol>
+<symbol id="i-building" viewBox="0 0 24 24"><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M12 6h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M16 6h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/><path d="M8 6h.01"/><path d="M9 22v-3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/><rect x="4" y="2" width="16" height="20" rx="2"/></symbol>
+<symbol id="i-trending-up" viewBox="0 0 24 24"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></symbol>
+<symbol id="i-activity" viewBox="0 0 24 24"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></symbol>
+<symbol id="i-database" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+<symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+<symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></symbol>
+</defs></svg>
+<div class="wrap">
+  <h1>Halden design language</h1>
+  <p class="lede">Lookout is the cockpit of a company that builds warehouse robots: engineered, precise, quiet. A grotesk for words, a technical mono for everything a machine would print, warm neutrals underneath, one teal accent that belongs to Halden.</p>
+  <div class="ruler" aria-hidden="true"><span style="left:0">Sep 25</span><span style="left:168px">Oct 2</span><span style="left:336px">Oct 9</span><span style="left:504px">Oct 16</span><span style="left:672px">Oct 23</span><span style="left:840px">Oct 30</span></div>
+  <p class="note">The ruler is the rule that runs under page titles: weekly ticks from the data date, so a date reads as a distance.</p>
+
+  <section><h2>Type</h2>
+  <div class="cols">
+    <div>
+      <div class="row"><span class="k">Title · Inter 600 20</span><span class="t20">Yunzhan plant fire</span></div>
+      <div class="row"><span class="k">Body · Inter 14</span><span class="t14">Ask Yunzhan for revised promise dates and a Plant 1 allocation.</span></div>
+      <div class="row"><span class="k">Table · Inter 13</span><span class="t13">Request revised promise</span></div>
+      <div class="row"><span class="k">Caption · 11.5</span><span class="t115">Data as of Fri Sep 25, 2026</span></div>
+      <div class="row"><span class="k">Label · caps 10.5</span><span class="cap">Scheduled receipts</span></div>
+    </div>
+    <div>
+      <table class="fig"><thead><tr><th>Figures · JetBrains Mono, tabular</th><th class="num">Oct</th><th class="num">Nov</th><th class="num">Dec</th></tr></thead><tbody>
+      <tr><td>Requirements</td><td class="num">364 <span class="u">EA</span></td><td class="num">376 <span class="u">EA</span></td><td class="num">352 <span class="u">EA</span></td></tr>
+      <tr><td>Scheduled receipts</td><td class="num">350 <span class="u">EA</span></td><td class="num">0 <span class="u">EA</span></td><td class="num">0 <span class="u">EA</span></td></tr>
+      <tr><td><b>Short</b></td><td class="num neg">364 <span class="u">EA</span></td><td class="num neg">376 <span class="u">EA</span></td><td class="num neg">352 <span class="u">EA</span></td></tr>
+      <tr><td>Duty, net</td><td class="num" colspan="3">1,539,054 <span class="u">USD</span></td></tr>
+      <tr><td>Unit price</td><td class="num" colspan="3">154.55 <span class="u">USD / EA</span></td></tr>
+      <tr><td>First step</td><td class="num" colspan="3">0.4 <span class="u">s</span></td></tr>
+      </tbody></table>
+      <p class="note">Units are always printed, in a quieter weight. Numbers right-align so columns read like an instrument.</p>
+    </div>
+  </div></section>
+
+  <section><h2>Asset tags and builds</h2>
+  <div class="list">
+    <span class="tag"><span class="l">Part</span><span class="v">HR-40110</span></span>
+    <span class="tag"><span class="l">PO line</span><span class="v">HPO-26-00450 / 10</span></span>
+    <span class="tag"><span class="l">Quote</span><span class="v">Q-YZ-26-0831</span></span>
+    <span class="build"><svg class="ic "><use href="#i-factory"/></svg>Tern T2 · Oct build</span>
+    <span class="chip"><span class="st"></span>Shenzhen Yunzhan Precision Motor</span>
+    <span class="chip"><span class="st hold"></span>Saltmarsh Components</span>
+  </div>
+  <p class="note">A part or PO number is an asset tag: hairline border, a small caps label, the number in mono. Products are builds, in the one Halden accent. Suppliers carry a status dot (active, on hold, inactive).</p></section>
+
+  <section><h2>Colour</h2>
+  <div class="sw">
+    <div><i style="background:#000"></i><span><b>Ink</b>text, primary button</span></div>
+    <div><i style="background:var(--cinder)"></i><span><b>Cinder</b>secondary text</span></div>
+    <div><i style="background:var(--gravel)"></i><span><b>Gravel</b>labels, units</span></div>
+    <div><i style="background:var(--chalk)"></i><span><b>Chalk</b>hairlines</span></div>
+    <div><i style="background:var(--powder)"></i><span><b>Powder</b>raised, hover</span></div>
+    <div><i style="background:var(--signal)"></i><span><b>Signal</b>live, clickable</span></div>
+    <div><i style="background:var(--risk-high)"></i><span><b>Risk high</b>state only</span></div>
+    <div><i style="background:var(--risk-med)"></i><span><b>Risk med</b>state only</span></div>
+    <div><i style="background:var(--risk-low)"></i><span><b>Risk low</b>state only</span></div>
+    <div><i style="background:var(--halden)"></i><span><b>Halden teal</b>builds, Lookout’s mark</span></div>
+  </div></section>
+
+  <section><h2>Icons · Lucide 16 px, 1.5 stroke, always beside a word</h2>
+  <ul class="icons"><li><svg class="ic "><use href="#i-factory"/></svg><span>a plant</span></li><li><svg class="ic "><use href="#i-truck"/></svg><span>in transit</span></li><li><svg class="ic "><use href="#i-package"/></svg><span>a part</span></li><li><svg class="ic "><use href="#i-cpu"/></svg><span>a controller</span></li><li><svg class="ic "><use href="#i-battery"/></svg><span>a battery pack</span></li><li><svg class="ic "><use href="#i-cog"/></svg><span>a motor, a drive</span></li><li><svg class="ic "><use href="#i-file-text"/></svg><span>a PO line</span></li><li><svg class="ic "><use href="#i-shield-alert"/></svg><span>trust</span></li><li><svg class="ic "><use href="#i-git-branch"/></svg><span>delegation</span></li><li><svg class="ic "><use href="#i-circle-check"/></svg><span>verified</span></li><li><svg class="ic "><use href="#i-circle-question-mark"/></svg><span>an open question</span></li><li><svg class="ic "><use href="#i-clock"/></svg><span>a deadline</span></li><li><svg class="ic "><use href="#i-ship"/></svg><span>ocean freight</span></li><li><svg class="ic "><use href="#i-container"/></svg><span>a shipment</span></li><li><svg class="ic "><use href="#i-landmark"/></svg><span>duty, customs</span></li><li><svg class="ic "><use href="#i-scale"/></svg><span>compare quotes</span></li></ul></section>
+
+  <section><h2>The agent has a presence</h2>
+  <div class="agents">
+    <div class="agent"><span class="mark m-lookout" title=""><svg class="ic "><use href="#i-radar"/></svg></span><span>Lookout<small>orchestrator</small></span></div>
+    <div class="agent"><span class="mark m-planner" title=""><svg class="ic "><use href="#i-boxes"/></svg></span><span>Supply planner<small>orders, demand, BOM</small></span></div>
+    <div class="agent"><span class="mark m-clerk" title=""><svg class="ic "><use href="#i-file-pen-line"/></svg></span><span>Buyer’s clerk<small>drafts, never sends</small></span></div>
+    <div class="agent"><span class="mark m-tariff" title=""><svg class="ic "><use href="#i-landmark"/></svg></span><span>Tariff analyst<small>origin, HTS, duty</small></span></div>
+    <div class="agent"><span class="mark m-sourcing" title=""><svg class="ic "><use href="#i-scale"/></svg></span><span>Sourcing analyst<small>quotes, landed cost</small></span></div>
+    <div class="agent"><span class="mark m-verifier" title=""><svg class="ic "><use href="#i-badge-check"/></svg></span><span>Verifier<small>checks every number</small></span></div>
+  </div></section>
+
+  <section><h2>Buttons and states</h2>
+  <div class="states">
+    <span></span><span class="k">default</span><span class="k">hover</span><span class="k">pressed</span><span class="k">focus</span><span class="k">disabled</span>
+    <span class="k">Primary</span><button class="btn primary">Approve and send</button><button class="btn primary h">Approve and send</button><button class="btn primary p">Approve and send</button><button class="btn primary f">Approve and send</button><button class="btn primary d">Approve and send</button>
+    <span class="k">Secondary</span><button class="btn">Change</button><button class="btn h">Change</button><button class="btn p">Change</button><button class="btn f">Change</button><button class="btn d">Change</button>
+    <span class="k">Text</span><button class="btn ghost">Skip</button><button class="btn ghost h">Skip</button><button class="btn ghost p">Skip</button><button class="btn ghost f">Skip</button><button class="btn ghost d">Skip</button>
+  </div>
+  <div class="list" style="margin-top:22px">
+    <input class="in" placeholder="Why is this being rejected?">
+    <span class="badge b-pend">Awaiting approval</span><span class="badge b-ok">Sent (simulated)</span><span class="badge b-bad">suspicious</span><span class="badge b-draft">from the agent</span><span class="badge b-info">computed</span>
+    <span>364 <span class="prov b-info">computed</span></span><span>Oct 13 <span class="prov" style="background:var(--caution-surface);color:var(--caution-ink)">inferred</span></span>
+    <span class="unknown"><svg class="ic "><use href="#i-circle-question-mark"/></svg>unknown · ask Dana</span>
+  </div></section>
+
+  <section><h2>Quietly alive</h2>
+  <div class="cols">
+    <div>
+      <div class="dl"><span>Oct 10</span><span class="bar"><b style="width:50%;background:var(--risk-high)"></b></span><span>15 d</span></div>
+      <div class="dl" style="margin-top:10px"><span>Oct 30</span><span class="bar"><b style="width:0%"></b></span><span class="u">35 d</span></div>
+      <p class="note">Days-left bar: the red fill grows as the date nears; ticks every 7 days. Past 30 days it stays empty.</p>
+      <div style="margin-top:14px;display:flex;gap:12px;align-items:center"><span class="pulse"></span><span class="live">Buyer’s clerk is drafting</span><span class="mono u" id="el">14.9 s</span></div>
+    </div>
+    <div>
+      <ul class="ticks"><li><svg class="ic "><use href="#i-circle-check"/></svg>8 of 8 numbers checked against the data</li><li><svg class="ic "><use href="#i-circle-check"/></svg>every open question has an owner</li><li><svg class="ic "><use href="#i-circle-check"/></svg>drafts go only to contacts on file</li></ul>
+      <p class="note">The checks tick in one after another as the verifier passes them (reload to replay).</p>
+    </div>
+  </div></section>
+
+  <section><h2>One Action list row</h2>
+  <div class="panel">
+    <div class="alrow"><span class="dot"></span>
+      <span class="t">Yunzhan plant fire: no drive motors for the October Tern build<small><span class="tag"><span class="l">Part</span><span class="v">HR-40110</span></span> &nbsp;<span class="build"><svg class="ic "><use href="#i-factory"/></svg>Tern T2 · Oct build</span></small></span>
+      <span class="m">364 <small>EA short</small></span>
+      <span class="dl"><span>Oct 10</span><span class="bar"><b style="width:50%;background:var(--risk-high)"></b></span><span class="u">15 d</span></span>
+      <span style="font-size:13px;color:var(--cinder)">Dana Reyes</span></div>
+  </div></section>
+
+  <section><h2>One run, in the language</h2>
+  <div class="panel">
+    <div class="step"><span class="mark m-lookout" title=""><svg class="ic "><use href="#i-radar"/></svg></span><span class="w"><b>Lookout</b> read the action item and its evidence<small>10 PO lines under force majeure · 3 messages · 2 open questions</small></span><span class="ms">0.4 s</span></div>
+    <div class="step"><span class="mark m-planner" title=""><svg class="ic "><use href="#i-boxes"/></svg></span><span class="w"><span class="del"><svg class="ic "><use href="#i-git-branch"/></svg>Lookout asked</span><br><b>Supply planner:</b> is the October Tern build short of <span class="tag"><span class="l">Part</span><span class="v">HR-40110</span></span>?<small>Yes. October is short 364 EA unless Plant 1 allocates motors or stock exists.</small></span><span class="ms">9.2 s</span></div>
+    <div class="step"><span class="mark m-clerk" title=""><svg class="ic "><use href="#i-file-pen-line"/></svg></span><span class="w"><span class="del"><svg class="ic "><use href="#i-git-branch"/></svg>Lookout asked</span><br><b>Buyer’s clerk:</b> draft the request to Yunzhan <span class="pulse" style="margin-left:6px"></span><small>Drafted a request to Li Wei, contact on file · awaiting approval</small></span><span class="ms live" id="el2">14.9 s</span></div>
+    <div class="step" style="opacity:.5"><span class="mark m-verifier" title=""><svg class="ic "><use href="#i-badge-check"/></svg></span><span class="w">Check every number against the data</span><span class="ms"></span></div>
+  </div></section>
+</div>
+<script>
+(function(){var a=document.getElementById('el'),b=document.getElementById('el2'),t=14.9;setInterval(function(){t+=.1;var s=t.toFixed(1)+' s';if(a)a.textContent=s;if(b)b.textContent=s;},100);})();
+</script>
+</body></html>

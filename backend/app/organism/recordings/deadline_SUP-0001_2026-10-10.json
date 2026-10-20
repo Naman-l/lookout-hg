@@ -1,0 +1,1514 @@
+{
+ "recorded_at": "2026-10-12T01:09:59.332381+00:00",
+ "run_id": "run-recorded",
+ "item_key": "deadline:SUP-0001:2026-10-10",
+ "run": {
+  "status": "ok",
+  "model": "claude-sonnet-5-5",
+  "prompt_hash": "207921b2b686",
+  "toolset_hash": "e38cbefe3035",
+  "sdk_version": "0.2.165",
+  "cost_usd": 0.10781373500000001,
+  "wall_ms": 35070,
+  "first_step_ms": 13,
+  "turns": 5,
+  "tool_calls": 11,
+  "denied_calls": 0
+ },
+ "shape": "tree",
+ "reviewer_mode": "after",
+ "events": [
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 1,
+   "ts": "2026-10-12T01:09:16.684208+00:00",
+   "t_ms": 13,
+   "type": "run.started",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Working deadline:SUP-0001:2026-10-10",
+   "refs": [],
+   "payload": {
+    "workflow": "work_item",
+    "item_key": "deadline:SUP-0001:2026-10-10",
+    "model": "claude-sonnet-5-5",
+    "prompt_hash": "207921b2b686",
+    "toolset_hash": "e38cbefe3035",
+    "specialist_prompts": {
+     "supply_planner": "5a93b2d343e2",
+     "buyers_clerk": "f7dbc2cb5d94"
+    },
+    "tool_count": 22,
+    "sdk_version": "0.2.165"
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 2,
+   "ts": "2026-10-12T01:09:16.684808+00:00",
+   "t_ms": 13,
+   "type": "tool.called",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Lookout reads the item",
+   "refs": [],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "args": {},
+    "gate": "allowed",
+    "gate_reason": "system step before the model runs",
+    "why": "Read what the system already worked out for this item: its finding, dates and figures."
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 3,
+   "ts": "2026-10-12T01:09:16.685350+00:00",
+   "t_ms": 14,
+   "type": "tool.result",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Read the item: Yunzhan promised revised delivery dates by Oct 10: chase if they do not come. Owner Dana Reyes.",
+   "refs": [
+    {
+     "type": "item",
+     "id": "deadline:SUP-0001:2026-10-10",
+     "label": "Yunzhan promised revised delivery dates by Oct 10: chase if they do not come"
+    },
+    {
+     "type": "supplier",
+     "id": "SUP-0001",
+     "label": "Yunzhan"
+    },
+    {
+     "type": "message",
+     "id": "2026-09-22_NOTICE_OF_FORCE_MAJEURE_-_Shenzhen_Yunzhan_Precision_Motor_Co_Ltd",
+     "label": "NOTICE OF FORCE MAJEURE - Shenzhen Yunzhan Precision Motor Co., Ltd."
+    }
+   ],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "ok": true,
+    "numbers": [],
+    "unknowns": [],
+    "item_key": "deadline:SUP-0001:2026-10-10",
+    "item_kind": "deadline"
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 4,
+   "ts": "2026-10-12T01:09:18.531198+00:00",
+   "t_ms": 1860,
+   "type": "step.text",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "I'm checking the supply side first: which Yunzhan lines are open and what the 10 October date protects.",
+   "refs": [],
+   "payload": {}
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 5,
+   "ts": "2026-10-12T01:09:19.961238+00:00",
+   "t_ms": 3290,
+   "type": "child.started",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01XKupTdpMAE2MvFPk5drDyC",
+   "summary": "Map Yunzhan open lines",
+   "refs": [],
+   "payload": {
+    "child_run_id": "run-recorded.1",
+    "specialist": "supply_planner",
+    "question": "Map Yunzhan open lines",
+    "task": "Map Yunzhan open lines",
+    "asked_by": "lookout"
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 1,
+   "ts": "2026-10-12T01:09:19.962461+00:00",
+   "t_ms": 3291,
+   "type": "run.started",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": null,
+   "summary": "Supply planner started",
+   "refs": [],
+   "payload": {
+    "workflow": "specialist:supply_planner",
+    "item_key": "deadline:SUP-0001:2026-10-10"
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 2,
+   "ts": "2026-10-12T01:09:21.237604+00:00",
+   "t_ms": 4566,
+   "type": "tool.called",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01UvaTv987zDk1QZrkCNDNas",
+   "summary": "Supply planner calls get_item",
+   "refs": [],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "args": {
+     "item_key": "deadline:SUP-0001:2026-10-10"
+    },
+    "gate": "allowed",
+    "gate_reason": "part of this role's work",
+    "why": "Read what the system already worked out for this item: its finding, dates and figures."
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 3,
+   "ts": "2026-10-12T01:09:21.257482+00:00",
+   "t_ms": 4586,
+   "type": "tool.result",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01UvaTv987zDk1QZrkCNDNas",
+   "summary": "Item Yunzhan promised revised delivery dates by Oct 10: chase if they do not come: 1 computed numbers, 2 open questions",
+   "refs": [],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "ok": true,
+    "numbers": [
+     {
+      "id": "item:deadline:SUP-0001:2026-10-10:days_left",
+      "name": "Days left to act",
+      "value": "15",
+      "unit": "days"
+     }
+    ],
+    "unknowns": [
+     {
+      "what": "the revised delivery dates",
+      "owner": "supplier",
+      "question": "What are the revised dates and what can still ship, per PO line?",
+      "why_it_blocks": "Yunzhan has promised new dates for its stuck lines by this day; until then no build can be re-planned"
+     },
+     {
+      "what": "the revised delivery dates",
+      "owner": "supplier",
+      "question": "What are the revised dates and what can still ship, per PO line?",
+      "why_it_blocks": "Yunzhan has promised new dates for its stuck lines by this day; until then no build can be re-planned"
+     }
+    ]
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 4,
+   "ts": "2026-10-12T01:09:21.394767+00:00",
+   "t_ms": 4723,
+   "type": "tool.called",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01NFc9mi9vngo7uq6Xx7ztME",
+   "summary": "Supply planner calls disrupted_supply",
+   "refs": [],
+   "payload": {
+    "tool": "disrupted_supply",
+    "name": "disrupted_supply",
+    "args": {
+     "supplier_id": "SUP-0001"
+    },
+    "gate": "allowed",
+    "gate_reason": "part of this role's work",
+    "why": "List every open order line this supplier can no longer ship, so each affected part is covered."
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 5,
+   "ts": "2026-10-12T01:09:21.407078+00:00",
+   "t_ms": 4736,
+   "type": "tool.result",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01NFc9mi9vngo7uq6Xx7ztME",
+   "summary": "Disrupted supply for SUP-0001: 10 lines across 5 parts (HR-40110, HR-40120, HR-40130, HR-40210, HR-40230)",
+   "refs": [],
+   "payload": {
+    "tool": "disrupted_supply",
+    "name": "disrupted_supply",
+    "ok": true,
+    "numbers": [
+     {
+      "id": "supply:SUP-0001:disrupted_lines",
+      "name": "Open PO lines disrupted for SUP-0001",
+      "value": "10",
+      "unit": "lines"
+     },
+     {
+      "id": "supply:HR-40110:stuck_qty",
+      "name": "Quantity on disrupted lines for HR-40110",
+      "value": "1140",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:HR-40110:HPO-26-00450/10:qty",
+      "name": "Quantity on HPO-26-00450/10",
+      "value": "355",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:HR-40110:HPO-26-00614/10:qty",
+      "name": "Quantity on HPO-26-00614/10",
+      "value": "435",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:HR-40110:HPO-26-00614/20:qty",
+      "name": "Quantity on HPO-26-00614/20",
+      "value": "350",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:HR-40120:stuck_qty",
+      "name": "Quantity on disrupted lines for HR-40120",
+      "value": "845",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:HR-40120:HPO-26-00450/20:qty",
+      "name": "Quantity on HPO-26-00450/20",
+      "value": "445",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:HR-40120:HPO-26-00670/10:qty",
+      "name": "Quantity on HPO-26-00670/10",
+      "value": "400",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:HR-40130:stuck_qty",
+      "name": "Quantity on disrupted lines for HR-40130",
+      "value": "2350",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:HR-40130:HPO-26-00532/10:qty",
+      "name": "Quantity on HPO-26-00532/10",
+      "value": "1320",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:HR-40130:HPO-26-00670/20:qty",
+      "name": "Quantity on HPO-26-00670/20",
+      "value": "1030",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:HR-40210:stuck_qty",
+      "name": "Quantity on disrupted lines for HR-40210",
+      "value": "307",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:HR-40210:HPO-26-00532/20:qty",
+      "name": "Quantity on HPO-26-00532/20",
+      "value": "163",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:HR-40210:HPO-26-00532/30:qty",
+      "name": "Quantity on HPO-26-00532/30",
+      "value": "144",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:HR-40230:stuck_qty",
+      "name": "Quantity on disrupted lines for HR-40230",
+      "value": "250",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:HR-40230:HPO-26-00614/30:qty",
+      "name": "Quantity on HPO-26-00614/30",
+      "value": "250",
+      "unit": "EA"
+     }
+    ],
+    "unknowns": []
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 6,
+   "ts": "2026-10-12T01:09:21.494131+00:00",
+   "t_ms": 4823,
+   "type": "tool.called",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01AmhtmJi9s4CaydKP6h2gTJ",
+   "summary": "Supply planner calls open_supply",
+   "refs": [],
+   "payload": {
+    "tool": "open_supply",
+    "name": "open_supply",
+    "args": {
+     "supplier_id": "SUP-0001"
+    },
+    "gate": "allowed",
+    "gate_reason": "part of this role's work",
+    "why": "Find the open order lines with this supplier and which are due before the date that matters."
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 7,
+   "ts": "2026-10-12T01:09:21.502227+00:00",
+   "t_ms": 4831,
+   "type": "tool.result",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01AmhtmJi9s4CaydKP6h2gTJ",
+   "summary": "Open supply for SUP-0001: 12 lines, 5,042 EA (4,892 EA on disrupted lines)",
+   "refs": [],
+   "payload": {
+    "tool": "open_supply",
+    "name": "open_supply",
+    "ok": true,
+    "numbers": [
+     {
+      "id": "supply:SUP-0001:open_lines",
+      "name": "Open PO lines for SUP-0001",
+      "value": "12",
+      "unit": "lines"
+     },
+     {
+      "id": "supply:SUP-0001:open_qty",
+      "name": "Quantity on open orders for SUP-0001",
+      "value": "5042",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:SUP-0001:stuck_qty",
+      "name": "Quantity on disrupted lines for SUP-0001",
+      "value": "4892",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:SUP-0001:unaffected_qty",
+      "name": "Quantity on open orders not disrupted for SUP-0001",
+      "value": "150",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:SUP-0001:PO-10711/1:qty",
+      "name": "Quantity on PO-10711/1",
+      "value": "130",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:SUP-0001:PO-10788/1:qty",
+      "name": "Quantity on PO-10788/1",
+      "value": "20",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:SUP-0001:HPO-26-00450/20:qty",
+      "name": "Quantity on HPO-26-00450/20",
+      "value": "445",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:SUP-0001:HPO-26-00450/10:qty",
+      "name": "Quantity on HPO-26-00450/10",
+      "value": "355",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:SUP-0001:HPO-26-00532/10:qty",
+      "name": "Quantity on HPO-26-00532/10",
+      "value": "1320",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:SUP-0001:HPO-26-00614/10:qty",
+      "name": "Quantity on HPO-26-00614/10",
+      "value": "435",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:SUP-0001:HPO-26-00614/30:qty",
+      "name": "Quantity on HPO-26-00614/30",
+      "value": "250",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:SUP-0001:HPO-26-00532/20:qty",
+      "name": "Quantity on HPO-26-00532/20",
+      "value": "163",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:SUP-0001:HPO-26-00614/20:qty",
+      "name": "Quantity on HPO-26-00614/20",
+      "value": "350",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:SUP-0001:HPO-26-00670/10:qty",
+      "name": "Quantity on HPO-26-00670/10",
+      "value": "400",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:SUP-0001:HPO-26-00670/20:qty",
+      "name": "Quantity on HPO-26-00670/20",
+      "value": "1030",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:SUP-0001:HPO-26-00532/30:qty",
+      "name": "Quantity on HPO-26-00532/30",
+      "value": "144",
+      "unit": "EA"
+     }
+    ],
+    "unknowns": []
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 8,
+   "ts": "2026-10-12T01:09:22.507213+00:00",
+   "t_ms": 5836,
+   "type": "tool.called",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01NzHjm1KW7ybFaBKRGJPnF9",
+   "summary": "Supply planner calls shortage_for_parts",
+   "refs": [],
+   "payload": {
+    "tool": "shortage_for_parts",
+    "name": "shortage_for_parts",
+    "args": {
+     "part_numbers": [
+      "HR-40110",
+      "HR-40120",
+      "HR-40130",
+      "HR-40210",
+      "HR-40230"
+     ]
+    },
+    "gate": "allowed",
+    "gate_reason": "part of this role's work",
+    "why": "Work out, month by month, what the builds need against what is coming for 5 parts, and when each first runs short."
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 9,
+   "ts": "2026-10-12T01:09:22.520244+00:00",
+   "t_ms": 5849,
+   "type": "tool.result",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01NzHjm1KW7ybFaBKRGJPnF9",
+   "summary": "Shortage for 5 parts: HR-40110: first short month October; HR-40120: first short month October; HR-40130: first short month October; HR-40210: first short month October; HR-40230: first short month October",
+   "refs": [],
+   "payload": {
+    "tool": "shortage_for_parts",
+    "name": "shortage_for_parts",
+    "ok": true,
+    "numbers": [
+     {
+      "id": "shortage:HR-40110:2026-10:short",
+      "name": "Units short in October for HR-40110",
+      "value": "364",
+      "unit": "EA"
+     },
+     {
+      "id": "req:HR-40110:2026-10",
+      "name": "Requirements for October for HR-40110",
+      "value": "364",
+      "unit": "EA"
+     },
+     {
+      "id": "shortage:HR-40110:2026-11:short",
+      "name": "Units short in November for HR-40110",
+      "value": "376",
+      "unit": "EA"
+     },
+     {
+      "id": "req:HR-40110:2026-11",
+      "name": "Requirements for November for HR-40110",
+      "value": "376",
+      "unit": "EA"
+     },
+     {
+      "id": "shortage:HR-40120:2026-10:short",
+      "name": "Units short in October for HR-40120",
+      "value": "182",
+      "unit": "EA"
+     },
+     {
+      "id": "req:HR-40120:2026-10",
+      "name": "Requirements for October for HR-40120",
+      "value": "182",
+      "unit": "EA"
+     },
+     {
+      "id": "shortage:HR-40120:2026-11:short",
+      "name": "Units short in November for HR-40120",
+      "value": "188",
+      "unit": "EA"
+     },
+     {
+      "id": "req:HR-40120:2026-11",
+      "name": "Requirements for November for HR-40120",
+      "value": "188",
+      "unit": "EA"
+     },
+     {
+      "id": "shortage:HR-40130:2026-10:short",
+      "name": "Units short in October for HR-40130",
+      "value": "364",
+      "unit": "EA"
+     },
+     {
+      "id": "req:HR-40130:2026-10",
+      "name": "Requirements for October for HR-40130",
+      "value": "364",
+      "unit": "EA"
+     },
+     {
+      "id": "shortage:HR-40130:2026-11:short",
+      "name": "Units short in November for HR-40130",
+      "value": "376",
+      "unit": "EA"
+     },
+     {
+      "id": "req:HR-40130:2026-11",
+      "name": "Requirements for November for HR-40130",
+      "value": "376",
+      "unit": "EA"
+     },
+     {
+      "id": "shortage:HR-40210:2026-10:short",
+      "name": "Units short in October for HR-40210",
+      "value": "80",
+      "unit": "EA"
+     },
+     {
+      "id": "req:HR-40210:2026-10",
+      "name": "Requirements for October for HR-40210",
+      "value": "80",
+      "unit": "EA"
+     },
+     {
+      "id": "shortage:HR-40210:2026-11:short",
+      "name": "Units short in November for HR-40210",
+      "value": "84",
+      "unit": "EA"
+     },
+     {
+      "id": "req:HR-40210:2026-11",
+      "name": "Requirements for November for HR-40210",
+      "value": "84",
+      "unit": "EA"
+     },
+     {
+      "id": "shortage:HR-40230:2026-10:short",
+      "name": "Units short in October for HR-40230",
+      "value": "80",
+      "unit": "EA"
+     },
+     {
+      "id": "req:HR-40230:2026-10",
+      "name": "Requirements for October for HR-40230",
+      "value": "80",
+      "unit": "EA"
+     },
+     {
+      "id": "shortage:HR-40230:2026-11:short",
+      "name": "Units short in November for HR-40230",
+      "value": "84",
+      "unit": "EA"
+     },
+     {
+      "id": "req:HR-40230:2026-11",
+      "name": "Requirements for November for HR-40230",
+      "value": "84",
+      "unit": "EA"
+     }
+    ],
+    "unknowns": [
+     {
+      "what": "on-hand stock",
+      "owner": "Dana",
+      "question": "What is on hand and on order outside the ERP for this part?",
+      "why_it_blocks": "the data has no inventory, safety stock or MRP output, so a projected balance cannot be stated"
+     },
+     {
+      "what": "on-hand stock",
+      "owner": "Dana",
+      "question": "What is on hand and on order outside the ERP for this part?",
+      "why_it_blocks": "the data has no inventory, safety stock or MRP output, so a projected balance cannot be stated"
+     },
+     {
+      "what": "on-hand stock",
+      "owner": "Dana",
+      "question": "What is on hand and on order outside the ERP for this part?",
+      "why_it_blocks": "the data has no inventory, safety stock or MRP output, so a projected balance cannot be stated"
+     },
+     {
+      "what": "on-hand stock",
+      "owner": "Dana",
+      "question": "What is on hand and on order outside the ERP for this part?",
+      "why_it_blocks": "the data has no inventory, safety stock or MRP output, so a projected balance cannot be stated"
+     },
+     {
+      "what": "on-hand stock",
+      "owner": "Dana",
+      "question": "What is on hand and on order outside the ERP for this part?",
+      "why_it_blocks": "the data has no inventory, safety stock or MRP output, so a projected balance cannot be stated"
+     }
+    ]
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 10,
+   "ts": "2026-10-12T01:09:22.669271+00:00",
+   "t_ms": 5998,
+   "type": "tool.called",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01UdqxJBpLzuBBhcfNM4EoFT",
+   "summary": "Supply planner calls where_used_for_parts",
+   "refs": [],
+   "payload": {
+    "tool": "where_used_for_parts",
+    "name": "where_used_for_parts",
+    "args": {
+     "part_numbers": [
+      "HR-40110",
+      "HR-40120",
+      "HR-40130",
+      "HR-40210",
+      "HR-40230"
+     ]
+    },
+    "gate": "allowed",
+    "gate_reason": "part of this role's work",
+    "why": "Find which robots use 5 parts, so the shortage is stated per build."
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 11,
+   "ts": "2026-10-12T01:09:22.678842+00:00",
+   "t_ms": 6007,
+   "type": "tool.result",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01UdqxJBpLzuBBhcfNM4EoFT",
+   "summary": "Where used: 5 parts checked",
+   "refs": [],
+   "payload": {
+    "tool": "where_used_for_parts",
+    "name": "where_used_for_parts",
+    "ok": true,
+    "numbers": [
+     {
+      "id": "bom:HR-40110:HR-90020:per_robot",
+      "name": "HR-40110 per Tern T2",
+      "value": "2",
+      "unit": "EA"
+     },
+     {
+      "id": "bom:HR-40120:HR-90020:per_robot",
+      "name": "HR-40120 per Tern T2",
+      "value": "1",
+      "unit": "EA"
+     },
+     {
+      "id": "bom:HR-40130:HR-90020:per_robot",
+      "name": "HR-40130 per Tern T2",
+      "value": "2",
+      "unit": "EA"
+     },
+     {
+      "id": "bom:HR-40210:HR-90050:per_robot",
+      "name": "HR-40210 per Porter P5",
+      "value": "2",
+      "unit": "EA"
+     },
+     {
+      "id": "bom:HR-40230:HR-90050:per_robot",
+      "name": "HR-40230 per Porter P5",
+      "value": "2",
+      "unit": "EA"
+     }
+    ],
+    "unknowns": []
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 12,
+   "ts": "2026-10-12T01:09:30.358029+00:00",
+   "t_ms": 13686,
+   "type": "run.finished",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": null,
+   "summary": "Supply planner finished",
+   "refs": [],
+   "payload": {
+    "status": "ok",
+    "tool_calls": 5,
+    "first_step_ms": 4566
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 6,
+   "ts": "2026-10-12T01:09:30.362223+00:00",
+   "t_ms": 13691,
+   "type": "child.finished",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": null,
+   "summary": "The 10 October date is the day Yunzhan Precision Motor (Shenzhen Yunzhan Precision Motor Co., Ltd.) promised revised delivery dates for the 10 lines its 22 September force majeure notice stopped; until those dates arrive, no Tern T2 or Porter P5 build can be re-planned. 15 days are left at the 25 September data date, and Dana Reyes owns the chase: if nothing arrives by 10 October, call Li Wei and ask what can still ship per PO line. The notice's own recovery is 6 to 8 weeks (about 17 November at the latest, code's upper bound, not a date Yunzhan gave).",
+   "refs": [],
+   "payload": {
+    "child_run_id": "run-recorded.1",
+    "status": "ok",
+    "handoff_ok": true
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 7,
+   "ts": "2026-10-12T01:09:32.396569+00:00",
+   "t_ms": 15725,
+   "type": "child.started",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01R7o2cTQAQRwg8acbfMW1tJ",
+   "summary": "Draft Yunzhan chase request",
+   "refs": [],
+   "payload": {
+    "child_run_id": "run-recorded.2",
+    "specialist": "buyers_clerk",
+    "question": "Draft Yunzhan chase request",
+    "task": "Draft Yunzhan chase request",
+    "asked_by": "lookout"
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 1,
+   "ts": "2026-10-12T01:09:32.397810+00:00",
+   "t_ms": 15726,
+   "type": "run.started",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": null,
+   "summary": "Buyer's clerk started",
+   "refs": [],
+   "payload": {
+    "workflow": "specialist:buyers_clerk",
+    "item_key": "deadline:SUP-0001:2026-10-10"
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 2,
+   "ts": "2026-10-12T01:09:33.925441+00:00",
+   "t_ms": 17254,
+   "type": "tool.called",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_016RVwG8whrRp5FXYeuMwiuE",
+   "summary": "Buyer's clerk calls get_handoffs",
+   "refs": [],
+   "payload": {
+    "tool": "get_handoffs",
+    "name": "get_handoffs",
+    "args": {},
+    "gate": "allowed",
+    "gate_reason": "part of this role's work",
+    "why": "Read what the earlier steps found, with the figures their lookups returned."
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 3,
+   "ts": "2026-10-12T01:09:33.928826+00:00",
+   "t_ms": 17257,
+   "type": "tool.called",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01MNvKQ2w8QPE965Ehvcg6rR",
+   "summary": "Buyer's clerk calls get_item",
+   "refs": [],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "args": {
+     "item_key": "deadline:SUP-0001:2026-10-10"
+    },
+    "gate": "allowed",
+    "gate_reason": "part of this role's work",
+    "why": "Read what the system already worked out for this item: its finding, dates and figures."
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 4,
+   "ts": "2026-10-12T01:09:33.940810+00:00",
+   "t_ms": 17269,
+   "type": "tool.result",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_016RVwG8whrRp5FXYeuMwiuE",
+   "summary": "Supply planner handed back their findings",
+   "refs": [],
+   "payload": {
+    "tool": "get_handoffs",
+    "name": "get_handoffs",
+    "ok": true,
+    "numbers": [],
+    "unknowns": []
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 5,
+   "ts": "2026-10-12T01:09:33.942490+00:00",
+   "t_ms": 17271,
+   "type": "tool.result",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01MNvKQ2w8QPE965Ehvcg6rR",
+   "summary": "Item Yunzhan promised revised delivery dates by Oct 10: chase if they do not come: 1 computed numbers, 2 open questions",
+   "refs": [],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "ok": true,
+    "numbers": [
+     {
+      "id": "item:deadline:SUP-0001:2026-10-10:days_left",
+      "name": "Days left to act",
+      "value": "15",
+      "unit": "days"
+     }
+    ],
+    "unknowns": [
+     {
+      "what": "the revised delivery dates",
+      "owner": "supplier",
+      "question": "What are the revised dates and what can still ship, per PO line?",
+      "why_it_blocks": "Yunzhan has promised new dates for its stuck lines by this day; until then no build can be re-planned"
+     },
+     {
+      "what": "the revised delivery dates",
+      "owner": "supplier",
+      "question": "What are the revised dates and what can still ship, per PO line?",
+      "why_it_blocks": "Yunzhan has promised new dates for its stuck lines by this day; until then no build can be re-planned"
+     }
+    ]
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 6,
+   "ts": "2026-10-12T01:09:35.377809+00:00",
+   "t_ms": 18706,
+   "type": "tool.called",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_0137tvZS2YnUSw9F1RueqetC",
+   "summary": "Buyer's clerk calls read_message",
+   "refs": [],
+   "payload": {
+    "tool": "read_message",
+    "name": "read_message",
+    "args": {
+     "message_id": "2026-09-22_NOTICE_OF_FORCE_MAJEURE_-_Shenzhen_Yunzhan_Precision_Motor_Co_Ltd"
+    },
+    "gate": "allowed",
+    "gate_reason": "part of this role's work",
+    "why": "Read the supplier's message and its thread, with who sent it and what it changes."
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 7,
+   "ts": "2026-10-12T01:09:35.421320+00:00",
+   "t_ms": 18750,
+   "type": "tool.result",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_0137tvZS2YnUSw9F1RueqetC",
+   "summary": "Li Wei, 2026-09-22: NOTICE OF FORCE MAJEURE - Shenzhen Yunzhan Precision Motor Co., Ltd. (force majeure, auto)",
+   "refs": [],
+   "payload": {
+    "tool": "read_message",
+    "name": "read_message",
+    "ok": true,
+    "numbers": [],
+    "unknowns": []
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 8,
+   "ts": "2026-10-12T01:09:40.011653+00:00",
+   "t_ms": 23340,
+   "type": "tool.called",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01ARASSiecp1R1D1evyvj8u4",
+   "summary": "Buyer's clerk calls draft_supplier_request",
+   "refs": [],
+   "payload": {
+    "tool": "draft_supplier_request",
+    "name": "draft_supplier_request",
+    "args": {
+     "supplier_id": "SUP-0001",
+     "subject": "Revised delivery dates and allocation - open Halden POs after your 22 September notice",
+     "body": "Dear Li Wei,\n\nThank you for your notice of 22 September about the fire at Plant 2. You said you would send revised delivery dates by 10 October. We have not yet received them, so we are following up. Please send them as soon as you can.\n\nFor each line below, please give the revised promised date and the quantity you can ship on it:\n\nHPO-26-00450 line 10, HR-40110, 355 EA\nHPO-26-00450 line 20, HR-40120, 445 EA\nHPO-26-00532 line 10, HR-40130, 1,320 EA\nHPO-26-00532 line 20, HR-40210, 163 EA\nHPO-26-00532 line 30, HR-40210, 144 EA\nHPO-26-00614 line 10, HR-40110, 435 EA\nHPO-26-00614 line 20, HR-40110, 350 EA\nHPO-26-00614 line 30, HR-40230, 250 EA\nHPO-26-00670 line 10, HR-40120, 400 EA\nHPO-26-00670 line 20, HR-40130, 1,030 EA\n\nPlease also tell us what allocation you can commit to Halden from Plant 1 or elsewhere while Plant 2 is down, and the earliest date each part could ship.\n\nWe also have two older lines, PO-10711 line 1 and PO-10788 line 1. Please confirm whether they are still open on your side.\n\nThis request is for information only. It does not change any term of our Supply Agreement or waive any of Halden's rights under it, and it does not accept the notice or agree any revised terms.\n\nBest regards,\nDana Reyes\nHalden Robotics"
+    },
+    "gate": "staged",
+    "gate_reason": "part of this role's work",
+    "why": "Prepare the request to the supplier for the buyer to approve. Nothing is sent."
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 9,
+   "ts": "2026-10-12T01:09:40.020956+00:00",
+   "t_ms": 23349,
+   "type": "tool.result",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01ARASSiecp1R1D1evyvj8u4",
+   "summary": "Draft to Li Wei awaiting approval: Revised delivery dates and allocation - open Halden POs after your 22 September notice",
+   "refs": [],
+   "payload": {
+    "tool": "draft_supplier_request",
+    "name": "draft_supplier_request",
+    "ok": true,
+    "numbers": [],
+    "unknowns": []
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 10,
+   "ts": "2026-10-12T01:09:40.021663+00:00",
+   "t_ms": 23350,
+   "type": "action.staged",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01ARASSiecp1R1D1evyvj8u4",
+   "summary": "Buyer's clerk drafted: Revised delivery dates and allocation - open Halden POs after your 22 September notice",
+   "refs": [
+    {
+     "type": "action",
+     "id": "A-03be3248",
+     "label": "Revised delivery dates and allocation - open Halden POs after your 22 September notice"
+    }
+   ],
+   "payload": {
+    "action_id": "A-03be3248",
+    "action_type": "supplier_request",
+    "recipient": "li.wei@yunzhan-motor.example",
+    "payload_hash": "be8c35de76db6c6f02593511887b180dcdb71fcce6ead521debb2f307d4e760a",
+    "already_waiting": null
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 11,
+   "ts": "2026-10-12T01:09:42.493123+00:00",
+   "t_ms": 25821,
+   "type": "run.finished",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": null,
+   "summary": "Buyer's clerk finished",
+   "refs": [],
+   "payload": {
+    "status": "ok",
+    "tool_calls": 4,
+    "first_step_ms": 17254
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 8,
+   "ts": "2026-10-12T01:09:42.495969+00:00",
+   "t_ms": 25824,
+   "type": "child.finished",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": null,
+   "summary": "Staged a request to the supplier's contact on file, awaiting approval",
+   "refs": [],
+   "payload": {
+    "child_run_id": "run-recorded.2",
+    "status": "ok",
+    "handoff_ok": true
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 9,
+   "ts": "2026-10-12T01:09:43.388286+00:00",
+   "t_ms": 26716,
+   "type": "tool.called",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": "toolu_01LGXgoB8sQsAhdvWkoavECM",
+   "summary": "Lookout calls get_handoffs",
+   "refs": [],
+   "payload": {
+    "tool": "get_handoffs",
+    "name": "get_handoffs",
+    "args": {},
+    "gate": "allowed",
+    "gate_reason": "part of this role's work",
+    "why": "Read what the earlier steps found, with the figures their lookups returned."
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 10,
+   "ts": "2026-10-12T01:09:43.404815+00:00",
+   "t_ms": 26733,
+   "type": "tool.result",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": "toolu_01LGXgoB8sQsAhdvWkoavECM",
+   "summary": "Supply planner and Buyer's clerk handed back their findings",
+   "refs": [],
+   "payload": {
+    "tool": "get_handoffs",
+    "name": "get_handoffs",
+    "ok": true,
+    "numbers": [],
+    "unknowns": []
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 11,
+   "ts": "2026-10-12T01:09:48.504053+00:00",
+   "t_ms": 31832,
+   "type": "verifier.result",
+   "agent": "verifier",
+   "agent_label": "Verifier",
+   "tool_use_id": null,
+   "summary": "8 of 8 numbers from tools · 2 open questions with an owner",
+   "refs": [],
+   "payload": {
+    "passed": true,
+    "warnings": [],
+    "numbers_checked": 8,
+    "numbers_from_tools": 8,
+    "open_questions_with_owner": 2,
+    "open_questions": 2,
+    "failures": []
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 12,
+   "ts": "2026-10-12T01:09:51.539366+00:00",
+   "t_ms": 34867,
+   "type": "step.text",
+   "agent": "reviewer",
+   "agent_label": "Reviewer",
+   "tool_use_id": null,
+   "summary": "The Reviewer read the drafted request: it commits Halden to nothing",
+   "refs": [],
+   "payload": {
+    "system": true
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 13,
+   "ts": "2026-10-12T01:09:51.758998+00:00",
+   "t_ms": 35087,
+   "type": "run.finished",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Run ok",
+   "refs": [],
+   "payload": {
+    "status": "ok",
+    "turns": 5,
+    "tool_calls": 11,
+    "cost_usd": 0.1061,
+    "wall_ms": 35070,
+    "first_step_ms": 13,
+    "first_token_ms": 1435,
+    "recommendation_id": "run-recorded",
+    "tokens_in": 188398,
+    "tokens_out": 5177,
+    "tokens_cache_read": 159554,
+    "tokens_cache_creation": 27109,
+    "tokens_by_agent": {
+     "supply_planner": {
+      "tokens": 22181,
+      "tool_uses": 6,
+      "duration_ms": 10416
+     },
+     "buyers_clerk": {
+      "tokens": 18423,
+      "tool_uses": 5,
+      "duration_ms": 10111
+     }
+    }
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 14,
+   "ts": "2026-10-12T01:09:59.325237+00:00",
+   "t_ms": 42653,
+   "type": "review.result",
+   "agent": "reviewer",
+   "agent_label": "Reviewer",
+   "tool_use_id": null,
+   "summary": "Reviewer 67/100: Clear finding and chase, but a notice date is listed as an assumption and system jargon appears.",
+   "refs": [],
+   "payload": {
+    "score": 67,
+    "checks": [
+     {
+      "name": "answers the buyer's question",
+      "passed": true,
+      "critique": "",
+      "critical": false
+     },
+     {
+      "name": "assumptions are really assumptions",
+      "passed": false,
+      "critique": "Lists the 10 October date and 25 September data date, which the notice gave, as assumptions.",
+      "critical": false
+     },
+     {
+      "name": "nothing in it commits Halden",
+      "passed": true,
+      "critique": "",
+      "critical": true
+     },
+     {
+      "name": "what would change it is specific",
+      "passed": true,
+      "critique": "",
+      "critical": false
+     },
+     {
+      "name": "buyer's words",
+      "passed": false,
+      "critique": "Uses system jargon: 'ERP', 'MRP output', and 'data date' are not buyer words.",
+      "critical": false
+     },
+     {
+      "name": "says what the date protects",
+      "passed": true,
+      "critique": "",
+      "critical": false
+     }
+    ],
+    "failed": [
+     "assumptions are really assumptions: Lists the 10 October date and 25 September data date, which the notice gave, as assumptions.",
+     "buyer's words: Uses system jargon: 'ERP', 'MRP output', and 'data date' are not buyer words."
+    ],
+    "cost_usd": 0.0017
+   }
+  }
+ ],
+ "recommendation": {
+  "finding": "Yunzhan's 10 October date is when it promised revised delivery dates for the lines its 22 September force majeure notice stopped. Until they arrive, the Tern T2 and Porter P5 builds can't be re-planned, and all five drive motors are short from October unless there is stock. The notice puts recovery at 6 to 8 weeks. I've drafted a chase to Yunzhan's contact on file for approval. It asks for revised dates, what can still ship, and allocation per line, and it waives nothing. If no answer comes, Dana should call Li Wei. The four ways through are laid out below, and the revised dates decide most of them.",
+  "numbers": [
+   {
+    "id": "item:deadline:SUP-0001:2026-10-10:days_left",
+    "value": "15",
+    "unit": "days",
+    "name": "Days left to act",
+    "headline": true,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "action list",
+     "row": "deadline:SUP-0001:2026-10-10",
+     "raw": null,
+     "inputs": [],
+     "rule": "the act-by date minus the data date, 2026-09-25",
+     "by": "attention.service"
+    }
+   },
+   {
+    "id": "shortage:HR-40110:2026-10:short",
+    "value": "364",
+    "unit": "EA",
+    "name": "Units short in October for HR-40110",
+    "headline": false,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": null,
+     "raw": null,
+     "inputs": [],
+     "rule": "requirement minus receipts not under force majeure",
+     "by": "demand.shortage"
+    }
+   },
+   {
+    "id": "shortage:HR-40120:2026-10:short",
+    "value": "182",
+    "unit": "EA",
+    "name": "Units short in October for HR-40120",
+    "headline": false,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": null,
+     "raw": null,
+     "inputs": [],
+     "rule": "requirement minus receipts not under force majeure",
+     "by": "demand.shortage"
+    }
+   },
+   {
+    "id": "shortage:HR-40130:2026-10:short",
+    "value": "364",
+    "unit": "EA",
+    "name": "Units short in October for HR-40130",
+    "headline": false,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": null,
+     "raw": null,
+     "inputs": [],
+     "rule": "requirement minus receipts not under force majeure",
+     "by": "demand.shortage"
+    }
+   },
+   {
+    "id": "shortage:HR-40210:2026-10:short",
+    "value": "80",
+    "unit": "EA",
+    "name": "Units short in October for HR-40210",
+    "headline": false,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": null,
+     "raw": null,
+     "inputs": [],
+     "rule": "requirement minus receipts not under force majeure",
+     "by": "demand.shortage"
+    }
+   },
+   {
+    "id": "shortage:HR-40230:2026-10:short",
+    "value": "80",
+    "unit": "EA",
+    "name": "Units short in October for HR-40230",
+    "headline": false,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": null,
+     "raw": null,
+     "inputs": [],
+     "rule": "requirement minus receipts not under force majeure",
+     "by": "demand.shortage"
+    }
+   },
+   {
+    "id": "supply:HR-40130:stuck_qty",
+    "value": "2350",
+    "unit": "EA",
+    "name": "Quantity on disrupted lines for HR-40130",
+    "headline": false,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": "supply:HR-40130:stuck_qty",
+     "raw": null,
+     "inputs": [],
+     "rule": "Quantity on disrupted lines for HR-40130",
+     "by": "agent tools"
+    }
+   },
+   {
+    "id": "supply:SUP-0001:disrupted_lines",
+    "value": "10",
+    "unit": "lines",
+    "name": "Open PO lines disrupted for SUP-0001",
+    "headline": false,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": "supply:SUP-0001:disrupted_lines",
+     "raw": null,
+     "inputs": [],
+     "rule": "Open PO lines disrupted for SUP-0001",
+     "by": "agent tools"
+    }
+   },
+   {
+    "id": "supply:SUP-0001:stuck_qty",
+    "value": "4892",
+    "unit": "EA",
+    "name": "Quantity on disrupted lines for SUP-0001",
+    "headline": false,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": "supply:SUP-0001:stuck_qty",
+     "raw": null,
+     "inputs": [],
+     "rule": "Quantity on disrupted lines for SUP-0001",
+     "by": "agent tools"
+    }
+   }
+  ],
+  "assumptions": [
+   "On-hand stock is unknown, so the shortage is the full October requirement.",
+   "The data date is 25 September; the 10 October date has not yet passed."
+  ],
+  "would_change": [
+   "Revised dates from Yunzhan for the stuck lines.",
+   "A stock count from Dana for the five drive motors."
+  ],
+  "open_questions": [
+   {
+    "what": "the revised delivery dates",
+    "why_it_blocks": "Yunzhan has promised new dates for its stuck lines by this day; until then no build can be re-planned",
+    "owner": "supplier",
+    "question": "What are the revised dates and what can still ship, per PO line?",
+    "refs": []
+   },
+   {
+    "what": "on-hand stock",
+    "why_it_blocks": "the data has no inventory, safety stock or MRP output, so a projected balance cannot be stated",
+    "owner": "Dana",
+    "question": "What is on hand and on order outside the ERP for this part?",
+    "refs": []
+   }
+  ],
+  "action_ids": [
+   "A-03be3248"
+  ],
+  "findings": [],
+  "grade": {
+   "reviewer_score": 67,
+   "checks_passed": 4,
+   "checks_total": 6,
+   "summary": "Clear finding and chase, but a notice date is listed as an assumption and system jargon appears.",
+   "revised": false,
+   "failed_checks": [
+    {
+     "name": "assumptions are really assumptions",
+     "reason": "Lists the 10 October date and 25 September data date, which the notice gave, as assumptions."
+    },
+    {
+     "name": "buyer's words",
+     "reason": "Uses system jargon: 'ERP', 'MRP output', and 'data date' are not buyer words."
+    }
+   ]
+  }
+ },
+ "verifier": {
+  "passed": true,
+  "warnings": [],
+  "numbers_checked": 8,
+  "numbers_from_tools": 8,
+  "open_questions_with_owner": 2,
+  "open_questions": 2,
+  "failures": []
+ },
+ "actions": [
+  {
+   "action_id": "A-03be3248",
+   "type": "supplier_request",
+   "item_key": "deadline:SUP-0001:2026-10-10",
+   "target": {
+    "type": "supplier",
+    "id": "SUP-0001",
+    "label": null
+   },
+   "recipient": "li.wei@yunzhan-motor.example",
+   "subject": "Revised delivery dates and allocation - open Halden POs after your 22 September notice",
+   "body": "Dear Li Wei,\n\nThank you for your notice of 22 September about the fire at Plant 2. You said you would send revised delivery dates by 10 October. We have not yet received them, so we are following up. Please send them as soon as you can.\n\nFor each line below, please give the revised promised date and the quantity you can ship on it:\n\nHPO-26-00450 line 10, HR-40110, 355 EA\nHPO-26-00450 line 20, HR-40120, 445 EA\nHPO-26-00532 line 10, HR-40130, 1,320 EA\nHPO-26-00532 line 20, HR-40210, 163 EA\nHPO-26-00532 line 30, HR-40210, 144 EA\nHPO-26-00614 line 10, HR-40110, 435 EA\nHPO-26-00614 line 20, HR-40110, 350 EA\nHPO-26-00614 line 30, HR-40230, 250 EA\nHPO-26-00670 line 10, HR-40120, 400 EA\nHPO-26-00670 line 20, HR-40130, 1,030 EA\n\nPlease also tell us what allocation you can commit to Halden from Plant 1 or elsewhere while Plant 2 is down, and the earliest date each part could ship.\n\nWe also have two older lines, PO-10711 line 1 and PO-10788 line 1. Please confirm whether they are still open on your side.\n\nThis request is for information only. It does not change any term of our Supply Agreement or waive any of Halden's rights under it, and it does not accept the notice or agree any revised terms.\n\nBest regards,\nDana Reyes\nHalden Robotics",
+   "change": null
+  }
+ ]
+}

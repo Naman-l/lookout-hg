@@ -1,0 +1,2151 @@
+{
+ "recorded_at": "2026-10-14T19:21:07.269304+00:00",
+ "as_of": "2026-09-25",
+ "run_id": "run-recorded",
+ "item_key": "consignment:HR-30110",
+ "run": {
+  "status": "ok",
+  "model": "claude-sonnet-5-5",
+  "prompt_hash": "708a897e68bf",
+  "toolset_hash": "8b686c9717a4",
+  "sdk_version": "0.2.165",
+  "cost_usd": 0.16482195000000002,
+  "wall_ms": 50585,
+  "first_step_ms": 15,
+  "turns": 3,
+  "tool_calls": 18,
+  "denied_calls": 2
+ },
+ "shape": "tree",
+ "reviewer_mode": "after",
+ "events": [
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 1,
+   "ts": "2026-10-14T19:20:08.027897+00:00",
+   "t_ms": 14,
+   "type": "run.started",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Working consignment:HR-30110",
+   "refs": [],
+   "payload": {
+    "workflow": "work_item",
+    "item_key": "consignment:HR-30110",
+    "model": "claude-sonnet-5-5",
+    "prompt_hash": "708a897e68bf",
+    "toolset_hash": "8b686c9717a4",
+    "specialist_prompts": {
+     "supply_planner": "586b71b9b9f1",
+     "buyers_clerk": "8736991ec3a7"
+    },
+    "tool_count": 27,
+    "sdk_version": "0.2.165"
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 2,
+   "ts": "2026-10-14T19:20:08.028694+00:00",
+   "t_ms": 15,
+   "type": "tool.called",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Lookout reads the item",
+   "refs": [],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "args": {},
+    "gate": "allowed",
+    "gate_reason": "system step before the model runs",
+    "why": "Read what the system already worked out for this item: its finding, dates and figures."
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 3,
+   "ts": "2026-10-14T19:20:08.029318+00:00",
+   "t_ms": 15,
+   "type": "tool.result",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Read the item: Safety controllers for every robot slip about 3 weeks: consigned PCB late at Lanxin. Owner Marcus Chen.",
+   "refs": [
+    {
+     "type": "item",
+     "id": "consignment:HR-30110",
+     "label": "Safety controllers for every robot slip about 3 weeks: consigned PCB late at Lanxin"
+    },
+    {
+     "type": "supplier",
+     "id": "SUP-0022",
+     "label": "Lanxin"
+    },
+    {
+     "type": "supplier",
+     "id": "SUP-0024",
+     "label": "Alderpoint Electronics"
+    },
+    {
+     "type": "part",
+     "id": "HR-30110",
+     "label": "PCB, safety controller rev B"
+    },
+    {
+     "type": "part",
+     "id": "HR-31110",
+     "label": "PCBA, safety controller"
+    },
+    {
+     "type": "po_line",
+     "id": "HPO-26-00629/10",
+     "label": "PCB, safety controller rev B order (HPO-26-00629 line 10)"
+    },
+    {
+     "type": "message",
+     "id": "2026-09-16_Lead_time_update_-_multilayer_PCB_orders_laminate_allocation",
+     "label": "Lead time update - multilayer PCB orders / laminate allocation"
+    },
+    {
+     "type": "message",
+     "id": "2026-09-05_RE_Quote_request_-_safety_controller_PCBA_HR-31110_2027_volumes",
+     "label": "RE: Quote request - safety controller PCBA HR-31110, 2027 volumes"
+    }
+   ],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "ok": true,
+    "numbers": [],
+    "unknowns": [],
+    "item_key": "consignment:HR-30110",
+    "item_kind": "disruption"
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 4,
+   "ts": "2026-10-14T19:20:11.064159+00:00",
+   "t_ms": 3050,
+   "type": "step.text",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Lookout is checking the supply side first.",
+   "refs": [],
+   "payload": {},
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 5,
+   "ts": "2026-10-14T19:20:12.480283+00:00",
+   "t_ms": 4466,
+   "type": "child.started",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_011VWkZ8UjWy1xLzDN1U15ZJ",
+   "summary": "Supply side check",
+   "refs": [],
+   "payload": {
+    "child_run_id": "run-recorded.1",
+    "specialist": "supply_planner",
+    "question": "Supply side check",
+    "task": "Supply side check",
+    "asked_by": "lookout"
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 1,
+   "ts": "2026-10-14T19:20:12.481462+00:00",
+   "t_ms": 4467,
+   "type": "run.started",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": null,
+   "summary": "Supply planner started",
+   "refs": [],
+   "payload": {
+    "workflow": "specialist:supply_planner",
+    "item_key": "consignment:HR-30110"
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 2,
+   "ts": "2026-10-14T19:20:14.365101+00:00",
+   "t_ms": 6351,
+   "type": "tool.called",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_0147peG5vrHC2dVeJgzQ7aYZ",
+   "summary": "Supply planner calls get_item",
+   "refs": [],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "args": {
+     "item_key": "disruption:SUP-0022"
+    },
+    "gate": "allowed",
+    "gate_reason": "Read what the system already worked out for this item: its finding, dates and figures.",
+    "why": "Read what the system already worked out for this item: its finding, dates and figures."
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 3,
+   "ts": "2026-10-14T19:20:14.367042+00:00",
+   "t_ms": 6353,
+   "type": "run.status",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_0147peG5vrHC2dVeJgzQ7aYZ",
+   "summary": "Supply planner: reading the item",
+   "refs": [],
+   "payload": {},
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 4,
+   "ts": "2026-10-14T19:20:14.393391+00:00",
+   "t_ms": 6379,
+   "type": "tool.result",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_0147peG5vrHC2dVeJgzQ7aYZ",
+   "summary": "get_item failed: no item disruption:SUP-0022: list_items shows the keys that exist",
+   "refs": [],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "ok": false,
+    "error": "no item disruption:SUP-0022: list_items shows the keys that exist",
+    "numbers": [],
+    "unknowns": []
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 5,
+   "ts": "2026-10-14T19:20:14.539360+00:00",
+   "t_ms": 6525,
+   "type": "tool.called",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01HKYyF1KuDwDCBKvaDg7Ly2",
+   "summary": "Supply planner calls disrupted_supply",
+   "refs": [],
+   "payload": {
+    "tool": "disrupted_supply",
+    "name": "disrupted_supply",
+    "args": {
+     "supplier_id": "SUP-0022"
+    },
+    "gate": "allowed",
+    "gate_reason": "List every open order line this supplier can no longer ship, so each affected part is covered.",
+    "why": "List every open order line this supplier can no longer ship, so each affected part is covered."
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 6,
+   "ts": "2026-10-14T19:20:14.540348+00:00",
+   "t_ms": 6526,
+   "type": "run.status",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01HKYyF1KuDwDCBKvaDg7Ly2",
+   "summary": "Supply planner: finding the lines under the notice",
+   "refs": [],
+   "payload": {},
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 7,
+   "ts": "2026-10-14T19:20:14.564722+00:00",
+   "t_ms": 6551,
+   "type": "tool.result",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01HKYyF1KuDwDCBKvaDg7Ly2",
+   "summary": "Disrupted supply for Lanxin Circuit Technology Co., Ltd.: 2 lines across 2 parts (HR-30110, HR-30120); notice: allocation",
+   "refs": [],
+   "payload": {
+    "tool": "disrupted_supply",
+    "name": "disrupted_supply",
+    "ok": true,
+    "numbers": [
+     {
+      "id": "supply:SUP-0022:disrupted_lines",
+      "name": "Open PO lines disrupted for Lanxin Circuit Technology Co., Ltd.",
+      "value": "2",
+      "unit": "lines"
+     },
+     {
+      "id": "supply:HR-30110:stuck_qty",
+      "name": "Quantity on disrupted lines for HR-30110",
+      "value": "830",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:HR-30110:HPO-26-00629/10:qty",
+      "name": "Quantity on HPO-26-00629/10",
+      "value": "830",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:HR-30120:stuck_qty",
+      "name": "Quantity on disrupted lines for HR-30120",
+      "value": "950",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:HR-30120:HPO-26-00629/20:qty",
+      "name": "Quantity on HPO-26-00629/20",
+      "value": "950",
+      "unit": "EA"
+     }
+    ],
+    "unknowns": []
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 8,
+   "ts": "2026-10-14T19:20:14.665571+00:00",
+   "t_ms": 6651,
+   "type": "tool.called",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01UFXkbhFCTnamcT6ZdTqKAe",
+   "summary": "Supply planner calls disrupted_supply",
+   "refs": [],
+   "payload": {
+    "tool": "disrupted_supply",
+    "name": "disrupted_supply",
+    "args": {
+     "supplier_id": "SUP-0024"
+    },
+    "gate": "allowed",
+    "gate_reason": "List every open order line this supplier can no longer ship, so each affected part is covered.",
+    "why": "List every open order line this supplier can no longer ship, so each affected part is covered."
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 9,
+   "ts": "2026-10-14T19:20:14.667310+00:00",
+   "t_ms": 6653,
+   "type": "run.status",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01UFXkbhFCTnamcT6ZdTqKAe",
+   "summary": "Supply planner: finding the lines under the notice",
+   "refs": [],
+   "payload": {},
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 10,
+   "ts": "2026-10-14T19:20:14.673880+00:00",
+   "t_ms": 6660,
+   "type": "tool.result",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01UFXkbhFCTnamcT6ZdTqKAe",
+   "summary": "Disrupted supply for SUP-0024: 0 lines across 0 parts ()",
+   "refs": [],
+   "payload": {
+    "tool": "disrupted_supply",
+    "name": "disrupted_supply",
+    "ok": true,
+    "numbers": [
+     {
+      "id": "supply:SUP-0024:disrupted_lines",
+      "name": "Open PO lines disrupted for SUP-0024",
+      "value": "0",
+      "unit": "lines"
+     }
+    ],
+    "unknowns": []
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 11,
+   "ts": "2026-10-14T19:20:16.690253+00:00",
+   "t_ms": 8676,
+   "type": "tool.called",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_016KQyo2czEGQrQNfn4nCTxr",
+   "summary": "Supply planner calls shortage_for_parts",
+   "refs": [],
+   "payload": {
+    "tool": "shortage_for_parts",
+    "name": "shortage_for_parts",
+    "args": {
+     "part_numbers": [
+      "HR-30110"
+     ]
+    },
+    "gate": "allowed",
+    "gate_reason": "Work out, month by month, what the builds need against what is coming for the part, and when each first runs short.",
+    "why": "Work out, month by month, what the builds need against what is coming for the part, and when each first runs short."
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 12,
+   "ts": "2026-10-14T19:20:16.697471+00:00",
+   "t_ms": 8683,
+   "type": "run.status",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_016KQyo2czEGQrQNfn4nCTxr",
+   "summary": "Supply planner: checking what runs short",
+   "refs": [],
+   "payload": {},
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 13,
+   "ts": "2026-10-14T19:20:16.708776+00:00",
+   "t_ms": 8695,
+   "type": "tool.result",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_016KQyo2czEGQrQNfn4nCTxr",
+   "summary": "Shortage for 1 parts: HR-30110: none raised",
+   "refs": [],
+   "payload": {
+    "tool": "shortage_for_parts",
+    "name": "shortage_for_parts",
+    "ok": true,
+    "numbers": [],
+    "unknowns": [
+     {
+      "what": "on-hand stock",
+      "owner": "Marcus",
+      "question": "What is on hand and on order outside the ERP for this part?",
+      "why_it_blocks": "the data has no inventory, safety stock or MRP output, so a projected balance cannot be stated"
+     }
+    ]
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 14,
+   "ts": "2026-10-14T19:20:16.855835+00:00",
+   "t_ms": 8842,
+   "type": "tool.called",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01R9KXUYMsRfDnSoejUcycVr",
+   "summary": "Supply planner calls where_used_for_parts",
+   "refs": [],
+   "payload": {
+    "tool": "where_used_for_parts",
+    "name": "where_used_for_parts",
+    "args": {
+     "part_numbers": [
+      "HR-30110"
+     ]
+    },
+    "gate": "allowed",
+    "gate_reason": "Find which robots use the part, so the shortage is stated per build.",
+    "why": "Find which robots use the part, so the shortage is stated per build."
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 15,
+   "ts": "2026-10-14T19:20:16.856742+00:00",
+   "t_ms": 8843,
+   "type": "run.status",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01R9KXUYMsRfDnSoejUcycVr",
+   "summary": "Supply planner: finding which builds use the part",
+   "refs": [],
+   "payload": {},
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 16,
+   "ts": "2026-10-14T19:20:16.869449+00:00",
+   "t_ms": 8855,
+   "type": "tool.result",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01R9KXUYMsRfDnSoejUcycVr",
+   "summary": "Where used: 1 parts checked",
+   "refs": [],
+   "payload": {
+    "tool": "where_used_for_parts",
+    "name": "where_used_for_parts",
+    "ok": true,
+    "numbers": [
+     {
+      "id": "bom:HR-30110:HR-90020:per_robot",
+      "name": "HR-30110 per Tern T2",
+      "value": "1",
+      "unit": "EA"
+     },
+     {
+      "id": "bom:HR-30110:HR-90050:per_robot",
+      "name": "HR-30110 per Porter P5",
+      "value": "1",
+      "unit": "EA"
+     },
+     {
+      "id": "bom:HR-30110:HR-90110:per_robot",
+      "name": "HR-30110 per Heron H1",
+      "value": "1",
+      "unit": "EA"
+     }
+    ],
+    "unknowns": []
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 17,
+   "ts": "2026-10-14T19:20:17.015046+00:00",
+   "t_ms": 9001,
+   "type": "tool.called",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01MvyL1nHzP6kztx1ydTEgi6",
+   "summary": "Supply planner calls open_supply",
+   "refs": [],
+   "payload": {
+    "tool": "open_supply",
+    "name": "open_supply",
+    "args": {
+     "supplier_id": "SUP-0024"
+    },
+    "gate": "allowed",
+    "gate_reason": "Find the open order lines with this supplier and which are due before the date that matters.",
+    "why": "Find the open order lines with this supplier and which are due before the date that matters."
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 18,
+   "ts": "2026-10-14T19:20:17.015959+00:00",
+   "t_ms": 9002,
+   "type": "run.status",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01MvyL1nHzP6kztx1ydTEgi6",
+   "summary": "Supply planner: checking the open orders",
+   "refs": [],
+   "payload": {},
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 19,
+   "ts": "2026-10-14T19:20:17.022834+00:00",
+   "t_ms": 9009,
+   "type": "tool.result",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01MvyL1nHzP6kztx1ydTEgi6",
+   "summary": "Open supply for Alderpoint Electronics Manufacturing: 1 lines, 44 EA (0 EA on disrupted lines)",
+   "refs": [],
+   "payload": {
+    "tool": "open_supply",
+    "name": "open_supply",
+    "ok": true,
+    "numbers": [
+     {
+      "id": "supply:SUP-0024:open_lines",
+      "name": "Open PO lines for Alderpoint Electronics Manufacturing",
+      "value": "1",
+      "unit": "lines"
+     },
+     {
+      "id": "supply:SUP-0024:open_qty",
+      "name": "Quantity on open orders for Alderpoint Electronics Manufacturing",
+      "value": "44",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:SUP-0024:stuck_qty",
+      "name": "Quantity on disrupted lines for Alderpoint Electronics Manufacturing",
+      "value": "0",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:SUP-0024:unaffected_qty",
+      "name": "Quantity on open orders not disrupted for Alderpoint Electronics Manufacturing",
+      "value": "44",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:SUP-0024:HPO-26-00555/10:qty",
+      "name": "Quantity on HPO-26-00555/10",
+      "value": "44",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:SUP-0024:open_value_usd",
+      "name": "Value still to arrive on open orders for Alderpoint Electronics Manufacturing (USD, at finance's rate for each order's month)",
+      "value": "55984.28",
+      "unit": "USD",
+      "say": "$56K"
+     }
+    ],
+    "unknowns": []
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 20,
+   "ts": "2026-10-14T19:20:17.099288+00:00",
+   "t_ms": 9085,
+   "type": "tool.called",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01WHBGGeBHKexNdNDXFBEuhA",
+   "summary": "Supply planner calls get_item",
+   "refs": [],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "args": {
+     "item_key": "consignment:HR-30110"
+    },
+    "gate": "allowed",
+    "gate_reason": "Read what the system already worked out for this item: its finding, dates and figures.",
+    "why": "Read what the system already worked out for this item: its finding, dates and figures."
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 21,
+   "ts": "2026-10-14T19:20:17.100337+00:00",
+   "t_ms": 9086,
+   "type": "run.status",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01WHBGGeBHKexNdNDXFBEuhA",
+   "summary": "Supply planner: reading the item",
+   "refs": [],
+   "payload": {},
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 22,
+   "ts": "2026-10-14T19:20:17.110494+00:00",
+   "t_ms": 9096,
+   "type": "tool.result",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01WHBGGeBHKexNdNDXFBEuhA",
+   "summary": "Item Safety controllers for every robot slip about 3 weeks: consigned PCB late at Lanxin: 10 computed numbers, 1 open questions",
+   "refs": [],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "ok": true,
+    "numbers": [
+     {
+      "id": "item:consignment:HR-30110:at_stake",
+      "name": "Money at stake",
+      "value": "12557.9",
+      "unit": "USD",
+      "say": "$13K"
+     },
+     {
+      "id": "item:consignment:HR-30110:tile:slip_days",
+      "name": "Days later than promised",
+      "value": "21",
+      "unit": "days"
+     },
+     {
+      "id": "item:consignment:HR-30110:tile:robots:HR-90020:2026-10",
+      "name": "Tern T2 planned in October",
+      "value": "182",
+      "unit": "robots"
+     },
+     {
+      "id": "item:consignment:HR-30110:tile:robots:HR-90050:2026-10",
+      "name": "Porter P5 planned in October",
+      "value": "40",
+      "unit": "robots"
+     },
+     {
+      "id": "item:consignment:HR-30110:tile:robots:HR-90110:2026-10",
+      "name": "Heron H1 planned in October",
+      "value": "22",
+      "unit": "robots"
+     },
+     {
+      "id": "item:consignment:HR-30110:consigned_slip_days:HR-30110",
+      "name": "Days later than promised (HR-30110)",
+      "value": "21",
+      "unit": "days"
+     },
+     {
+      "id": "item:consignment:HR-30110:consigned_open_value:HR-30110",
+      "name": "Open value of the late PCB orders",
+      "value": "12557.9",
+      "unit": "USD",
+      "say": "$13K"
+     },
+     {
+      "id": "item:consignment:HR-30110:days_left",
+      "name": "Days left to act",
+      "value": "0",
+      "unit": "days"
+     },
+     {
+      "id": "item:consignment:HR-30110:po_line_count",
+      "name": "PO lines the item is about",
+      "value": "1",
+      "unit": "lines"
+     },
+     {
+      "id": "item:consignment:HR-30110:past_due_line_count",
+      "name": "Of them, lines past the promised date",
+      "value": "0",
+      "unit": "lines"
+     }
+    ],
+    "unknowns": [
+     {
+      "what": "stock of the board or the built part",
+      "owner": "Marcus",
+      "question": "Is there PCB or safety controller on hand at Alderpoint Electronics, or in transit, that covers the weeks?",
+      "why_it_blocks": "the data has no inventory"
+     }
+    ]
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 23,
+   "ts": "2026-10-14T19:20:22.325829+00:00",
+   "t_ms": 14312,
+   "type": "tool.called",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01XuGXwoWWe95QeQmk2doKkB",
+   "summary": "Supply planner calls open_supply",
+   "refs": [],
+   "payload": {
+    "tool": "open_supply",
+    "name": "open_supply",
+    "args": {
+     "part_number": "HR-30110"
+    },
+    "gate": "allowed",
+    "gate_reason": "Find what is on order for the part and what is stuck.",
+    "why": "Find what is on order for the part and what is stuck."
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 24,
+   "ts": "2026-10-14T19:20:22.327487+00:00",
+   "t_ms": 14313,
+   "type": "run.status",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01XuGXwoWWe95QeQmk2doKkB",
+   "summary": "Supply planner: checking the open orders",
+   "refs": [],
+   "payload": {},
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 25,
+   "ts": "2026-10-14T19:20:22.336819+00:00",
+   "t_ms": 14323,
+   "type": "tool.result",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01XuGXwoWWe95QeQmk2doKkB",
+   "summary": "Open supply for HR-30110: 1 lines, 830 EA (0 EA on disrupted lines); 1 under the notice (allocation)",
+   "refs": [],
+   "payload": {
+    "tool": "open_supply",
+    "name": "open_supply",
+    "ok": true,
+    "numbers": [
+     {
+      "id": "supply:HR-30110:open_lines",
+      "name": "Open PO lines for HR-30110",
+      "value": "1",
+      "unit": "lines"
+     },
+     {
+      "id": "supply:HR-30110:open_qty",
+      "name": "Quantity on open orders for HR-30110",
+      "value": "830",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:HR-30110:stuck_qty",
+      "name": "Quantity on disrupted lines for HR-30110",
+      "value": "0",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:HR-30110:unaffected_qty",
+      "name": "Quantity on open orders not disrupted for HR-30110",
+      "value": "830",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:HR-30110:HPO-26-00629/10:qty",
+      "name": "Quantity on HPO-26-00629/10",
+      "value": "830",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:HR-30110:open_value_usd",
+      "name": "Value still to arrive on open orders for HR-30110 (USD, at finance's rate for each order's month)",
+      "value": "12557.9",
+      "unit": "USD",
+      "say": "$13K"
+     },
+     {
+      "id": "cover:HR-30110:HR-90020:robots_on_order",
+      "name": "Tern T2 robots that the open orders of HR-30110 cover if all of it goes to the Tern T2 (830 on order, 1 per robot), before stock on hand; a part used in several robots has one such figure per robot, never to be added",
+      "value": "830",
+      "unit": "robots"
+     },
+     {
+      "id": "cover:HR-30110:HR-90050:robots_on_order",
+      "name": "Porter P5 robots that the open orders of HR-30110 cover if all of it goes to the Porter P5 (830 on order, 1 per robot), before stock on hand; a part used in several robots has one such figure per robot, never to be added",
+      "value": "830",
+      "unit": "robots"
+     },
+     {
+      "id": "cover:HR-30110:HR-90110:robots_on_order",
+      "name": "Heron H1 robots that the open orders of HR-30110 cover if all of it goes to the Heron H1 (830 on order, 1 per robot), before stock on hand; a part used in several robots has one such figure per robot, never to be added",
+      "value": "830",
+      "unit": "robots"
+     }
+    ],
+    "unknowns": []
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 26,
+   "ts": "2026-10-14T19:20:25.415648+00:00",
+   "t_ms": 17401,
+   "type": "tool.result",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01PWAJJX2pjeNTpD3eLnYBSj",
+   "summary": "submit_handoff failed: not finished: run shortage_for_parts for HR-30120 (the notice affects them), then hand off",
+   "refs": [],
+   "payload": {
+    "tool": "submit_handoff",
+    "name": "submit_handoff",
+    "ok": false,
+    "error": "not finished: run shortage_for_parts for HR-30120 (the notice affects them), then hand off",
+    "numbers": [],
+    "unknowns": []
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 27,
+   "ts": "2026-10-14T19:20:26.682973+00:00",
+   "t_ms": 18669,
+   "type": "tool.called",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01AxViMZv8HKPpsbdWQfTAnx",
+   "summary": "Supply planner calls shortage_for_parts",
+   "refs": [],
+   "payload": {
+    "tool": "shortage_for_parts",
+    "name": "shortage_for_parts",
+    "args": {
+     "part_numbers": [
+      "HR-30120"
+     ]
+    },
+    "gate": "allowed",
+    "gate_reason": "Work out, month by month, what the builds need against what is coming for the part, and when each first runs short.",
+    "why": "Work out, month by month, what the builds need against what is coming for the part, and when each first runs short."
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 28,
+   "ts": "2026-10-14T19:20:26.684580+00:00",
+   "t_ms": 18670,
+   "type": "run.status",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01AxViMZv8HKPpsbdWQfTAnx",
+   "summary": "Supply planner: checking what runs short",
+   "refs": [],
+   "payload": {},
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 29,
+   "ts": "2026-10-14T19:20:26.700719+00:00",
+   "t_ms": 18686,
+   "type": "tool.result",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01AxViMZv8HKPpsbdWQfTAnx",
+   "summary": "Shortage for 1 parts: HR-30120: none raised",
+   "refs": [],
+   "payload": {
+    "tool": "shortage_for_parts",
+    "name": "shortage_for_parts",
+    "ok": true,
+    "numbers": [],
+    "unknowns": [
+     {
+      "what": "on-hand stock",
+      "owner": "Marcus",
+      "question": "What is on hand and on order outside the ERP for this part?",
+      "why_it_blocks": "the data has no inventory, safety stock or MRP output, so a projected balance cannot be stated"
+     }
+    ]
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 30,
+   "ts": "2026-10-14T19:20:26.711522+00:00",
+   "t_ms": 18697,
+   "type": "tool.called",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01Cfyzhj4kJrmae9wSzP6wB6",
+   "summary": "Supply planner calls where_used_for_parts",
+   "refs": [],
+   "payload": {
+    "tool": "where_used_for_parts",
+    "name": "where_used_for_parts",
+    "args": {
+     "part_numbers": [
+      "HR-30120"
+     ]
+    },
+    "gate": "allowed",
+    "gate_reason": "Find which robots use the part, so the shortage is stated per build.",
+    "why": "Find which robots use the part, so the shortage is stated per build."
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 31,
+   "ts": "2026-10-14T19:20:26.712646+00:00",
+   "t_ms": 18698,
+   "type": "run.status",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01Cfyzhj4kJrmae9wSzP6wB6",
+   "summary": "Supply planner: finding which builds use the part",
+   "refs": [],
+   "payload": {},
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 32,
+   "ts": "2026-10-14T19:20:26.727522+00:00",
+   "t_ms": 18713,
+   "type": "tool.result",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01Cfyzhj4kJrmae9wSzP6wB6",
+   "summary": "Where used: 1 parts checked",
+   "refs": [],
+   "payload": {
+    "tool": "where_used_for_parts",
+    "name": "where_used_for_parts",
+    "ok": true,
+    "numbers": [],
+    "unknowns": []
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 33,
+   "ts": "2026-10-14T19:20:30.523321+00:00",
+   "t_ms": 22509,
+   "type": "run.finished",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": null,
+   "summary": "Supply planner finished",
+   "refs": [],
+   "payload": {
+    "status": "ok",
+    "tool_calls": 10,
+    "first_step_ms": 6351
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 6,
+   "ts": "2026-10-14T19:20:30.526469+00:00",
+   "t_ms": 22512,
+   "type": "child.finished",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": null,
+   "summary": "The consigned PCB HR-30110 has one open line, HPO-26-00629/10 (830 EA, about $12.6K, owner Marcus Chen): promised 25 Sep 2026, and Lanxin's allocation notice of 16 Sep moves it to 16 Oct, 21 days later. It is not yet past due, and it is not counted as arriving until 16 Oct. No shortage is raised for HR-30110 because the notice is a later date rather than a stop, so the 830 boards arrive 16 Oct unless there is stock. The same notice moves Lanxin's HPO-26-00629/20 (HR-30120, 950 EA) to 19 Oct, but HR-30120 is not in any robot's bill of materials, so it has no build impact.",
+   "refs": [],
+   "payload": {
+    "child_run_id": "run-recorded.1",
+    "status": "ok",
+    "handoff_ok": true
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 7,
+   "ts": "2026-10-14T19:20:32.737442+00:00",
+   "t_ms": 24723,
+   "type": "child.started",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01BdZN8RqU4pbYv24rJELraz",
+   "summary": "Draft supplier request",
+   "refs": [],
+   "payload": {
+    "child_run_id": "run-recorded.2",
+    "specialist": "buyers_clerk",
+    "question": "Draft supplier request",
+    "task": "Draft supplier request",
+    "asked_by": "lookout"
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 1,
+   "ts": "2026-10-14T19:20:32.738367+00:00",
+   "t_ms": 24724,
+   "type": "run.started",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": null,
+   "summary": "Buyer's clerk started",
+   "refs": [],
+   "payload": {
+    "workflow": "specialist:buyers_clerk",
+    "item_key": "consignment:HR-30110"
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 2,
+   "ts": "2026-10-14T19:20:34.695885+00:00",
+   "t_ms": 26681,
+   "type": "tool.called",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01PP4Hr3M19w8J31Fz9VCvMD",
+   "summary": "Buyer's clerk calls get_item",
+   "refs": [],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "args": {
+     "item_key": "consignment:HR-30110"
+    },
+    "gate": "allowed",
+    "gate_reason": "Read what the system already worked out for this item: its finding, dates and figures.",
+    "why": "Read what the system already worked out for this item: its finding, dates and figures."
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 3,
+   "ts": "2026-10-14T19:20:34.697591+00:00",
+   "t_ms": 26683,
+   "type": "run.status",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01PP4Hr3M19w8J31Fz9VCvMD",
+   "summary": "Buyer's clerk: reading the item",
+   "refs": [],
+   "payload": {},
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 4,
+   "ts": "2026-10-14T19:20:34.714249+00:00",
+   "t_ms": 26700,
+   "type": "tool.result",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01PP4Hr3M19w8J31Fz9VCvMD",
+   "summary": "Item Safety controllers for every robot slip about 3 weeks: consigned PCB late at Lanxin: 10 computed numbers, 1 open questions",
+   "refs": [],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "ok": true,
+    "numbers": [
+     {
+      "id": "item:consignment:HR-30110:at_stake",
+      "name": "Money at stake",
+      "value": "12557.9",
+      "unit": "USD",
+      "say": "$13K"
+     },
+     {
+      "id": "item:consignment:HR-30110:tile:slip_days",
+      "name": "Days later than promised",
+      "value": "21",
+      "unit": "days"
+     },
+     {
+      "id": "item:consignment:HR-30110:tile:robots:HR-90020:2026-10",
+      "name": "Tern T2 planned in October",
+      "value": "182",
+      "unit": "robots"
+     },
+     {
+      "id": "item:consignment:HR-30110:tile:robots:HR-90050:2026-10",
+      "name": "Porter P5 planned in October",
+      "value": "40",
+      "unit": "robots"
+     },
+     {
+      "id": "item:consignment:HR-30110:tile:robots:HR-90110:2026-10",
+      "name": "Heron H1 planned in October",
+      "value": "22",
+      "unit": "robots"
+     },
+     {
+      "id": "item:consignment:HR-30110:consigned_slip_days:HR-30110",
+      "name": "Days later than promised (HR-30110)",
+      "value": "21",
+      "unit": "days"
+     },
+     {
+      "id": "item:consignment:HR-30110:consigned_open_value:HR-30110",
+      "name": "Open value of the late PCB orders",
+      "value": "12557.9",
+      "unit": "USD",
+      "say": "$13K"
+     },
+     {
+      "id": "item:consignment:HR-30110:days_left",
+      "name": "Days left to act",
+      "value": "0",
+      "unit": "days"
+     },
+     {
+      "id": "item:consignment:HR-30110:po_line_count",
+      "name": "PO lines the item is about",
+      "value": "1",
+      "unit": "lines"
+     },
+     {
+      "id": "item:consignment:HR-30110:past_due_line_count",
+      "name": "Of them, lines past the promised date",
+      "value": "0",
+      "unit": "lines"
+     }
+    ],
+    "unknowns": [
+     {
+      "what": "stock of the board or the built part",
+      "owner": "Marcus",
+      "question": "Is there PCB or safety controller on hand at Alderpoint Electronics, or in transit, that covers the weeks?",
+      "why_it_blocks": "the data has no inventory"
+     }
+    ]
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 5,
+   "ts": "2026-10-14T19:20:35.363816+00:00",
+   "t_ms": 27349,
+   "type": "tool.called",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_015zhSivd9A1nYHyTxKwLEyC",
+   "summary": "Buyer's clerk calls requests_for",
+   "refs": [],
+   "payload": {
+    "tool": "requests_for",
+    "name": "requests_for",
+    "args": {
+     "item_key": "consignment:HR-30110"
+    },
+    "gate": "allowed",
+    "gate_reason": "Read the requests to suppliers the approval ledger holds, so the answer says what is waiting, approved or sent.",
+    "why": "Read the requests to suppliers the approval ledger holds, so the answer says what is waiting, approved or sent."
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 6,
+   "ts": "2026-10-14T19:20:35.365954+00:00",
+   "t_ms": 27351,
+   "type": "run.status",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_015zhSivd9A1nYHyTxKwLEyC",
+   "summary": "Buyer's clerk: checking which requests were staged or sent",
+   "refs": [],
+   "payload": {},
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 7,
+   "ts": "2026-10-14T19:20:35.368264+00:00",
+   "t_ms": 27354,
+   "type": "tool.called",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01X1iAsGwJ2b7gsqknq3DUkz",
+   "summary": "Buyer's clerk calls get_handoffs",
+   "refs": [],
+   "payload": {
+    "tool": "get_handoffs",
+    "name": "get_handoffs",
+    "args": {},
+    "gate": "allowed",
+    "gate_reason": "Read what the earlier steps found, with the figures their lookups returned.",
+    "why": "Read what the earlier steps found, with the figures their lookups returned."
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 8,
+   "ts": "2026-10-14T19:20:35.369992+00:00",
+   "t_ms": 27355,
+   "type": "run.status",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01X1iAsGwJ2b7gsqknq3DUkz",
+   "summary": "Buyer's clerk: working",
+   "refs": [],
+   "payload": {},
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 9,
+   "ts": "2026-10-14T19:20:35.390620+00:00",
+   "t_ms": 27376,
+   "type": "tool.result",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_015zhSivd9A1nYHyTxKwLEyC",
+   "summary": "1 requests on record, 0 sent",
+   "refs": [],
+   "payload": {
+    "tool": "requests_for",
+    "name": "requests_for",
+    "ok": true,
+    "numbers": [],
+    "unknowns": []
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 10,
+   "ts": "2026-10-14T19:20:35.396337+00:00",
+   "t_ms": 27382,
+   "type": "tool.result",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01X1iAsGwJ2b7gsqknq3DUkz",
+   "summary": "Supply planner handed back their findings",
+   "refs": [],
+   "payload": {
+    "tool": "get_handoffs",
+    "name": "get_handoffs",
+    "ok": true,
+    "numbers": [],
+    "unknowns": []
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 11,
+   "ts": "2026-10-14T19:20:38.832367+00:00",
+   "t_ms": 30818,
+   "type": "tool.called",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01S54W2sw6c9pUwwtx6q4Rts",
+   "summary": "Buyer's clerk calls draft_supplier_request",
+   "refs": [],
+   "payload": {
+    "tool": "draft_supplier_request",
+    "name": "draft_supplier_request",
+    "args": {
+     "supplier_id": "SUP-0022",
+     "subject": "HPO-26-00629 line 10, PCB HR-30110: earlier date or partial shipment",
+     "body": "Dear Huang Shu-fen,\n\nYour notice of 16 September moves PCB, safety controller rev B (HR-30110), on HPO-26-00629 line 10 (830 EA) from 25 September to 16 October. This board is consigned to our assembler and goes into every robot, so the later date matters to us.\n\nCould you please:\n- tell us whether an earlier date, or a partial shipment ahead of 16 October, is possible on HPO-26-00629 line 10;\n- confirm the revised promise date for HPO-26-00629 line 10 in writing.\n\nPlease reply as soon as you can.\n\nBest regards,\nMarcus Chen",
+     "lines": [
+      "HPO-26-00629/10"
+     ]
+    },
+    "gate": "staged",
+    "gate_reason": "Prepare the request to the supplier for the buyer to approve. Nothing is sent.",
+    "why": "Prepare the request to the supplier for the buyer to approve. Nothing is sent."
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 12,
+   "ts": "2026-10-14T19:20:38.835596+00:00",
+   "t_ms": 30821,
+   "type": "run.status",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01S54W2sw6c9pUwwtx6q4Rts",
+   "summary": "Buyer's clerk: drafting the request",
+   "refs": [],
+   "payload": {},
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 13,
+   "ts": "2026-10-14T19:20:38.861514+00:00",
+   "t_ms": 30847,
+   "type": "tool.result",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01S54W2sw6c9pUwwtx6q4Rts",
+   "summary": "The waiting draft to Huang Shu-fen was amended: HPO-26-00629 line 10, PCB HR-30110: earlier date or partial shipment",
+   "refs": [],
+   "payload": {
+    "tool": "draft_supplier_request",
+    "name": "draft_supplier_request",
+    "ok": true,
+    "numbers": [],
+    "unknowns": []
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 14,
+   "ts": "2026-10-14T19:20:38.863666+00:00",
+   "t_ms": 30849,
+   "type": "action.staged",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01S54W2sw6c9pUwwtx6q4Rts",
+   "summary": "Buyer's clerk drafted: HPO-26-00629 line 10, PCB HR-30110: earlier date or partial shipment",
+   "refs": [
+    {
+     "type": "action",
+     "id": "A-068130a3",
+     "label": "HPO-26-00629 line 10, PCB HR-30110: earlier date or partial shipment"
+    }
+   ],
+   "payload": {
+    "action_id": "A-068130a3",
+    "action_type": "supplier_request",
+    "recipient": "huang.shufen@lanxin-pcb.example",
+    "payload_hash": "961b0a91409da4344c1781d92410618ea9d83128849d827624492052db326275",
+    "already_waiting": null
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 15,
+   "ts": "2026-10-14T19:20:40.960303+00:00",
+   "t_ms": 32946,
+   "type": "run.finished",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": null,
+   "summary": "Buyer's clerk finished",
+   "refs": [],
+   "payload": {
+    "status": "ok",
+    "tool_calls": 4,
+    "first_step_ms": 26681
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 8,
+   "ts": "2026-10-14T19:20:40.964775+00:00",
+   "t_ms": 32950,
+   "type": "child.finished",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": null,
+   "summary": "Staged a request to the supplier's contact on file, awaiting approval",
+   "refs": [],
+   "payload": {
+    "child_run_id": "run-recorded.2",
+    "status": "ok",
+    "handoff_ok": true
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 9,
+   "ts": "2026-10-14T19:20:42.175431+00:00",
+   "t_ms": 34161,
+   "type": "tool.called",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": "toolu_01FTvfbHsqEHHFdxNgQB7K1R",
+   "summary": "Lookout calls get_handoffs",
+   "refs": [],
+   "payload": {
+    "tool": "get_handoffs",
+    "name": "get_handoffs",
+    "args": {},
+    "gate": "allowed",
+    "gate_reason": "Read what the earlier steps found, with the figures their lookups returned.",
+    "why": "Read what the earlier steps found, with the figures their lookups returned."
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 10,
+   "ts": "2026-10-14T19:20:42.178731+00:00",
+   "t_ms": 34164,
+   "type": "run.status",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": "toolu_01FTvfbHsqEHHFdxNgQB7K1R",
+   "summary": "Lookout: working",
+   "refs": [],
+   "payload": {},
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 11,
+   "ts": "2026-10-14T19:20:42.212733+00:00",
+   "t_ms": 34198,
+   "type": "tool.result",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": "toolu_01FTvfbHsqEHHFdxNgQB7K1R",
+   "summary": "Supply planner and Buyer's clerk handed back their findings",
+   "refs": [],
+   "payload": {
+    "tool": "get_handoffs",
+    "name": "get_handoffs",
+    "ok": true,
+    "numbers": [],
+    "unknowns": []
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 12,
+   "ts": "2026-10-14T19:20:46.552197+00:00",
+   "t_ms": 38538,
+   "type": "tool.called",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": "toolu_015rikZ985oTgdBuoWsHVkap",
+   "summary": "Lookout was refused StructuredOutput: rewrite it to fit: the finding has 22 words; it is one decision sentence of at most 20; move the detail into points; the Situation has 22 words; at most 14 on a case; the recommended reason has 9 words; at most 8",
+   "refs": [],
+   "payload": {
+    "tool": "StructuredOutput",
+    "name": "StructuredOutput",
+    "args": {
+     "finding": "Lanxin's board slip of 21 days hits safety controllers: up to 182 Tern T2, 40 Porter P5, 22 Heron H1 in October.",
+     "numbers": [
+      {
+       "id": "item:consignment:HR-30110:tile:slip_days",
+       "value": 21
+      },
+      {
+       "id": "item:consignment:HR-30110:tile:robots:HR-90020:2026-10",
+       "value": 182
+      },
+      {
+       "id": "item:consignment:HR-30110:tile:robots:HR-90050:2026-10",
+       "value": 40
+      },
+      {
+       "id": "item:consignment:HR-30110:tile:robots:HR-90110:2026-10",
+       "value": 22
+      },
+      {
+       "id": "item:consignment:HR-30110:at_stake",
+       "value": 12557.9
+      }
+     ],
+     "recommended": {
+      "kind": "earlier_date",
+      "reason": "21 days late on the only open board line",
+      "number_ids": [
+       "item:consignment:HR-30110:tile:slip_days"
+      ]
+     },
+     "next_step": {
+      "what": "Approve the email to Huang Shu-fen (Lanxin)",
+      "who": "Marcus Chen",
+      "by": "Sep 25"
+     },
+     "assumptions": [
+      "Shortfalls are upper bounds: on-hand stock isn't in the data."
+     ],
+     "would_change": [
+      "Alderpoint Electronics confirming board or controller stock that covers October",
+      "Huang Shu-fen giving an earlier date on HPO-26-00629/10"
+     ],
+     "open_questions": [
+      {
+       "what": "stock of the board or the built part",
+       "why_it_blocks": "the data has no inventory",
+       "owner": "Marcus",
+       "question": "Is there PCB or safety controller on hand at Alderpoint Electronics, or in transit, that covers the weeks?"
+      }
+     ]
+    },
+    "gate": "denied",
+    "gate_reason": "rewrite it to fit: the finding has 22 words; it is one decision sentence of at most 20; move the detail into points; the Situation has 22 words; at most 14 on a case; the recommended reason has 9 words; at most 8"
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 13,
+   "ts": "2026-10-14T19:20:50.734994+00:00",
+   "t_ms": 42720,
+   "type": "verifier.result",
+   "agent": "verifier",
+   "agent_label": "Verifier",
+   "tool_use_id": null,
+   "summary": "4 of 4 numbers from tools · 2 open questions with an owner · 2 checks failed",
+   "refs": [],
+   "payload": {
+    "passed": false,
+    "warnings": [],
+    "numbers_checked": 4,
+    "numbers_from_tools": 4,
+    "open_questions_with_owner": 2,
+    "reasons": [
+     "A check on the answer failed"
+    ],
+    "unchecked": [],
+    "open_questions": 2,
+    "failures": [
+     "binding: '182' is a planned count (the forecast), not a shortfall; say planned, or give a short figure a tool returned",
+     "binding: '40' is a planned count (the forecast), not a shortfall; say planned, or give a short figure a tool returned"
+    ]
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 14,
+   "ts": "2026-10-14T19:20:50.735656+00:00",
+   "t_ms": 42721,
+   "type": "revision.started",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Lookout revises once: a check failed",
+   "refs": [],
+   "payload": {},
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 15,
+   "ts": "2026-10-14T19:20:54.740883+00:00",
+   "t_ms": 46726,
+   "type": "tool.called",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": "toolu_017zjSHXkTr37bgyByMUV1ms",
+   "summary": "Lookout was refused StructuredOutput: rewrite it to fit: the Situation has 17 words; at most 14 on a case",
+   "refs": [],
+   "payload": {
+    "tool": "StructuredOutput",
+    "name": "StructuredOutput",
+    "args": {
+     "finding": "Lanxin's board slips 21 days; safety controllers for October's Tern T2, Porter P5, Heron H1 builds exposed.",
+     "numbers": [
+      {
+       "id": "item:consignment:HR-30110:tile:slip_days",
+       "value": 21
+      },
+      {
+       "id": "item:consignment:HR-30110:at_stake",
+       "value": 12557.9
+      }
+     ],
+     "recommended": {
+      "kind": "earlier_date",
+      "reason": "21 days late on the only board line",
+      "number_ids": [
+       "item:consignment:HR-30110:tile:slip_days"
+      ]
+     },
+     "next_step": {
+      "what": "Approve the email to Huang Shu-fen (Lanxin)",
+      "who": "Marcus Chen",
+      "by": "Sep 25"
+     },
+     "assumptions": [
+      "Shortfalls are upper bounds: on-hand stock isn't in the data."
+     ],
+     "would_change": [
+      "Alderpoint Electronics confirming board or controller stock that covers October",
+      "Huang Shu-fen giving an earlier date on HPO-26-00629/10"
+     ],
+     "open_questions": [
+      {
+       "what": "stock of the board or the built part",
+       "why_it_blocks": "the data has no inventory",
+       "owner": "Marcus",
+       "question": "Is there PCB or safety controller on hand at Alderpoint Electronics, or in transit, that covers the weeks?"
+      }
+     ]
+    },
+    "gate": "denied",
+    "gate_reason": "rewrite it to fit: the Situation has 17 words; at most 14 on a case"
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 16,
+   "ts": "2026-10-14T19:20:58.216155+00:00",
+   "t_ms": 50201,
+   "type": "verifier.result",
+   "agent": "verifier",
+   "agent_label": "Verifier",
+   "tool_use_id": null,
+   "summary": "2 of 2 numbers from tools · 2 open questions with an owner",
+   "refs": [],
+   "payload": {
+    "passed": true,
+    "warnings": [],
+    "numbers_checked": 2,
+    "numbers_from_tools": 2,
+    "open_questions_with_owner": 2,
+    "reasons": [],
+    "unchecked": [],
+    "open_questions": 2,
+    "failures": []
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 17,
+   "ts": "2026-10-14T19:20:58.617108+00:00",
+   "t_ms": 50602,
+   "type": "run.finished",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Run ok",
+   "refs": [],
+   "payload": {
+    "status": "ok",
+    "turns": 3,
+    "tool_calls": 18,
+    "cost_usd": 0.1633,
+    "wall_ms": 50585,
+    "first_step_ms": 15,
+    "first_token_ms": 2683,
+    "recommendation_id": "run-recorded",
+    "tokens_in": 324369,
+    "tokens_out": 6890,
+    "tokens_cache_read": 280707,
+    "tokens_cache_creation": 41569,
+    "tokens_by_agent": {
+     "supply_planner": {
+      "tokens": 17026,
+      "tool_uses": 12,
+      "duration_ms": 18063
+     },
+     "buyers_clerk": {
+      "tokens": 16169,
+      "tool_uses": 5,
+      "duration_ms": 8241
+     }
+    }
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 18,
+   "ts": "2026-10-14T19:21:07.251157+00:00",
+   "t_ms": 59236,
+   "type": "review.result",
+   "agent": "reviewer",
+   "agent_label": "Reviewer",
+   "tool_use_id": null,
+   "summary": "Reviewer 67/100: Clear finding and safe asks; fails on an id-for-name and unnamed robot builds.",
+   "refs": [],
+   "payload": {
+    "score": 67,
+    "checks": [
+     {
+      "name": "answers the buyer's question",
+      "passed": true,
+      "critique": "",
+      "critical": false
+     },
+     {
+      "name": "assumptions are really assumptions",
+      "passed": true,
+      "critique": "",
+      "critical": false
+     },
+     {
+      "name": "nothing in it commits Halden",
+      "passed": true,
+      "critique": "",
+      "critical": true
+     },
+     {
+      "name": "what would change it is specific",
+      "passed": true,
+      "critique": "",
+      "critical": false
+     },
+     {
+      "name": "buyer's words",
+      "passed": false,
+      "critique": "SUP-0024 id stands in for a supplier name in the figures.",
+      "critical": false
+     },
+     {
+      "name": "names the robot and the month",
+      "passed": false,
+      "critique": "Robot builds never named; asks partial shipment, not allocation.",
+      "critical": false
+     }
+    ],
+    "failed": [
+     "buyer's words: SUP-0024 id stands in for a supplier name in the figures.",
+     "names the robot and the month: Robot builds never named; asks partial shipment, not allocation."
+    ],
+    "cost_usd": 0.0015
+   },
+   "stage": null
+  }
+ ],
+ "recommendation": {
+  "finding": "Lanxin's board slips 21 days; October safety controllers for all three robots exposed.",
+  "next_step": {
+   "who": "Marcus Chen",
+   "what": "Approve the email to Huang Shu-fen (Lanxin)",
+   "by": "Sep 25"
+  },
+  "done": [
+   {
+    "text": "Drafted a request to Huang Shu-fen: waiting for your approval",
+    "action_id": "A-068130a3",
+    "stage": "proposed"
+   }
+  ],
+  "points": [],
+  "answer_entities": [],
+  "recommendation_entities": [],
+  "numbers": [
+   {
+    "id": "supply:HR-30110:open_lines",
+    "value": "1",
+    "unit": "lines",
+    "name": "Open PO lines for HR-30110",
+    "headline": true,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": "supply:HR-30110:open_lines",
+     "raw": null,
+     "inputs": [],
+     "rule": "Open PO lines for HR-30110",
+     "by": "agent tools"
+    }
+   },
+   {
+    "id": "supply:HR-30110:stuck_qty",
+    "value": "0",
+    "unit": "EA",
+    "name": "Quantity on disrupted lines for HR-30110",
+    "headline": true,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": "supply:HR-30110:stuck_qty",
+     "raw": null,
+     "inputs": [],
+     "rule": "Quantity on disrupted lines for HR-30110",
+     "by": "agent tools"
+    }
+   },
+   {
+    "id": "supply:HR-30120:stuck_qty",
+    "value": "950",
+    "unit": "EA",
+    "name": "Quantity on disrupted lines for HR-30120",
+    "headline": true,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": "supply:HR-30120:stuck_qty",
+     "raw": null,
+     "inputs": [],
+     "rule": "Quantity on disrupted lines for HR-30120",
+     "by": "agent tools"
+    }
+   },
+   {
+    "id": "supply:SUP-0022:disrupted_lines",
+    "value": "2",
+    "unit": "lines",
+    "name": "Open PO lines disrupted for Lanxin Circuit Technology Co., Ltd.",
+    "headline": true,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": "supply:SUP-0022:disrupted_lines",
+     "raw": null,
+     "inputs": [],
+     "rule": "Open PO lines disrupted for Lanxin Circuit Technology Co., Ltd.",
+     "by": "agent tools"
+    }
+   },
+   {
+    "id": "supply:SUP-0024:disrupted_lines",
+    "value": "0",
+    "unit": "lines",
+    "name": "Open PO lines disrupted for SUP-0024",
+    "headline": true,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": "supply:SUP-0024:disrupted_lines",
+     "raw": null,
+     "inputs": [],
+     "rule": "Open PO lines disrupted for SUP-0024",
+     "by": "agent tools"
+    }
+   },
+   {
+    "id": "supply:SUP-0024:open_lines",
+    "value": "1",
+    "unit": "lines",
+    "name": "Open PO lines for Alderpoint Electronics Manufacturing",
+    "headline": true,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": "supply:SUP-0024:open_lines",
+     "raw": null,
+     "inputs": [],
+     "rule": "Open PO lines for Alderpoint Electronics Manufacturing",
+     "by": "agent tools"
+    }
+   },
+   {
+    "id": "supply:SUP-0024:stuck_qty",
+    "value": "0",
+    "unit": "EA",
+    "name": "Quantity on disrupted lines for Alderpoint Electronics Manufacturing",
+    "headline": true,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": "supply:SUP-0024:stuck_qty",
+     "raw": null,
+     "inputs": [],
+     "rule": "Quantity on disrupted lines for Alderpoint Electronics Manufacturing",
+     "by": "agent tools"
+    }
+   },
+   {
+    "id": "item:consignment:HR-30110:at_stake",
+    "value": "12557.9",
+    "unit": "USD",
+    "name": "Money at stake",
+    "headline": false,
+    "say": "$13K",
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": null,
+     "raw": null,
+     "inputs": [
+      {
+       "type": "po_line",
+       "id": "HPO-26-00629/10",
+       "label": null
+      }
+     ],
+     "rule": "open value of the late lines of the consigned material",
+     "by": "attention.consignment"
+    }
+   },
+   {
+    "id": "item:consignment:HR-30110:tile:slip_days",
+    "value": "21",
+    "unit": "days",
+    "name": "Days later than promised",
+    "headline": false,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": null,
+     "raw": null,
+     "inputs": [
+      {
+       "type": "po_line",
+       "id": "HPO-26-00629/10",
+       "label": "PCB, safety controller rev B order (HPO-26-00629 line 10)"
+      }
+     ],
+     "rule": "the longest slip among the open orders of the consigned material",
+     "by": "attention.consignment"
+    }
+   }
+  ],
+  "assumptions": [
+   "Shortfalls are upper bounds: on-hand stock isn't in the data."
+  ],
+  "would_change": [
+   "Alderpoint Electronics confirming board or controller stock that covers October",
+   "Huang Shu-fen giving an earlier date on HPO-26-00629/10"
+  ],
+  "open_questions": [
+   {
+    "what": "stock of the board or the built part",
+    "why_it_blocks": "the data has no inventory",
+    "owner": "Marcus",
+    "question": "Is there PCB or safety controller on hand at Alderpoint Electronics, or in transit, that covers the weeks?",
+    "refs": []
+   },
+   {
+    "what": "on-hand stock",
+    "why_it_blocks": "the data has no inventory, safety stock or MRP output, so a projected balance cannot be stated",
+    "owner": "Marcus",
+    "question": "What is on hand and on order outside the ERP for this part?",
+    "refs": [
+     {
+      "type": "part",
+      "id": "HR-30110",
+      "label": null
+     }
+    ]
+   }
+  ],
+  "action_ids": [
+   "A-068130a3"
+  ],
+  "unchecked": [],
+  "findings": [],
+  "grade": {
+   "reviewer_score": 67,
+   "checks_passed": 4,
+   "checks_total": 6,
+   "summary": "Clear finding and safe asks; fails on an id-for-name and unnamed robot builds.",
+   "revised": false,
+   "failed_checks": [
+    {
+     "name": "buyer's words",
+     "reason": "SUP-0024 id stands in for a supplier name in the figures."
+    },
+    {
+     "name": "names the robot and the month",
+     "reason": "Robot builds never named; asks partial shipment, not allocation."
+    }
+   ]
+  },
+  "case_findings": [],
+  "recommended": {
+   "kind": "earlier_date",
+   "reason": "21 days late on the only board line",
+   "number_ids": [
+    "item:consignment:HR-30110:tile:slip_days"
+   ]
+  }
+ },
+ "verifier": {
+  "passed": true,
+  "warnings": [],
+  "numbers_checked": 2,
+  "numbers_from_tools": 2,
+  "open_questions_with_owner": 2,
+  "reasons": [],
+  "unchecked": [],
+  "open_questions": 2,
+  "failures": []
+ },
+ "actions": [
+  {
+   "action_id": "A-068130a3",
+   "type": "supplier_request",
+   "item_key": "consignment:HR-30110",
+   "target": {
+    "type": "supplier",
+    "id": "SUP-0022",
+    "label": null
+   },
+   "recipient": "huang.shufen@lanxin-pcb.example",
+   "subject": "HPO-26-00629 line 10, PCB HR-30110: earlier date or partial shipment",
+   "body": "Dear Huang Shu-fen,\n\nYour notice of 16 September moves PCB, safety controller rev B (HR-30110), on HPO-26-00629 line 10 (830 EA) from 25 September to 16 October. This board is consigned to our assembler and goes into every robot, so the later date matters to us.\n\nCould you please:\n- tell us whether an earlier date, or a partial shipment ahead of 16 October, is possible on HPO-26-00629 line 10;\n- confirm the revised promise date for HPO-26-00629 line 10 in writing.\n\nPlease reply as soon as you can.\n\nBest regards,\nMarcus Chen\nHalden Robotics",
+   "change": {
+    "amended_for": [
+     "deadline:quotes"
+    ],
+    "asks": [
+     "consignment:HR-30110",
+     "deadline:quotes"
+    ],
+    "owner": "Marcus Chen"
+   }
+  }
+ ]
+}

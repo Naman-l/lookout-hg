@@ -1,0 +1,4 @@
+<!-- tables: runs, run_events -->
+- An **Action item** is one cause that will cost money or a date if nobody acts, ranked by group: a supplier's disruption, a message that may be fraud, a deadline that lives only in an email, the duty, and what the data cannot say. Each has an owner, an at-stake figure with its provenance, the date to act by, a next step and the records behind it.
+- Its **stage** says where the work stands: found, worked, decision ready, drafted, approved, sent, answered. It is read from the runs and the ledger, never stored, with the one next act and who has the move. A **category** (Purchasing, Quote & risk) files it under the procurement stages where it belongs to one.
+- A disruption's **options** (other capacity, air freight, re-sequencing the builds, a second source) are laid out with what each needs, the earliest date the data supports, its cost where it can be computed and the unknown that decides it. None is picked for the buyer.

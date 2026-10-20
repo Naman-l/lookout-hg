@@ -1,0 +1,58 @@
+{
+ "graded_at": "2026-10-12T00:02:09.512266+00:00",
+ "reviewer_model": "claude-haiku-5-5",
+ "recorded_at": "2026-10-11T23:18:20.355865+00:00",
+ "grade": {
+  "reviewer_score": 80,
+  "checks_passed": 4,
+  "checks_total": 5,
+  "summary": "Clear finding and actions, but a teammate's title slips into the text.",
+  "revised": false,
+  "failed_checks": [
+   {
+    "name": "buyer's words",
+    "reason": "Uses teammate title 'the motors buyer' for Dana Reyes; also field-like 'kind: common'."
+   }
+  ]
+ },
+ "review_summary": "Reviewer 80/100: Clear finding and actions, but a teammate's title slips into the text.",
+ "review_payload": {
+  "score": 80,
+  "checks": [
+   {
+    "name": "answers the buyer's question",
+    "passed": true,
+    "critique": "",
+    "critical": false
+   },
+   {
+    "name": "assumptions are really assumptions",
+    "passed": true,
+    "critique": "",
+    "critical": false
+   },
+   {
+    "name": "nothing in it commits Halden",
+    "passed": true,
+    "critique": "",
+    "critical": true
+   },
+   {
+    "name": "what would change it is specific",
+    "passed": true,
+    "critique": "",
+    "critical": false
+   },
+   {
+    "name": "buyer's words",
+    "passed": false,
+    "critique": "Uses teammate title 'the motors buyer' for Dana Reyes; also field-like 'kind: common'.",
+    "critical": false
+   }
+  ],
+  "failed": [
+   "buyer's words: Uses teammate title 'the motors buyer' for Dana Reyes; also field-like 'kind: common'."
+  ],
+  "cost_usd": 0.0014
+ }
+}

@@ -1,0 +1,624 @@
+{
+ "recorded_at": "2026-10-11T23:18:48.979833+00:00",
+ "run_id": "run-recorded",
+ "item_key": "triage:2026-09-02_Baycrest_Connectors_is_now_BCX_Interconnect_-_2027_quotation_BCX-Q-2609",
+ "run": {
+  "status": "ok",
+  "model": "claude-sonnet-5-5",
+  "prompt_hash": "1b8e90ed2cd1",
+  "toolset_hash": "d09696d21ab2",
+  "sdk_version": "0.2.165",
+  "cost_usd": 0.054246045,
+  "wall_ms": 20952,
+  "first_step_ms": 15,
+  "turns": 3,
+  "tool_calls": 7,
+  "denied_calls": 0
+ },
+ "shape": "tree",
+ "reviewer_mode": "after",
+ "events": [
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 1,
+   "ts": "2026-10-11T23:18:21.474366+00:00",
+   "t_ms": 14,
+   "type": "run.started",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Working triage:2026-09-02_Baycrest_Connectors_is_now_BCX_Interconnect_-_2027_quotation_BCX-Q-2609",
+   "refs": [],
+   "payload": {
+    "workflow": "work_item",
+    "item_key": "triage:2026-09-02_Baycrest_Connectors_is_now_BCX_Interconnect_-_2027_quotation_BCX-Q-2609",
+    "model": "claude-sonnet-5-5",
+    "prompt_hash": "1b8e90ed2cd1",
+    "toolset_hash": "d09696d21ab2",
+    "specialist_prompts": {
+     "inbox_analyst": "3c0a4de5a4a7",
+     "buyers_clerk": "7504437b791f"
+    },
+    "tool_count": 22,
+    "sdk_version": "0.2.165"
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 2,
+   "ts": "2026-10-11T23:18:21.475116+00:00",
+   "t_ms": 15,
+   "type": "tool.called",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Lookout reads the item",
+   "refs": [],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "args": {},
+    "gate": "allowed",
+    "gate_reason": "system step before the model runs",
+    "why": "Read what the system already worked out for this item: its finding, dates and figures."
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 3,
+   "ts": "2026-10-11T23:18:21.475667+00:00",
+   "t_ms": 15,
+   "type": "tool.result",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Read the item: Triage: Baycrest Connectors is now BCX Interconnect - 2027 quotation BCX-Q-2609.",
+   "refs": [
+    {
+     "type": "item",
+     "id": "triage:2026-09-02_Baycrest_Connectors_is_now_BCX_Interconnect_-_2027_quotation_BCX-Q-2609",
+     "label": "Triage: Baycrest Connectors is now BCX Interconnect - 2027 quotation BCX-Q-2609"
+    },
+    {
+     "type": "message",
+     "id": "2026-09-02_Baycrest_Connectors_is_now_BCX_Interconnect_-_2027_quotation_BCX-Q-2609",
+     "label": "Baycrest Connectors is now BCX Interconnect - 2027 quotation BCX-Q-2609"
+    },
+    {
+     "type": "supplier",
+     "id": "SUP-0016",
+     "label": "Baycrest Connectors, Inc."
+    }
+   ],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "ok": true,
+    "numbers": [],
+    "unknowns": [],
+    "item_key": "triage:2026-09-02_Baycrest_Connectors_is_now_BCX_Interconnect_-_2027_quotation_BCX-Q-2609",
+    "item_kind": "triage"
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 4,
+   "ts": "2026-10-11T23:18:23.480103+00:00",
+   "t_ms": 2020,
+   "type": "step.text",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "I'm having the inbox analyst read the message and check who sent it.",
+   "refs": [],
+   "payload": {}
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 5,
+   "ts": "2026-10-11T23:18:25.072693+00:00",
+   "t_ms": 3612,
+   "type": "child.started",
+   "agent": "inbox_analyst",
+   "agent_label": "inbox_analyst",
+   "tool_use_id": "toolu_01QGGCZQqR6KgCvpX2puoYqS",
+   "summary": "Judge rename message",
+   "refs": [],
+   "payload": {
+    "child_run_id": "run-recorded.1",
+    "specialist": "inbox_analyst",
+    "question": "Judge rename message",
+    "task": "Judge rename message",
+    "asked_by": "lookout"
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 1,
+   "ts": "2026-10-11T23:18:25.073404+00:00",
+   "t_ms": 3613,
+   "type": "run.started",
+   "agent": "inbox_analyst",
+   "agent_label": "inbox_analyst",
+   "tool_use_id": null,
+   "summary": "Inbox analyst started",
+   "refs": [],
+   "payload": {
+    "workflow": "specialist:inbox_analyst",
+    "item_key": "triage:2026-09-02_Baycrest_Connectors_is_now_BCX_Interconnect_-_2027_quotation_BCX-Q-2609"
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 2,
+   "ts": "2026-10-11T23:18:26.027192+00:00",
+   "t_ms": 4567,
+   "type": "tool.called",
+   "agent": "inbox_analyst",
+   "agent_label": "inbox_analyst",
+   "tool_use_id": "toolu_01SXhQ2dv4ue8vcgCzq6kUxc",
+   "summary": "inbox_analyst calls read_message",
+   "refs": [],
+   "payload": {
+    "tool": "read_message",
+    "name": "read_message",
+    "args": {
+     "message_id": "triage:2026-09-02_Baycrest_Connectors_is_now_BCX_Interconnect_-_2027_quotation_BCX-Q-2609"
+    },
+    "gate": "allowed",
+    "gate_reason": "part of this role's work",
+    "why": "Read the supplier's message and its thread, with who sent it and what it changes."
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 3,
+   "ts": "2026-10-11T23:18:26.104401+00:00",
+   "t_ms": 4644,
+   "type": "tool.called",
+   "agent": "inbox_analyst",
+   "agent_label": "inbox_analyst",
+   "tool_use_id": "toolu_01HPwsqBPPeVmdsHtTKpQypN",
+   "summary": "inbox_analyst calls find_suppliers",
+   "refs": [],
+   "payload": {
+    "tool": "find_suppliers",
+    "name": "find_suppliers",
+    "args": {
+     "name": "Baycrest Connectors"
+    },
+    "gate": "allowed",
+    "gate_reason": "part of this role's work",
+    "why": "Check the supplier master for the company, including renamed and legacy records."
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 4,
+   "ts": "2026-10-11T23:18:26.124041+00:00",
+   "t_ms": 4663,
+   "type": "tool.result",
+   "agent": "inbox_analyst",
+   "agent_label": "inbox_analyst",
+   "tool_use_id": "toolu_01HPwsqBPPeVmdsHtTKpQypN",
+   "summary": "'Baycrest Connectors': 1 companies and 2 vendor records match",
+   "refs": [],
+   "payload": {
+    "tool": "find_suppliers",
+    "name": "find_suppliers",
+    "ok": true,
+    "numbers": [],
+    "unknowns": []
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 5,
+   "ts": "2026-10-11T23:18:26.315057+00:00",
+   "t_ms": 4854,
+   "type": "tool.called",
+   "agent": "inbox_analyst",
+   "agent_label": "inbox_analyst",
+   "tool_use_id": "toolu_01Nb295V4tBjihGR74kAiFNg",
+   "summary": "inbox_analyst calls find_suppliers",
+   "refs": [],
+   "payload": {
+    "tool": "find_suppliers",
+    "name": "find_suppliers",
+    "args": {
+     "name": "BCX Interconnect"
+    },
+    "gate": "allowed",
+    "gate_reason": "part of this role's work",
+    "why": "Check the supplier master for the company, including renamed and legacy records."
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 6,
+   "ts": "2026-10-11T23:18:26.321012+00:00",
+   "t_ms": 4860,
+   "type": "tool.result",
+   "agent": "inbox_analyst",
+   "agent_label": "inbox_analyst",
+   "tool_use_id": "toolu_01Nb295V4tBjihGR74kAiFNg",
+   "summary": "'BCX Interconnect': 0 companies and 1 vendor records match",
+   "refs": [],
+   "payload": {
+    "tool": "find_suppliers",
+    "name": "find_suppliers",
+    "ok": true,
+    "numbers": [],
+    "unknowns": []
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 6,
+   "ts": "2026-10-11T23:18:26.414883+00:00",
+   "t_ms": 4954,
+   "type": "step.text",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "The inbox analyst is reading the Baycrest/BCX message, checking who sent it, and looking in the supplier master for evidence of a rename. It's still running, and I'll continue once it reports back.",
+   "refs": [],
+   "payload": {}
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 7,
+   "ts": "2026-10-11T23:18:27.184807+00:00",
+   "t_ms": 5724,
+   "type": "step.text",
+   "agent": "inbox_analyst",
+   "agent_label": "inbox_analyst",
+   "tool_use_id": null,
+   "summary": "The message id did not resolve, so I'll look up the inbox listing to get the right id.",
+   "refs": [],
+   "payload": {}
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 8,
+   "ts": "2026-10-11T23:18:27.203031+00:00",
+   "t_ms": 5742,
+   "type": "tool.called",
+   "agent": "inbox_analyst",
+   "agent_label": "inbox_analyst",
+   "tool_use_id": "toolu_01PmCW1KdJGujQYJ2fwRiDBi",
+   "summary": "inbox_analyst calls inbox_overview",
+   "refs": [],
+   "payload": {
+    "tool": "inbox_overview",
+    "name": "inbox_overview",
+    "args": {},
+    "gate": "allowed",
+    "gate_reason": "part of this role's work",
+    "why": "List the inbox as the system classified it, to find the message the question is about."
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 9,
+   "ts": "2026-10-11T23:18:27.221405+00:00",
+   "t_ms": 5761,
+   "type": "tool.result",
+   "agent": "inbox_analyst",
+   "agent_label": "inbox_analyst",
+   "tool_use_id": "toolu_01PmCW1KdJGujQYJ2fwRiDBi",
+   "summary": "15 messages",
+   "refs": [],
+   "payload": {
+    "tool": "inbox_overview",
+    "name": "inbox_overview",
+    "ok": true,
+    "numbers": [],
+    "unknowns": []
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 10,
+   "ts": "2026-10-11T23:18:28.034173+00:00",
+   "t_ms": 6574,
+   "type": "tool.called",
+   "agent": "inbox_analyst",
+   "agent_label": "inbox_analyst",
+   "tool_use_id": "toolu_016kSKzzcL1syYDEzh3K6dTZ",
+   "summary": "inbox_analyst calls read_message",
+   "refs": [],
+   "payload": {
+    "tool": "read_message",
+    "name": "read_message",
+    "args": {
+     "message_id": "2026-09-02_Baycrest_Connectors_is_now_BCX_Interconnect_-_2027_quotation_BCX-Q-2609"
+    },
+    "gate": "allowed",
+    "gate_reason": "part of this role's work",
+    "why": "Read the supplier's message and its thread, with who sent it and what it changes."
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 11,
+   "ts": "2026-10-11T23:18:28.045870+00:00",
+   "t_ms": 6585,
+   "type": "tool.result",
+   "agent": "inbox_analyst",
+   "agent_label": "inbox_analyst",
+   "tool_use_id": "toolu_016kSKzzcL1syYDEzh3K6dTZ",
+   "summary": "Brian Tanaka, 2026-09-02: Baycrest Connectors is now BCX Interconnect - 2027 quotation BCX-Q-2609 (quote, review)",
+   "refs": [],
+   "payload": {
+    "tool": "read_message",
+    "name": "read_message",
+    "ok": true,
+    "numbers": [],
+    "unknowns": []
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 12,
+   "ts": "2026-10-11T23:18:36.522295+00:00",
+   "t_ms": 15062,
+   "type": "run.finished",
+   "agent": "inbox_analyst",
+   "agent_label": "inbox_analyst",
+   "tool_use_id": null,
+   "summary": "inbox_analyst finished",
+   "refs": [],
+   "payload": {
+    "status": "ok",
+    "tool_calls": 5,
+    "first_step_ms": 4567
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 7,
+   "ts": "2026-10-11T23:18:36.525816+00:00",
+   "t_ms": 15065,
+   "type": "child.finished",
+   "agent": "inbox_analyst",
+   "agent_label": "inbox_analyst",
+   "tool_use_id": null,
+   "summary": "Baycrest Connectors (SUP-0016) sent quotation BCX-Q-2609 for 11 parts (including HR-20103 and HR-20104) with a 2027 price set, valid to 30 November 2026. It also asks that purchase orders go to a new BCX Interconnect address, and says the bank details and terms are unchanged. The sender, Brian Tanaka, writes from an address that is not the contact on file, so the message needs review and nothing should be sent to the new address until the contact on file confirms it.",
+   "refs": [],
+   "payload": {
+    "child_run_id": "run-recorded.1",
+    "status": "ok",
+    "handoff_ok": true
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 13,
+   "ts": "2026-10-11T23:18:36.549575+00:00",
+   "t_ms": 15089,
+   "type": "step.text",
+   "agent": "inbox_analyst",
+   "agent_label": "inbox_analyst",
+   "tool_use_id": null,
+   "summary": "**Baycrest Connectors / BCX Interconnect: quotation BCX-Q-2609 (Brian Tanaka, 2 September 2026)**\n\n**What it is.** A 2027 price quote for 11 parts, sent under the notice that Baycrest Connectors is now BCX Interconnect. The quote is for HR-20103, HR-20104, HR-20110, HR-20111 and others. The prices, stated in the message and read as extracted, are:\n- Items 1 to 6 are priced per thousand, converted to each: 0.2406, 0.2854, 0.1147, 0.1399, 0.01921 and 1.537 USD.\n- Items 7 to 11 are priced each: 9.10, 13.24, 4.14, 7.25 and 11.90 USD.\n- All are valid to 30 November 2026.\n- The quote says origin is shown by line, but the origin values were not in what I could read. Dongguan-built items may be affected by a pending tariff action, so origin needs checking before these prices are compared.\n\n**What it changes.** Nothing on an open PO line. It adds a quote with a validity date of 30 November 2026. The message also changes the ordering address: it asks that purchase orders go to orders@bcxinterconnect.example, with the old baycrestconnectors.example addresses forwarding until 31 December 2026. It says the tax ID, bank account, remit-to address, payment terms (Net 30) and delivery terms (DDP Reno) are unchanged. It also says Tijuana production for the charging contacts is targeted for Q2 2027.\n\n**Is the sender who they claim?** Not verified. Brian Tanaka writes from an address that is not the contact on file for SUP-0016, so the message is marked for review. Nothing should go to the new address on the strength of this email. The supplier's own contact on file is the only address for orders and any reply.\n\n**Is the rename real?** The supplier master supports it. Baycrest Connectors, Inc. (SUP-0016) is the company, and the record \"BCX Interconnect\" (SUP-0061) is already linked to it as stated, so it is one company and there is nothing to propose. A second record, V10045 \"Baycrest Connectors Inc\", is linked by inferred domain match. No separate BCX company exists. The change of name itself is consistent with the master, but the acquisition and the new ordering address are only claims in the email.\n\n**Thread.** This is a single message with no corrections or follow-ups.\n\n**Recommended next step.** Priya Nair should check the new address and the Dongguan origin claims with the contact on file before approving any PO change, and before comparing these prices. The 30 November validity date should be on the calendar.",
+   "refs": [],
+   "payload": {}
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 8,
+   "ts": "2026-10-11T23:18:38.667301+00:00",
+   "t_ms": 17207,
+   "type": "tool.called",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": "toolu_01VeUzQw4PeGEnJzg4ji9VTi",
+   "summary": "Lookout calls get_handoffs",
+   "refs": [],
+   "payload": {
+    "tool": "get_handoffs",
+    "name": "get_handoffs",
+    "args": {},
+    "gate": "allowed",
+    "gate_reason": "part of this role's work",
+    "why": "Read what the earlier steps found, with the figures their lookups returned."
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 9,
+   "ts": "2026-10-11T23:18:38.673141+00:00",
+   "t_ms": 17212,
+   "type": "tool.result",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": "toolu_01VeUzQw4PeGEnJzg4ji9VTi",
+   "summary": "inbox_analyst handed back their findings",
+   "refs": [],
+   "payload": {
+    "tool": "get_handoffs",
+    "name": "get_handoffs",
+    "ok": true,
+    "numbers": [],
+    "unknowns": []
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 10,
+   "ts": "2026-10-11T23:18:42.053156+00:00",
+   "t_ms": 20592,
+   "type": "verifier.result",
+   "agent": "verifier",
+   "agent_label": "Verifier",
+   "tool_use_id": null,
+   "summary": "0 of 0 numbers from tools · 0 open questions with an owner",
+   "refs": [],
+   "payload": {
+    "passed": true,
+    "warnings": [
+     "message: it asks to send to another address; treated as information only"
+    ],
+    "numbers_checked": 0,
+    "numbers_from_tools": 0,
+    "open_questions_with_owner": 0,
+    "open_questions": 0,
+    "failures": []
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 11,
+   "ts": "2026-10-11T23:18:42.429945+00:00",
+   "t_ms": 20969,
+   "type": "run.finished",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Run ok",
+   "refs": [],
+   "payload": {
+    "status": "ok",
+    "turns": 3,
+    "tool_calls": 7,
+    "cost_usd": 0.053,
+    "wall_ms": 20952,
+    "first_step_ms": 15,
+    "first_token_ms": 1671,
+    "recommendation_id": "run-recorded",
+    "tokens_in": 157607,
+    "tokens_out": 3548,
+    "tokens_cache_read": 144232,
+    "tokens_cache_creation": 11800,
+    "tokens_by_agent": {
+     "inbox_analyst": {
+      "tokens": 15891,
+      "tool_uses": 6,
+      "duration_ms": 11481
+     }
+    }
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 12,
+   "ts": "2026-10-11T23:18:48.975982+00:00",
+   "t_ms": 27515,
+   "type": "review.result",
+   "agent": "reviewer",
+   "agent_label": "Reviewer",
+   "tool_use_id": null,
+   "summary": "Reviewer 60/100: Clear action and no commitments; rename stated as fact and system jargon used.",
+   "refs": [],
+   "payload": {
+    "score": 60,
+    "checks": [
+     {
+      "name": "answers the buyer's question",
+      "passed": true,
+      "critique": "",
+      "critical": false
+     },
+     {
+      "name": "assumptions are really assumptions",
+      "passed": false,
+      "critique": "States the rename as fact ('now BCX Interconnect', 'already recorded') while listing the acquisition as unverified.",
+      "critical": false
+     },
+     {
+      "name": "nothing in it commits Halden",
+      "passed": true,
+      "critique": "",
+      "critical": true
+     },
+     {
+      "name": "what would change it is specific",
+      "passed": true,
+      "critique": "",
+      "critical": false
+     },
+     {
+      "name": "buyer's words",
+      "passed": false,
+      "critique": "'supplier master' is a system record name, not buyer wording.",
+      "critical": false
+     }
+    ],
+    "failed": [
+     "assumptions are really assumptions: States the rename as fact ('now BCX Interconnect', 'already recorded') while listing the acquisition as unverified.",
+     "buyer's words: 'supplier master' is a system record name, not buyer wording."
+    ],
+    "cost_usd": 0.0012
+   }
+  }
+ ],
+ "recommendation": {
+  "finding": "Baycrest Connectors, now BCX Interconnect, sent 2027 quotation BCX-Q-2609 for 11 parts, valid to 30 November 2026, and asks that purchase orders go to a new BCX address. It changes no open PO line. The sender, Brian Tanaka, is not the contact on file, so treat the message as unverified: send nothing to the new address, and have Priya Nair confirm the address and the Dongguan origin by phone with the contact on file. The rename itself is already recorded in the supplier master (BCX Interconnect is linked as the same supplier as Baycrest Connectors), so no link is proposed and nothing is staged. Don't compare these prices until origin and the pending tariff are checked.",
+  "numbers": [],
+  "assumptions": [
+   "The acquisition story and the new ordering address are only the sender's claims until the contact on file confirms them."
+  ],
+  "would_change": [
+   "The contact on file confirming the new ordering address and Brian Tanaka as sender.",
+   "Origin papers for the Dongguan-built lines, which decide any duty on the quoted prices."
+  ],
+  "open_questions": [],
+  "action_ids": [],
+  "findings": [],
+  "grade": {
+   "reviewer_score": 60,
+   "checks_passed": 3,
+   "checks_total": 5,
+   "summary": "Clear action and no commitments; rename stated as fact and system jargon used.",
+   "revised": false,
+   "failed_checks": [
+    {
+     "name": "assumptions are really assumptions",
+     "reason": "States the rename as fact ('now BCX Interconnect', 'already recorded') while listing the acquisition as unverified."
+    },
+    {
+     "name": "buyer's words",
+     "reason": "'supplier master' is a system record name, not buyer wording."
+    }
+   ]
+  }
+ },
+ "verifier": {
+  "passed": true,
+  "warnings": [
+   "message: it asks to send to another address; treated as information only"
+  ],
+  "numbers_checked": 0,
+  "numbers_from_tools": 0,
+  "open_questions_with_owner": 0,
+  "open_questions": 0,
+  "failures": []
+ },
+ "actions": []
+}

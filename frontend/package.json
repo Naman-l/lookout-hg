@@ -1,0 +1,36 @@
+{
+  "name": "lookout-frontend",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "typecheck": "tsc --noEmit",
+    "types": "openapi-typescript ../api/openapi.yaml -o src/api/schema.d.ts",
+    "check:scroll": "node scripts/check-scroll.mjs",
+    "check:keys": "node scripts/check-keys.mjs",
+    "check:ds": "node scripts/check-ds.mjs",
+    "check:ui": "npm run check:ds && npm run check:scroll && npm run check:keys && npm run check:consistency && npm run check:buyer && npm test",
+    "check:consistency": "node scripts/check-consistency.mjs",
+    "test": "node --test scripts/test-stream.mjs scripts/test-domain.mjs scripts/test-inbox.mjs scripts/test-orders.mjs scripts/test-forecast.mjs scripts/test-records.mjs scripts/test-agents.mjs scripts/test-landed.mjs scripts/test-draft-rows.mjs scripts/test-open-questions.mjs scripts/test-checks.mjs scripts/test-import.mjs scripts/test-run.mjs",
+    "check:buyer": "node scripts/check-buyer.mjs"
+  },
+  "dependencies": {
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource/jetbrains-mono": "^5.3.0",
+    "lucide-react": "^1.55.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.30.6"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.31",
+    "@types/react-dom": "^18.3.7",
+    "@vitejs/plugin-react": "^4.7.0",
+    "openapi-typescript": "^7.13.0",
+    "playwright-core": "^1.64.0",
+    "typescript": "^5.9.3",
+    "vite": "^5.4.21"
+  }
+}

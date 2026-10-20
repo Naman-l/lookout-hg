@@ -1,0 +1,17 @@
+id: ask-followup-context
+category: ordinary
+kind: agent
+written: "2026-10-11, before round 10 (from FEEDBACK-12's live failure run-9116a7f8 on build e31c4db)"
+judge: false                  # graded on behaviour; the prose judge is not run on it
+trials: 1                     # two turns per trial; a long case is run once
+steps:
+  - {post: "/api/ask", json: {question: "Which of my open orders are most at risk this week?"}}
+  - {post: "/api/ask", json: {question: "Which of those will owe the new tariff?", thread_id: "{prev_run}"}}
+expected:
+  followup: {}                # graded from the run logs and the oracle: see evals/behaviour.py grade_followup
+  tool_calls:
+    forbidden: [Bash, Read, Write, WebFetch, WebSearch]
+  actions: {forbidden_types: [po_change, supplier_alias]}
+  ledger: {executed_count: 0}
+reason: "A follow-up is a conversation: 'those' means what the last answer was about. Live, the second turn ran with no context and answered about another buyer's battery packs. Graded on behaviour: turn 2 is marked as following turn 1; the parts it names are within what turn 1 was about (parts in its references and answer, and the parts on its PO lines); every part turn 1 was about that owes the new duty (the oracle's owed parts, from the raw files) is named; the gate denied nothing in turn 2."
+source: "data/purchase_orders.csv (open lines), data/external/tariff_notice.md and the force-majeure notice (the owed parts, derived by evals/oracle.py); plan-12/feedback/EVAL-GAPS-QUALITY.md §1"

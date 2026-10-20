@@ -1,0 +1,358 @@
+/* The shell: one layout for every page. A fixed sidebar, a fluid main (a top bar, the page, the Ask dock), and the Ask answer in the rail.
+   Three page templates sit on it: list (full width), detail with a rail, master-detail. Widths and heights come from tokens.css. */
+html,body,#root{height:100%}
+.app{display:grid;grid-template-columns:var(--side) minmax(0,1fr);min-height:100dvh;background:var(--surface)}
+.app.ai-open{grid-template-columns:var(--side) minmax(0,1fr) var(--rail)}
+.side{height:100dvh;position:sticky;top:0;box-shadow:inset -1px 0 0 var(--line)}      /* a hairline where the sidebar meets the page (drawn inside, so no width changes) */
+.main{display:flex;flex-direction:column;min-width:0;min-height:100dvh;padding:0}
+.top{display:flex;align-items:center;justify-content:space-between;gap:var(--s4);flex:none;height:var(--top);min-height:var(--top);padding:0 var(--pad-x)}
+.content{flex:1;min-width:0;padding:var(--s2) var(--pad-x) var(--s6)}
+.content>*{min-width:0}
+/* A page that holds still (Today's pattern, a1807c5): on a desktop the page root .pg-fix fills the space above the Ask dock; its children keep their height
+   (title, tiles, tabs, filters) and only the one marked .pg-body scrolls. A phone scrolls the page as before. */
+@media (min-width:761px){
+  .main:has(>.content>.pg-fix){height:100dvh;min-height:0;overflow:hidden}
+  .main:has(>.content>.pg-fix)>.content{display:flex;flex-direction:column;min-height:0;padding-bottom:0}
+  .content>.pg-fix{flex:1;min-height:0;display:flex;flex-direction:column;padding-bottom:0}
+  .pg-fix>*{flex:none}
+  .pg-fix>.pg-body{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding-bottom:var(--s4)}
+  .pg-fix>.pg-body{border-top:1px solid var(--line)}      /* the hairline between what holds and what scrolls */
+  .pg-fix>.td-seg{align-self:flex-start}
+  .pg-fix>.ag-title:has(+.pg-body){padding-bottom:var(--s3)}
+}
+
+/* page templates: the rail fills what a wide screen leaves, and stacks under the page below 1280 */
+.tpl-rail{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s6)}
+@media (min-width:1280px){.tpl-rail{grid-template-columns:minmax(0,1fr) var(--rail)}}
+.tpl-rail>.rail{display:flex;flex-direction:column;gap:var(--s5);min-width:0}
+.prose{max-width:var(--measure)}
+.ld{display:grid;grid-template-columns:minmax(0,var(--list)) minmax(0,1fr);gap:var(--s6);align-items:start}
+.ld-list,.ld-detail{min-width:0;position:relative} /* positioned, so visually-hidden text inside a pane cannot stretch the page */
+@media (min-width:1024px){
+  .ld-list,.ld-detail{max-height:calc(100dvh - 190px - var(--composer));overflow-y:auto;overscroll-behavior:contain}
+}
+@media (max-width:1023px){.ld{grid-template-columns:minmax(0,1fr)}}
+/* list | detail: a hairline between the two panes when they sit side by side */
+@media (min-width:1024px){.ld{column-gap:0} .ld>.ld-list{padding-right:var(--s5)} .ld>.ld-detail{border-left:1px solid var(--line);padding-left:var(--s5)}}
+
+/* an item: the sections in the main column, the stage, the numbers, the next act and how the agent got there in the rail. Stacked, the rail comes first: the decision before the detail */
+.item{container-type:inline-size}
+.item-main{min-width:0;max-width:100%} .item-main .ds-decision{max-width:var(--measure)}
+.item-grid.tpl-rail{grid-template-columns:minmax(0,1fr)} .item-grid>.rail{order:-1}
+@container (min-width: 960px){.item-grid.tpl-rail{grid-template-columns:minmax(0,1fr) var(--rail)} .item-grid>.rail{order:0}}
+.rail .ds-act{margin-top:0;flex-wrap:wrap}
+@container (min-width: 960px){.rail .ds-tiles{grid-template-columns:minmax(0,1fr)}}
+
+/* an approval: one grid. Stacked, the action comes right under the title; with room, the title and the email take the main column and the stage, the action, why and the decisions share the rail, both columns starting on one top edge */
+.ld-detail{container-type:inline-size}
+.ap{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s5);grid-template-areas:"title" "act" "stage" "mail" "why" "dec"}
+.ap-main,.ap-rail{display:contents}
+.ap-title{grid-area:title} .ap-act{grid-area:act;margin:0} .ap-stage{grid-area:stage} .ap-mail{grid-area:mail;max-width:var(--measure)} .ap-why{grid-area:why} .ap-dec{grid-area:dec}
+.ap-act .ds-btn{height:auto;white-space:normal;padding:var(--s2) var(--s4);line-height:var(--lh);text-align:center}
+.ap>*,.ap-main>*,.ap-rail>*{min-width:0} .ap-why,.ap-dec{display:flex;flex-direction:column;gap:var(--s2)} .ap-why p,.ap-dec p{margin:0}
+@container (min-width: 740px){
+  .ap{grid-template-columns:minmax(0,1fr) 320px;column-gap:var(--s6);row-gap:var(--s4);align-items:start;grid-template-areas:"title title" "mail rail"}
+  .ap-main{display:contents} .ap-rail{grid-area:rail;display:flex;flex-direction:column;gap:var(--s5);min-width:0}
+  .ap-title{grid-area:title} .ap-mail{grid-area:mail} .ap-rail>*{grid-area:auto}
+  .ap .ap-rail>.ap-act{flex-wrap:wrap;position:static;margin:0}
+  .ap-stage .stagetrack{flex-direction:column}
+}
+/* a phone: the content first, then Approve and Reject pinned above the tab bar */
+@media (max-width:760px){
+  .ap-act{position:sticky;bottom:calc(60px + env(safe-area-inset-bottom,0px));z-index:5;background:var(--surface);box-shadow:0 -1px 0 var(--line);margin:0 calc(-1 * var(--s4));border-radius:0;padding:var(--s3) var(--s4)}
+  .ap{grid-template-areas:"title" "stage" "mail" "why" "dec" "act"}
+  .ap-act{flex-wrap:nowrap;align-items:center;gap:var(--s3);min-height:64px} .ap-act .ap-hint{display:none} .ap-act .ds-btn{flex:1;min-height:var(--control)} .ap-act .ds-btn.quiet,.ap-act .ds-btn:not(.primary){flex:none;white-space:nowrap}
+}
+
+button.chip:hover{background:var(--hover)}
+
+/* the answer: a bounded conversation panel in the rail */
+.ai-mark{width:14px;height:14px;border-radius:var(--r-xs);background:var(--ai);display:inline-block;flex:none}
+.ai-h{display:flex;align-items:center;gap:var(--s2);margin:0;flex:none} .ai-h .ai-mark{width:18px;height:18px} .ai-h .meta{color:var(--ink-3);font-size:var(--t-small);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap} .ai-h b,.ai-h .x{white-space:nowrap}
+.ai-h .x{all:unset;flex:none;white-space:nowrap;cursor:pointer;margin-left:auto;font-size:var(--t-small);font-weight:500;color:var(--ink-2);background:var(--surface);border-radius:var(--r-sm);min-height:var(--chip);padding:0 var(--s3);display:inline-flex;align-items:center;box-shadow:var(--e-1)} .ai-h .x:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.aipanel{position:sticky;top:0;height:100dvh;display:flex;flex-direction:column;background:var(--ai-bg);padding:var(--s4) var(--s4) 0;min-width:0;z-index:20;box-shadow:-1px 0 0 var(--line)}
+.aipanel .grab{display:none}
+.ai-body{flex:1;min-height:0;overflow-y:auto;padding:var(--s4) 0;display:flex;flex-direction:column;gap:var(--s5)}
+.turn{display:flex;flex-direction:column;gap:var(--s2)}
+.aipanel .who{font-size:var(--t-small);color:var(--ink-3);margin:0} .aipanel .q{font-size:var(--t-lead);font-weight:600;margin:0}
+.aipanel .decision{font-size:var(--t-body);margin:0;max-width:var(--measure)}
+.aipanel .working{display:flex;flex-wrap:wrap;gap:var(--s2);align-items:center;color:var(--ink-2);margin:0} .aipanel .working small{color:var(--ink-3)}
+.aipanel .examples,.aipanel .srcs{display:flex;flex-wrap:wrap;gap:var(--s2);margin:0;align-items:center}
+.aipanel .src{font-size:var(--t-caption);color:var(--ink-3);margin:0}
+.aipanel .ds-act{background:var(--surface);margin-top:var(--s2)}
+.aipanel .turn-err,.aipanel .error{font-size:var(--t-small);color:var(--critical);margin:0}
+.mini-tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s2)}
+.mini-tiles .mt{background:var(--surface);border-radius:var(--r-sm);padding:var(--s2) var(--s3);display:flex;flex-direction:column;min-width:0} .mini-tiles b{font-weight:600;font-variant-numeric:tabular-nums} .mini-tiles span{font-size:var(--t-caption);color:var(--ink-3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.aipanel .foot-in{flex:none;display:flex;gap:var(--s2);align-items:center;padding:var(--s3) 0 var(--s4);border-top:1px solid var(--line)}
+.aipanel .foot-in input{flex:1;min-width:0;height:var(--control);border:1px solid var(--line);border-radius:var(--r-sm);background:var(--surface);padding:0 var(--s3);font:var(--t-body) var(--font);color:var(--ink);outline:0} .aipanel .foot-in input:focus-visible{outline:2px solid var(--accent);border-color:transparent}
+.ask-err,.needs{font-size:var(--t-small);color:var(--critical)}
+
+/* on a list page the answer lies over the right edge: the table keeps its columns and nothing moves; a detail page (an item) gives the rail its own column */
+@media (min-width:761px){
+  .app.ai-over{grid-template-columns:var(--side) minmax(0,1fr)}
+  .ai-over .aipanel{position:fixed;right:0;top:0;width:var(--rail);box-shadow:var(--e-side)}
+}
+/* between a phone and the wide rail the answer lies over the right edge instead of narrowing the page */
+@media (min-width:761px) and (max-width:1279px){
+  .app.ai-open{grid-template-columns:var(--side) minmax(0,1fr)}
+  .aipanel{position:fixed;right:0;top:0;width:var(--rail);box-shadow:var(--e-side)}
+}
+
+/* the phone: no dock (the tab bar's Ask opens the sheet), the page keeps its 16 px gutter */
+@media (max-width:760px){
+  .app,.app.ai-open{display:block}
+  .main{min-height:100dvh;padding-bottom:calc(72px + env(safe-area-inset-bottom,0px))}
+  .top{height:auto;min-height:0;padding:max(12px,env(safe-area-inset-top,0px)) var(--s4) 0}
+  .content{padding:var(--s2) var(--s4) var(--s5)}
+  .aipanel{position:fixed;top:auto;left:0;right:0;bottom:0;height:auto;max-height:82dvh;border-radius:var(--r-sheet) var(--r-sheet) 0 0;box-shadow:var(--e-2);padding:var(--s3) var(--s4) 0;z-index:45}
+  .aipanel .grab{display:block;width:40px;height:4px;border-radius:var(--r-xs);background:var(--line);margin:0 auto var(--s3);flex:none}
+  .aipanel .foot-in{padding-bottom:calc(var(--s4) + env(safe-area-inset-bottom,0px))}
+  .ds-btn{min-height:44px} .ds-field{height:44px} /* a thumb needs more than a pointer does */
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+.top.phone-off{display:none}
+
+.ap-h{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin:0}
+.ap-sub{margin:var(--s1) 0 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dm-chip.sev-high{background:var(--critical-bg);color:var(--critical)} .dm-chip.sev-medium{background:var(--caution-bg);color:var(--caution)}
+
+/* quiet buttons: a link-looking control is a button with a target and a hover, never grey text */
+.linkbtn{all:unset;position:relative;cursor:pointer;box-sizing:border-box;display:inline-flex;max-width:100%;text-align:left;align-items:center;gap:var(--s1);min-height:var(--chip);padding:0 var(--s2);border-radius:var(--r-sm);color:var(--ink-2);font-size:var(--t-small);font-weight:500}
+.linkbtn:hover{background:var(--raised);color:var(--ink);text-decoration:none} .linkbtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.disclose{all:unset;position:relative;cursor:pointer;box-sizing:border-box;display:inline-flex;max-width:100%;text-align:left;align-items:center;gap:var(--s1);min-height:var(--control);padding:0 var(--s3);border-radius:var(--r-sm);color:var(--ink-2);font-size:var(--t-small);font-weight:500}
+.disclose:hover{background:var(--raised);color:var(--ink)} .disclose:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.chev-cell{display:inline-grid;place-items:center;width:var(--control);height:var(--control);border-radius:var(--r-sm);color:var(--ink-3)} .dt-row:hover .chev-cell{background:var(--hover);color:var(--ink)}
+
+/* Today: the table and, at 1920+, the selected item beside it (two columns of facts and the next act from 2560) */
+.today-grid{display:block}
+@media (min-width:1920px){
+  .today-grid{display:grid;grid-template-columns:minmax(0,1fr) 440px;gap:var(--s6);align-items:start}
+  .today-preview{position:sticky;top:var(--s4);background:var(--raised);border-radius:var(--r-md);padding:var(--s5);display:flex;flex-direction:column;gap:var(--s4)}
+}
+@media (min-width:2560px){
+  .today-grid{grid-template-columns:minmax(0,1fr) 640px}
+  .today-preview .pv-facts{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+.today-preview h3{margin:0;font-size:var(--t-h2);line-height:var(--lh-tight);font-weight:600}
+.pv-facts{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s3)}
+.pv-facts>div{display:flex;flex-direction:column;gap:var(--s1);min-width:0} .pv-facts span{font-size:var(--t-caption);color:var(--ink-3);text-transform:uppercase;letter-spacing:.04em;font-weight:600} .pv-facts b{font-size:var(--t-lead);font-weight:600;font-variant-numeric:tabular-nums} .pv-facts small{color:var(--ink-3);font-size:var(--t-small)}
+.pv-next{margin:0;display:flex;flex-direction:column;gap:var(--s1);max-width:var(--measure)} .pv-next span{font-size:var(--t-caption);color:var(--ink-3);text-transform:uppercase;letter-spacing:.04em;font-weight:600}
+.today-preview .ds-btn{align-self:flex-start}
+
+/* the rail grows with the window; the answer panel and the item rail share it */
+
+/* the scope of a question: a real control, with a chevron and a menu */
+.scope{position:relative;flex:none;max-width:34%}
+.scope-btn{all:unset;cursor:pointer;box-sizing:border-box;display:inline-flex;align-items:center;gap:var(--s2);height:var(--control);max-width:100%;padding:0 var(--s3);border:1px solid var(--line);border-radius:var(--r-sm);background:var(--surface);color:var(--ink-2);font-size:var(--t-small);font-weight:500}
+.scope-btn span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap} .scope-btn:hover{background:var(--raised);color:var(--ink)} .scope-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.scope-menu{position:absolute;left:0;bottom:calc(100% + var(--s2));z-index:30;min-width:260px;background:var(--surface);border-radius:var(--r-md);box-shadow:var(--e-1),0 8px 24px var(--scrim);padding:var(--s1);display:flex;flex-direction:column}
+.scope-menu button{all:unset;cursor:pointer;box-sizing:border-box;display:flex;align-items:flex-start;gap:var(--s2);min-height:var(--control);padding:var(--s2) var(--s3) var(--s2) calc(var(--s3) + 16px + var(--s2));border-radius:var(--r-sm);position:relative}
+.scope-menu button svg{position:absolute;left:var(--s3);top:calc(var(--s2) + 2px)} .scope-menu button:hover{background:var(--raised)} .scope-menu button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.scope-menu b{display:block;font-weight:500} .scope-menu small{display:block;color:var(--ink-3);font-size:var(--t-small);max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* Ask: a quiet search-like field in the top bar; no dock, nothing reserved at the foot */
+.top{gap:var(--s4)}
+.askbar{position:relative;flex:1 1 auto;max-width:520px;min-width:220px;margin:0 auto;display:flex;align-items:center;gap:var(--s2);height:var(--control);padding:0 var(--s2) 0 var(--s3);border-radius:var(--r-sm);background:var(--raised);color:var(--ink-3)}
+.askbar:focus-within{background:var(--surface);box-shadow:0 0 0 1px var(--line)}
+.askbar input{flex:1;min-width:0;height:100%;border:0;background:none;color:var(--ink);font:var(--t-body) var(--font);outline:0} .askbar input:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:var(--r-sm)}
+.askbar input::placeholder{color:var(--ink-3)}
+.askbar-key{font:var(--t-caption) var(--mono);color:var(--ink-3);border:1px solid var(--line);border-radius:var(--r-xs);padding:0 var(--s1);background:var(--surface)}
+.askbar .scope{max-width:42%} .askbar .scope-btn{height:var(--chip);border:0;background:var(--surface);padding:0 var(--s2)}
+.askbar .scope-menu{bottom:auto;top:calc(100% + var(--s2))}
+.askbar-note{position:absolute;left:0;right:0;top:calc(100% + var(--s2));z-index:30;background:var(--surface);border-radius:var(--r-md);box-shadow:var(--e-1),0 8px 24px var(--scrim);padding:var(--s3);color:var(--ink-2);font-size:var(--t-small)} .askbar-note p{margin:0 0 var(--s2)} .askbar-note p:last-child{margin:0}
+.askbar-ex{display:flex;flex-wrap:wrap;gap:var(--s2)}
+.chip{display:inline-flex;align-items:center;min-height:var(--chip);padding:0 var(--s3);border-radius:var(--r-sm);background:var(--raised);color:var(--ink-2);font:var(--t-small) var(--font);border:0;cursor:pointer}
+.chip:hover{background:var(--hover)}
+.ai-h .x{padding:0;width:var(--chip);justify-content:center}
+.aipanel .reasons{margin:0;padding-left:var(--s4);display:flex;flex-direction:column;gap:var(--s1);font-size:var(--t-small);color:var(--ink-2);max-width:var(--measure)}
+.aipanel .turn-fold{all:unset;cursor:pointer;display:block;padding:var(--s2) var(--s3);border-radius:var(--r-sm);background:var(--surface)} .aipanel .turn-fold:hover{background:var(--raised)} .aipanel .turn-fold b{font-weight:500}
+.aipanel .rest{margin:0;font-size:var(--t-small);color:var(--ink-2);max-width:var(--measure)}
+/* the panel: 380 at 1280, 420 from 1440; below 1024 it is a bottom sheet */
+@media (min-width:1280px){:root{--rail:380px}}
+@media (min-width:1440px){:root{--rail:420px}}
+@media (min-width:1920px){:root{--rail:440px}}
+@media (min-width:761px) and (max-width:1023px){
+  .aipanel{position:fixed;top:auto;left:0;right:0;bottom:0;width:auto;height:auto;max-height:85dvh;border-radius:var(--r-sheet) var(--r-sheet) 0 0;box-shadow:var(--e-2);padding:var(--s3) var(--s4) 0;z-index:45}
+  .aipanel .grab{display:block;width:40px;height:4px;border-radius:var(--r-xs);background:var(--line);margin:0 auto var(--s3);flex:none}
+}
+
+/* Ask in place: shown when a row is pointed at or focused; the answer opens beside the row */
+.dt-rw{position:relative} .dt-rw+.dt-rw,.dt-rw+.ds-rowx{border-top:1px solid var(--line)} .dt-rw>.dt-row{border-top:0}
+.dt.has-act .dt-rw{display:grid;grid-template-columns:minmax(0,1fr) 72px;align-items:center} .dt.has-act .dt-head{margin-right:72px} .dt-ra{opacity:0;transition:opacity var(--dur) var(--ease);display:flex;justify-content:center}
+.dt-rw:hover .dt-ra,.dt-rw:focus-within .dt-ra,.dt-ra:has([aria-expanded=true]){opacity:1}
+@media (hover:none){.dt-ra{opacity:1}}
+.askhere-btn{all:unset;cursor:pointer;box-sizing:border-box;display:inline-flex;align-items:center;gap:var(--s1);height:var(--chip);padding:0 var(--s2);border-radius:var(--r-sm);background:var(--surface);box-shadow:0 0 0 1px var(--line);color:var(--ink-2);font-size:var(--t-small);font-weight:500}
+.askhere-btn:hover{background:var(--raised);color:var(--ink)} .askhere-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.askhere-pop{position:absolute;right:0;top:calc(100% + var(--s1));z-index:25;width:420px;max-width:calc(100vw - 2 * var(--s4));max-height:70dvh;overflow:auto;background:var(--surface);border-radius:var(--r-md);box-shadow:var(--e-1),0 12px 32px var(--scrim);padding:var(--s3);display:flex;flex-direction:column;gap:var(--s3);text-align:left}
+.askhere-pop form{display:flex} .askhere-pop input{flex:1;min-width:0;height:var(--control);border:1px solid var(--line);border-radius:var(--r-sm);background:var(--surface);padding:0 var(--s3);font:var(--t-body) var(--font);color:var(--ink);outline:0} .askhere-pop input:focus-visible{outline:2px solid var(--accent);border-color:transparent}
+.askhere-pop .q{font-weight:600;margin:0} .askhere-pop .decision{margin:0} .askhere-pop .working{margin:0;display:flex;gap:var(--s2);align-items:center;color:var(--ink-2)} .askhere-pop .working small{color:var(--ink-3)}
+.askhere-pop .reasons{margin:0;padding-left:var(--s4);font-size:var(--t-small);color:var(--ink-2)} .askhere-pop .src{margin:0;font-size:var(--t-caption);color:var(--ink-3)} .askhere-pop .turn{display:flex;flex-direction:column;gap:var(--s2)}
+
+@media (max-width:760px){.pbar{padding-left:var(--s4);padding-right:var(--s4)}}
+@media (max-width:760px){.dt-ra{display:none}}
+
+/* FilterBar: a search box and a chip per filter, on one row above a list */
+.fb{position:relative;display:flex;flex-wrap:nowrap;align-items:center;gap:var(--s2);margin:0 0 var(--s4);min-width:0}
+.fb-chips{display:flex;flex:none;flex-wrap:nowrap;align-items:center;gap:var(--s2)}
+.fb-menu.fb-menu-end{left:auto;right:0;max-width:calc(100vw - 32px)} .fb-group-h{padding:var(--s2) var(--s3) var(--s1);font-size:var(--t-caption);color:var(--ink-3)} .fb-chip em{font-style:normal;font-size:var(--t-caption);color:var(--ink)}
+.fb-search{display:flex;align-items:center;gap:var(--s2);height:var(--control);padding:0 var(--s3);border-radius:var(--r-sm);background:var(--raised);color:var(--ink-3);min-width:120px;flex:1 1 160px;max-width:320px}
+.fb-search input{flex:1;min-width:0;border:0;background:none;font:var(--t-body) var(--font);color:var(--ink);outline:0} .fb-search:focus-within{box-shadow:0 0 0 1px var(--line);background:var(--surface)} .fb-search input:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:var(--r-sm)}
+.fb-chip-wrap{position:relative;display:inline-flex;align-items:center}
+.fb-chip{all:unset;cursor:pointer;box-sizing:border-box;display:inline-flex;align-items:center;gap:var(--s1);height:var(--control);padding:0 var(--s3);border-radius:var(--r-sm);box-shadow:inset 0 0 0 1px var(--line);color:var(--ink-2);font-size:var(--t-small);font-weight:500;white-space:nowrap}
+.fb-chip:hover{background:var(--raised);color:var(--ink)} .fb-chip.on{background:var(--raised);color:var(--ink);padding-right:calc(var(--s3) + var(--s5))} .fb-chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.fb-clear{all:unset;cursor:pointer;position:absolute;right:var(--s2);top:50%;transform:translateY(-50%);display:grid;place-items:center;width:var(--s5);height:var(--s5);border-radius:var(--r-xs);color:var(--ink-3)} .fb-clear:hover{background:var(--hover);color:var(--ink)} .fb-clear:focus-visible{outline:2px solid var(--accent)}
+.fb-menu{position:absolute;left:0;top:calc(100% + var(--s1));z-index:30;min-width:200px;background:var(--surface);border-radius:var(--r-md);box-shadow:var(--e-1),0 8px 24px var(--scrim);padding:var(--s1);display:flex;flex-direction:column}
+.fb-menu button{all:unset;cursor:pointer;box-sizing:border-box;display:flex;align-items:center;gap:var(--s2);min-height:var(--control);padding:0 var(--s3);border-radius:var(--r-sm);font-size:var(--t-small)} .fb-menu button i{width:16px;flex:none} .fb-menu button span{flex:1} .fb-menu button small{color:var(--ink-3)}
+.fb-menu.fb-float{position:fixed;z-index:60;width:300px;max-width:calc(100vw - 16px);max-height:min(60vh,440px);overflow-y:auto;overscroll-behavior:contain}
+.fb-float button span{flex:1 1 auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0} .fb-float button small{font-variant-numeric:tabular-nums} .fb-float .fb-more span{color:var(--ink-2)}
+.fb-menu button:hover{background:var(--raised)} .fb-menu button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.fb-reset{all:unset;cursor:pointer;color:var(--ink-3);font-size:var(--t-small);padding:0 var(--s2);height:var(--control);display:inline-flex;align-items:center} .fb-reset:hover{color:var(--ink);text-decoration:underline}
+.nums{margin-bottom:var(--s5)}
+
+/* the fine print behind an (i) */
+.info{position:relative;display:inline-flex;align-items:center;flex:none}
+.info-btn{all:unset;cursor:pointer;display:grid;place-items:center;width:var(--control);height:var(--control);border-radius:var(--r-sm);color:var(--ink-3)} .info-btn:hover{background:var(--raised);color:var(--ink)} .info-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.info-text{position:absolute;right:0;bottom:calc(100% + var(--s2));z-index:8;width:280px;max-width:calc(100vw - 2 * var(--s4));background:var(--surface);border-radius:var(--r-md);box-shadow:var(--e-1),0 12px 28px var(--scrim);padding:var(--s3);color:var(--ink-2);font-size:var(--t-small);text-align:left}
+
+.opts-zone .dt{max-width:900px}
+
+/* one scroll model: the top bar is fixed, the title row is sticky under it (compact once you scroll), column headers stick under the title, the action in a rail stays in view; master-detail columns scroll on their own */
+.top{position:sticky;top:0;z-index:20;background:var(--surface)}
+.ds-hd{position:sticky;top:var(--top);z-index:15;background:var(--surface);padding-bottom:var(--s2)}
+.ds-hd.stuck .meta,.ds-hd.stuck .back{display:none} .ds-hd.stuck{padding-top:var(--s2)} .ds-hd.stuck h1{font-size:var(--t-lead)}
+.dt-head{position:sticky;top:calc(var(--top) + var(--hd-h, 0px));z-index:10;background:var(--surface)}
+.ld .dt-head,.ld-list .dt-head,.ld-detail .dt-head{top:0}
+.ld-list>.fb,.ld-list>.ib-search{position:sticky;top:0;z-index:11;background:var(--surface)} /* a list's search and filters stay at the top of its pane */
+.today-head{position:sticky;top:calc(var(--top) + var(--hd-h, 0px));z-index:10;background:var(--surface)} .today-head .dt-head{position:static} .today-head .dt{margin:0}
+.ap-act{position:sticky;top:calc(var(--top) + var(--hd-h, 0px) + var(--s3));z-index:5}
+.pbar{position:sticky;top:0;z-index:20;background:var(--surface)}
+@media (max-width:760px){.ds-hd{position:static}.dt-head{position:static} .ap-act{top:auto}}
+
+/* two heading styles only: SectionTitle (24 above, 12 below) and FieldLabel; the old eyebrows and captions fold into them */
+h2,.ds-st,.ds-group,.oqh,.sec .oqh,.ds-page h2{font-size:var(--t-body);font-weight:600;color:var(--ink);text-transform:none;letter-spacing:0;margin:var(--s5) 0 var(--s3);padding:0}
+.ds-group{padding:0 var(--s3)} .ds-group .muted{font-weight:400;color:var(--ink-3);text-transform:none;letter-spacing:0}
+.ds-fl,.ds-caption,.fc dt,.opt-detail dt,.pv-facts span,.pv-next span,.dt-head,.dt-head>span,.side-foot-h{font-size:var(--t-caption);font-weight:500;color:var(--ink-3);text-transform:none;letter-spacing:0}
+.ds-caption{margin:0 0 var(--s2)}
+
+.ds-demo-row{display:flex;flex-wrap:wrap;gap:var(--s4);margin-bottom:var(--s4)}
+.ds-legend{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:var(--s3) var(--s5)} .ds-legend>div{display:grid;grid-template-columns:auto 1fr;gap:0 var(--s2);align-items:center} .ds-legend small{grid-column:2;color:var(--ink-3)}
+
+/* nothing wraps in the top bar: the Ask field shrinks, the date shortens, "You are" goes before anything overlaps */
+.top{flex-wrap:nowrap;gap:var(--s3)} /* a menu opened from the bar must be able to leave it: nothing in the bar clips */
+.top .me{flex:0 1 auto;min-width:0;overflow:hidden} .top .me b{overflow:hidden;text-overflow:ellipsis}
+.askbar{flex:1 1 200px;min-width:160px}
+.top .asof{flex:none;white-space:nowrap} .asof-s{display:none}
+@media (max-width:1279px){.asof-l{display:none}.asof-s{display:inline}.me-you,.me-dot{display:none}}
+/* a figure is a figure: no dotted rule under money; the source opens from it */
+.ds-tile b .value-btn{border-bottom-color:transparent}
+/* the numbers under a title sit close to it */
+.ds-hd .meta{margin-bottom:var(--s3)} .nums{margin-top:var(--s2)}
+/* tiles in an item: as many per row as fit, never a figure cut across lines */
+.item-grid>.rail .ds-tiles{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+@container (min-width: 960px){.rail .ds-tiles{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:1279px){.ds-tile b{font-size:var(--t-h2)}}
+
+.decisions{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--s2)} .decisions li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:0 var(--s3);align-items:baseline;font-size:var(--t-small)} .decisions .dec-t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0} .decisions .dec-t.full{white-space:normal} .decisions li .disclose{grid-column:2;justify-self:start}
+
+/* rail rows have no dot column, and a quiet button in a rail sits on the rail's own edge */
+.rail .ds-row{grid-template-columns:minmax(0,1fr) auto;padding-left:0} .rail .ds-row>span:empty{display:none} .rail .ds-row .t,.rail .ds-row .s{grid-column:1} .rail .ds-row .f{grid-column:2}
+.str .disclose,.rail .disclose{margin-left:calc(-1 * var(--s3))}
+
+
+.countline{margin:var(--s2) 0 var(--s4);color:var(--ink-2)} .countline b{color:var(--ink);font-variant-numeric:tabular-nums} .ev{margin-top:var(--s5)}
+
+/* a row with an Ask control highlights across its gutter too */
+.dt.has-act .dt-rw:hover,.dt.has-act .dt-rw:has(.dt-row.active){background:var(--raised)} .dt.has-act .dt-row:hover,.dt.has-act .dt-row.active{background:none}
+
+/* the item: the page does not scroll. The header is fixed above two scroll regions, the main column and the rail; the rail scrolls as one (stage, decision, figures, dates), so a short window never squeezes it to a sliver. Narrower than 1000 px it is one region with the decision first. */
+.rail-pin{flex:none} .rail-stage{flex:none;padding-bottom:var(--s4);border-bottom:1px solid var(--line)} .rail-scroll{display:flex;flex-direction:column;gap:var(--s5);min-width:0}
+@container (min-width: 960px){
+  .item-grid{height:calc(100dvh - var(--top) - var(--hd-h, 96px) - var(--s7) - var(--composer));align-items:stretch}
+  .item-grid>.rail{min-height:0;overflow-y:auto;overscroll-behavior:contain;position:relative;gap:var(--s4);padding-right:var(--s1)}
+  .item-main{min-height:0;overflow-y:auto;padding-right:var(--s3)}
+  .rail-scroll{flex:none}
+}
+
+/* Ask: one rounded composer floating at the bottom of the main area; main's last row scrolls clear of it because it sits in the flow at the end of main */
+.composer-wrap{position:sticky;bottom:0;z-index:12;display:flex;flex-direction:column;align-items:center;gap:var(--s2);padding:var(--s3) var(--s6) var(--s4);margin-top:auto;background:var(--surface)}
+.composer-wrap{box-shadow:0 -1px 0 var(--line)}
+.composer{display:flex;align-items:center;gap:var(--s3);width:min(720px,100%);height:48px;padding:0 var(--s2) 0 var(--s2);border-radius:var(--r-pill);background:var(--surface);box-shadow:0 0 0 1px var(--line),0 8px 24px var(--scrim)}
+.composer:focus-within{box-shadow:0 0 0 1px var(--ink-4),0 8px 24px var(--scrim)}
+.composer input{flex:1;min-width:0;height:100%;border:0;background:none;color:var(--ink);font:var(--t-body) var(--font);outline:0} .composer input:focus-visible{outline:2px solid var(--accent);outline-offset:-4px;border-radius:var(--r-pill)}
+.composer input::placeholder{color:var(--ink-3)}
+.composer .scope{max-width:46%;flex:none} .composer .scope-btn{height:var(--control);border:0;background:var(--raised);border-radius:var(--r-pill);padding:0 var(--s3)}
+.composer .scope-menu{bottom:calc(100% + var(--s3))}
+.composer .go{all:unset;cursor:pointer;width:var(--control);height:var(--control);border-radius:50%;background:var(--fill);color:var(--on-fill);display:grid;place-items:center;flex:none} .composer .go:disabled{opacity:.3;cursor:default} .composer .go:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.composer-note{display:flex;flex-wrap:wrap;gap:var(--s2);align-items:center;justify-content:center;margin:0;font-size:var(--t-small);color:var(--ink-2);background:var(--surface);border-radius:var(--r-md);padding:var(--s2) var(--s3);box-shadow:0 0 0 1px var(--line)}
+@media (min-width:761px){.app.ai-over .composer-wrap:not(.in-panel){padding-right:calc(var(--s6) + var(--rail))}}      /* the dock clears the panel; the composer inside the panel does not */
+/* the top bar's search: its results, grouped, one row each */
+.askbar-results{position:absolute;left:0;right:0;top:calc(100% + var(--s2));z-index:30;max-height:70dvh;overflow:auto;background:var(--surface);border-radius:var(--r-md);box-shadow:var(--e-1),0 12px 32px var(--scrim);padding:var(--s2)}
+.ar-h{margin:var(--s2) var(--s3) var(--s1);font-size:var(--t-caption);font-weight:500;color:var(--ink-3)} .ar-none{margin:var(--s3);color:var(--ink-3)}
+.ar-row{all:unset;cursor:pointer;box-sizing:border-box;display:flex;align-items:center;gap:var(--s3);width:100%;min-height:var(--control);padding:var(--s1) var(--s3);border-radius:var(--r-sm);color:var(--ink-2)}
+.ar-row.on,.ar-row:hover{background:var(--raised);color:var(--ink)} .ar-row:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.ar-t{display:flex;flex-direction:column;min-width:0} .ar-t b{font-weight:500;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap} .ar-t small{color:var(--ink-3);font-size:var(--t-small);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ar-t mark{background:var(--caution-bg);color:inherit;border-radius:var(--r-xs)}
+
+/* the composer is the one place to type: while the panel is open it sits at the panel's foot (the bottom bar is gone); the panel's own plain follow-up line is only for the phone sheet */
+@media (min-width:761px){.aipanel .foot-in{display:none} .app.ai-open{--composer:0px}}
+.composer-wrap.in-panel{position:static;flex:none;padding:var(--s3) 0 var(--s4);margin:0;background:none;box-shadow:0 -1px 0 var(--line)} .in-panel .composer{width:100%;box-shadow:0 0 0 1px var(--line)} .in-panel .composer:focus-within{box-shadow:0 0 0 1px var(--ink-4)} .in-panel .composer-note{max-width:100%}
+.in-panel .composer{flex-wrap:wrap;height:auto;border-radius:var(--r-lg);padding:var(--s2);gap:var(--s2)} .in-panel .composer .scope{flex-basis:100%;max-width:100%} .in-panel .composer input{height:var(--control);flex:1 1 0;padding:0 var(--s2)}
+.ds-hd .hd-row .ds-btn{white-space:nowrap;flex:none}
+
+/* Minimal: at most one boxed thing on a screen (the composer). Everything else is type, space and hairlines. */
+/* the stage is a small coloured dot and one word */
+.stc{width:auto} .app .stc .stc-pill{width:auto;height:auto;padding:0;background:none;box-shadow:none;border-radius:0;color:var(--ink);font-weight:500;gap:var(--s2);--tone:var(--ink-4)}
+.app .stc .stc-pill svg{display:none}
+.app .stc .stc-pill::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--tone);flex:none}
+.app .stc .stc-pill.near{--tone:var(--amber)} .app .stc .stc-pill.ok{--tone:var(--green)} .app .stc .stc-pill.held{--tone:var(--risk)} .app .stc .stc-pill.cur,.app .stc .stc-pill.asking{--tone:var(--ink-4)}
+/* the figures sit in one plain row: a big number and a small label under it */
+.ds-tiles{display:flex;flex-wrap:wrap;gap:var(--s3) var(--s6)} .ds-tile{background:none;padding:0;border-radius:0;min-width:0;flex:0 1 auto}
+.ds-tile b{font-size:var(--t-h2)} .rail .ds-tiles,.item-grid>.rail .ds-tiles{display:flex}
+/* the decision is type and a button, no box */
+.ds-act{background:none;padding:0;border-radius:0}
+.ap-act{background:none}
+/* how the agent got here is one quiet line, no tint */
+.collapsed,.ai{background:none;padding:0;border-radius:0} .ai-fold .ai{margin-top:var(--s3)}
+/* chips lose their grey; people are an avatar and a name */
+.dm-chip,.dm-count,a.dm-chip:hover{background:none;padding:0;border-radius:0}
+.dm-chip.sev-high,.dm-chip.sev-medium{background:none;padding:0} .dm-chip.sev-high{color:var(--critical)} .dm-chip.sev-medium{color:var(--caution)}
+.dm-itemlink{background:none;border-radius:0;padding-left:0;padding-right:0;border-top:1px solid var(--line)}
+.dm-person .dm-avatar,.avs .av{background:var(--ink-4)}
+
+/* a wide table stays in its column: it scrolls inside itself with its labels fixed, and never runs under the rail */
+.tablewrap{max-width:100%;overflow-x:auto} table.tp{font-size:var(--t-small)} table.tp td:first-child,table.tp th:first-child{position:sticky;left:0;background:var(--surface);z-index:1;white-space:nowrap}
+.item-main,.item-main>*{min-width:0}
+/* a header sticks to the top of the region it scrolls in, not under the page's bar */
+.item-main .dt-head,.rail-scroll .dt-head{top:0}
+
+.live-line,.status-line{display:flex;align-items:center;gap:var(--s2);margin:0;height:var(--s6);color:var(--ink-2);font-size:var(--t-small);min-width:0} .live-line small,.status-line small{color:var(--ink-3);margin-left:auto;flex:none;white-space:nowrap}
+.status-line .pulse{flex:none} .sl-t{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.run-prev{margin:0;color:var(--ink-3);font-size:var(--t-small);height:var(--s6);display:flex;align-items:center}
+
+.run-line{margin:0;color:var(--ink-3);font-size:var(--t-small)}
+/* the item behind a draft is a row, not a box: the one boxed thing on a screen is the draft */
+.ap-why .dm-itemlink{background:none;border:0;border-radius:0;padding:var(--s2) 0}
+/* initials of two letters stay inside their dot and clear of the name */
+.dm-dot{min-width:1.2em;width:auto;padding:0 var(--s1);border-radius:var(--r-pill);margin-right:var(--s1)}
+.ds-hd.flow{position:static}
+.ar-t small.ar-closed{color:var(--ink-4)}
+.askbar-results.stale .ar-row{opacity:.45}
+/* Ask examples on focus (FINAL 08 D): the questions about what is on screen first; a recorded answer says so in the foot. */
+.ask-ex{background:var(--surface);border-radius:var(--r-md);box-shadow:var(--e-menu);padding:8px 14px 10px;margin:0 0 8px;display:flex;flex-direction:column;max-width:620px;width:100%;align-self:center}
+.ask-ex-h{margin:2px 0 4px;font-size:var(--t-caption);color:var(--ink-3)}
+.ask-ex button{all:unset;cursor:pointer;padding:8px 0;border-bottom:1px solid var(--line);font-size:var(--t-small);color:var(--ink)}
+.ask-ex button:last-of-type{border-bottom:0} .ask-ex button:hover{text-decoration:underline;text-underline-offset:2px}
+.ask-ex button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:var(--r-xs)}
+.ask-ex-f{margin:6px 0 0;font-size:var(--t-caption);color:var(--ink-3)}
+.ask-who{margin:2px 0 8px;font-size:var(--t-caption);color:var(--ink-3);display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center}
+.ask-who i{display:inline-block;width:8px;height:8px;margin-right:4px;box-sizing:border-box} .ask-who i.lead{background:var(--ink)} .ask-who i.spec{border:1px solid var(--ink-3)}
+.ask-steps{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:4px;font-size:var(--t-caption);color:var(--ink-2)}
+.ask-steps li{display:flex;justify-content:space-between;gap:12px} .ask-steps span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis} .ask-steps em{font-style:normal;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.ask-ex.in{box-shadow:none;padding:0;margin:8px 0 0}
+.ask-prep{display:flex;align-items:center;justify-content:space-between;gap:var(--s3);min-height:44px;padding:0 var(--s3);margin-top:var(--s3);background:var(--raised);border-radius:var(--r-sm);font-size:var(--t-small);color:var(--ink-2);text-decoration:none} .ask-prep b{color:var(--ink);font-weight:500} .ask-prep:hover b:last-child{text-decoration:underline}
+/* F104: the Ask panel wears the RightPanel frame (outlined, r8, white, inset 16) on a wide screen; its header is a section with a hairline under it */
+@media (min-width:1280px){
+  .aipanel{top:var(--s4);height:calc(100dvh - var(--s6));margin:var(--s4) var(--s4) var(--s4) 0;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--surface);box-shadow:none;padding:0 var(--s5)}
+  .aipanel .ai-h{padding:var(--s3) 0;border-bottom:1px solid var(--line)}
+}
+.asof-link{color:inherit;text-decoration:none} .asof-link:hover{text-decoration:underline;text-underline-offset:2px} .asof-link:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:var(--r-xs)}

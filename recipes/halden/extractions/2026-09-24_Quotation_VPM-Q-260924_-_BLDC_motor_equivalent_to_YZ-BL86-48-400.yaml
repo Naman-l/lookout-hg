@@ -1,0 +1,44 @@
+message: 2026-09-24_Quotation_VPM-Q-260924_-_BLDC_motor_equivalent_to_YZ-BL86-48-400
+by: transcribed
+note: typed once from the document by the earlier hand-written step 22; every price is checked against its cited line on every build
+offers:
+- source: email
+  line: 'Unit price: USD 165.54 at 500 pcs/order, USD 160.87 at 1,000 pcs/order'
+  line_ref: Unit price
+  quote_no: VPM-Q-260924
+  supplier_name: Vinh Phuc Motor Technology Co., Ltd.
+  part_number: HR-40110
+  supplier_model: VPM-86-48-400B
+  qty_break: 500
+  price_raw: '165.54'
+  price: 165.54
+  incoterm: FOB
+  incoterm_place: Hai Phong
+  origin_claim: Vietnam; magnets sourced from China; origin documentation on request
+  lead_time: 60 days
+  lead_time_condition: 'after PPAP approval (samples: 10 pcs free, 4 weeks)'
+  lead_time_days: 60
+  moq: 200
+  payment_terms: 30% deposit, 70% before shipment for the first 3 orders, then Net 45
+  conditions: ISO 9001 certified; IATF 16949 in progress. Sender is not in the supplier master.
+  prepayment: 30% deposit, 70% before shipment for the first 3 orders
+- source: email
+  line: 'Unit price: USD 165.54 at 500 pcs/order, USD 160.87 at 1,000 pcs/order'
+  line_ref: Unit price
+  quote_no: VPM-Q-260924
+  supplier_name: Vinh Phuc Motor Technology Co., Ltd.
+  part_number: HR-40110
+  supplier_model: VPM-86-48-400B
+  qty_break: 1000
+  price_raw: '160.87'
+  price: 160.87
+  incoterm: FOB
+  incoterm_place: Hai Phong
+  origin_claim: Vietnam; magnets sourced from China; origin documentation on request
+  lead_time: 60 days
+  lead_time_condition: 'after PPAP approval (samples: 10 pcs free, 4 weeks)'
+  lead_time_days: 60
+  moq: 200
+  payment_terms: 30% deposit, 70% before shipment for the first 3 orders, then Net 45
+  conditions: ISO 9001 certified; IATF 16949 in progress. Sender is not in the supplier master.
+  prepayment: 30% deposit, 70% before shipment for the first 3 orders

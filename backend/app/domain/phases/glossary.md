@@ -1,0 +1,2 @@
+<!-- tables: -->
+- A **stage ladder** follows one order line or one part: need, quote, ordered, promised, acknowledged, at the supplier, shipped, in transit, customs, received, inspected, stocked, closed. A stage is `done` or `expected` only where a record says so, and cites it; `late` where a promise has passed; `disrupted` under a supplier's notice; otherwise `unknown`, with the person to ask. A received date proves nothing about customs or inspection.

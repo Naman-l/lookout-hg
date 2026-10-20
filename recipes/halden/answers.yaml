@@ -1,0 +1,104 @@
+# Decisions a person would answer on a flashcard. The bootstrap answers were taken from the evidence named in each entry.
+kind: bootstrap
+# The data date and horizon: the day the data README calls today. LOOKOUT_AS_OF overrides it to rebuild as the data stood on an earlier day.
+as_of: "2026-09-25"
+# The company the workspace is for: what the agents call it. Read from here, never typed into a prompt.
+company: "Halden Robotics"
+supplier_risk:      # thresholds for the supplier-risk detector: a supplier with a warning that is the sole source of a part and one of the biggest spends is a Today item
+  on_time_below: 0.5       # delivered on or before the promise on fewer than this share of closed lines
+  min_closed_lines: 10     # ... and at least this many closed lines to say so
+  top_spend_share: 0.10    # a "top-spend" supplier has at least this share of the last twelve months' spend
+# What each kind of id looks like in this customer's records (regular expressions, no anchors). The agent layer reads these from the build; no code names a shape.
+id_shapes:
+  part: 'HR-\d{5}'
+  supplier: 'SUP-\d{4}'
+  legacy_supplier: 'V\d{5}'
+  po_line: 'HPO-\d{2}-\d{5}(?:/\d+)?'
+  po_number: '(?:HPO-\d{2}-\d{5}|PO-\d{5})'      # a PO as the mails and the ERP write it, either system
+# How a part number is cleaned: the prefix and the digit block it has (a letter O in the block stands for 0).
+part_number: {prefix: "HR-", digits: 5}
+answered_by: DOMAIN (from the evidence cited), pending the buyer's confirmation
+
+# Link ERP records that no rule can join: the supplier renamed itself.
+supplier_aliases:
+  - record: SUP-0061
+    identity: SUP-0016
+    evidence: "message 2026-09-02_Baycrest_Connectors_is_now_BCX_Interconnect: 'Baycrest Connectors is now BCX Interconnect', same address, same contact desk"
+
+# Forecast product name -> the finished-good part number (verified against parts.description).
+products:
+  "Tern T2": {part: HR-90020, family: Tern}
+  "Porter P5": {part: HR-90050, family: Porter}
+  "Heron H1": {part: HR-90110, family: Heron}
+
+# Buyer initials used in the legacy POs -> buyer id (first name).
+buyers:
+  - {id: Dana, name: Dana Reyes, initials: DR}
+  - {id: Marcus, name: Marcus Chen, initials: MC}
+  - {id: Priya, name: Priya Nair, initials: PN}
+  - {id: Tom, name: Tom Albrecht, initials: TA}
+  - {id: Sofia, name: Sofia Marino, initials: SM}
+
+# Category spellings -> one label. The right-hand side is the label the majority of parts already use.
+categories:
+  CONN: Connectors
+  Connector: Connectors
+  Fastener: Fasteners
+  HARDWARE: Fasteners          # the three parts are socket and button head screws
+  Sheetmetal: Sheet Metal
+  Passive: Passives
+  Motor: Motors
+  "Cable Assy": Cables & Harnesses
+  Semiconductors: ICs          # an MCU, a CAN transceiver and a DAC
+
+# Where no PO history names the buyer of a part, its category's buyer from the data README.
+category_buyer:
+  Motors: Dana
+  Motor Drives: Dana
+  Gears & Gearboxes: Dana
+  Bearings: Dana
+  Wheels & Casters: Dana
+  Linear Motion: Dana
+  ICs: Marcus
+  Passives: Marcus
+  Discrete Semiconductors: Marcus
+  Sensors: Marcus
+  PCB (bare): Marcus
+  PCBA: Marcus
+  Compute & Wireless: Marcus
+  Circuit Protection: Marcus
+  Connectors: Priya
+  Cables & Harnesses: Priya
+  Batteries: Priya
+  Power Electronics: Priya
+  Switches & Controls: Priya
+  Fasteners: Tom
+  Sheet Metal: Tom
+  Plastic Parts: Tom
+  Machined Parts: Tom
+  Rubber & Seals: Tom
+  Extrusions: Tom
+  Thermal: Tom
+  Springs & Stampings: Tom
+  Pneumatics & Vacuum: Tom
+  Labels & Packaging: Sofia
+  MRO Consumables: Sofia
+
+# Words that put a news item under a topic (the first topic whose words appear in the headline or summary wins; order matters). Plain English and German.
+news_topics:
+  denial: [denies, denied, refutes, "no plans to"]
+  cyberattack: [cyberattack, "cyber attack", ransomware, hackers]
+  insolvency: [insolvency, bankruptcy, "chapter 11", schutzschirm, restructuring, "files for protection", receivership]
+  fire: [fire, explosion, blaze]
+  shortage: [shortage, "allocation", "lead times into"]
+  price_rise: ["raise prices", "price increase", "price hike", "raises prices"]
+  recall: [recall]
+  layoffs: [trims, layoffs, "job cuts", "cuts jobs"]
+  closure: [closure, "shuts down", shutdown, "halts production"]
+# Material Halden owns that sits at a contract manufacturer and is built into one of Halden's parts there. A delay in the material delays the part.
+# Each entry cites the message that says so; the answer is a person's, bootstrapped from that evidence.
+consignments:
+  - material: HR-30110
+    holder: SUP-0024
+    into: HR-31110
+    evidence: "message 2026-09-05_RE_Quote_request_-_safety_controller_PCBA_HR-31110_2027_volumes: the PCBA price is 'with Halden-consigned bare PCB (HR-30110) and MCU', and its 6 weeks run 'from receipt of consigned material'"

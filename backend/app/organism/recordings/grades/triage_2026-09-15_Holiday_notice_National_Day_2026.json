@@ -1,0 +1,51 @@
+{
+ "graded_at": "2026-10-12T00:02:41.245640+00:00",
+ "reviewer_model": "claude-haiku-5-5",
+ "recorded_at": "2026-10-11T23:20:29.865039+00:00",
+ "grade": {
+  "reviewer_score": 100,
+  "checks_passed": 5,
+  "checks_total": 5,
+  "summary": "Closure facts, impact, and next steps are clear; no commitments; assumptions and triggers are checkable.",
+  "revised": false,
+  "failed_checks": []
+ },
+ "review_summary": "Reviewer 100/100: Closure facts, impact, and next steps are clear; no commitments; assumptions and triggers are checkable.",
+ "review_payload": {
+  "score": 100,
+  "checks": [
+   {
+    "name": "answers the buyer's question",
+    "passed": true,
+    "critique": "",
+    "critical": false
+   },
+   {
+    "name": "assumptions are really assumptions",
+    "passed": true,
+    "critique": "",
+    "critical": false
+   },
+   {
+    "name": "nothing in it commits Halden",
+    "passed": true,
+    "critique": "",
+    "critical": true
+   },
+   {
+    "name": "what would change it is specific",
+    "passed": true,
+    "critique": "",
+    "critical": false
+   },
+   {
+    "name": "buyer's words",
+    "passed": true,
+    "critique": "",
+    "critical": false
+   }
+  ],
+  "failed": [],
+  "cost_usd": 0.0012
+ }
+}

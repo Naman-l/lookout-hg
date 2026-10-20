@@ -1,0 +1,56 @@
+/* The Ask panel on a case (ask-panel.md): the RightPanel frame (F104) at its one variant width, 400. */
+.cask{position:sticky;top:var(--s4);width:400px;max-width:100%;height:calc(100vh - 156px - var(--dock));display:flex;flex-direction:column;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--surface);padding:var(--s1) var(--s5)}
+.cask-h{display:flex;align-items:center;gap:var(--s2);padding:var(--s3) 0;border-bottom:1px solid var(--line)}
+.cask-h b{flex:1;min-width:0;font-size:var(--t-caption);font-weight:600;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cask-x{border:0;background:none;color:var(--ink-3);padding:2px;border-radius:var(--r-xs);cursor:pointer;display:inline-flex} .cask-x:hover{color:var(--ink)}
+.cask-cap{font-size:var(--t-caption);color:var(--ink-3);margin:var(--s2) 0 0}
+.cask-body{flex:1;overflow-y:auto;padding:var(--s4) 0;display:flex;flex-direction:column;gap:var(--s5)}
+.cask-sugg{display:flex;flex-direction:column;align-items:flex-start;gap:var(--s2)}
+.cask-sugg button{border:0;background:none;padding:0;text-align:left;font-size:var(--t-small);color:var(--ink-2);cursor:pointer} .cask-sugg button:hover{color:var(--ink);text-decoration:underline}
+.cask-turn{display:flex;flex-direction:column;gap:var(--s2)}
+.cask-q{align-self:flex-end;max-width:85%;margin:0;padding:var(--s2) var(--s3);background:var(--raised);border-radius:var(--r-sm);font-size:var(--t-small);font-weight:500;color:var(--ink);white-space:pre-wrap}
+.cask-work{margin:0;font-size:var(--t-small);color:var(--ink-2)} .cask-work span{color:var(--ink-3)}
+.cask-a{display:flex;flex-direction:column;gap:var(--s2)}
+.cask-lead{margin:0;font-size:var(--t-body);font-weight:500;color:var(--ink);line-height:var(--lh-tight)}
+.cask-rest{margin:0;font-size:var(--t-small);color:var(--ink-2);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.cask-t h5{margin:var(--s1) 0 var(--s1);font-size:var(--t-caption);font-weight:600;color:var(--ink-2)}
+.cask-t .cp-t{font-size:var(--t-caption)} .cask-t .cp-t td{height:32px;box-sizing:border-box}
+.cask-more{margin:var(--s1) 0 0;font-size:var(--t-caption);color:var(--ink-3)}
+.cask-kv{margin:0;display:grid;gap:6px}
+.cask-kv div{display:grid;grid-template-columns:96px 1fr;gap:var(--s2);font-size:var(--t-small)} .cask-kv dt{color:var(--ink-3)} .cask-kv dd{margin:0;color:var(--ink-2)}
+.cask-foot{margin:0;font-size:var(--t-caption);color:var(--ink-3)} .cask-foot a{color:var(--ink-3)} .cask-foot .nc{color:var(--ink)}
+.cask-prep{display:flex;align-items:center;gap:var(--s3);min-height:44px;padding:0 var(--s3);background:var(--raised);border-radius:var(--r-sm);font-size:var(--t-small);color:var(--ink)}
+.cask-prep span{flex:1;min-width:0}
+.cask-link{border:0;background:none;padding:0;font:inherit;color:var(--ink-2);cursor:pointer;text-decoration:none} .cask-link.b{font-weight:500;color:var(--ink);white-space:nowrap} .cask-link:hover{text-decoration:underline}
+.cask-err{margin:0;font-size:var(--t-small);color:var(--ink-2)}
+.cask-in{border-top:1px solid var(--line);padding:var(--s2) 0 var(--s3);display:flex;flex-direction:column;gap:var(--s2)}
+.cask-chip{align-self:flex-start;font-size:var(--t-caption);color:var(--ink-2);background:var(--raised);border-radius:var(--r-sm);padding:2px var(--s2)}
+.cask-row{display:flex;align-items:flex-end;gap:var(--s2)}
+.cask-row textarea{flex:1;resize:none;min-height:32px;max-height:120px;border:1px solid var(--line);border-radius:var(--r-sm);padding:6px var(--s3);font:inherit;font-size:var(--t-small);color:var(--ink);background:var(--surface)}
+.cask-row textarea:focus{outline:2px solid var(--accent);outline-offset:-1px} .cask-row textarea:disabled{background:var(--raised);color:var(--ink-3)}
+.cask-go{width:32px;height:32px;flex:none;border-radius:50%;border:0;background:var(--line);color:var(--surface);display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+.cask-go.on{background:var(--ink)} .cask-go:disabled{cursor:default}
+@media (max-width:1100px){.cask{position:static;width:auto;height:70vh}}
+.cask-t h5 span{font-weight:400;color:var(--ink-3)}
+.cask.bare{position:static;width:auto;height:100%;min-height:0;border:0;border-radius:0;background:none;padding:0}
+/* Ask for changes, under a waiting draft (C3) */
+.afc{margin:var(--s2) 0 0;font-size:var(--t-small)} .afc-note{color:var(--ink-3);font-size:var(--t-caption)}
+.cask-link:disabled{color:var(--ink-3);cursor:default;text-decoration:none}
+.afc-box{margin-top:var(--s2);display:flex;flex-direction:column;gap:var(--s2)}
+.afc-box textarea{resize:vertical;min-height:52px;border:1px solid var(--line);border-radius:var(--r-sm);padding:6px var(--s3);font:inherit;font-size:var(--t-small);color:var(--ink);background:var(--surface)}
+.afc-box textarea:focus{outline:2px solid var(--accent);outline-offset:-1px}
+.afc-row{display:flex;align-items:center;justify-content:flex-end;gap:var(--s3);font-size:var(--t-small)} .afc-err{flex:1;color:var(--ink-2)}
+.afc-done{margin-top:var(--s2);display:flex;flex-direction:column;align-items:flex-start;gap:var(--s2);font-size:var(--t-small)}
+.afc-lead{margin:0;font-weight:500;color:var(--ink)}
+.afc-body{align-self:stretch;white-space:pre-wrap;color:var(--ink-2);font-size:var(--t-small);line-height:var(--lh);display:flex;flex-direction:column}
+.afc-body ins{text-decoration:none;background:var(--raised);color:var(--ink);border-radius:var(--r-xs);padding:0 2px}
+.cask-t .cp-t td{white-space:normal;overflow-wrap:break-word} .cask-t .cp-t td.n,.cask-t .cp-t th.n{white-space:nowrap}
+.cask-work em{font-style:normal;font-variant-numeric:tabular-nums}
+/* on the case page the panel takes the rail's slot (the rail is hidden while Ask is open) */
+.cp .cp-cols.ask-open{grid-template-columns:minmax(0,1fr) 400px}
+@media (max-width:1100px){.cp .cp-cols.ask-open{grid-template-columns:minmax(0,1fr)}}
+.cask-g{margin:0 0 var(--s5)}
+.cask-note{display:block;font-size:var(--t-caption);color:var(--ink-3)}
+.cask-oq h5{margin:var(--s1) 0;font-size:var(--t-caption);font-weight:600;color:var(--ink-2)}
+.cask-oq ul{margin:0;padding:0 0 0 var(--s4);font-size:var(--t-small);color:var(--ink-2);display:grid;gap:2px} .cask-oq li span{color:var(--ink-3)}
+.cask-oq .cask-link{font-size:var(--t-caption);color:var(--ink-3);margin-top:2px}

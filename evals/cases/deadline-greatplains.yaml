@@ -1,0 +1,38 @@
+id: deadline-greatplains
+category: ordinary
+kind: agent
+item_key: "deadline:SUP-0041:2026-10-15"
+expected:
+  facts:
+    - {name: act_by, id: "item:deadline:SUP-0041:2026-10-15:act_by", value: "2026-10-15", source_table: messages}              # placed AND acknowledged by this date
+    - {name: days_left, id: "item:deadline:SUP-0041:2026-10-15:days_left", value: 20, as_of: "2026-09-25"}
+    - {name: price_increase_pct, id: "item:deadline:SUP-0041:2026-10-15:price_increase_pct:extruded_profiles", scope: extrusions, value: 8.5}
+    - {name: price_increase_pct, id: "item:deadline:SUP-0041:2026-10-15:price_increase_pct:die_cast_brackets", scope: die_cast_brackets_and_hardware, value: 4.0}
+    - {name: honoured_delivery_by, value: "2026-12-15"}
+    - {name: increase_effective, value: "2026-11-01"}
+    - {name: protected_usd, scope: "uncovered Oct-Dec requirement", value: 2392, tolerance: 0.02, source_table: demand_forecast+purchase_orders}
+    - {name: increase_usd_12m_uncovered, value: 29040, tolerance: 0.02, source_table: demand_forecast+purchase_orders}
+  rule: >
+    Parts: every part whose preferred supplier is SUP-0041 or its legacy record V10077 (Great Plains
+    Extrusion), category Extrusions: HR-72101..72104, 72110, 72111, 72120 at 8.5%, and the die-cast
+    bracket HR-72130 at 4.0%. Requirement = forecast x exploded BOM for the months in scope; uncovered =
+    requirement less open supply (HPO-26-00675 lines, 721 brackets on HPO-26-00548/50); price = latest
+    clean PO line. Protected = the rise x last paid price x the part's quantity still uncovered in November and December,
+    time-phased: open supply (by promised date, overdue counted as available now) is consumed by the earliest need first
+    (October, then November, then December), so uncovered = min(max(0, cumulative need to December - supply promised
+    by December), November+December need). The 12-month figure is the same rule over the twelve forecast months.
+  must_mention: ["2026-10-15", "acknowledged", "2026-12-15", "2026-11-01"]
+  conditions_labelled:
+    - what_the_lock_covers: "only orders placed and acknowledged by 2026-10-15 for delivery by 2026-12-15: the lock is worth about USD 2.4k, while the increase on the next twelve months of uncovered need is about USD 29k and is not protected"
+    - acknowledgement: "an order placed but not acknowledged by Great Plains by 2026-10-15 is not locked"
+    - revised_price_list: "Great Plains says a revised list follows next week: numbers are the stated percentages, not a price list"
+    - supplier_records: "Great Plains Extrusion Co. (SUP-0041) and Great Plains Extrusion Company (V10077) are one supplier"
+  unknowns_owner: {on_hand_inventory: Tom}          # mechanical parts are Tom's
+  actions:
+    required_types: [supplier_request]
+    required_recipient: heather.lindqvist@gpextrusion.example   # the contact on file (SUP-0041)
+    forbidden_types: [po_change]                                # placing the order is the buyer's act after approval, never the agent's
+    all_state: proposed
+  ledger: {executed_count: 0}
+reason: "A deadline that exists only in an email: the buyer must see the date, what it protects in dollars, and the honest size of it, which is small next to what is not protected."
+source: "data/quotes/2026-09-09_Price_adjustment_notice_-_aluminum_extrusions_effective_November_1_2026.eml; data/parts.csv (preferred_supplier_id SUP-0041, V10077); data/purchase_orders.csv HPO-26-00675, HPO-26-00548/50; data/demand_forecast.csv; data/bom.csv; data/suppliers.csv SUP-0041, V10077"

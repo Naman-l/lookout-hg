@@ -1,0 +1,833 @@
+{
+ "recorded_at": "2026-10-11T23:27:37.149343+00:00",
+ "run_id": "run-recorded",
+ "item_key": "reply:2026-09-15_Holiday_notice_National_Day_2026",
+ "run": {
+  "status": "ok",
+  "model": "claude-sonnet-5-5",
+  "prompt_hash": "1b8e90ed2cd1",
+  "toolset_hash": "d09696d21ab2",
+  "sdk_version": "0.2.165",
+  "cost_usd": 0.079571585,
+  "wall_ms": 27089,
+  "first_step_ms": 12,
+  "turns": 4,
+  "tool_calls": 9,
+  "denied_calls": 0
+ },
+ "shape": "tree",
+ "reviewer_mode": "after",
+ "events": [
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 1,
+   "ts": "2026-10-11T23:27:05.764490+00:00",
+   "t_ms": 11,
+   "type": "run.started",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Working reply:2026-09-15_Holiday_notice_National_Day_2026",
+   "refs": [],
+   "payload": {
+    "workflow": "work_item",
+    "item_key": "reply:2026-09-15_Holiday_notice_National_Day_2026",
+    "model": "claude-sonnet-5-5",
+    "prompt_hash": "1b8e90ed2cd1",
+    "toolset_hash": "d09696d21ab2",
+    "specialist_prompts": {
+     "inbox_analyst": "3c0a4de5a4a7",
+     "buyers_clerk": "7504437b791f"
+    },
+    "tool_count": 22,
+    "sdk_version": "0.2.165"
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 2,
+   "ts": "2026-10-11T23:27:05.765164+00:00",
+   "t_ms": 12,
+   "type": "tool.called",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Lookout reads the item",
+   "refs": [],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "args": {},
+    "gate": "allowed",
+    "gate_reason": "system step before the model runs",
+    "why": "Read what the system already worked out for this item: its finding, dates and figures."
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 3,
+   "ts": "2026-10-11T23:27:05.765656+00:00",
+   "t_ms": 12,
+   "type": "tool.result",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Read the item: Reply to Yang Xiu: Holiday notice - National Day 2026.",
+   "refs": [
+    {
+     "type": "item",
+     "id": "reply:2026-09-15_Holiday_notice_National_Day_2026",
+     "label": "Reply to Yang Xiu: Holiday notice - National Day 2026"
+    },
+    {
+     "type": "message",
+     "id": "2026-09-15_Holiday_notice_National_Day_2026",
+     "label": "Holiday notice - National Day 2026"
+    },
+    {
+     "type": "supplier",
+     "id": "SUP-0042",
+     "label": "Dongguan Meiya Mould & Plastics Co., Ltd."
+    }
+   ],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "ok": true,
+    "numbers": [],
+    "unknowns": [],
+    "item_key": "reply:2026-09-15_Holiday_notice_National_Day_2026",
+    "item_kind": "reply"
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 4,
+   "ts": "2026-10-11T23:27:07.757224+00:00",
+   "t_ms": 2004,
+   "type": "step.text",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "I'm having the inbox analyst read the whole thread first.",
+   "refs": [],
+   "payload": {}
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 5,
+   "ts": "2026-10-11T23:27:08.867242+00:00",
+   "t_ms": 3114,
+   "type": "child.started",
+   "agent": "inbox_analyst",
+   "agent_label": "inbox_analyst",
+   "tool_use_id": "toolu_01TW6hgvaQjSfLop4HykXcqu",
+   "summary": "Read holiday notice thread",
+   "refs": [],
+   "payload": {
+    "child_run_id": "run-recorded.1",
+    "specialist": "inbox_analyst",
+    "question": "Read holiday notice thread",
+    "task": "Read holiday notice thread",
+    "asked_by": "lookout"
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 1,
+   "ts": "2026-10-11T23:27:08.868077+00:00",
+   "t_ms": 3114,
+   "type": "run.started",
+   "agent": "inbox_analyst",
+   "agent_label": "inbox_analyst",
+   "tool_use_id": null,
+   "summary": "Inbox analyst started",
+   "refs": [],
+   "payload": {
+    "workflow": "specialist:inbox_analyst",
+    "item_key": "reply:2026-09-15_Holiday_notice_National_Day_2026"
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 2,
+   "ts": "2026-10-11T23:27:09.683009+00:00",
+   "t_ms": 3929,
+   "type": "tool.called",
+   "agent": "inbox_analyst",
+   "agent_label": "inbox_analyst",
+   "tool_use_id": "toolu_0128KNBFWiT5nevL3MfLFzb6",
+   "summary": "inbox_analyst calls read_message",
+   "refs": [],
+   "payload": {
+    "tool": "read_message",
+    "name": "read_message",
+    "args": {
+     "message_id": "2026-09-15_Holiday_notice_National_Day_2026"
+    },
+    "gate": "allowed",
+    "gate_reason": "part of this role's work",
+    "why": "Read the supplier's message and its thread, with who sent it and what it changes."
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 3,
+   "ts": "2026-10-11T23:27:09.706064+00:00",
+   "t_ms": 3952,
+   "type": "tool.result",
+   "agent": "inbox_analyst",
+   "agent_label": "inbox_analyst",
+   "tool_use_id": "toolu_0128KNBFWiT5nevL3MfLFzb6",
+   "summary": "Yang Xiu, 2026-09-15: Holiday notice - National Day 2026 (closure, auto)",
+   "refs": [],
+   "payload": {
+    "tool": "read_message",
+    "name": "read_message",
+    "ok": true,
+    "numbers": [],
+    "unknowns": []
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 6,
+   "ts": "2026-10-11T23:27:09.822614+00:00",
+   "t_ms": 4069,
+   "type": "step.text",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "I've started the inbox analyst on the holiday notice from Yang Xiu. It's reading the whole thread. The reply draft comes after it finishes, and I don't have its results yet.",
+   "refs": [],
+   "payload": {}
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 4,
+   "ts": "2026-10-11T23:27:09.847218+00:00",
+   "t_ms": 4094,
+   "type": "tool.called",
+   "agent": "inbox_analyst",
+   "agent_label": "inbox_analyst",
+   "tool_use_id": "toolu_01KG1QYnNosC5DUbaet4s9E8",
+   "summary": "inbox_analyst calls find_suppliers",
+   "refs": [],
+   "payload": {
+    "tool": "find_suppliers",
+    "name": "find_suppliers",
+    "args": {
+     "name": "SUP-0042"
+    },
+    "gate": "allowed",
+    "gate_reason": "part of this role's work",
+    "why": "Check the supplier master for the company, including renamed and legacy records."
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 5,
+   "ts": "2026-10-11T23:27:09.863639+00:00",
+   "t_ms": 4110,
+   "type": "tool.result",
+   "agent": "inbox_analyst",
+   "agent_label": "inbox_analyst",
+   "tool_use_id": "toolu_01KG1QYnNosC5DUbaet4s9E8",
+   "summary": "'SUP-0042': 0 companies and 0 vendor records match",
+   "refs": [],
+   "payload": {
+    "tool": "find_suppliers",
+    "name": "find_suppliers",
+    "ok": true,
+    "numbers": [],
+    "unknowns": []
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 6,
+   "ts": "2026-10-11T23:27:12.071554+00:00",
+   "t_ms": 6318,
+   "type": "tool.called",
+   "agent": "inbox_analyst",
+   "agent_label": "inbox_analyst",
+   "tool_use_id": "toolu_012mbZw6BpKGiEa5wF7XnNbX",
+   "summary": "inbox_analyst calls find_suppliers",
+   "refs": [],
+   "payload": {
+    "tool": "find_suppliers",
+    "name": "find_suppliers",
+    "args": {
+     "name": "Meiya Mould"
+    },
+    "gate": "allowed",
+    "gate_reason": "part of this role's work",
+    "why": "Check the supplier master for the company, including renamed and legacy records."
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 7,
+   "ts": "2026-10-11T23:27:12.078425+00:00",
+   "t_ms": 6325,
+   "type": "tool.result",
+   "agent": "inbox_analyst",
+   "agent_label": "inbox_analyst",
+   "tool_use_id": "toolu_012mbZw6BpKGiEa5wF7XnNbX",
+   "summary": "'Meiya Mould': 1 companies and 2 vendor records match",
+   "refs": [],
+   "payload": {
+    "tool": "find_suppliers",
+    "name": "find_suppliers",
+    "ok": true,
+    "numbers": [],
+    "unknowns": []
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 8,
+   "ts": "2026-10-11T23:27:16.050990+00:00",
+   "t_ms": 10297,
+   "type": "run.finished",
+   "agent": "inbox_analyst",
+   "agent_label": "inbox_analyst",
+   "tool_use_id": null,
+   "summary": "inbox_analyst finished",
+   "refs": [],
+   "payload": {
+    "status": "ok",
+    "tool_calls": 3,
+    "first_step_ms": 3929
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 7,
+   "ts": "2026-10-11T23:27:16.052390+00:00",
+   "t_ms": 10299,
+   "type": "child.finished",
+   "agent": "inbox_analyst",
+   "agent_label": "inbox_analyst",
+   "tool_use_id": null,
+   "summary": "Yang Xiu of Dongguan Meiya Mould & Plastics (supplier SUP-0042, active, on file, and linked to legacy record V10388 as the same company) gave notice that the factory is closed 1 to 8 October 2026, with the last shipment before it on 28 September and production resuming 9 October; orders scheduled to ship in the closure ship on 12 October. The notice asked for any pre-holiday parts requests by 22 September, a date that had already passed at the data date of 25 September, so Tom Albrecht should check Meiya's open lines for anything due before the closure.",
+   "refs": [],
+   "payload": {
+    "child_run_id": "run-recorded.1",
+    "status": "ok",
+    "handoff_ok": true
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 8,
+   "ts": "2026-10-11T23:27:16.220461+00:00",
+   "t_ms": 10467,
+   "type": "step.text",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Still waiting for Buyer's clerk to finish",
+   "refs": [],
+   "payload": {
+    "system": true
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 9,
+   "ts": "2026-10-11T23:27:16.911697+00:00",
+   "t_ms": 11158,
+   "type": "step.text",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Next the clerk drafts the reply.",
+   "refs": [],
+   "payload": {}
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 10,
+   "ts": "2026-10-11T23:27:18.252171+00:00",
+   "t_ms": 12498,
+   "type": "child.started",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01LXpsVUSzhLwgd2NDj5e2EF",
+   "summary": "Draft reply to supplier",
+   "refs": [],
+   "payload": {
+    "child_run_id": "run-recorded.2",
+    "specialist": "buyers_clerk",
+    "question": "Draft reply to supplier",
+    "task": "Draft reply to supplier",
+    "asked_by": "lookout"
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 1,
+   "ts": "2026-10-11T23:27:18.253784+00:00",
+   "t_ms": 12500,
+   "type": "run.started",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": null,
+   "summary": "Buyer's clerk started",
+   "refs": [],
+   "payload": {
+    "workflow": "specialist:buyers_clerk",
+    "item_key": "reply:2026-09-15_Holiday_notice_National_Day_2026"
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 2,
+   "ts": "2026-10-11T23:27:19.359776+00:00",
+   "t_ms": 13606,
+   "type": "tool.called",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01X39LHrcbvPYLWLpnDKQYxe",
+   "summary": "Buyer's clerk calls read_message",
+   "refs": [],
+   "payload": {
+    "tool": "read_message",
+    "name": "read_message",
+    "args": {
+     "message_id": "2026-09-15_Holiday_notice_National_Day_2026"
+    },
+    "gate": "allowed",
+    "gate_reason": "part of this role's work",
+    "why": "Read the supplier's message and its thread, with who sent it and what it changes."
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 3,
+   "ts": "2026-10-11T23:27:19.372994+00:00",
+   "t_ms": 13619,
+   "type": "tool.result",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01X39LHrcbvPYLWLpnDKQYxe",
+   "summary": "Yang Xiu, 2026-09-15: Holiday notice - National Day 2026 (closure, auto)",
+   "refs": [],
+   "payload": {
+    "tool": "read_message",
+    "name": "read_message",
+    "ok": true,
+    "numbers": [],
+    "unknowns": []
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 4,
+   "ts": "2026-10-11T23:27:20.028747+00:00",
+   "t_ms": 14275,
+   "type": "tool.called",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01QNQa4u6EPfcYX9wWBEiQ9m",
+   "summary": "Buyer's clerk calls get_handoffs",
+   "refs": [],
+   "payload": {
+    "tool": "get_handoffs",
+    "name": "get_handoffs",
+    "args": {},
+    "gate": "allowed",
+    "gate_reason": "part of this role's work",
+    "why": "Read what the earlier steps found, with the figures their lookups returned."
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 5,
+   "ts": "2026-10-11T23:27:20.030681+00:00",
+   "t_ms": 14277,
+   "type": "tool.called",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01MNktQUE8DXDS8pYZuxRWF2",
+   "summary": "Buyer's clerk calls get_item",
+   "refs": [],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "args": {
+     "item_key": "reply:2026-09-15_Holiday_notice_National_Day_2026"
+    },
+    "gate": "allowed",
+    "gate_reason": "part of this role's work",
+    "why": "Read what the system already worked out for this item: its finding, dates and figures."
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 6,
+   "ts": "2026-10-11T23:27:20.262588+00:00",
+   "t_ms": 14509,
+   "type": "tool.result",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01QNQa4u6EPfcYX9wWBEiQ9m",
+   "summary": "inbox_analyst handed back their findings",
+   "refs": [],
+   "payload": {
+    "tool": "get_handoffs",
+    "name": "get_handoffs",
+    "ok": true,
+    "numbers": [],
+    "unknowns": []
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 7,
+   "ts": "2026-10-11T23:27:23.246198+00:00",
+   "t_ms": 17492,
+   "type": "tool.called",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01PT9nHbGCF6NLPuY26eLuba",
+   "summary": "Buyer's clerk calls draft_supplier_request",
+   "refs": [],
+   "payload": {
+    "tool": "draft_supplier_request",
+    "name": "draft_supplier_request",
+    "args": {
+     "supplier_id": "SUP-0042",
+     "subject": "Re: Holiday notice - National Day 2026",
+     "body": "Dear Yang Xiu,\n\nThank you for the notice. We have noted that the factory is closed from 1 October to 8 October, that the last shipment before the closure leaves on 28 September, that production resumes on 9 October, and that orders scheduled to ship during the closure will ship on 12 October.\n\nWe saw your 22 September date for pre-holiday requests after it had passed. Could you please send us the current promised dates for all our open PO lines with Meiya that fall between 1 October and 12 October? Where a shipment on 12 October would be later than the date on the PO line, please tell us the revised ship date as soon as you can.\n\nThis is a confirmation of receipt and a request for dates only. It does not change any PO terms or waive any of our rights under the orders.\n\nBest regards,\nTom Albrecht\nHalden Robotics"
+    },
+    "gate": "staged",
+    "gate_reason": "part of this role's work",
+    "why": "Prepare the request to the supplier for the buyer to approve. Nothing is sent."
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 8,
+   "ts": "2026-10-11T23:27:23.262915+00:00",
+   "t_ms": 17509,
+   "type": "tool.result",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01PT9nHbGCF6NLPuY26eLuba",
+   "summary": "Draft to Yang Xiu awaiting approval: Re: Holiday notice - National Day 2026",
+   "refs": [],
+   "payload": {
+    "tool": "draft_supplier_request",
+    "name": "draft_supplier_request",
+    "ok": true,
+    "numbers": [],
+    "unknowns": []
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 9,
+   "ts": "2026-10-11T23:27:23.263856+00:00",
+   "t_ms": 17510,
+   "type": "action.staged",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01PT9nHbGCF6NLPuY26eLuba",
+   "summary": "Buyer's clerk drafted: Re: Holiday notice - National Day 2026",
+   "refs": [
+    {
+     "type": "action",
+     "id": "A-f95b94cd",
+     "label": "Re: Holiday notice - National Day 2026"
+    }
+   ],
+   "payload": {
+    "action_id": "A-f95b94cd",
+    "action_type": "supplier_request",
+    "recipient": "yang.xiu@meiya-mould.example",
+    "payload_hash": "43357ecff1299acd93e3e0498cca57b97ea7f8a44f8e7aec9d9eadfe1ea6ac62",
+    "already_waiting": null
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 10,
+   "ts": "2026-10-11T23:27:26.245743+00:00",
+   "t_ms": 20492,
+   "type": "run.finished",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": null,
+   "summary": "Buyer's clerk finished",
+   "refs": [],
+   "payload": {
+    "status": "ok",
+    "tool_calls": 4,
+    "first_step_ms": 13606
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 11,
+   "ts": "2026-10-11T23:27:26.249502+00:00",
+   "t_ms": 20496,
+   "type": "child.finished",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": null,
+   "summary": "Staged a request to the supplier's contact on file, awaiting approval",
+   "refs": [],
+   "payload": {
+    "child_run_id": "run-recorded.2",
+    "status": "ok",
+    "handoff_ok": true
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 12,
+   "ts": "2026-10-11T23:27:27.038725+00:00",
+   "t_ms": 21285,
+   "type": "tool.called",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": "toolu_01KdLpMoFmVskUDU5kJBmzzt",
+   "summary": "Lookout calls get_handoffs",
+   "refs": [],
+   "payload": {
+    "tool": "get_handoffs",
+    "name": "get_handoffs",
+    "args": {},
+    "gate": "allowed",
+    "gate_reason": "part of this role's work",
+    "why": "Read what the earlier steps found, with the figures their lookups returned."
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 13,
+   "ts": "2026-10-11T23:27:27.048195+00:00",
+   "t_ms": 21294,
+   "type": "tool.result",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": "toolu_01KdLpMoFmVskUDU5kJBmzzt",
+   "summary": "inbox_analyst and Buyer's clerk handed back their findings",
+   "refs": [],
+   "payload": {
+    "tool": "get_handoffs",
+    "name": "get_handoffs",
+    "ok": true,
+    "numbers": [],
+    "unknowns": []
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 14,
+   "ts": "2026-10-11T23:27:29.921757+00:00",
+   "t_ms": 24168,
+   "type": "verifier.result",
+   "agent": "verifier",
+   "agent_label": "Verifier",
+   "tool_use_id": null,
+   "summary": "0 of 0 numbers from tools · 0 open questions with an owner",
+   "refs": [],
+   "payload": {
+    "passed": true,
+    "warnings": [],
+    "numbers_checked": 0,
+    "numbers_from_tools": 0,
+    "open_questions_with_owner": 0,
+    "open_questions": 0,
+    "failures": []
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 15,
+   "ts": "2026-10-11T23:27:32.610617+00:00",
+   "t_ms": 26857,
+   "type": "step.text",
+   "agent": "reviewer",
+   "agent_label": "Reviewer",
+   "tool_use_id": null,
+   "summary": "The Reviewer read the drafted request: it commits Halden to nothing",
+   "refs": [],
+   "payload": {
+    "system": true
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 16,
+   "ts": "2026-10-11T23:27:32.857227+00:00",
+   "t_ms": 27103,
+   "type": "run.finished",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Run ok",
+   "refs": [],
+   "payload": {
+    "status": "ok",
+    "turns": 4,
+    "tool_calls": 9,
+    "cost_usd": 0.0784,
+    "wall_ms": 27089,
+    "first_step_ms": 12,
+    "first_token_ms": 1657,
+    "recommendation_id": "run-recorded",
+    "tokens_in": 189180,
+    "tokens_out": 3690,
+    "tokens_cache_read": 177240,
+    "tokens_cache_creation": 10454,
+    "tokens_by_agent": {
+     "inbox_analyst": {
+      "tokens": 11815,
+      "tool_uses": 5,
+      "duration_ms": 7199
+     },
+     "buyers_clerk": {
+      "tokens": 12595,
+      "tool_uses": 5,
+      "duration_ms": 8010
+     }
+    }
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 17,
+   "ts": "2026-10-11T23:27:37.144751+00:00",
+   "t_ms": 31391,
+   "type": "review.result",
+   "agent": "reviewer",
+   "agent_label": "Reviewer",
+   "tool_use_id": null,
+   "summary": "Reviewer 100/100: Answers the buyer clearly; assumptions empty, no commitments, checkable open items.",
+   "refs": [],
+   "payload": {
+    "score": 100,
+    "checks": [
+     {
+      "name": "answers the buyer's question",
+      "passed": true,
+      "critique": "",
+      "critical": false
+     },
+     {
+      "name": "assumptions are really assumptions",
+      "passed": true,
+      "critique": "",
+      "critical": false
+     },
+     {
+      "name": "nothing in it commits Halden",
+      "passed": true,
+      "critique": "",
+      "critical": true
+     },
+     {
+      "name": "what would change it is specific",
+      "passed": true,
+      "critique": "",
+      "critical": false
+     },
+     {
+      "name": "buyer's words",
+      "passed": true,
+      "critique": "",
+      "critical": false
+     }
+    ],
+    "failed": [],
+    "cost_usd": 0.0012
+   }
+  }
+ ],
+ "recommendation": {
+  "finding": "Dongguan Meiya Mould & Plastics, which is on file and linked to its old record as the same company, says its factory is closed 1 to 8 October, with the last shipment on 28 September and production resuming 9 October. Orders scheduled to ship during the closure ship on 12 October. Its 22 September cutoff for pre-holiday requests has already passed. I've drafted a reply for approval that confirms those dates and asks for promised dates on open lines between 1 and 12 October. It also asks for a revised ship date where 12 October would be late. It makes no promises and waives nothing. Tom Albrecht should check Meiya's open lines for anything due before the closure. The draft's recipient shows as Yang Xiu's own address, so check it is the contact on file before approving.",
+  "numbers": [],
+  "assumptions": [],
+  "would_change": [
+   "Meiya's promised dates on its open lines between 1 and 12 October would show whether any build is hit.",
+   "Confirmation that the draft's recipient is the contact on file."
+  ],
+  "open_questions": [],
+  "action_ids": [
+   "A-f95b94cd"
+  ],
+  "findings": [],
+  "grade": {
+   "reviewer_score": 100,
+   "checks_passed": 5,
+   "checks_total": 5,
+   "summary": "Answers the buyer clearly; assumptions empty, no commitments, checkable open items.",
+   "revised": false,
+   "failed_checks": []
+  }
+ },
+ "verifier": {
+  "passed": true,
+  "warnings": [],
+  "numbers_checked": 0,
+  "numbers_from_tools": 0,
+  "open_questions_with_owner": 0,
+  "open_questions": 0,
+  "failures": []
+ },
+ "actions": [
+  {
+   "action_id": "A-f95b94cd",
+   "type": "supplier_request",
+   "item_key": "reply:2026-09-15_Holiday_notice_National_Day_2026",
+   "target": {
+    "type": "supplier",
+    "id": "SUP-0042",
+    "label": null
+   },
+   "recipient": "yang.xiu@meiya-mould.example",
+   "subject": "Re: Holiday notice - National Day 2026",
+   "body": "Dear Yang Xiu,\n\nThank you for the notice. We have noted that the factory is closed from 1 October to 8 October, that the last shipment before the closure leaves on 28 September, that production resumes on 9 October, and that orders scheduled to ship during the closure will ship on 12 October.\n\nWe saw your 22 September date for pre-holiday requests after it had passed. Could you please send us the current promised dates for all our open PO lines with Meiya that fall between 1 October and 12 October? Where a shipment on 12 October would be later than the date on the PO line, please tell us the revised ship date as soon as you can.\n\nThis is a confirmation of receipt and a request for dates only. It does not change any PO terms or waive any of our rights under the orders.\n\nBest regards,\nTom Albrecht\nHalden Robotics",
+   "change": null
+  }
+ ]
+}

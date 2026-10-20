@@ -1,0 +1,598 @@
+{
+ "recorded_at": "2026-10-12T01:18:24.867870+00:00",
+ "run_id": "run-recorded",
+ "item_key": "ask:c57cd020",
+ "run": {
+  "status": "ok",
+  "model": "claude-sonnet-5-5",
+  "prompt_hash": "542691266425",
+  "toolset_hash": "e38cbefe3035",
+  "sdk_version": "0.2.165",
+  "cost_usd": 0.03745278,
+  "wall_ms": 13061,
+  "first_step_ms": 1896,
+  "turns": 4,
+  "tool_calls": 3,
+  "denied_calls": 0
+ },
+ "shape": "tree",
+ "reviewer_mode": "after",
+ "events": [
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 1,
+   "ts": "2026-10-12T01:18:06.554771+00:00",
+   "t_ms": 32,
+   "type": "run.started",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Asked: How many HR-40110 do we have on the shelf right now?",
+   "refs": [],
+   "payload": {
+    "workflow": "ask",
+    "item_key": "ask:c57cd020",
+    "question": "How many HR-40110 do we have on the shelf right now?",
+    "context": null,
+    "model": "claude-sonnet-5-5",
+    "prompt_hash": "542691266425",
+    "toolset_hash": "e38cbefe3035",
+    "specialist_prompts": {
+     "supply_planner": "5a93b2d343e2",
+     "tariff_analyst": "8b24ac1d94e3",
+     "sourcing_analyst": "3b053bf5f8a4",
+     "data_steward": "c5eccb643beb",
+     "inbox_analyst": "2727f95dbef4",
+     "buyers_clerk": "f7dbc2cb5d94"
+    },
+    "tool_count": 22,
+    "sdk_version": "0.2.165"
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 2,
+   "ts": "2026-10-12T01:18:08.711884+00:00",
+   "t_ms": 2189,
+   "type": "step.text",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "I'm asking the supply side what is known about HR-40110 and who owns it.",
+   "refs": [],
+   "payload": {}
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 3,
+   "ts": "2026-10-12T01:18:09.848574+00:00",
+   "t_ms": 3326,
+   "type": "child.started",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01Ubuw1ZGFvimH9TwVAiEfxW",
+   "summary": "Check HR-40110 supply and stock",
+   "refs": [],
+   "payload": {
+    "child_run_id": "run-recorded.1",
+    "specialist": "supply_planner",
+    "question": "Check HR-40110 supply and stock",
+    "task": "Check HR-40110 supply and stock",
+    "asked_by": "lookout"
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 1,
+   "ts": "2026-10-12T01:18:09.849401+00:00",
+   "t_ms": 3327,
+   "type": "run.started",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": null,
+   "summary": "Supply planner started",
+   "refs": [],
+   "payload": {
+    "workflow": "specialist:supply_planner",
+    "item_key": "ask:c57cd020"
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 2,
+   "ts": "2026-10-12T01:18:10.829557+00:00",
+   "t_ms": 4307,
+   "type": "tool.called",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01Sb3r2c5CpVgURg5brgmpDE",
+   "summary": "Supply planner calls open_supply",
+   "refs": [],
+   "payload": {
+    "tool": "open_supply",
+    "name": "open_supply",
+    "args": {
+     "part_number": "HR-40110"
+    },
+    "gate": "allowed",
+    "gate_reason": "part of this role's work",
+    "why": "Find what is on order for the part and what is stuck."
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 3,
+   "ts": "2026-10-12T01:18:10.833417+00:00",
+   "t_ms": 4311,
+   "type": "tool.called",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01SqyKV2jqA8qP36i84VuAaA",
+   "summary": "Supply planner calls get_phases",
+   "refs": [],
+   "payload": {
+    "tool": "get_phases",
+    "name": "get_phases",
+    "args": {
+     "part_number": "HR-40110"
+    },
+    "gate": "allowed",
+    "gate_reason": "part of this role's work",
+    "why": "Show where the order or part stands between need and stock, and which steps no record can show."
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 4,
+   "ts": "2026-10-12T01:18:10.897384+00:00",
+   "t_ms": 4375,
+   "type": "tool.result",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01Sb3r2c5CpVgURg5brgmpDE",
+   "summary": "Open supply for HR-40110: 3 lines, 1,140 EA (1,140 EA on disrupted lines)",
+   "refs": [],
+   "payload": {
+    "tool": "open_supply",
+    "name": "open_supply",
+    "ok": true,
+    "numbers": [
+     {
+      "id": "supply:HR-40110:open_lines",
+      "name": "Open PO lines for HR-40110",
+      "value": "3",
+      "unit": "lines"
+     },
+     {
+      "id": "supply:HR-40110:open_qty",
+      "name": "Quantity on open orders for HR-40110",
+      "value": "1140",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:HR-40110:stuck_qty",
+      "name": "Quantity on disrupted lines for HR-40110",
+      "value": "1140",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:HR-40110:unaffected_qty",
+      "name": "Quantity on open orders not disrupted for HR-40110",
+      "value": "0",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:HR-40110:HPO-26-00450/10:qty",
+      "name": "Quantity on HPO-26-00450/10",
+      "value": "355",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:HR-40110:HPO-26-00614/10:qty",
+      "name": "Quantity on HPO-26-00614/10",
+      "value": "435",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:HR-40110:HPO-26-00614/20:qty",
+      "name": "Quantity on HPO-26-00614/20",
+      "value": "350",
+      "unit": "EA"
+     }
+    ],
+    "unknowns": []
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 5,
+   "ts": "2026-10-12T01:18:10.900167+00:00",
+   "t_ms": 4377,
+   "type": "tool.result",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01SqyKV2jqA8qP36i84VuAaA",
+   "summary": "HR-40110: 3 shown by the records, 0 expected, 2 disrupted, 8 unknown (no data), 1 not applicable",
+   "refs": [],
+   "payload": {
+    "tool": "get_phases",
+    "name": "get_phases",
+    "ok": true,
+    "numbers": [
+     {
+      "id": "phases:HR-40110:done",
+      "name": "Stages of HR-40110 that are done",
+      "value": "3",
+      "unit": "stages"
+     },
+     {
+      "id": "phases:HR-40110:disrupted",
+      "name": "Stages of HR-40110 that are disrupted",
+      "value": "2",
+      "unit": "stages"
+     },
+     {
+      "id": "phases:HR-40110:unknown",
+      "name": "Stages of HR-40110 that are unknown",
+      "value": "8",
+      "unit": "stages"
+     },
+     {
+      "id": "phases:HR-40110:na",
+      "name": "Stages of HR-40110 that are not applicable",
+      "value": "1",
+      "unit": "stages"
+     }
+    ],
+    "unknowns": [
+     {
+      "what": "Where HR-40110 is in: acknowledged, being made, shipped, in transit",
+      "owner": "supplier",
+      "question": "Has Shenzhen Yunzhan Precision Motor Co., Ltd. acknowledged HR-40110 and confirmed the date? Where is HR-40110 in production at Shenzhen Yunzhan Precision Motor Co., Ltd.? Has Shenzhen Yunzhan Precision Motor Co., Ltd. shipped HR-40110? Ask for the packing list. Which carrier and what ETA for HR-401",
+      "why_it_blocks": "whether the supplier acknowledged the order; how far the supplier has got making it; whether it has shipped; where it is in transit"
+     },
+     {
+      "what": "Where HR-40110 is in: through customs",
+      "owner": "broker",
+      "question": "Has the customs broker cleared the shipment for HR-40110?",
+      "why_it_blocks": "whether it has cleared customs"
+     },
+     {
+      "what": "Where HR-40110 is in: inspected, in stock, kitted",
+      "owner": "Dana",
+      "question": "Did HR-40110 pass incoming inspection? How many of HR-40110 are on the shelf? Has it been kitted for the build?",
+      "why_it_blocks": "whether it passed incoming inspection; what is in stock; whether it has been kitted for a build"
+     }
+    ]
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 6,
+   "ts": "2026-10-12T01:18:14.527580+00:00",
+   "t_ms": 8005,
+   "type": "run.finished",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": null,
+   "summary": "Supply planner finished",
+   "refs": [],
+   "payload": {
+    "status": "ok",
+    "tool_calls": 2,
+    "first_step_ms": 4307
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 4,
+   "ts": "2026-10-12T01:18:14.529195+00:00",
+   "t_ms": 8006,
+   "type": "child.finished",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": null,
+   "summary": "HR-40110 on-hand stock is unknown: Halden's data holds no stock count for this part, so I can't say how many are on the shelf. The question goes to Dana, who owns the receiving and stock side. Open supply is 1,140 EA on three PO lines, all named in Shenzhen Yunzhan Precision Motor Co., Ltd.'s force-majeure notice of 2026-09-22, so none of it counts as arriving: HPO-26-00450/10 (355 EA, promised 2026-08-26, 30 days past due), HPO-26-00614/10 (435 EA, promised 2026-09-23, 2 days past due) and HPO-26-00614/20 (350 EA, promised 2026-10-26, not yet due).",
+   "refs": [],
+   "payload": {
+    "child_run_id": "run-recorded.1",
+    "status": "ok",
+    "handoff_ok": true
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 5,
+   "ts": "2026-10-12T01:18:15.372965+00:00",
+   "t_ms": 8850,
+   "type": "tool.called",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": "toolu_01R9CoZbPBVZTh1MtVkN3915",
+   "summary": "Lookout calls get_handoffs",
+   "refs": [],
+   "payload": {
+    "tool": "get_handoffs",
+    "name": "get_handoffs",
+    "args": {},
+    "gate": "allowed",
+    "gate_reason": "part of this role's work",
+    "why": "Read what the earlier steps found, with the figures their lookups returned."
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 6,
+   "ts": "2026-10-12T01:18:15.379898+00:00",
+   "t_ms": 8857,
+   "type": "tool.result",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": "toolu_01R9CoZbPBVZTh1MtVkN3915",
+   "summary": "Supply planner handed back their findings",
+   "refs": [],
+   "payload": {
+    "tool": "get_handoffs",
+    "name": "get_handoffs",
+    "ok": true,
+    "numbers": [],
+    "unknowns": []
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 7,
+   "ts": "2026-10-12T01:18:19.083825+00:00",
+   "t_ms": 12561,
+   "type": "verifier.result",
+   "agent": "verifier",
+   "agent_label": "Verifier",
+   "tool_use_id": null,
+   "summary": "4 of 4 numbers from tools · 3 open questions with an owner",
+   "refs": [],
+   "payload": {
+    "passed": true,
+    "warnings": [],
+    "numbers_checked": 4,
+    "numbers_from_tools": 4,
+    "open_questions_with_owner": 3,
+    "open_questions": 3,
+    "failures": []
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 8,
+   "ts": "2026-10-12T01:18:19.617216+00:00",
+   "t_ms": 13094,
+   "type": "run.finished",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Run ok",
+   "refs": [],
+   "payload": {
+    "status": "ok",
+    "turns": 4,
+    "tool_calls": 3,
+    "cost_usd": 0.0363,
+    "wall_ms": 13061,
+    "first_step_ms": 1896,
+    "first_token_ms": 1896,
+    "recommendation_id": "run-recorded",
+    "tokens_in": 84906,
+    "tokens_out": 1811,
+    "tokens_cache_read": 75589,
+    "tokens_cache_creation": 8063,
+    "tokens_by_agent": {
+     "supply_planner": {
+      "tokens": 14416,
+      "tool_uses": 3,
+      "duration_ms": 4691
+     }
+    }
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 9,
+   "ts": "2026-10-12T01:18:24.865118+00:00",
+   "t_ms": 18342,
+   "type": "review.result",
+   "agent": "reviewer",
+   "agent_label": "Reviewer",
+   "tool_use_id": null,
+   "summary": "Reviewer 100/100: Answers the stock question plainly, with a named owner and checkable next steps.",
+   "refs": [],
+   "payload": {
+    "score": 100,
+    "checks": [
+     {
+      "name": "answers the buyer's question",
+      "passed": true,
+      "critique": "",
+      "critical": false
+     },
+     {
+      "name": "assumptions are really assumptions",
+      "passed": true,
+      "critique": "",
+      "critical": false
+     },
+     {
+      "name": "nothing in it commits Halden",
+      "passed": true,
+      "critique": "",
+      "critical": true
+     },
+     {
+      "name": "what would change it is specific",
+      "passed": true,
+      "critique": "",
+      "critical": false
+     },
+     {
+      "name": "buyer's words",
+      "passed": true,
+      "critique": "",
+      "critical": false
+     }
+    ],
+    "failed": [],
+    "cost_usd": 0.0011
+   }
+  }
+ ],
+ "recommendation": {
+  "finding": "Nobody can say how many HR-40110 are on the shelf. Halden's data holds no stock count for it, so I won't estimate one. Nothing has been received against it: all three open order lines are under Shenzhen Yunzhan Precision Motor Co., Ltd.'s force-majeure notice, so none of that supply counts as arriving. Dana, who owns the part, needs to count the shelf.",
+  "numbers": [
+   {
+    "id": "supply:HR-40110:open_lines",
+    "value": "3",
+    "unit": "lines",
+    "name": "Open PO lines for HR-40110",
+    "headline": false,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": "supply:HR-40110:open_lines",
+     "raw": null,
+     "inputs": [],
+     "rule": "Open PO lines for HR-40110",
+     "by": "agent tools"
+    }
+   },
+   {
+    "id": "supply:HR-40110:open_qty",
+    "value": "1140",
+    "unit": "EA",
+    "name": "Quantity on open orders for HR-40110",
+    "headline": false,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": "supply:HR-40110:open_qty",
+     "raw": null,
+     "inputs": [],
+     "rule": "Quantity on open orders for HR-40110",
+     "by": "agent tools"
+    }
+   },
+   {
+    "id": "supply:HR-40110:stuck_qty",
+    "value": "1140",
+    "unit": "EA",
+    "name": "Quantity on disrupted lines for HR-40110",
+    "headline": false,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": "supply:HR-40110:stuck_qty",
+     "raw": null,
+     "inputs": [],
+     "rule": "Quantity on disrupted lines for HR-40110",
+     "by": "agent tools"
+    }
+   },
+   {
+    "id": "supply:HR-40110:unaffected_qty",
+    "value": "0",
+    "unit": "EA",
+    "name": "Quantity on open orders not disrupted for HR-40110",
+    "headline": false,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": "supply:HR-40110:unaffected_qty",
+     "raw": null,
+     "inputs": [],
+     "rule": "Quantity on open orders not disrupted for HR-40110",
+     "by": "agent tools"
+    }
+   }
+  ],
+  "assumptions": [
+   "Stock on hand is unknown, so any shortage on this part is 'short unless there is stock'."
+  ],
+  "would_change": [
+   "A physical stock count from Dana would give the shelf quantity.",
+   "Revised promise dates or an allocation from Shenzhen Yunzhan Precision Motor Co., Ltd. would change what is expected to arrive."
+  ],
+  "open_questions": [
+   {
+    "what": "Where HR-40110 is in: inspected, in stock, kitted",
+    "why_it_blocks": "whether it passed incoming inspection; what is in stock; whether it has been kitted for a build",
+    "owner": "Dana",
+    "question": "Did HR-40110 pass incoming inspection? How many of HR-40110 are on the shelf? Has it been kitted for the build?",
+    "refs": []
+   },
+   {
+    "what": "Where HR-40110 is in: acknowledged, being made, shipped, in transit",
+    "why_it_blocks": "whether the supplier acknowledged the order; how far the supplier has got making it; whether it has shipped; where it is in transit",
+    "owner": "supplier",
+    "question": "Has Shenzhen Yunzhan Precision Motor Co., Ltd. acknowledged HR-40110 and confirmed the date? Where is HR-40110 in production at Shenzhen Yunzhan Precision Motor Co., Ltd.? Has Shenzhen Yunzhan Precision Motor Co., Ltd. shipped HR-40110? Ask for the packing list. Which carrier and what ETA for HR-401",
+    "refs": [
+     {
+      "type": "part",
+      "id": "HR-40110",
+      "label": null
+     }
+    ]
+   },
+   {
+    "what": "Where HR-40110 is in: through customs",
+    "why_it_blocks": "whether it has cleared customs",
+    "owner": "broker",
+    "question": "Has the customs broker cleared the shipment for HR-40110?",
+    "refs": [
+     {
+      "type": "part",
+      "id": "HR-40110",
+      "label": null
+     }
+    ]
+   }
+  ],
+  "action_ids": [],
+  "findings": [],
+  "grade": {
+   "reviewer_score": 100,
+   "checks_passed": 5,
+   "checks_total": 5,
+   "summary": "Answers the stock question plainly, with a named owner and checkable next steps.",
+   "revised": false,
+   "failed_checks": []
+  }
+ },
+ "verifier": {
+  "passed": true,
+  "warnings": [],
+  "numbers_checked": 4,
+  "numbers_from_tools": 4,
+  "open_questions_with_owner": 3,
+  "open_questions": 3,
+  "failures": []
+ },
+ "actions": [],
+ "question": "How many HR-40110 do we have on the shelf right now?",
+ "context": null
+}

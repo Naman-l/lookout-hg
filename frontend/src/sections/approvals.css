@@ -1,0 +1,54 @@
+/* Approvals (FINAL 03): tabs, then queue 240 | the email | the decision rail 288 (sticky) at 1280 px and wider; stacked below. */
+.apx-h{font-size:var(--t-title);line-height:1.2;margin:var(--s2) 0 0;font-weight:600;letter-spacing:-.01em}
+.apx-tabs{display:flex;gap:22px;border-bottom:1px solid var(--line);margin:20px 0 0;flex-wrap:wrap;row-gap:0}
+.apx-tabs button{padding:8px 0;border:0;background:none;font:inherit;font-size:var(--t-body);color:var(--ink-3);border-bottom:2px solid transparent;margin-bottom:-1px;cursor:pointer;display:inline-flex;gap:6px;align-items:center;white-space:nowrap;flex:none}
+.apx-tabs button:hover{color:var(--ink)} .apx-tabs button.on{color:var(--ink);border-bottom-color:var(--ink);font-weight:500}
+.apx-tabs em{font-style:normal;color:var(--ink-3);font-size:var(--t-small);font-weight:400;font-variant-numeric:tabular-nums}
+.apx-grid{display:flex;flex-direction:column;gap:var(--s5);margin-top:var(--s5);padding-bottom:96px}
+.apx.three .apx-grid{display:grid;grid-template-columns:240px minmax(0,1fr) 288px;gap:32px;align-items:start;padding-bottom:0} .apx.three .apd{padding-bottom:140px}
+.apx:not(.three) .apx-grid{flex-direction:column} .apx:not(.three) .apr{order:-1}
+.apx-pick{order:-2;display:flex;gap:var(--s2);align-items:center;font-size:var(--t-small);color:var(--ink-3)} .apx-pick select{font:inherit;color:var(--ink);padding:6px 8px;border-radius:var(--r-sm);border:0;background:var(--raised);max-width:100%}
+/* queue */
+.apq{display:flex;flex-direction:column;gap:2px;min-width:0}
+.apq-row{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border-radius:var(--r-sm);color:var(--ink);text-decoration:none;min-width:0}
+.apq-row:hover{background:var(--row-hover);text-decoration:none} .apq-row.on{background:var(--raised)} .apq-row:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.apq-row b{font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.apq-row small{font-size:var(--t-caption);color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.apq-l3{display:flex;justify-content:space-between;gap:8px;font-size:var(--t-small);margin-top:2px} .apq-l3 .w{color:var(--ink-3)} .apq-l3 .w.you{color:var(--accent);font-weight:500}
+.apq-l3 .by{color:var(--ink-2);font-variant-numeric:tabular-nums}
+.apq-empty{color:var(--ink-3);margin:var(--s3) 0}
+.apq-sk{display:flex;flex-direction:column;gap:6px;padding:12px} .apq-sk i{display:block;height:10px;border-radius:var(--r-xs);background:var(--skel);width:70%} .apq-sk i+i{width:90%}
+/* the email and the rail */
+.apd{min-width:0;max-width:var(--measure)}
+.apd-h{font-size:var(--t-lead);font-weight:600;margin:0 0 var(--s3)}
+.apd-back{margin-bottom:var(--s2)}
+.apr{min-width:0} .apx.three .apr{position:sticky;top:calc(var(--top) + 20px);max-height:calc(100dvh - var(--top) - 120px);overflow:auto;padding-bottom:var(--s4)} /* the row runs to the page end, so the decision never slides under the top bar */
+.apr-err{color:var(--critical);font-size:var(--t-small);margin:8px 0 0}
+/* The page holds still (Khalid 2026-10-14, as on Today): title and tabs never move; the list, the email and the decision each scroll
+   on their own, separated by a rule, and end above the Ask dock. 1024-1279: the draft picker on top, then email | decision. Phone unchanged. */
+@media (min-width:1024px){
+  .main[data-route=approvals]{height:100dvh;min-height:0;overflow:hidden}
+  .main[data-route=approvals]>.content{display:flex;flex-direction:column;min-height:0;padding-bottom:0}
+  .apx{flex:1;min-height:0;display:flex;flex-direction:column}
+  .apx-h,.apx-tabs{flex:none}
+  .apx .apx-grid{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 256px;grid-template-rows:auto minmax(0,1fr);gap:0;margin-top:0;padding-bottom:0;align-items:stretch}
+  .apx.three .apx-grid{grid-template-columns:200px minmax(0,1fr) 256px;grid-template-rows:minmax(0,1fr);align-items:stretch}
+  .apx-pick{grid-column:1/-1;padding:var(--s3) 0;border-bottom:1px solid var(--line)}
+  .apx:not(.three) .apr{order:0}
+  .apx .apq,.apx .apd,.apx .apr{min-height:0;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:none;padding-top:var(--s4);padding-bottom:var(--s5)}
+  .apx .apq{padding-right:var(--s3);gap:2px}
+  .apx .apd{max-width:none;padding-left:var(--s5);padding-right:var(--s4);border-left:1px solid var(--line)}
+  .apx:not(.three) .apd{border-left:0;padding-left:0}
+  .apx .apr{position:static;max-height:none;padding-left:var(--s4);border-left:1px solid var(--line)}
+  .apx.three .apd{padding-bottom:var(--s5)}
+  .apx .apd>*{max-width:var(--measure)}
+  .apx .apd .db-tb{display:block;overflow-x:auto;max-width:calc(100% - var(--s4));scrollbar-width:thin}
+  .apx .apd .db-tb td,.apx .apd .db-tb th{padding-right:var(--s3)} .apx .apd .db-tb td:nth-child(2){white-space:normal;min-width:120px}
+  .apx .db-sent{display:none}
+}
+@media (max-width:1439px){.apx .apd .db-tb td:nth-child(n+4),.apx .apd .db-tb th{white-space:normal} .apx.three .apd{padding-left:var(--s4)} .apx .apd .db-tb{margin-left:var(--s2);max-width:calc(100% - var(--s2))}}
+@media (min-width:1440px){.apx.three .apx-grid{grid-template-columns:216px minmax(0,1fr) 272px} .apx .apr{padding-left:var(--s5)} .apx .apd .db-tb{margin-left:var(--s2);max-width:calc(100% - var(--s2))}}
+/* a row: who · subject · what is at stake (from the case) · Approve and the act-by, or how late its own lines are */
+.apq-stake{font-size:var(--t-caption);color:var(--ink-2);font-variant-numeric:tabular-nums;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.apq-stake em{font-style:normal;color:var(--critical)}
+@media (min-width:1024px){.apx-pick{min-width:0} .apx-pick select{flex:1;min-width:0;text-overflow:ellipsis}}

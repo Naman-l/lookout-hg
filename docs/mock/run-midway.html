@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lookout · How we got here (running)</title>
+<link rel="stylesheet" href="mock.css">
+<style>
+  .steps{list-style:none;margin:0;padding:0}
+  .step{display:grid;grid-template-columns:22px 1fr auto auto;gap:10px;align-items:start;padding:9px 0;border-bottom:1px solid var(--chalk)}
+  .step:last-child{border:0}
+  .ic{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:700;margin-top:1px}
+  .ic.done{background:var(--positive-surface);color:var(--positive-ink)}
+  .ic.run{border:2px solid var(--signal);border-top-color:transparent;animation:spin 1s linear infinite}
+  .ic.wait{border:1.5px dashed var(--fog)}
+  .ic.deny{background:var(--critical-surface);color:var(--critical-ink)}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .step .t{font-size:13.5px} .step .t small{display:block;color:var(--gravel);font-size:12px;margin-top:2px}
+  .step .ms{font-size:12px;color:var(--gravel);font-variant-numeric:tabular-nums;min-width:44px;text-align:right}
+  .who{font-weight:600}
+  .child{margin:6px 0 4px 32px;border-left:2px solid var(--chalk);padding-left:14px}
+  .child .step{grid-template-columns:22px 1fr auto auto}
+  .gate{font-size:10.5px;font-weight:600;padding:1px 7px;border-radius:var(--r-pill)}
+  .g-allowed{background:var(--powder);color:var(--cinder)}
+  .g-denied{background:var(--critical-surface);color:var(--critical-ink)}
+  .g-staged{background:var(--caution-surface);color:var(--caution-ink)}
+  .ask{font-size:13.5px;padding:8px 0 2px}
+</style></head>
+<body><div class="app">
+<aside class="side">
+  <div class="brand">Lookout<small>Halden Robotics · Procurement</small></div>
+  <nav class="nav">
+    <a href="action-list-a.html">Action list <span class="n hot">12</span></a>
+    <a href="#">Inbox <span class="n">15</span></a><a href="#">Suppliers <span class="n">60</span></a>
+    <a href="#">Parts and BOM <span class="n">502</span></a><a href="#">Orders <span class="n">185 open</span></a>
+    <a href="#">Forecast and demand</a><div class="sep"></div>
+    <a href="approval.html">Approvals <span class="n hot">1</span></a>
+    <a class="on" href="run-midway.html">Agent activity <span class="n">1 running</span></a>
+    <a href="#">Data <span class="n">17 issues</span></a>
+  </nav>
+</aside>
+<main class="main">
+  <div class="top"><div class="where"><a href="item-yunzhan.html">Yunzhan plant fire</a> / <b>How we got here</b></div>
+    <div class="asof">Data as of <b style="color:var(--ink)">Fri Sep 25, 2026</b></div></div>
+
+  <h1>How we got here</h1>
+  <p class="lede">Lookout is working <a href="item-yunzhan.html">Yunzhan plant fire: no drive motors on the way for the October Tern build</a>, asked by Dana Reyes.</p>
+
+  <div class="grid2">
+  <div class="card" style="padding-top:10px">
+    <ul class="steps">
+      <li class="step"><span class="ic done">✓</span><div class="t"><span class="who">Lookout</span> read the action item and its evidence<small>10 PO lines under force majeure · 3 messages · 2 open questions</small></div><span class="gate g-allowed">allowed</span><span class="ms">0.4 s</span></li>
+      <li class="step"><span class="ic done">✓</span><div class="t"><span class="who">Lookout</span> asked the <span class="who">Supply planner</span>: “Is the October Tern build short of HR-40110, and by how much?”</div><span></span><span class="ms">1.1 s</span></li>
+    </ul>
+    <div class="child">
+      <ul class="steps">
+        <li class="step"><span class="ic done">✓</span><div class="t">Open supply for <span class="chip"><span class="mono">HR-40110</span></span><small>3 open PO lines, 1,140 EA, all from Yunzhan Plant 2</small></div><span class="gate g-allowed">allowed</span><span class="ms">2.0 s</span></li>
+        <li class="step"><span class="ic done">✓</span><div class="t">Requirements for <span class="chip"><span class="mono">HR-40110</span></span>, Oct–Dec<small>Tern T2 forecast × 2 per robot: 364 · 376 · 352</small></div><span class="gate g-allowed">allowed</span><span class="ms">2.3 s</span></li>
+        <li class="step"><span class="ic deny">✕</span><div class="t">Tried to draft a request to Yunzhan<small>Not allowed: only the Buyer’s clerk drafts supplier requests. The planner was told so and continued.</small></div><span class="gate g-denied">denied</span><span class="ms">4.8 s</span></li>
+        <li class="step"><span class="ic done">✓</span><div class="t">Shortage if Yunzhan ships nothing<small>First short month October 2026: 364 short · on-hand stock unknown, owner Dana Reyes</small></div><span class="gate g-allowed">allowed</span><span class="ms">5.6 s</span></li>
+        <li class="step"><span class="ic done">✓</span><div class="t"><span class="who">Supply planner</span> answered<small>“Yes. October is short 364 unless Plant 1 allocates motors or stock exists. November and December are short too.”</small></div><span></span><span class="ms">9.2 s</span></li>
+      </ul>
+    </div>
+    <ul class="steps">
+      <li class="step"><span class="ic done">✓</span><div class="t"><span class="who">Lookout</span> asked the <span class="who">Buyer’s clerk</span>: “Draft the request to Yunzhan: revised dates, Plant 1 allocation, quote extension.”</div><span></span><span class="ms">9.6 s</span></li>
+    </ul>
+    <div class="child">
+      <ul class="steps">
+        <li class="step"><span class="ic done">✓</span><div class="t">Read the whole thread with Yunzhan<small>4 messages · the Sep 23 payment-change email is flagged and was not used</small></div><span class="gate g-allowed">allowed</span><span class="ms">10.4 s</span></li>
+        <li class="step"><span class="ic done">✓</span><div class="t">Drafted a request to Li Wei (contact on file)<small><a href="approval.html">Request to Yunzhan: revised promise dates, Plant 1 allocation, quote extension</a> · awaiting approval</small></div><span class="gate g-staged">staged</span><span class="ms">14.1 s</span></li>
+        <li class="step"><span class="ic run"></span><div class="t">Asking Dana Reyes about on-hand stock (logged, no approval)…</div><span></span><span class="ms">14.9 s</span></li>
+      </ul>
+    </div>
+    <ul class="steps">
+      <li class="step"><span class="ic wait"></span><div class="t muted">Check every number against the data <small>Verifier, in code</small></div><span></span><span class="ms"></span></li>
+      <li class="step"><span class="ic wait"></span><div class="t muted">Recommendation</div><span></span><span class="ms"></span></li>
+    </ul>
+    <details style="margin-top:10px"><summary>details (raw events for this run)</summary>
+<pre class="json">{"seq": 7, "type": "tool.called", "agent": "supply_planner", "tool": "draft_supplier_request",
+ "gate": "denied", "gate_reason": "only the Buyer's clerk drafts supplier requests", "t_ms": 4810}</pre></details>
+  </div>
+
+  <div>
+    <div class="card">
+      <h3>This run</h3>
+      <dl class="kv">
+        <dt>Status</dt><dd><span class="badge s-pending">Running</span></dd>
+        <dt>Started</dt><dd>10:42:08 · first step in 0.4 s</dd>
+        <dt>Elapsed</dt><dd>14.9 s</dd>
+        <dt>Agents</dt><dd>Lookout, Supply planner, Buyer’s clerk</dd>
+        <dt>Tool calls</dt><dd>6 · 1 denied</dd>
+        <dt>Drafts</dt><dd>1 awaiting approval</dd>
+        <dt>Cost so far</dt><dd>$0.04 of $0.60 limit</dd>
+        <dt>Model</dt><dd>Sonnet 5.5</dd>
+      </dl>
+    </div>
+    <div class="banner info" style="display:block">Nothing is sent from a run. Drafts wait in <a href="approval.html">Approvals</a> until a person approves them.</div>
+  </div>
+  </div>
+</main></div>
+<div class="mocknote">Mock · How we got here, mid-run · static</div>
+</body></html>

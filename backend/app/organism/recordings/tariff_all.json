@@ -1,0 +1,2763 @@
+{
+ "recorded_at": "2026-10-14T13:33:47.587946+00:00",
+ "as_of": "2026-09-25",
+ "run_id": "run-recorded-04",
+ "item_key": "tariff:all",
+ "run": {
+  "status": "ok",
+  "model": "claude-sonnet-5-5",
+  "prompt_hash": "f03882ac83cf",
+  "toolset_hash": "1bcb65c5314a",
+  "sdk_version": "0.2.165",
+  "cost_usd": 0.09879091000000001,
+  "wall_ms": 30443,
+  "first_step_ms": 12,
+  "turns": 5,
+  "tool_calls": 5,
+  "denied_calls": 1
+ },
+ "shape": "tree",
+ "reviewer_mode": "after",
+ "events": [
+  {
+   "run_id": "run-recorded-04",
+   "parent_run_id": null,
+   "seq": 1,
+   "ts": "2026-10-14T13:33:07.890651+00:00",
+   "t_ms": 11,
+   "type": "run.started",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Working tariff:all",
+   "refs": [],
+   "payload": {
+    "workflow": "work_item",
+    "item_key": "tariff:all",
+    "model": "claude-sonnet-5-5",
+    "prompt_hash": "f03882ac83cf",
+    "toolset_hash": "1bcb65c5314a",
+    "specialist_prompts": {
+     "tariff_analyst": "250f997b18af"
+    },
+    "tool_count": 27,
+    "sdk_version": "0.2.165"
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded-04",
+   "parent_run_id": null,
+   "seq": 2,
+   "ts": "2026-10-14T13:33:07.891176+00:00",
+   "t_ms": 12,
+   "type": "tool.called",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Lookout reads the item",
+   "refs": [],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "args": {},
+    "gate": "allowed",
+    "gate_reason": "system step before the model runs",
+    "why": "Read what the system already worked out for this item: its finding, dates and figures."
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded-04",
+   "parent_run_id": null,
+   "seq": 3,
+   "ts": "2026-10-14T13:33:07.891624+00:00",
+   "t_ms": 12,
+   "type": "tool.result",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Read the item: New 25% duty on China-origin parts from Nov 1. Owner Priya Nair · Dana Reyes.",
+   "refs": [
+    {
+     "type": "item",
+     "id": "tariff:all",
+     "label": "New 25% duty on China-origin parts from Nov 1"
+    },
+    {
+     "type": "part",
+     "id": "HR-50110",
+     "label": "Battery pack, 48 V 30 Ah LFP"
+    },
+    {
+     "type": "part",
+     "id": "HR-50210",
+     "label": "Battery pack, 48 V 60 Ah LFP"
+    },
+    {
+     "type": "part",
+     "id": "HR-40110",
+     "label": "Motor, BLDC"
+    },
+    {
+     "type": "part",
+     "id": "HR-40210",
+     "label": "Motor, BLDC"
+    },
+    {
+     "type": "part",
+     "id": "HR-41110",
+     "label": "Motor controller, dual BLDC"
+    },
+    {
+     "type": "part",
+     "id": "HR-40120",
+     "label": "Motor, DC gearmotor"
+    },
+    {
+     "type": "part",
+     "id": "HR-40310",
+     "label": "Motor, frameless BLDC servo"
+    },
+    {
+     "type": "part",
+     "id": "HR-51120",
+     "label": "DC-DC converter, 48 V to 12 V"
+    },
+    {
+     "type": "part",
+     "id": "HR-41120",
+     "label": "Motor driver, brushed DC"
+    },
+    {
+     "type": "part",
+     "id": "HR-51320",
+     "label": "Power supply, AC-DC"
+    },
+    {
+     "type": "part",
+     "id": "HR-51220",
+     "label": "Charging dock power unit, 48 V 40 A"
+    }
+   ],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "ok": true,
+    "numbers": [],
+    "unknowns": [],
+    "item_key": "tariff:all",
+    "item_kind": "tariff"
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded-04",
+   "parent_run_id": null,
+   "seq": 4,
+   "ts": "2026-10-14T13:33:09.760850+00:00",
+   "t_ms": 1881,
+   "type": "step.text",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Lookout is asking the tariff analyst to read the duty exposure across the eleven parts.",
+   "refs": [],
+   "payload": {},
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded-04",
+   "parent_run_id": null,
+   "seq": 5,
+   "ts": "2026-10-14T13:33:11.412979+00:00",
+   "t_ms": 3534,
+   "type": "child.started",
+   "agent": "tariff_analyst",
+   "agent_label": "Tariff analyst",
+   "tool_use_id": "toolu_01H8ybAKEUEhgMi2vewMbAA2",
+   "summary": "Read tariff exposure",
+   "refs": [],
+   "payload": {
+    "child_run_id": "run-recorded-04.1",
+    "specialist": "tariff_analyst",
+    "question": "Read tariff exposure",
+    "task": "Read tariff exposure",
+    "asked_by": "lookout"
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded-04.1",
+   "parent_run_id": "run-recorded-04",
+   "seq": 1,
+   "ts": "2026-10-14T13:33:11.413696+00:00",
+   "t_ms": 3534,
+   "type": "run.started",
+   "agent": "tariff_analyst",
+   "agent_label": "Tariff analyst",
+   "tool_use_id": null,
+   "summary": "Tariff analyst started",
+   "refs": [],
+   "payload": {
+    "workflow": "specialist:tariff_analyst",
+    "item_key": "tariff:all"
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded-04.1",
+   "parent_run_id": "run-recorded-04",
+   "seq": 2,
+   "ts": "2026-10-14T13:33:14.202585+00:00",
+   "t_ms": 6323,
+   "type": "tool.called",
+   "agent": "tariff_analyst",
+   "agent_label": "Tariff analyst",
+   "tool_use_id": "toolu_01F8u6CfHrAFgzKKvcfWi9Yt",
+   "summary": "Tariff analyst calls get_item",
+   "refs": [],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "args": {
+     "item_key": "tariff:all"
+    },
+    "gate": "allowed",
+    "gate_reason": "Read what the system already worked out for this item: its finding, dates and figures.",
+    "why": "Read what the system already worked out for this item: its finding, dates and figures."
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded-04.1",
+   "parent_run_id": "run-recorded-04",
+   "seq": 3,
+   "ts": "2026-10-14T13:33:14.205646+00:00",
+   "t_ms": 6326,
+   "type": "run.status",
+   "agent": "tariff_analyst",
+   "agent_label": "Tariff analyst",
+   "tool_use_id": "toolu_01F8u6CfHrAFgzKKvcfWi9Yt",
+   "summary": "Tariff analyst: reading the item",
+   "refs": [],
+   "payload": {},
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded-04.1",
+   "parent_run_id": "run-recorded-04",
+   "seq": 4,
+   "ts": "2026-10-14T13:33:14.238895+00:00",
+   "t_ms": 6360,
+   "type": "tool.result",
+   "agent": "tariff_analyst",
+   "agent_label": "Tariff analyst",
+   "tool_use_id": "toolu_01F8u6CfHrAFgzKKvcfWi9Yt",
+   "summary": "Item New 25% duty on China-origin parts from Nov 1: 31 computed numbers, 1 open questions",
+   "refs": [],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "ok": true,
+    "numbers": [
+     {
+      "id": "item:tariff:all:at_stake",
+      "name": "Money at stake",
+      "value": "1432968.87",
+      "unit": "USD",
+      "say": "$1.43M"
+     },
+     {
+      "id": "item:tariff:all:tile:owed",
+      "name": "Owed",
+      "value": "1432968.87",
+      "unit": "USD",
+      "say": "$1.43M"
+     },
+     {
+      "id": "item:tariff:all:tile:if_late",
+      "name": "Owed only if the open orders ship late",
+      "value": "104142.43",
+      "unit": "USD",
+      "say": "$104K"
+     },
+     {
+      "id": "item:tariff:all:tile:if_china",
+      "name": "Owed if the parts with no recorded origin are China-origin",
+      "value": "114574.8",
+      "unit": "USD",
+      "say": "$115K"
+     },
+     {
+      "id": "item:tariff:all:duty_owed_fire:SUP-0001",
+      "name": "Owed on Yunzhan's 7 open orders under force majeure: they cannot ship before Nov 1",
+      "value": "85350.35",
+      "unit": "USD",
+      "say": "$85K"
+     },
+     {
+      "id": "item:tariff:all:duty_share:Priya",
+      "name": "Priya's share of the duty owed",
+      "value": "1009075.07",
+      "unit": "USD",
+      "say": "$1.01M"
+     },
+     {
+      "id": "item:tariff:all:duty_share:Dana",
+      "name": "Dana's share of the duty owed",
+      "value": "423893.8",
+      "unit": "USD",
+      "say": "$424K"
+     },
+     {
+      "id": "item:tariff:all:duty_share_fixed:Dana",
+      "name": "Of Dana's share, owed on lines under force majeure that cannot ship before Nov 1",
+      "value": "85350.35",
+      "unit": "USD",
+      "say": "$85K"
+     },
+     {
+      "id": "item:tariff:all:duty_share_open:Dana",
+      "name": "Of Dana's share, what still depends on ship dates or origin proof",
+      "value": "338543.46",
+      "unit": "USD",
+      "say": "$339K"
+     },
+     {
+      "id": "item:tariff:all:duty_net:HR-50110",
+      "name": "Battery pack, 48 V 30 Ah LFP (HR-50110)",
+      "value": "501185.64",
+      "unit": "USD",
+      "say": "$501K"
+     },
+     {
+      "id": "item:tariff:all:duty_net:HR-50210",
+      "name": "Battery pack, 48 V 60 Ah LFP (HR-50210)",
+      "value": "480373.2",
+      "unit": "USD",
+      "say": "$480K"
+     },
+     {
+      "id": "item:tariff:all:duty_net:HR-40110",
+      "name": "Motor, BLDC (HR-40110)",
+      "value": "183186.97",
+      "unit": "USD",
+      "say": "$183K"
+     },
+     {
+      "id": "item:tariff:all:duty_net:HR-40210",
+      "name": "Motor, BLDC (HR-40210)",
+      "value": "93567.53",
+      "unit": "USD",
+      "say": "$94K"
+     },
+     {
+      "id": "item:tariff:all:duty_net:HR-41110",
+      "name": "Motor controller, dual BLDC (HR-41110)",
+      "value": "62101.04",
+      "unit": "USD",
+      "say": "$62K"
+     },
+     {
+      "id": "item:tariff:all:duty_net:HR-40120",
+      "name": "Motor, DC gearmotor (HR-40120)",
+      "value": "43961.34",
+      "unit": "USD",
+      "say": "$44K"
+     },
+     {
+      "id": "item:tariff:all:duty_net:HR-40310",
+      "name": "Motor, frameless BLDC servo (HR-40310)",
+      "value": "25168.27",
+      "unit": "USD",
+      "say": "$25K"
+     },
+     {
+      "id": "item:tariff:all:duty_net:HR-51120",
+      "name": "DC-DC converter, 48 V to 12 V (HR-51120)",
+      "value": "23550.45",
+      "unit": "USD",
+      "say": "$24K"
+     },
+     {
+      "id": "item:tariff:all:duty_net:HR-41120",
+      "name": "Motor driver, brushed DC (HR-41120)",
+      "value": "15908.65",
+      "unit": "USD",
+      "say": "$16K"
+     },
+     {
+      "id": "item:tariff:all:duty_net:HR-51320",
+      "name": "Power supply, AC-DC (HR-51320)",
+      "value": "3965.78",
+      "unit": "USD",
+      "say": "$3,965.78"
+     },
+     {
+      "id": "item:tariff:all:duty_net:HR-51220",
+      "name": "Charging dock power unit, 48 V 40 A (HR-51220)",
+      "value": "0",
+      "unit": "USD"
+     },
+     {
+      "id": "item:tariff:all:rate:t1",
+      "name": "Duty rate, tranche 1 (from Nov 1)",
+      "value": "25",
+      "unit": "%"
+     },
+     {
+      "id": "item:tariff:all:rate:t2",
+      "name": "Duty rate, tranche 2 (from Jan 1)",
+      "value": "15",
+      "unit": "%"
+     },
+     {
+      "id": "item:tariff:all:duty_conditional:tranche1",
+      "name": "Tranche 1 owed only if the open orders ship late",
+      "value": "104142.43",
+      "unit": "USD",
+      "say": "$104K"
+     },
+     {
+      "id": "item:tariff:all:duty_gross:tranche1",
+      "name": "Tranche 1 gross (every open line and the full 12-month forecast)",
+      "value": "2138539.04",
+      "unit": "USD",
+      "say": "$2.14M"
+     },
+     {
+      "id": "item:tariff:all:duty_net:tranche2",
+      "name": "Tranche 2 (15% from Jan 1), owed",
+      "value": "91592.6",
+      "unit": "USD",
+      "say": "$92K"
+     },
+     {
+      "id": "item:tariff:all:duty_gross:tranche2",
+      "name": "Tranche 2, gross",
+      "value": "137524.22",
+      "unit": "USD",
+      "say": "$138K"
+     },
+     {
+      "id": "item:tariff:all:days_left",
+      "name": "Days left to act",
+      "value": "20",
+      "unit": "days"
+     },
+     {
+      "id": "item:tariff:all:po_line_count",
+      "name": "PO lines the item is about",
+      "value": "10",
+      "unit": "lines"
+     },
+     {
+      "id": "item:tariff:all:past_due_line_count",
+      "name": "Of them, lines past the promised date",
+      "value": "2",
+      "unit": "lines"
+     },
+     {
+      "id": "item:tariff:all:past_due:HPO-26-00450/10",
+      "name": "HPO-26-00450/10: days past due",
+      "value": "30",
+      "unit": "days"
+     },
+     {
+      "id": "item:tariff:all:past_due:HPO-26-00614/10",
+      "name": "HPO-26-00614/10: days past due",
+      "value": "2",
+      "unit": "days"
+     }
+    ],
+    "unknowns": [
+     {
+      "what": "whether the conditional orders ship before the duty date",
+      "owner": "Priya",
+      "question": "Will the open orders due in the window or with no date ship before Nov 1?",
+      "why_it_blocks": "the ship date decides whether a conditional order owes the duty, and no ship date is in the data"
+     }
+    ]
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded-04.1",
+   "parent_run_id": "run-recorded-04",
+   "seq": 5,
+   "ts": "2026-10-14T13:33:17.018919+00:00",
+   "t_ms": 9140,
+   "type": "tool.called",
+   "agent": "tariff_analyst",
+   "agent_label": "Tariff analyst",
+   "tool_use_id": "toolu_013JcAmKdk2U9kFzpr5YhSSP",
+   "summary": "Tariff analyst calls exposure_for_parts",
+   "refs": [],
+   "payload": {
+    "tool": "exposure_for_parts",
+    "name": "exposure_for_parts",
+    "args": {
+     "part_numbers": [
+      "HR-50110",
+      "HR-50210",
+      "HR-40110",
+      "HR-40210",
+      "HR-41110",
+      "HR-40120",
+      "HR-40310",
+      "HR-51120"
+     ]
+    },
+    "gate": "allowed",
+    "gate_reason": "Work out the duty on 8 parts in one step: net and gross, who pays it, and which lines enter in time.",
+    "why": "Work out the duty on 8 parts in one step: net and gross, who pays it, and which lines enter in time."
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded-04.1",
+   "parent_run_id": "run-recorded-04",
+   "seq": 6,
+   "ts": "2026-10-14T13:33:17.021629+00:00",
+   "t_ms": 9142,
+   "type": "run.status",
+   "agent": "tariff_analyst",
+   "agent_label": "Tariff analyst",
+   "tool_use_id": "toolu_013JcAmKdk2U9kFzpr5YhSSP",
+   "summary": "Tariff analyst: working out the duty exposure",
+   "refs": [],
+   "payload": {},
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded-04.1",
+   "parent_run_id": "run-recorded-04",
+   "seq": 7,
+   "ts": "2026-10-14T13:33:17.069255+00:00",
+   "t_ms": 9190,
+   "type": "tool.result",
+   "agent": "tariff_analyst",
+   "agent_label": "Tariff analyst",
+   "tool_use_id": "toolu_013JcAmKdk2U9kFzpr5YhSSP",
+   "summary": "Tariff exposure for 8 parts: Tariff exposure for HR-50110: china listed, net 501,185 USD; Tariff exposure for HR-50210: china listed, net 480,373 USD; Tariff exposure for HR-40110: china listed, net 183,186 USD; Tariff exposure for HR-40210: china listed, net 93,567 USD; Tariff exposure for HR-41110: china listed, net 62,101 USD; Tariff exposure for HR-40120: china listed, net 43,961 USD; Tariff exposure for HR-40310: china listed, net 25,168 USD; Tariff exposure for HR-51120: china listed, net 23,550 USD",
+   "refs": [],
+   "payload": {
+    "tool": "exposure_for_parts",
+    "name": "exposure_for_parts",
+    "ok": true,
+    "numbers": [
+     {
+      "id": "tariff:HR-50110:net",
+      "name": "New duty on HR-50110, owed (what to act on)",
+      "value": "501185.64",
+      "unit": "USD",
+      "say": "$501K"
+     },
+     {
+      "id": "tariff:HR-50110:conditional",
+      "name": "New duty on HR-50110 owed only if its open orders ship late (in transit)",
+      "value": "50886.12",
+      "unit": "USD",
+      "say": "$51K"
+     },
+     {
+      "id": "tariff:HR-50110:gross",
+      "name": "New duty on HR-50110, gross (every open line and the full forecast)",
+      "value": "862387.78",
+      "unit": "USD",
+      "say": "$862K"
+     },
+     {
+      "id": "tariff:HR-50110:rate",
+      "name": "Duty rate on HR-50110, percent",
+      "value": "25",
+      "unit": "%"
+     },
+     {
+      "id": "tariff:HR-50110:days_to_effective",
+      "name": "Days from the data date to the duty date for HR-50110",
+      "value": "37",
+      "unit": "days"
+     },
+     {
+      "id": "tariff:HR-50110:uncovered_qty",
+      "name": "12-month requirement of HR-50110 not covered by open supply",
+      "value": "1763",
+      "unit": "EA"
+     },
+     {
+      "id": "tariff:HR-50110:reference_price",
+      "name": "Price used for HR-50110 where no order exists",
+      "value": "1137.12",
+      "unit": "USD",
+      "say": "$1,137.12"
+     },
+     {
+      "id": "tariff:HR-50110:HPO-26-00429/20:open_value",
+      "name": "Open value of HPO-26-00429/20",
+      "value": "257372.6",
+      "unit": "USD",
+      "say": "$257K"
+     },
+     {
+      "id": "tariff:HR-50110:HPO-26-00429/20:duty",
+      "name": "New duty on HPO-26-00429/20",
+      "value": "64343.15",
+      "unit": "USD",
+      "say": "$64K"
+     },
+     {
+      "id": "tariff:HR-50110:HPO-26-00560/10:open_value",
+      "name": "Open value of HPO-26-00560/10",
+      "value": "261820.28",
+      "unit": "USD",
+      "say": "$262K"
+     },
+     {
+      "id": "tariff:HR-50110:HPO-26-00560/10:duty",
+      "name": "New duty on HPO-26-00560/10",
+      "value": "65455.07",
+      "unit": "USD",
+      "say": "$65K"
+     },
+     {
+      "id": "tariff:HR-50110:HPO-26-00609/10:open_value",
+      "name": "Open value of HPO-26-00609/10",
+      "value": "203544.48",
+      "unit": "USD",
+      "say": "$204K"
+     },
+     {
+      "id": "tariff:HR-50110:HPO-26-00609/10:duty",
+      "name": "New duty on HPO-26-00609/10",
+      "value": "50886.12",
+      "unit": "USD",
+      "say": "$51K"
+     },
+     {
+      "id": "tariff:HR-50110:open_value",
+      "name": "Open order value of HR-50110",
+      "value": "722737.36",
+      "unit": "USD",
+      "say": "$723K"
+     },
+     {
+      "id": "tariff:HR-50110:open_lines_duty",
+      "name": "New duty on the open lines of HR-50110",
+      "value": "180684.34",
+      "unit": "USD",
+      "say": "$181K"
+     },
+     {
+      "id": "tariff:HR-50210:net",
+      "name": "New duty on HR-50210, owed (what to act on)",
+      "value": "480373.2",
+      "unit": "USD",
+      "say": "$480K"
+     },
+     {
+      "id": "tariff:HR-50210:conditional",
+      "name": "New duty on HR-50210 owed only if its open orders ship late (in transit)",
+      "value": "42138",
+      "unit": "USD",
+      "say": "$42K"
+     },
+     {
+      "id": "tariff:HR-50210:gross",
+      "name": "New duty on HR-50210, gross (every open line and the full forecast)",
+      "value": "661105.45",
+      "unit": "USD",
+      "say": "$661K"
+     },
+     {
+      "id": "tariff:HR-50210:rate",
+      "name": "Duty rate on HR-50210, percent",
+      "value": "25",
+      "unit": "%"
+     },
+     {
+      "id": "tariff:HR-50210:days_to_effective",
+      "name": "Days from the data date to the duty date for HR-50210",
+      "value": "37",
+      "unit": "days"
+     },
+     {
+      "id": "tariff:HR-50210:uncovered_qty",
+      "name": "12-month requirement of HR-50210 not covered by open supply",
+      "value": "912",
+      "unit": "EA"
+     },
+     {
+      "id": "tariff:HR-50210:reference_price",
+      "name": "Price used for HR-50210 where no order exists",
+      "value": "2106.9",
+      "unit": "USD",
+      "say": "$2,106.90"
+     },
+     {
+      "id": "tariff:HR-50210:HPO-26-00560/30:open_value",
+      "name": "Open value of HPO-26-00560/30",
+      "value": "191990.2",
+      "unit": "USD",
+      "say": "$192K"
+     },
+     {
+      "id": "tariff:HR-50210:HPO-26-00560/30:duty",
+      "name": "New duty on HPO-26-00560/30",
+      "value": "47997.55",
+      "unit": "USD",
+      "say": "$48K"
+     },
+     {
+      "id": "tariff:HR-50210:HPO-26-00609/20:open_value",
+      "name": "Open value of HPO-26-00609/20",
+      "value": "168552",
+      "unit": "USD",
+      "say": "$169K"
+     },
+     {
+      "id": "tariff:HR-50210:HPO-26-00609/20:duty",
+      "name": "New duty on HPO-26-00609/20",
+      "value": "42138",
+      "unit": "USD",
+      "say": "$42K"
+     },
+     {
+      "id": "tariff:HR-50210:open_value",
+      "name": "Open order value of HR-50210",
+      "value": "360542.2",
+      "unit": "USD",
+      "say": "$361K"
+     },
+     {
+      "id": "tariff:HR-50210:open_lines_duty",
+      "name": "New duty on the open lines of HR-50210",
+      "value": "90135.55",
+      "unit": "USD",
+      "say": "$90K"
+     },
+     {
+      "id": "tariff:HR-40110:net",
+      "name": "New duty on HR-40110, owed (what to act on)",
+      "value": "183186.97",
+      "unit": "USD",
+      "say": "$183K"
+     },
+     {
+      "id": "tariff:HR-40110:gross",
+      "name": "New duty on HR-40110, gross (every open line and the full forecast)",
+      "value": "226752.07",
+      "unit": "USD",
+      "say": "$227K"
+     },
+     {
+      "id": "tariff:HR-40110:rate",
+      "name": "Duty rate on HR-40110, percent",
+      "value": "25",
+      "unit": "%"
+     },
+     {
+      "id": "tariff:HR-40110:days_to_effective",
+      "name": "Days from the data date to the duty date for HR-40110",
+      "value": "37",
+      "unit": "days"
+     },
+     {
+      "id": "tariff:HR-40110:uncovered_qty",
+      "name": "12-month requirement of HR-40110 not covered by open supply",
+      "value": "3656",
+      "unit": "EA"
+     },
+     {
+      "id": "tariff:HR-40110:reference_price",
+      "name": "Price used for HR-40110 where no order exists",
+      "value": "152.86",
+      "unit": "USD",
+      "say": "$152.86"
+     },
+     {
+      "id": "tariff:HR-40110:HPO-26-00450/10:open_value",
+      "name": "Open value of HPO-26-00450/10",
+      "value": "54318.55",
+      "unit": "USD",
+      "say": "$54K"
+     },
+     {
+      "id": "tariff:HR-40110:HPO-26-00450/10:duty",
+      "name": "New duty on HPO-26-00450/10",
+      "value": "13579.64",
+      "unit": "USD",
+      "say": "$14K"
+     },
+     {
+      "id": "tariff:HR-40110:HPO-26-00614/10:open_value",
+      "name": "Open value of HPO-26-00614/10",
+      "value": "66072.15",
+      "unit": "USD",
+      "say": "$66K"
+     },
+     {
+      "id": "tariff:HR-40110:HPO-26-00614/10:duty",
+      "name": "New duty on HPO-26-00614/10",
+      "value": "16518.04",
+      "unit": "USD",
+      "say": "$17K"
+     },
+     {
+      "id": "tariff:HR-40110:HPO-26-00614/20:open_value",
+      "name": "Open value of HPO-26-00614/20",
+      "value": "53501",
+      "unit": "USD",
+      "say": "$54K"
+     },
+     {
+      "id": "tariff:HR-40110:HPO-26-00614/20:duty",
+      "name": "New duty on HPO-26-00614/20",
+      "value": "13375.25",
+      "unit": "USD",
+      "say": "$13K"
+     },
+     {
+      "id": "tariff:HR-40110:open_value",
+      "name": "Open order value of HR-40110",
+      "value": "173891.7",
+      "unit": "USD",
+      "say": "$174K"
+     },
+     {
+      "id": "tariff:HR-40110:open_lines_duty",
+      "name": "New duty on the open lines of HR-40110",
+      "value": "43472.93",
+      "unit": "USD",
+      "say": "$43K"
+     },
+     {
+      "id": "tariff:HR-40210:net",
+      "name": "New duty on HR-40210, owed (what to act on)",
+      "value": "93567.53",
+      "unit": "USD",
+      "say": "$94K"
+     },
+     {
+      "id": "tariff:HR-40210:gross",
+      "name": "New duty on HR-40210, gross (every open line and the full forecast)",
+      "value": "120139.02",
+      "unit": "USD",
+      "say": "$120K"
+     },
+     {
+      "id": "tariff:HR-40210:rate",
+      "name": "Duty rate on HR-40210, percent",
+      "value": "25",
+      "unit": "%"
+     },
+     {
+      "id": "tariff:HR-40210:days_to_effective",
+      "name": "Days from the data date to the duty date for HR-40210",
+      "value": "37",
+      "unit": "days"
+     },
+     {
+      "id": "tariff:HR-40210:uncovered_qty",
+      "name": "12-month requirement of HR-40210 not covered by open supply",
+      "value": "777",
+      "unit": "EA"
+     },
+     {
+      "id": "tariff:HR-40210:reference_price",
+      "name": "Price used for HR-40210 where no order exists",
+      "value": "346.21",
+      "unit": "USD",
+      "say": "$346.21"
+     },
+     {
+      "id": "tariff:HR-40210:HPO-26-00532/20:open_value",
+      "name": "Open value of HPO-26-00532/20",
+      "value": "55412.29",
+      "unit": "USD",
+      "say": "$55K"
+     },
+     {
+      "id": "tariff:HR-40210:HPO-26-00532/20:duty",
+      "name": "New duty on HPO-26-00532/20",
+      "value": "13853.07",
+      "unit": "USD",
+      "say": "$14K"
+     },
+     {
+      "id": "tariff:HR-40210:HPO-26-00532/30:open_value",
+      "name": "Open value of HPO-26-00532/30",
+      "value": "49853.99",
+      "unit": "USD",
+      "say": "$50K"
+     },
+     {
+      "id": "tariff:HR-40210:HPO-26-00532/30:duty",
+      "name": "New duty on HPO-26-00532/30",
+      "value": "12463.5",
+      "unit": "USD",
+      "say": "$12K"
+     },
+     {
+      "id": "tariff:HR-40210:open_value",
+      "name": "Open order value of HR-40210",
+      "value": "105266.28",
+      "unit": "USD",
+      "say": "$105K"
+     },
+     {
+      "id": "tariff:HR-40210:open_lines_duty",
+      "name": "New duty on the open lines of HR-40210",
+      "value": "26316.57",
+      "unit": "USD",
+      "say": "$26K"
+     },
+     {
+      "id": "tariff:HR-41110:net",
+      "name": "New duty on HR-41110, owed (what to act on)",
+      "value": "62101.04",
+      "unit": "USD",
+      "say": "$62K"
+     },
+     {
+      "id": "tariff:HR-41110:gross",
+      "name": "New duty on HR-41110, gross (every open line and the full forecast)",
+      "value": "85124.17",
+      "unit": "USD",
+      "say": "$85K"
+     },
+     {
+      "id": "tariff:HR-41110:rate",
+      "name": "Duty rate on HR-41110, percent",
+      "value": "25",
+      "unit": "%"
+     },
+     {
+      "id": "tariff:HR-41110:days_to_effective",
+      "name": "Days from the data date to the duty date for HR-41110",
+      "value": "37",
+      "unit": "days"
+     },
+     {
+      "id": "tariff:HR-41110:uncovered_qty",
+      "name": "12-month requirement of HR-41110 not covered by open supply",
+      "value": "2023",
+      "unit": "EA"
+     },
+     {
+      "id": "tariff:HR-41110:reference_price",
+      "name": "Price used for HR-41110 where no order exists",
+      "value": "122.79",
+      "unit": "USD",
+      "say": "$122.79"
+     },
+     {
+      "id": "tariff:HR-41110:HPO-26-00659/10:open_value",
+      "name": "Open value of HPO-26-00659/10",
+      "value": "46046.25",
+      "unit": "USD",
+      "say": "$46K"
+     },
+     {
+      "id": "tariff:HR-41110:HPO-26-00659/10:duty",
+      "name": "New duty on HPO-26-00659/10",
+      "value": "11511.56",
+      "unit": "USD",
+      "say": "$12K"
+     },
+     {
+      "id": "tariff:HR-41110:open_value",
+      "name": "Open order value of HR-41110",
+      "value": "46046.25",
+      "unit": "USD",
+      "say": "$46K"
+     },
+     {
+      "id": "tariff:HR-41110:open_lines_duty",
+      "name": "New duty on the open lines of HR-41110",
+      "value": "11511.56",
+      "unit": "USD",
+      "say": "$12K"
+     },
+     {
+      "id": "tariff:HR-40120:net",
+      "name": "New duty on HR-40120, owed (what to act on)",
+      "value": "43961.34",
+      "unit": "USD",
+      "say": "$44K"
+     },
+     {
+      "id": "tariff:HR-40120:gross",
+      "name": "New duty on HR-40120, gross (every open line and the full forecast)",
+      "value": "59414.28",
+      "unit": "USD",
+      "say": "$59K"
+     },
+     {
+      "id": "tariff:HR-40120:rate",
+      "name": "Duty rate on HR-40120, percent",
+      "value": "25",
+      "unit": "%"
+     },
+     {
+      "id": "tariff:HR-40120:days_to_effective",
+      "name": "Days from the data date to the duty date for HR-40120",
+      "value": "37",
+      "unit": "days"
+     },
+     {
+      "id": "tariff:HR-40120:uncovered_qty",
+      "name": "12-month requirement of HR-40120 not covered by open supply",
+      "value": "1553",
+      "unit": "EA"
+     },
+     {
+      "id": "tariff:HR-40120:reference_price",
+      "name": "Price used for HR-40120 where no order exists",
+      "value": "73.15",
+      "unit": "USD",
+      "say": "$73.15"
+     },
+     {
+      "id": "tariff:HR-40120:HPO-26-00450/20:open_value",
+      "name": "Open value of HPO-26-00450/20",
+      "value": "32983.4",
+      "unit": "USD",
+      "say": "$33K"
+     },
+     {
+      "id": "tariff:HR-40120:HPO-26-00450/20:duty",
+      "name": "New duty on HPO-26-00450/20",
+      "value": "8245.85",
+      "unit": "USD",
+      "say": "$8,245.85"
+     },
+     {
+      "id": "tariff:HR-40120:HPO-26-00670/10:open_value",
+      "name": "Open value of HPO-26-00670/10",
+      "value": "29260",
+      "unit": "USD",
+      "say": "$29K"
+     },
+     {
+      "id": "tariff:HR-40120:HPO-26-00670/10:duty",
+      "name": "New duty on HPO-26-00670/10",
+      "value": "7315",
+      "unit": "USD",
+      "say": "$7,315"
+     },
+     {
+      "id": "tariff:HR-40120:open_value",
+      "name": "Open order value of HR-40120",
+      "value": "62243.4",
+      "unit": "USD",
+      "say": "$62K"
+     },
+     {
+      "id": "tariff:HR-40120:open_lines_duty",
+      "name": "New duty on the open lines of HR-40120",
+      "value": "15560.85",
+      "unit": "USD",
+      "say": "$16K"
+     },
+     {
+      "id": "tariff:HR-40310:net",
+      "name": "New duty on HR-40310, owed (what to act on)",
+      "value": "25168.27",
+      "unit": "USD",
+      "say": "$25K"
+     },
+     {
+      "id": "tariff:HR-40310:gross",
+      "name": "New duty on HR-40310, gross (every open line and the full forecast)",
+      "value": "26846.16",
+      "unit": "USD",
+      "say": "$27K"
+     },
+     {
+      "id": "tariff:HR-40310:rate",
+      "name": "Duty rate on HR-40310, percent",
+      "value": "25",
+      "unit": "%"
+     },
+     {
+      "id": "tariff:HR-40310:days_to_effective",
+      "name": "Days from the data date to the duty date for HR-40310",
+      "value": "37",
+      "unit": "days"
+     },
+     {
+      "id": "tariff:HR-40310:uncovered_qty",
+      "name": "12-month requirement of HR-40310 not covered by open supply",
+      "value": "1056",
+      "unit": "EA"
+     },
+     {
+      "id": "tariff:HR-40310:reference_price",
+      "name": "Price used for HR-40310 where no order exists",
+      "value": "101.69",
+      "unit": "USD",
+      "say": "$101.69"
+     },
+     {
+      "id": "tariff:HR-51120:net",
+      "name": "New duty on HR-51120, owed (what to act on)",
+      "value": "23550.45",
+      "unit": "USD",
+      "say": "$24K"
+     },
+     {
+      "id": "tariff:HR-51120:gross",
+      "name": "New duty on HR-51120, gross (every open line and the full forecast)",
+      "value": "36396.15",
+      "unit": "USD",
+      "say": "$36K"
+     },
+     {
+      "id": "tariff:HR-51120:rate",
+      "name": "Duty rate on HR-51120, percent",
+      "value": "25",
+      "unit": "%"
+     },
+     {
+      "id": "tariff:HR-51120:days_to_effective",
+      "name": "Days from the data date to the duty date for HR-51120",
+      "value": "37",
+      "unit": "days"
+     },
+     {
+      "id": "tariff:HR-51120:uncovered_qty",
+      "name": "12-month requirement of HR-51120 not covered by open supply",
+      "value": "2310",
+      "unit": "EA"
+     },
+     {
+      "id": "tariff:HR-51120:reference_price",
+      "name": "Price used for HR-51120 where no order exists",
+      "value": "40.78",
+      "unit": "USD",
+      "say": "$40.78"
+     },
+     {
+      "id": "tariff:HR-51120:HPO-26-00517/10:open_value",
+      "name": "Open value of HPO-26-00517/10",
+      "value": "25691.4",
+      "unit": "USD",
+      "say": "$26K"
+     },
+     {
+      "id": "tariff:HR-51120:HPO-26-00517/10:duty",
+      "name": "New duty on HPO-26-00517/10",
+      "value": "6422.85",
+      "unit": "USD",
+      "say": "$6,422.85"
+     },
+     {
+      "id": "tariff:HR-51120:open_value",
+      "name": "Open order value of HR-51120",
+      "value": "25691.4",
+      "unit": "USD",
+      "say": "$26K"
+     },
+     {
+      "id": "tariff:HR-51120:open_lines_duty",
+      "name": "New duty on the open lines of HR-51120",
+      "value": "6422.85",
+      "unit": "USD",
+      "say": "$6,422.85"
+     }
+    ],
+    "unknowns": [
+     {
+      "what": "whether the late line of HR-50110 ships before the duty date",
+      "owner": "Priya",
+      "question": "When will the late line of HR-50110 ship, and will it enter before the duty window closes?",
+      "why_it_blocks": "this line owes the duty only if it ships and enters in time, before 1 November, and no record holds a ship date"
+     },
+     {
+      "what": "whether the late line of HR-50210 ships before the duty date",
+      "owner": "Priya",
+      "question": "When will the late line of HR-50210 ship, and will it enter before the duty window closes?",
+      "why_it_blocks": "this line owes the duty only if it ships and enters in time, before 1 November, and no record holds a ship date"
+     }
+    ]
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded-04.1",
+   "parent_run_id": "run-recorded-04",
+   "seq": 8,
+   "ts": "2026-10-14T13:33:24.412753+00:00",
+   "t_ms": 16533,
+   "type": "run.finished",
+   "agent": "tariff_analyst",
+   "agent_label": "Tariff analyst",
+   "tool_use_id": null,
+   "summary": "Tariff analyst finished",
+   "refs": [],
+   "payload": {
+    "status": "ok",
+    "tool_calls": 2,
+    "first_step_ms": 6323
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded-04",
+   "parent_run_id": null,
+   "seq": 6,
+   "ts": "2026-10-14T13:33:24.415355+00:00",
+   "t_ms": 16536,
+   "type": "child.finished",
+   "agent": "tariff_analyst",
+   "agent_label": "Tariff analyst",
+   "tool_use_id": null,
+   "summary": "Owed on the 25% China-origin duty from 1 November is 1,432,968.87 USD (1.43M) across the whole item. The eleven parts' net owed figures are: HR-50110 501,185.64; HR-50210 480,373.20; HR-40110 183,186.97; HR-40210 93,567.53; HR-41110 62,101.04; HR-40120 43,961.34; HR-40310 25,168.27; HR-51120 23,550.45; HR-41120 15,908.65; HR-51320 3,965.78; HR-51220 0. Conditional, owed only if open orders ship after 1 November, is 104,142.43 USD; gross (every open line and the full 12-month forecast, the ceiling) is 2,138,539.04 USD. Of the owed figure, 85,350.35 USD is Yunzhan's seven open orders under force majeure, which cannot ship before 1 November, so that part is owed on certainty of timing, not on a ship date.",
+   "refs": [],
+   "payload": {
+    "child_run_id": "run-recorded-04.1",
+    "status": "ok",
+    "handoff_ok": true
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded-04",
+   "parent_run_id": null,
+   "seq": 7,
+   "ts": "2026-10-14T13:33:25.470690+00:00",
+   "t_ms": 17591,
+   "type": "tool.called",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": "toolu_01C2J6vgEx8QD9zDe6storhw",
+   "summary": "Lookout calls get_handoffs",
+   "refs": [],
+   "payload": {
+    "tool": "get_handoffs",
+    "name": "get_handoffs",
+    "args": {},
+    "gate": "allowed",
+    "gate_reason": "Read what the earlier steps found, with the figures their lookups returned.",
+    "why": "Read what the earlier steps found, with the figures their lookups returned."
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded-04",
+   "parent_run_id": null,
+   "seq": 8,
+   "ts": "2026-10-14T13:33:25.471456+00:00",
+   "t_ms": 17592,
+   "type": "run.status",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": "toolu_01C2J6vgEx8QD9zDe6storhw",
+   "summary": "Lookout: working",
+   "refs": [],
+   "payload": {},
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded-04",
+   "parent_run_id": null,
+   "seq": 9,
+   "ts": "2026-10-14T13:33:25.482019+00:00",
+   "t_ms": 17603,
+   "type": "tool.result",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": "toolu_01C2J6vgEx8QD9zDe6storhw",
+   "summary": "Tariff analyst handed back their findings",
+   "refs": [],
+   "payload": {
+    "tool": "get_handoffs",
+    "name": "get_handoffs",
+    "ok": true,
+    "numbers": [],
+    "unknowns": []
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded-04",
+   "parent_run_id": null,
+   "seq": 10,
+   "ts": "2026-10-14T13:33:32.947143+00:00",
+   "t_ms": 25068,
+   "type": "tool.called",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": "toolu_01FRATWvLVWpM6ruYeuGXrrV",
+   "summary": "Lookout was refused StructuredOutput: rewrite it to fit: the meaning of fire_lines_duty has 9 words; at most 8",
+   "refs": [],
+   "payload": {
+    "tool": "StructuredOutput",
+    "name": "StructuredOutput",
+    "args": {
+     "finding": "New 25% duty from Nov 1 puts $1.43M owed on China-origin parts.",
+     "numbers": [
+      {
+       "id": "item:tariff:all:tile:owed",
+       "value": 1432968.87
+      },
+      {
+       "id": "item:tariff:all:duty_owed_fire:SUP-0001",
+       "value": 85350.35
+      },
+      {
+       "id": "item:tariff:all:tile:if_late",
+       "value": 104142.43
+      },
+      {
+       "id": "item:tariff:all:tile:if_china",
+       "value": 114574.8
+      }
+     ],
+     "findings": [
+      {
+       "key": "fire_lines_duty",
+       "meaning": "Fire lines cannot ship before Nov 1; duty certain"
+      }
+     ],
+     "recommended": {
+      "kind": "broker_exclusion",
+      "reason": "$85K owed on fire lines that cannot ship",
+      "number_ids": [
+       "item:tariff:all:duty_owed_fire:SUP-0001"
+      ]
+     },
+     "next_step": {
+      "what": "Record the decision: budget the $85K duty, ask the broker about an exclusion",
+      "who": "Priya Nair and Dana Reyes",
+      "by": "Oct 15"
+     },
+     "assumptions": [
+      "Importer of record per line was not returned, so who pays at entry is not confirmed."
+     ],
+     "would_change": [
+      "Priya Nair confirming the battery pack lines ship and enter before Nov 1.",
+      "A broker ruling that excludes these parts from the duty."
+     ],
+     "open_questions": [
+      {
+       "what": "whether the conditional orders ship before the duty date",
+       "owner": "Priya",
+       "question": "Will the open orders due in the window or with no date ship before Nov 1?",
+       "why_it_blocks": "the ship date decides whether a conditional order owes the duty, and no ship date is in the data"
+      },
+      {
+       "what": "whether the late line of HR-50110 ships before the duty date",
+       "owner": "Priya",
+       "question": "When will the late line of HR-50110 ship, and will it enter before the duty window closes?",
+       "why_it_blocks": "this line owes the duty only if it ships and enters in time, before 1 November, and no record holds a ship date"
+      },
+      {
+       "what": "whether the late line of HR-50210 ships before the duty date",
+       "owner": "Priya",
+       "question": "When will the late line of HR-50210 ship, and will it enter before the duty window closes?",
+       "why_it_blocks": "this line owes the duty only if it ships and enters in time, before 1 November, and no record holds a ship date"
+      }
+     ]
+    },
+    "gate": "denied",
+    "gate_reason": "rewrite it to fit: the meaning of fire_lines_duty has 9 words; at most 8"
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded-04",
+   "parent_run_id": null,
+   "seq": 11,
+   "ts": "2026-10-14T13:33:38.130352+00:00",
+   "t_ms": 30251,
+   "type": "verifier.result",
+   "agent": "verifier",
+   "agent_label": "Verifier",
+   "tool_use_id": null,
+   "summary": "4 of 4 numbers from tools · 3 open questions with an owner",
+   "refs": [],
+   "payload": {
+    "passed": true,
+    "warnings": [],
+    "numbers_checked": 4,
+    "numbers_from_tools": 4,
+    "open_questions_with_owner": 3,
+    "reasons": [],
+    "unchecked": [],
+    "open_questions": 3,
+    "failures": []
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded-04",
+   "parent_run_id": null,
+   "seq": 12,
+   "ts": "2026-10-14T13:33:38.338818+00:00",
+   "t_ms": 30460,
+   "type": "run.finished",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Run ok",
+   "refs": [],
+   "payload": {
+    "status": "ok",
+    "turns": 5,
+    "tool_calls": 5,
+    "cost_usd": 0.0973,
+    "wall_ms": 30443,
+    "first_step_ms": 12,
+    "first_token_ms": 1507,
+    "recommendation_id": "run-recorded-04",
+    "tokens_in": 157394,
+    "tokens_out": 4698,
+    "tokens_cache_read": 127526,
+    "tokens_cache_creation": 29854,
+    "tokens_by_agent": {
+     "tariff_analyst": {
+      "tokens": 19733,
+      "tool_uses": 3,
+      "duration_ms": 13019
+     }
+    }
+   },
+   "stage": null
+  },
+  {
+   "run_id": "run-recorded-04",
+   "parent_run_id": null,
+   "seq": 13,
+   "ts": "2026-10-14T13:33:47.572846+00:00",
+   "t_ms": 39694,
+   "type": "review.result",
+   "agent": "reviewer",
+   "agent_label": "Reviewer",
+   "tool_use_id": null,
+   "summary": "Reviewer 67/100: Clear action and checkable triggers, but origin is overstated and importer of record is missing.",
+   "refs": [],
+   "payload": {
+    "score": 67,
+    "checks": [
+     {
+      "name": "answers the buyer's question",
+      "passed": true,
+      "critique": "",
+      "critical": false
+     },
+     {
+      "name": "assumptions are really assumptions",
+      "passed": false,
+      "critique": "Finding states China-origin as fact, but some parts have no recorded origin.",
+      "critical": false
+     },
+     {
+      "name": "nothing in it commits Halden",
+      "passed": true,
+      "critique": "",
+      "critical": true
+     },
+     {
+      "name": "what would change it is specific",
+      "passed": true,
+      "critique": "",
+      "critical": false
+     },
+     {
+      "name": "buyer's words",
+      "passed": true,
+      "critique": "",
+      "critical": false
+     },
+     {
+      "name": "what is owed, the most it could be, and who pays",
+      "passed": false,
+      "critique": "Never names the importer of record or flags that some duty is owed only if orders ship late.",
+      "critical": false
+     }
+    ],
+    "failed": [
+     "assumptions are really assumptions: Finding states China-origin as fact, but some parts have no recorded origin.",
+     "what is owed, the most it could be, and who pays: Never names the importer of record or flags that some duty is owed only if orders ship late."
+    ],
+    "cost_usd": 0.0015
+   },
+   "stage": null
+  }
+ ],
+ "recommendation": {
+  "finding": "New 25% duty from Nov 1 puts $1.43M owed on China-origin parts.",
+  "next_step": {
+   "who": "Priya Nair and Dana Reyes",
+   "what": "Record the decision: budget the $85K duty, ask the broker about an exclusion",
+   "by": "Oct 15"
+  },
+  "done": [],
+  "points": [],
+  "answer_entities": [],
+  "recommendation_entities": [],
+  "numbers": [
+   {
+    "id": "item:tariff:all:at_stake",
+    "value": "1432968.87",
+    "unit": "USD",
+    "name": "Money at stake",
+    "headline": true,
+    "say": "$1.43M",
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": null,
+     "raw": null,
+     "inputs": [
+      {
+       "type": "part",
+       "id": "HR-40010",
+       "label": null
+      },
+      {
+       "type": "part",
+       "id": "HR-40020",
+       "label": null
+      },
+      {
+       "type": "part",
+       "id": "HR-40110",
+       "label": null
+      },
+      {
+       "type": "part",
+       "id": "HR-40120",
+       "label": null
+      },
+      {
+       "type": "part",
+       "id": "HR-40210",
+       "label": null
+      },
+      {
+       "type": "part",
+       "id": "HR-40310",
+       "label": null
+      },
+      {
+       "type": "part",
+       "id": "HR-41010",
+       "label": null
+      },
+      {
+       "type": "part",
+       "id": "HR-41110",
+       "label": null
+      },
+      {
+       "type": "part",
+       "id": "HR-41120",
+       "label": null
+      },
+      {
+       "type": "part",
+       "id": "HR-50010",
+       "label": null
+      },
+      {
+       "type": "part",
+       "id": "HR-50110",
+       "label": null
+      },
+      {
+       "type": "part",
+       "id": "HR-50210",
+       "label": null
+      },
+      {
+       "type": "part",
+       "id": "HR-51010",
+       "label": null
+      },
+      {
+       "type": "part",
+       "id": "HR-51120",
+       "label": null
+      },
+      {
+       "type": "part",
+       "id": "HR-51210",
+       "label": null
+      },
+      {
+       "type": "part",
+       "id": "HR-51220",
+       "label": null
+      },
+      {
+       "type": "part",
+       "id": "HR-51320",
+       "label": null
+      }
+     ],
+     "rule": "sum of tranche-1 parts' duty owed / gross duty: 25% of the price of China-origin parts that will enter on or after Nov 1: the need not yet on order, open orders due after Nov 30, and open orders of a supplier whose force majeure notice puts its restart after Nov 1.",
+     "by": "attention.tariff"
+    }
+   },
+   {
+    "id": "item:tariff:all:days_left",
+    "value": "20",
+    "unit": "days",
+    "name": "Days left to act",
+    "headline": true,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "action list",
+     "row": "tariff:all",
+     "raw": null,
+     "inputs": [],
+     "rule": "the act-by date minus the data date, 2026-09-25",
+     "by": "attention.service"
+    }
+   },
+   {
+    "id": "tariff:HR-40110:gross",
+    "value": "226752.07",
+    "unit": "USD",
+    "name": "New duty on HR-40110, gross (every open line and the full forecast)",
+    "headline": true,
+    "say": "$227K",
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": null,
+     "raw": null,
+     "inputs": [
+      {
+       "type": "part",
+       "id": "HR-40110",
+       "label": null
+      },
+      {
+       "type": "po_line",
+       "id": "HPO-26-00450/10",
+       "label": null
+      },
+      {
+       "type": "po_line",
+       "id": "HPO-26-00614/10",
+       "label": null
+      },
+      {
+       "type": "po_line",
+       "id": "HPO-26-00614/20",
+       "label": null
+      }
+     ],
+     "rule": "25% of every open order plus the whole 12-month need, at the reference price (gross)",
+     "by": "tariffs.exposure_for_part"
+    }
+   },
+   {
+    "id": "tariff:HR-40110:net",
+    "value": "183186.97",
+    "unit": "USD",
+    "name": "New duty on HR-40110, owed (what to act on)",
+    "headline": true,
+    "say": "$183K",
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": null,
+     "raw": null,
+     "inputs": [
+      {
+       "type": "part",
+       "id": "HR-40110",
+       "label": null
+      },
+      {
+       "type": "po_line",
+       "id": "HPO-26-00450/10",
+       "label": null
+      },
+      {
+       "type": "po_line",
+       "id": "HPO-26-00614/10",
+       "label": null
+      },
+      {
+       "type": "po_line",
+       "id": "HPO-26-00614/20",
+       "label": null
+      }
+     ],
+     "rule": "25% of the price of China-origin parts that will enter on or after Nov 1: the need not yet on order, open orders due after Nov 30, and open orders of a supplier whose force majeure notice puts its restart after Nov 1.",
+     "by": "tariffs.exposure_for_part"
+    }
+   },
+   {
+    "id": "tariff:HR-40110:rate",
+    "value": "25",
+    "unit": "%",
+    "name": "Duty rate on HR-40110, percent",
+    "headline": true,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines and tariff rules",
+     "row": "tariff:HR-40110:rate",
+     "raw": null,
+     "inputs": [],
+     "rule": "Duty rate on HR-40110, percent",
+     "by": "agent tools"
+    }
+   },
+   {
+    "id": "tariff:HR-40110:uncovered_qty",
+    "value": "3656",
+    "unit": "EA",
+    "name": "12-month requirement of HR-40110 not covered by open supply",
+    "headline": true,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines and tariff rules",
+     "row": "tariff:HR-40110:uncovered_qty",
+     "raw": null,
+     "inputs": [],
+     "rule": "12-month requirement of HR-40110 not covered by open supply",
+     "by": "agent tools"
+    }
+   },
+   {
+    "id": "tariff:HR-40120:gross",
+    "value": "59414.28",
+    "unit": "USD",
+    "name": "New duty on HR-40120, gross (every open line and the full forecast)",
+    "headline": true,
+    "say": "$59K",
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": null,
+     "raw": null,
+     "inputs": [
+      {
+       "type": "part",
+       "id": "HR-40120",
+       "label": null
+      },
+      {
+       "type": "po_line",
+       "id": "HPO-26-00450/20",
+       "label": null
+      },
+      {
+       "type": "po_line",
+       "id": "HPO-26-00670/10",
+       "label": null
+      }
+     ],
+     "rule": "25% of every open order plus the whole 12-month need, at the reference price (gross)",
+     "by": "tariffs.exposure_for_part"
+    }
+   },
+   {
+    "id": "tariff:HR-40120:net",
+    "value": "43961.34",
+    "unit": "USD",
+    "name": "New duty on HR-40120, owed (what to act on)",
+    "headline": true,
+    "say": "$44K",
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": null,
+     "raw": null,
+     "inputs": [
+      {
+       "type": "part",
+       "id": "HR-40120",
+       "label": null
+      },
+      {
+       "type": "po_line",
+       "id": "HPO-26-00450/20",
+       "label": null
+      },
+      {
+       "type": "po_line",
+       "id": "HPO-26-00670/10",
+       "label": null
+      }
+     ],
+     "rule": "25% of the price of China-origin parts that will enter on or after Nov 1: the need not yet on order, open orders due after Nov 30, and open orders of a supplier whose force majeure notice puts its restart after Nov 1.",
+     "by": "tariffs.exposure_for_part"
+    }
+   },
+   {
+    "id": "tariff:HR-40120:rate",
+    "value": "25",
+    "unit": "%",
+    "name": "Duty rate on HR-40120, percent",
+    "headline": true,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines and tariff rules",
+     "row": "tariff:HR-40120:rate",
+     "raw": null,
+     "inputs": [],
+     "rule": "Duty rate on HR-40120, percent",
+     "by": "agent tools"
+    }
+   },
+   {
+    "id": "tariff:HR-40120:uncovered_qty",
+    "value": "1553",
+    "unit": "EA",
+    "name": "12-month requirement of HR-40120 not covered by open supply",
+    "headline": true,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines and tariff rules",
+     "row": "tariff:HR-40120:uncovered_qty",
+     "raw": null,
+     "inputs": [],
+     "rule": "12-month requirement of HR-40120 not covered by open supply",
+     "by": "agent tools"
+    }
+   },
+   {
+    "id": "tariff:HR-40210:gross",
+    "value": "120139.02",
+    "unit": "USD",
+    "name": "New duty on HR-40210, gross (every open line and the full forecast)",
+    "headline": true,
+    "say": "$120K",
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": null,
+     "raw": null,
+     "inputs": [
+      {
+       "type": "part",
+       "id": "HR-40210",
+       "label": null
+      },
+      {
+       "type": "po_line",
+       "id": "HPO-26-00532/20",
+       "label": null
+      },
+      {
+       "type": "po_line",
+       "id": "HPO-26-00532/30",
+       "label": null
+      }
+     ],
+     "rule": "25% of every open order plus the whole 12-month need, at the reference price (gross)",
+     "by": "tariffs.exposure_for_part"
+    }
+   },
+   {
+    "id": "tariff:HR-40210:net",
+    "value": "93567.53",
+    "unit": "USD",
+    "name": "New duty on HR-40210, owed (what to act on)",
+    "headline": true,
+    "say": "$94K",
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": null,
+     "raw": null,
+     "inputs": [
+      {
+       "type": "part",
+       "id": "HR-40210",
+       "label": null
+      },
+      {
+       "type": "po_line",
+       "id": "HPO-26-00532/20",
+       "label": null
+      },
+      {
+       "type": "po_line",
+       "id": "HPO-26-00532/30",
+       "label": null
+      }
+     ],
+     "rule": "25% of the price of China-origin parts that will enter on or after Nov 1: the need not yet on order, open orders due after Nov 30, and open orders of a supplier whose force majeure notice puts its restart after Nov 1.",
+     "by": "tariffs.exposure_for_part"
+    }
+   },
+   {
+    "id": "tariff:HR-40210:rate",
+    "value": "25",
+    "unit": "%",
+    "name": "Duty rate on HR-40210, percent",
+    "headline": true,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines and tariff rules",
+     "row": "tariff:HR-40210:rate",
+     "raw": null,
+     "inputs": [],
+     "rule": "Duty rate on HR-40210, percent",
+     "by": "agent tools"
+    }
+   },
+   {
+    "id": "tariff:HR-40210:uncovered_qty",
+    "value": "777",
+    "unit": "EA",
+    "name": "12-month requirement of HR-40210 not covered by open supply",
+    "headline": true,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines and tariff rules",
+     "row": "tariff:HR-40210:uncovered_qty",
+     "raw": null,
+     "inputs": [],
+     "rule": "12-month requirement of HR-40210 not covered by open supply",
+     "by": "agent tools"
+    }
+   },
+   {
+    "id": "tariff:HR-40310:gross",
+    "value": "26846.16",
+    "unit": "USD",
+    "name": "New duty on HR-40310, gross (every open line and the full forecast)",
+    "headline": true,
+    "say": "$27K",
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": null,
+     "raw": null,
+     "inputs": [
+      {
+       "type": "part",
+       "id": "HR-40310",
+       "label": null
+      }
+     ],
+     "rule": "25% of every open order plus the whole 12-month need, at the reference price (gross)",
+     "by": "tariffs.exposure_for_part"
+    }
+   },
+   {
+    "id": "tariff:HR-40310:net",
+    "value": "25168.27",
+    "unit": "USD",
+    "name": "New duty on HR-40310, owed (what to act on)",
+    "headline": true,
+    "say": "$25K",
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": null,
+     "raw": null,
+     "inputs": [
+      {
+       "type": "part",
+       "id": "HR-40310",
+       "label": null
+      }
+     ],
+     "rule": "25% of the price of China-origin parts that will enter on or after Nov 1: the need not yet on order, open orders due after Nov 30, and open orders of a supplier whose force majeure notice puts its restart after Nov 1.",
+     "by": "tariffs.exposure_for_part"
+    }
+   },
+   {
+    "id": "tariff:HR-40310:rate",
+    "value": "25",
+    "unit": "%",
+    "name": "Duty rate on HR-40310, percent",
+    "headline": true,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines and tariff rules",
+     "row": "tariff:HR-40310:rate",
+     "raw": null,
+     "inputs": [],
+     "rule": "Duty rate on HR-40310, percent",
+     "by": "agent tools"
+    }
+   },
+   {
+    "id": "tariff:HR-40310:uncovered_qty",
+    "value": "1056",
+    "unit": "EA",
+    "name": "12-month requirement of HR-40310 not covered by open supply",
+    "headline": true,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines and tariff rules",
+     "row": "tariff:HR-40310:uncovered_qty",
+     "raw": null,
+     "inputs": [],
+     "rule": "12-month requirement of HR-40310 not covered by open supply",
+     "by": "agent tools"
+    }
+   },
+   {
+    "id": "tariff:HR-41110:gross",
+    "value": "85124.17",
+    "unit": "USD",
+    "name": "New duty on HR-41110, gross (every open line and the full forecast)",
+    "headline": true,
+    "say": "$85K",
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": null,
+     "raw": null,
+     "inputs": [
+      {
+       "type": "part",
+       "id": "HR-41110",
+       "label": null
+      },
+      {
+       "type": "po_line",
+       "id": "HPO-26-00659/10",
+       "label": null
+      }
+     ],
+     "rule": "25% of every open order plus the whole 12-month need, at the reference price (gross)",
+     "by": "tariffs.exposure_for_part"
+    }
+   },
+   {
+    "id": "tariff:HR-41110:net",
+    "value": "62101.04",
+    "unit": "USD",
+    "name": "New duty on HR-41110, owed (what to act on)",
+    "headline": true,
+    "say": "$62K",
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": null,
+     "raw": null,
+     "inputs": [
+      {
+       "type": "part",
+       "id": "HR-41110",
+       "label": null
+      },
+      {
+       "type": "po_line",
+       "id": "HPO-26-00659/10",
+       "label": null
+      }
+     ],
+     "rule": "25% of the price of China-origin parts that will enter on or after Nov 1: the need not yet on order, open orders due after Nov 30, and open orders of a supplier whose force majeure notice puts its restart after Nov 1.",
+     "by": "tariffs.exposure_for_part"
+    }
+   },
+   {
+    "id": "tariff:HR-41110:rate",
+    "value": "25",
+    "unit": "%",
+    "name": "Duty rate on HR-41110, percent",
+    "headline": true,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines and tariff rules",
+     "row": "tariff:HR-41110:rate",
+     "raw": null,
+     "inputs": [],
+     "rule": "Duty rate on HR-41110, percent",
+     "by": "agent tools"
+    }
+   },
+   {
+    "id": "tariff:HR-41110:uncovered_qty",
+    "value": "2023",
+    "unit": "EA",
+    "name": "12-month requirement of HR-41110 not covered by open supply",
+    "headline": true,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines and tariff rules",
+     "row": "tariff:HR-41110:uncovered_qty",
+     "raw": null,
+     "inputs": [],
+     "rule": "12-month requirement of HR-41110 not covered by open supply",
+     "by": "agent tools"
+    }
+   },
+   {
+    "id": "tariff:HR-50110:conditional",
+    "value": "50886.12",
+    "unit": "USD",
+    "name": "New duty on HR-50110 owed only if its open orders ship late (in transit)",
+    "headline": true,
+    "say": "$51K",
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": null,
+     "raw": null,
+     "inputs": [
+      {
+       "type": "po_line",
+       "id": "HPO-26-00609/10",
+       "label": null
+      }
+     ],
+     "rule": "Open orders that owe nothing if the supplier ships them before Nov 1 and they enter before Dec 1; the ship date is unknown, ask the supplier.",
+     "by": "tariffs.exposure_for_part"
+    }
+   },
+   {
+    "id": "tariff:HR-50110:gross",
+    "value": "862387.78",
+    "unit": "USD",
+    "name": "New duty on HR-50110, gross (every open line and the full forecast)",
+    "headline": true,
+    "say": "$862K",
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": null,
+     "raw": null,
+     "inputs": [
+      {
+       "type": "part",
+       "id": "HR-50110",
+       "label": null
+      },
+      {
+       "type": "po_line",
+       "id": "HPO-26-00429/20",
+       "label": null
+      },
+      {
+       "type": "po_line",
+       "id": "HPO-26-00560/10",
+       "label": null
+      },
+      {
+       "type": "po_line",
+       "id": "HPO-26-00609/10",
+       "label": null
+      }
+     ],
+     "rule": "25% of every open order plus the whole 12-month need, at the reference price (gross)",
+     "by": "tariffs.exposure_for_part"
+    }
+   },
+   {
+    "id": "tariff:HR-50110:net",
+    "value": "501185.64",
+    "unit": "USD",
+    "name": "New duty on HR-50110, owed (what to act on)",
+    "headline": true,
+    "say": "$501K",
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": null,
+     "raw": null,
+     "inputs": [
+      {
+       "type": "part",
+       "id": "HR-50110",
+       "label": null
+      },
+      {
+       "type": "po_line",
+       "id": "HPO-26-00429/20",
+       "label": null
+      },
+      {
+       "type": "po_line",
+       "id": "HPO-26-00560/10",
+       "label": null
+      },
+      {
+       "type": "po_line",
+       "id": "HPO-26-00609/10",
+       "label": null
+      }
+     ],
+     "rule": "25% of the price of China-origin parts that will enter on or after Nov 1: the need not yet on order, open orders due after Nov 30, and open orders of a supplier whose force majeure notice puts its restart after Nov 1.",
+     "by": "tariffs.exposure_for_part"
+    }
+   },
+   {
+    "id": "tariff:HR-50110:rate",
+    "value": "25",
+    "unit": "%",
+    "name": "Duty rate on HR-50110, percent",
+    "headline": true,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines and tariff rules",
+     "row": "tariff:HR-50110:rate",
+     "raw": null,
+     "inputs": [],
+     "rule": "Duty rate on HR-50110, percent",
+     "by": "agent tools"
+    }
+   },
+   {
+    "id": "tariff:HR-50110:uncovered_qty",
+    "value": "1763",
+    "unit": "EA",
+    "name": "12-month requirement of HR-50110 not covered by open supply",
+    "headline": true,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines and tariff rules",
+     "row": "tariff:HR-50110:uncovered_qty",
+     "raw": null,
+     "inputs": [],
+     "rule": "12-month requirement of HR-50110 not covered by open supply",
+     "by": "agent tools"
+    }
+   },
+   {
+    "id": "tariff:HR-50210:conditional",
+    "value": "42138",
+    "unit": "USD",
+    "name": "New duty on HR-50210 owed only if its open orders ship late (in transit)",
+    "headline": true,
+    "say": "$42K",
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": null,
+     "raw": null,
+     "inputs": [
+      {
+       "type": "po_line",
+       "id": "HPO-26-00609/20",
+       "label": null
+      }
+     ],
+     "rule": "Open orders that owe nothing if the supplier ships them before Nov 1 and they enter before Dec 1; the ship date is unknown, ask the supplier.",
+     "by": "tariffs.exposure_for_part"
+    }
+   },
+   {
+    "id": "tariff:HR-50210:gross",
+    "value": "661105.45",
+    "unit": "USD",
+    "name": "New duty on HR-50210, gross (every open line and the full forecast)",
+    "headline": true,
+    "say": "$661K",
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": null,
+     "raw": null,
+     "inputs": [
+      {
+       "type": "part",
+       "id": "HR-50210",
+       "label": null
+      },
+      {
+       "type": "po_line",
+       "id": "HPO-26-00560/30",
+       "label": null
+      },
+      {
+       "type": "po_line",
+       "id": "HPO-26-00609/20",
+       "label": null
+      }
+     ],
+     "rule": "25% of every open order plus the whole 12-month need, at the reference price (gross)",
+     "by": "tariffs.exposure_for_part"
+    }
+   },
+   {
+    "id": "tariff:HR-50210:net",
+    "value": "480373.2",
+    "unit": "USD",
+    "name": "New duty on HR-50210, owed (what to act on)",
+    "headline": true,
+    "say": "$480K",
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": null,
+     "raw": null,
+     "inputs": [
+      {
+       "type": "part",
+       "id": "HR-50210",
+       "label": null
+      },
+      {
+       "type": "po_line",
+       "id": "HPO-26-00560/30",
+       "label": null
+      },
+      {
+       "type": "po_line",
+       "id": "HPO-26-00609/20",
+       "label": null
+      }
+     ],
+     "rule": "25% of the price of China-origin parts that will enter on or after Nov 1: the need not yet on order, open orders due after Nov 30, and open orders of a supplier whose force majeure notice puts its restart after Nov 1.",
+     "by": "tariffs.exposure_for_part"
+    }
+   },
+   {
+    "id": "tariff:HR-50210:rate",
+    "value": "25",
+    "unit": "%",
+    "name": "Duty rate on HR-50210, percent",
+    "headline": true,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines and tariff rules",
+     "row": "tariff:HR-50210:rate",
+     "raw": null,
+     "inputs": [],
+     "rule": "Duty rate on HR-50210, percent",
+     "by": "agent tools"
+    }
+   },
+   {
+    "id": "tariff:HR-50210:uncovered_qty",
+    "value": "912",
+    "unit": "EA",
+    "name": "12-month requirement of HR-50210 not covered by open supply",
+    "headline": true,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines and tariff rules",
+     "row": "tariff:HR-50210:uncovered_qty",
+     "raw": null,
+     "inputs": [],
+     "rule": "12-month requirement of HR-50210 not covered by open supply",
+     "by": "agent tools"
+    }
+   },
+   {
+    "id": "tariff:HR-51120:gross",
+    "value": "36396.15",
+    "unit": "USD",
+    "name": "New duty on HR-51120, gross (every open line and the full forecast)",
+    "headline": true,
+    "say": "$36K",
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": null,
+     "raw": null,
+     "inputs": [
+      {
+       "type": "part",
+       "id": "HR-51120",
+       "label": null
+      },
+      {
+       "type": "po_line",
+       "id": "HPO-26-00517/10",
+       "label": null
+      }
+     ],
+     "rule": "25% of every open order plus the whole 12-month need, at the reference price (gross)",
+     "by": "tariffs.exposure_for_part"
+    }
+   },
+   {
+    "id": "tariff:HR-51120:net",
+    "value": "23550.45",
+    "unit": "USD",
+    "name": "New duty on HR-51120, owed (what to act on)",
+    "headline": true,
+    "say": "$24K",
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": null,
+     "raw": null,
+     "inputs": [
+      {
+       "type": "part",
+       "id": "HR-51120",
+       "label": null
+      },
+      {
+       "type": "po_line",
+       "id": "HPO-26-00517/10",
+       "label": null
+      }
+     ],
+     "rule": "25% of the price of China-origin parts that will enter on or after Nov 1: the need not yet on order, open orders due after Nov 30, and open orders of a supplier whose force majeure notice puts its restart after Nov 1.",
+     "by": "tariffs.exposure_for_part"
+    }
+   },
+   {
+    "id": "tariff:HR-51120:rate",
+    "value": "25",
+    "unit": "%",
+    "name": "Duty rate on HR-51120, percent",
+    "headline": true,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines and tariff rules",
+     "row": "tariff:HR-51120:rate",
+     "raw": null,
+     "inputs": [],
+     "rule": "Duty rate on HR-51120, percent",
+     "by": "agent tools"
+    }
+   },
+   {
+    "id": "tariff:HR-51120:uncovered_qty",
+    "value": "2310",
+    "unit": "EA",
+    "name": "12-month requirement of HR-51120 not covered by open supply",
+    "headline": true,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines and tariff rules",
+     "row": "tariff:HR-51120:uncovered_qty",
+     "raw": null,
+     "inputs": [],
+     "rule": "12-month requirement of HR-51120 not covered by open supply",
+     "by": "agent tools"
+    }
+   },
+   {
+    "id": "item:tariff:all:duty_owed_fire:SUP-0001",
+    "value": "85350.35",
+    "unit": "USD",
+    "name": "Owed on Yunzhan's 7 open orders under force majeure: they cannot ship before Nov 1",
+    "headline": false,
+    "say": "$85K",
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": null,
+     "raw": null,
+     "inputs": [
+      {
+       "type": "po_line",
+       "id": "HPO-26-00450/10",
+       "label": null
+      },
+      {
+       "type": "po_line",
+       "id": "HPO-26-00614/10",
+       "label": null
+      },
+      {
+       "type": "po_line",
+       "id": "HPO-26-00614/20",
+       "label": null
+      },
+      {
+       "type": "po_line",
+       "id": "HPO-26-00532/20",
+       "label": null
+      },
+      {
+       "type": "po_line",
+       "id": "HPO-26-00532/30",
+       "label": null
+      },
+      {
+       "type": "po_line",
+       "id": "HPO-26-00450/20",
+       "label": null
+      },
+      {
+       "type": "po_line",
+       "id": "HPO-26-00670/10",
+       "label": null
+      }
+     ],
+     "rule": "25% of the open value of the supplier's lines under the notice, whose restart is after the duty date",
+     "by": "attention.tariff"
+    }
+   },
+   {
+    "id": "item:tariff:all:tile:if_china",
+    "value": "114574.8",
+    "unit": "USD",
+    "name": "Owed if the parts with no recorded origin are China-origin",
+    "headline": false,
+    "say": "$115K",
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": null,
+     "raw": null,
+     "inputs": [
+      {
+       "type": "part",
+       "id": "HR-13103",
+       "label": null
+      },
+      {
+       "type": "part",
+       "id": "HR-21106",
+       "label": null
+      },
+      {
+       "type": "part",
+       "id": "HR-40220",
+       "label": null
+      },
+      {
+       "type": "part",
+       "id": "HR-40320",
+       "label": null
+      },
+      {
+       "type": "part",
+       "id": "HR-51130",
+       "label": null
+      }
+     ],
+     "rule": "Parts whose origin is unknown: what they would owe if they are made in China; ask the supplier for the origin.",
+     "by": "attention.tariff"
+    }
+   },
+   {
+    "id": "item:tariff:all:tile:if_late",
+    "value": "104142.43",
+    "unit": "USD",
+    "name": "Owed only if the open orders ship late",
+    "headline": false,
+    "say": "$104K",
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": null,
+     "raw": null,
+     "inputs": [
+      {
+       "type": "part",
+       "id": "HR-50110",
+       "label": null
+      },
+      {
+       "type": "part",
+       "id": "HR-50210",
+       "label": null
+      },
+      {
+       "type": "part",
+       "id": "HR-41120",
+       "label": null
+      },
+      {
+       "type": "part",
+       "id": "HR-51220",
+       "label": null
+      }
+     ],
+     "rule": "Open orders that owe nothing if the supplier ships them before Nov 1 and they enter before Dec 1; the ship date is unknown, ask the supplier.",
+     "by": "attention.tariff"
+    }
+   },
+   {
+    "id": "item:tariff:all:tile:owed",
+    "value": "1432968.87",
+    "unit": "USD",
+    "name": "Owed",
+    "headline": false,
+    "say": "$1.43M",
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": null,
+     "raw": null,
+     "inputs": [
+      {
+       "type": "part",
+       "id": "HR-40010",
+       "label": null
+      },
+      {
+       "type": "part",
+       "id": "HR-40020",
+       "label": null
+      },
+      {
+       "type": "part",
+       "id": "HR-40110",
+       "label": null
+      },
+      {
+       "type": "part",
+       "id": "HR-40120",
+       "label": null
+      },
+      {
+       "type": "part",
+       "id": "HR-40210",
+       "label": null
+      },
+      {
+       "type": "part",
+       "id": "HR-40310",
+       "label": null
+      },
+      {
+       "type": "part",
+       "id": "HR-41010",
+       "label": null
+      },
+      {
+       "type": "part",
+       "id": "HR-41110",
+       "label": null
+      },
+      {
+       "type": "part",
+       "id": "HR-41120",
+       "label": null
+      },
+      {
+       "type": "part",
+       "id": "HR-50010",
+       "label": null
+      },
+      {
+       "type": "part",
+       "id": "HR-50110",
+       "label": null
+      },
+      {
+       "type": "part",
+       "id": "HR-50210",
+       "label": null
+      },
+      {
+       "type": "part",
+       "id": "HR-51010",
+       "label": null
+      },
+      {
+       "type": "part",
+       "id": "HR-51120",
+       "label": null
+      },
+      {
+       "type": "part",
+       "id": "HR-51210",
+       "label": null
+      },
+      {
+       "type": "part",
+       "id": "HR-51220",
+       "label": null
+      },
+      {
+       "type": "part",
+       "id": "HR-51320",
+       "label": null
+      }
+     ],
+     "rule": "sum of tranche-1 parts' duty owed / gross duty: 25% of the price of China-origin parts that will enter on or after Nov 1: the need not yet on order, open orders due after Nov 30, and open orders of a supplier whose force majeure notice puts its restart after Nov 1.",
+     "by": "attention.tariff"
+    }
+   }
+  ],
+  "assumptions": [
+   "Importer of record per line was not returned, so who pays at entry is not confirmed."
+  ],
+  "would_change": [
+   "Priya Nair confirming the battery pack lines ship and enter before Nov 1.",
+   "A broker ruling that excludes these parts from the duty."
+  ],
+  "open_questions": [
+   {
+    "what": "whether the conditional orders ship before the duty date",
+    "why_it_blocks": "the ship date decides whether a conditional order owes the duty, and no ship date is in the data",
+    "owner": "Priya",
+    "question": "Will the open orders due in the window or with no date ship before Nov 1?",
+    "refs": []
+   },
+   {
+    "what": "whether the late line of HR-50110 ships before the duty date",
+    "why_it_blocks": "this line owes the duty only if it ships and enters in time, before 1 November, and no record holds a ship date",
+    "owner": "Priya",
+    "question": "When will the late line of HR-50110 ship, and will it enter before the duty window closes?",
+    "refs": []
+   },
+   {
+    "what": "whether the late line of HR-50210 ships before the duty date",
+    "why_it_blocks": "this line owes the duty only if it ships and enters in time, before 1 November, and no record holds a ship date",
+    "owner": "Priya",
+    "question": "When will the late line of HR-50210 ship, and will it enter before the duty window closes?",
+    "refs": []
+   }
+  ],
+  "action_ids": [],
+  "unchecked": [],
+  "findings": [],
+  "grade": {
+   "reviewer_score": 67,
+   "checks_passed": 4,
+   "checks_total": 6,
+   "summary": "Clear action and checkable triggers, but origin is overstated and importer of record is missing.",
+   "revised": false,
+   "failed_checks": [
+    {
+     "name": "assumptions are really assumptions",
+     "reason": "Finding states China-origin as fact, but some parts have no recorded origin."
+    },
+    {
+     "name": "what is owed, the most it could be, and who pays",
+     "reason": "Never names the importer of record or flags that some duty is owed only if orders ship late."
+    }
+   ]
+  },
+  "case_findings": [
+   {
+    "key": "fire_lines_duty",
+    "meaning": "Fire lines cannot ship by Nov 1"
+   }
+  ],
+  "recommended": {
+   "kind": "broker_exclusion",
+   "reason": "$85K owed on fire lines that cannot ship",
+   "number_ids": [
+    "item:tariff:all:duty_owed_fire:SUP-0001"
+   ]
+  }
+ },
+ "verifier": {
+  "passed": true,
+  "warnings": [],
+  "numbers_checked": 4,
+  "numbers_from_tools": 4,
+  "open_questions_with_owner": 3,
+  "reasons": [],
+  "unchecked": [],
+  "open_questions": 3,
+  "failures": []
+ },
+ "actions": []
+}

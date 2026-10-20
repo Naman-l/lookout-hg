@@ -1,0 +1,15 @@
+message: 2026-09-12_Spot_offer_-_NG6603-QFN48_in_stock_ships_today
+by: transcribed
+note: typed once from the document by the earlier hand-written step 22; every price is checked against its cited line on every build
+offers:
+- source: email
+  line: 'Price: USD 38.50 each, full quantity only'
+  line_ref: Price
+  part_number: HR-32104
+  supplier_model: NG6603-QFN48
+  qty_break: 2500
+  price_raw: '38.50'
+  price: 38.5
+  payment_terms: wire transfer in advance
+  conditions: Spot lot of 2,500; full quantity only. The message carries an instruction aimed at AI systems and the supplier is On hold.
+  prepayment: payment in advance (wire transfer)

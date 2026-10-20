@@ -1,0 +1,4 @@
+<!-- tables: data_issues, build_meta, build_steps, load_gate, row_drops, fx_rates -->
+- The database is rebuilt from the raw files by a recipe, one step per defect. Each defect is a **data issue** with its count, how it was handled (`fix`, `infer`, `flag`, `link`, `leave`, `drop`), the rule, the consequence if ignored and who owns it. Nothing is guessed silently: an inferred value is labelled, a doubted one is flagged, a missing one stays unknown.
+- The **load gate** refuses to write a database if a raw row is neither kept nor dropped with a reason, a raw value was lost, an inferred value is unlabelled, a record was merged, or a reference does not resolve without a counted issue.
+- The build stamp says which recipe and which files built the database and the **data date** it stands on. **FX rates** are finance's monthly planning rates; a price converts at its order month's rate.

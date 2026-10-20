@@ -1,0 +1,28 @@
+id: chase-silent-late-lines
+category: ordinary
+kind: api                 # the chase list is code: open lines behind their PO date that no supplier message mentions; no model
+item_key: null
+checks:
+  - id: title-wording              # wording only: the count, total and largest below are graded as numbers
+    get: /api/action-items/deadline:chase
+    expect:
+      title: "16 past-due lines, no updated promise"
+      summary: "largest Vistaray $368K (Marcus)"
+  - id: count
+    get: /api/action-items/deadline:chase
+    rows: numbers
+    pick: {id: "chase:count"}
+    expect: {value.value: {approx: 16, tol: 0}}
+  - id: open-total
+    get: /api/action-items/deadline:chase
+    rows: numbers
+    pick: {id: "chase:open_total"}
+    expect: {value: {approx: 496044, tol: 1}}
+  - id: largest
+    get: /api/action-items/deadline:chase
+    rows: numbers
+    pick: {id: "chase:largest"}
+    expect: {value: {approx: 367729, tol: 1}}
+reason: "Sixteen open lines are behind their PO date and nobody at the supplier has written about them (a supplier that announced a closure or a force majeure has): 496,044 USD open, the largest HPO-26-00505/10 (HR-60110, Vistaray, 367,729 USD, buyer Marcus). Owners are the four buyers whose lines they are (Marcus, Dana, Priya, Tom); Sofia has no line."
+oracle: "evals/oracle.py chase(): open or partial lines promised before 2026-09-25, minus the stale legacy lines, the lines on the Yunzhan force-majeure notice, and every line of a PO that any message mentions outside quoted text; value = open quantity x the line's own price in USD"
+source: "data/purchase_orders.csv; data/quotes/*.eml and *.txt (PO numbers mentioned outside quoted text); the Yunzhan notice table"

@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lookout · Action list (A: grouped by what is at stake)</title>
+<link rel="stylesheet" href="mock.css">
+<style>
+  .al td:nth-child(1){width:18px;padding-right:0}
+  .al td.what b{font-weight:500}
+  .al td.what .sub{display:block;color:var(--gravel);font-size:12px;margin-top:2px}
+  .al td.when b{font-weight:600}
+</style></head>
+<body><div class="app">
+<aside class="side">
+  <div class="brand">Lookout<small>Halden Robotics · Procurement</small></div>
+  <nav class="nav">
+    <a class="on" href="action-list-a.html">Action list <span class="n hot">12</span></a>
+    <a href="#">Inbox <span class="n">15</span></a>
+    <a href="#">Suppliers <span class="n">60</span></a>
+    <a href="#">Parts and BOM <span class="n">502</span></a>
+    <a href="#">Orders <span class="n">185 open</span></a>
+    <a href="#">Forecast and demand</a>
+    <div class="sep"></div>
+    <a href="approval.html">Approvals <span class="n hot">2</span></a>
+    <a href="run-midway.html">Agent activity <span class="n">1 running</span></a>
+    <a href="#">Data <span class="n">17 issues</span></a>
+  </nav>
+</aside>
+<main class="main">
+  <div class="top">
+    <div class="where"><b>Action list</b></div>
+    <div class="asof">Data as of <b style="color:var(--ink)">Fri Sep 25, 2026</b> · <span class="fchip">All buyers ▾</span></div>
+  </div>
+  <h1>Action list</h1>
+  <p class="lede">What will cost Halden money or a build if nobody acts, most urgent first.</p>
+
+  <div class="banner trust"><b>2 messages look suspicious.</b> A payment-change request claiming to be Yunzhan and a spot offer from a supplier on hold. Nothing can be approved from them. <a class="btn" href="#">Review in Inbox</a></div>
+
+  <div class="filters">
+    <span class="fchip on">All 12</span><span class="fchip">Supply disruption 2</span><span class="fchip">Deadline 4</span><span class="fchip">Tariff exposure 3</span><span class="fchip">Open question 3</span>
+  </div>
+
+  <div class="tablewrap"><table class="al">
+    <thead><tr><th></th><th>Action item</th><th class="num">At stake</th><th>Act by</th><th>Affects</th><th>Owner</th><th>Next action</th></tr></thead>
+    <tbody>
+    <tr class="group"><td colspan="7">Supply disruption <span class="muted">· a build will be short</span></td></tr>
+    <tr class="link" onclick="location='item-yunzhan.html'"><td><span class="dot high"></span></td>
+      <td class="what"><b>Yunzhan plant fire: no drive motors on the way for the October Tern build</b><span class="sub">Force majeure on 10 PO lines · 1,140 <span class="chip"><span class="mono">HR-40110</span> drive motor</span> stuck · 2 lines already past due</span></td>
+      <td class="num">364 short<br><span class="muted small">Oct build</span></td>
+      <td class="when"><b>Oct 10</b><br><span class="muted small">revised dates due · 15 days</span></td>
+      <td>Tern T2<br><span class="muted small">Oct–Dec builds</span></td><td>Dana Reyes</td><td>Request revised promise</td></tr>
+    <tr class="link"><td><span class="dot med"></span></td>
+      <td class="what"><b>Jadepeak power modules slip to November and January</b><span class="sub">5 PO lines revised · made in Dongguan, so China origin: arrivals after Nov 1 carry the new duty</span></td>
+      <td class="num">5 lines<br><span class="muted small">Nov 4 – Jan 8</span></td>
+      <td class="when"><b>Nov 1</b><br><span class="muted small">37 days</span></td>
+      <td>Power modules</td><td>Marcus Chen</td><td>Draft expedite</td></tr>
+
+    <tr class="group"><td colspan="7">Deadline <span class="muted">· money or an option is lost on a date</span></td></tr>
+    <tr class="link"><td><span class="dot high"></span></td>
+      <td class="what"><b>Yunzhan quote Q-YZ-26-0831 expires</b><span class="sub">“Validity: 60 days” from Aug 14 · the only quote on file for HR-40110</span></td>
+      <td class="num">$154.55<br><span class="muted small">per unit at 500</span></td>
+      <td class="when"><b>Oct 13</b><br><span class="muted small">in 18 days</span></td>
+      <td><span class="chip"><span class="mono">HR-40110</span></span></td><td>Dana Reyes</td><td>Request quote extension</td></tr>
+    <tr class="link"><td><span class="dot high"></span></td>
+      <td class="what"><b>Great Plains aluminium price rise: lock today’s price</b><span class="sub">+8.5% extrusions, +4% sheet from Nov 1 · orders acknowledged by Oct 15 keep current price</span></td>
+      <td class="num">+8.5%<br><span class="muted small">on extrusions</span></td>
+      <td class="when"><b>Oct 15</b><br><span class="muted small">in 20 days</span></td>
+      <td>Extrusions, sheet</td><td>Tom Albrecht</td><td>Place orders before Oct 15</td></tr>
+    <tr class="link"><td><span class="dot low"></span></td>
+      <td class="what"><b>Ruilian ships 58 of 115 later than promised</b><span class="sub">Correction: ex-works Oct 9 and Oct 30, plus ~21 days ocean</span></td>
+      <td class="num">58<br><span class="muted small">units late</span></td>
+      <td class="when"><b>Oct 30</b><br><span class="muted small">in 35 days</span></td>
+      <td><span class="chip"><span class="mono">HR-21111</span></span></td><td>Priya Nair</td><td>Propose push out</td></tr>
+    <tr class="link"><td><span class="dot med"></span></td>
+      <td class="what"><b>Hallerbeck gearbox quote expires; 30% prepayment applies</b><span class="sub">Supplier is in insolvency protection (supplier news)</span></td>
+      <td class="num">€38,950<br><span class="muted small">100 pcs</span></td>
+      <td class="when"><b>Oct 31</b><br><span class="muted small">in 36 days</span></td>
+      <td><span class="chip"><span class="mono">HR-12110</span></span></td><td>Dana Reyes</td><td>Review with finance</td></tr>
+
+    <tr class="group"><td colspan="7">Tariff exposure <span class="muted">· new duty on China-origin parts from Nov 1</span></td></tr>
+    <tr class="link"><td><span class="dot high"></span></td>
+      <td class="what"><b>New 25% duty on China-origin parts from Nov 1: $1.54M on orders arriving after Nov 1 and uncovered forecast</b><span class="sub">24 parts on the listed HTS codes · largest: Tern battery pack $862K, Porter pack $661K, drive motor $227K</span></td>
+      <td class="num">$1.54M<br><span class="muted small">gross $2.14M if every line slips</span></td>
+      <td class="when"><b>Nov 1</b><br><span class="muted small">37 days</span></td>
+      <td>All three products</td><td>Dana Reyes +3</td><td>Request COO certificate</td></tr>
+
+    <tr class="group"><td colspan="7">Open question <span class="muted">· the data cannot answer; someone must</span></td></tr>
+    <tr class="link"><td><span class="dot med"></span></td>
+      <td class="what"><b>5 parts on the tariff list have no country of origin</b><span class="sub">Duty cannot be computed for them, so it is not shown as a number</span></td>
+      <td class="num"><span class="unknown">unknown</span><br><span class="muted small">net $123K if China<br>gross $157K</span></td>
+      <td class="when"><b>Nov 1</b><br><span class="muted small">37 days</span></td>
+      <td><span class="chip"><span class="mono">HR-40220</span></span> +4</td><td>Dana, Priya, Tom</td><td>Ask the owner</td></tr>
+    <tr class="link"><td><span class="dot low"></span></td>
+      <td class="what"><b>On-hand stock is not in the data</b><span class="sub">Every shortage is computed against open supply only</span></td>
+      <td class="num"><span class="unknown">unknown</span></td>
+      <td class="when">—</td><td>All shortages</td><td>Dana Reyes</td><td>Ask the owner</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Ranked inside each group by what is at stake, then by days left. Figures and owners here are from the planning analysis and illustrative; the app shows the values the services compute, each one clickable to its source.</p>
+</main></div>
+<div class="mocknote">Mock A · grouped · static</div>
+</body></html>

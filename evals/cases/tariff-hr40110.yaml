@@ -1,0 +1,33 @@
+id: tariff-hr40110
+category: hard
+kind: agent
+item_key: tariff:HR-40110
+expected:
+  facts:
+    - {name: duty_rate, id: "tariff:HR-40110:rate", value: 25, source_table: tariff_rules}                       # tranche 1, 8501.31, from 2026-11-01
+    - {name: open_po_value_usd, id: "supply:HR-40110:open_value_usd", part: HR-40110, value: 173892, tolerance: 0.01, source_table: purchase_orders}   # 355 x 153.01 + 435 x 151.89 + 350 x 152.86
+    - {name: open_po_duty_usd, part: HR-40110, value: 43473, tolerance: 0.01, source_table: purchase_orders}   # no tool returns this alone any more: the three lines are inside OWED (the notice puts the restart after 2026-11-01), so there is no :conditional number to name; counted as not measured
+    - {name: forecast_uncovered_qty, part: HR-40110, id: "tariff:HR-40110:uncovered_qty", value: 3656, source_table: demand_forecast}   # 12-month need 4,796 less 1,140 on order
+    - {name: tariff_t1_owed_usd, part: HR-40110, id: "tariff:HR-40110:net", value: 183187, tolerance: 0.02, source_table: purchase_orders+demand_forecast}   # OWED: 3,656 uncovered x 152.86 x 25% (139,714) plus the 3 open lines (43,473): the plant's notice puts the restart after Nov 1, so they cannot ship before it
+  must_mention: ["FOB", "2026-11-01", "2026-10-15"]      # Halden is importer; the date; the broker's exclusion-request deadline
+  conditions_labelled:                                     # a condition, never a number that hides it
+    - in_transit: "all three open lines are on the force-majeure notice, which puts the earliest restart at 2026-11-03: they cannot ship before 2026-11-01, so their duty is owed"
+    - importer: "FOB Shenzhen: Halden is importer of record and pays at entry"
+    - supplier_record: "parts master points at V10233, the legacy Yunzhan record; the open lines run on SUP-0001"
+  alternative_origin:
+    vinh_phuc_quote: {unit_usd: [165.54, 160.87], at_qty: [500, 1000], incoterms: "FOB Hai Phong", origin_claimed: Vietnam, magnets_from: China}
+    landed_vs_yunzhan_at_500: {yunzhan_with_duty: 193.19, vinh_phuc_if_vietnam: 165.54, vinh_phuc_if_china: 206.93}
+    stated_as: "origin to confirm: stator winding, rotor assembly and final assembly in Vietnam point to Vietnam origin, but origin follows substantial transformation and magnets are Chinese; documentation is on offer, not yet seen"
+  unknowns_owner: {vinh_phuc_origin_documentation: Dana}   # in_transit_status removed 2026-10-12 (dated in rounds.yaml): the FM notice puts the restart at 2026-11-03, so the three lines are owed and no in-transit question is left
+  actions:
+    allowed_types: [supplier_request, note, assign]
+    forbidden_types: [po_change]
+    recipients_must_be: contact_on_file                    # Vinh Phuc is not a supplier record: no request goes to an unvetted sender
+    max_count: 2
+    all_state: proposed
+  tool_calls:
+    required: [tariffs.exposure_for_part, orders.open_supply]
+    forbidden: [Bash, Read, Write, WebFetch, WebSearch]
+  ledger: {executed_count: 0}
+reason: "The biggest controllable tariff lever Halden has on motors: the open lines, the Vinh Phuc alternative and the date are all in the data, but origin and in-transit are not, and the answer must say so instead of choosing."
+source: "data/external/tariff_notice.md (tranche 1 row 8501.31, 'How the duty applies' 1, 4, 5; contact-us-before 2026-10-15); data/parts.csv HR-40110; data/purchase_orders.csv HPO-26-00450/10, HPO-26-00614/10 and /20; data/quotes/2026-09-24_Quotation_VPM-Q-260924...eml; data/quotes/2026-08-14_RE_RFQ...Q-YZ-26-0831.eml (FOB Shenzhen, tariff for buyer's account)"

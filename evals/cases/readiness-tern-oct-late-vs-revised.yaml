@@ -1,0 +1,18 @@
+id: readiness-tern-oct-late-vs-revised
+category: hard
+kind: api
+item_key: null
+checks:
+  - id: split-between-after-the-build-and-past-due
+    get: /api/builds/Tern%20T2/2026-10/readiness
+    expect:
+      counts.after_build: 13
+      counts.past_due: 3
+  - id: verdict-wording            # wording only: the counts above are graded as numbers, so a wording ruling changes this one field
+    get: /api/builds/Tern%20T2/2026-10/readiness
+    expect:
+      verdict: "Tern T2, October: 182 robots need 134 bought parts. 35 have dated supply landing in the month; 13 arrive after the month ends; 3 are late on the supplier's latest date; 3 are under a supplier's force-majeure notice; 80 have no open order (unknown without stock data); 7 assemblies Halden builds are counted through their parts."
+reason: "Two PO lines (HPO-26-00486/10 for HR-51110, promised 2026-09-21, and HPO-26-00517/20 for HR-51130, promised 2026-09-23) are behind their PO date at the data date. Jadepeak's notice of 2026-09-18, three days before the first of them, moved them to 2026-11-09 and 2026-11-04. Read from the files the buyer's picture is: not late against the supplier's own commitment, arriving after the October build. The product first counted them past due (5) and so showed 11 after the build; it did use the revised date for the third line of that notice (HPO-26-00517/10, promised 2026-09-30, revised to 2026-11-11)."
+resolution: "The oracle said 13 arrive after the month ends and 3 are past due; the product first said 11 and 5. Ruled: a supplier's dated revision is the line's current best date, so a line whose supplier announced a later date before it fell due reads 'after the build', with the PO-date lateness shown beside it. The product was changed to match; the oracle was not."
+oracle: "evals/oracle.py readiness()"
+source: "data/purchase_orders.csv HPO-26-00486/10, HPO-26-00517/20; data/quotes/2026-09-18_Jadepeak_Customer_Notice_CN-2026-09.txt revised schedule table"

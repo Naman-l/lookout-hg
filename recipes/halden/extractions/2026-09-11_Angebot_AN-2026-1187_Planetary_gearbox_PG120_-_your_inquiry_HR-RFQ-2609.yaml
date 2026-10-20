@@ -1,0 +1,46 @@
+message: 2026-09-11_Angebot_AN-2026-1187_Planetary_gearbox_PG120_-_your_inquiry_HR-RFQ-2609
+by: transcribed
+note: typed once from the document by the earlier hand-written step 22; every price is checked against its cited line on every build
+offers:
+- source: pdf:AN-2026-1187_Hallerbeck_Angebot.pdf
+  line: 389,50
+  line_ref: Pos. 10
+  quote_no: AN-2026-1187
+  part_number: HR-12210
+  supplier_model: PG120-20-HD
+  qty_break: 100
+  price_raw: 389,50
+  price: 389.5
+  currency: EUR
+  incoterm: EXW
+  incoterm_place: Hannover
+  lead_time: 14 weeks
+  lead_time_condition: after receipt of order
+  lead_time_days: 98
+  validity_date: '2026-10-31'
+  surcharge_pct: 3.5
+  payment_terms: Net 30 (was 45)
+  conditions: 'Material surcharge 3.5% on net value. 30% prepayment on orders above EUR 25,000 net: 100 pcs is EUR 38,950, so it applies. Supplier
+    is in a protective-shield insolvency procedure (a court-appointed monitor signs the quote). Prices exclude duties.'
+  prepayment: 30% on orders above EUR 25,000 net
+- source: pdf:AN-2026-1187_Hallerbeck_Angebot.pdf
+  line: 376,10
+  line_ref: Pos. 10
+  quote_no: AN-2026-1187
+  part_number: HR-12210
+  supplier_model: PG120-20-HD
+  qty_break: 250
+  price_raw: 376,10
+  price: 376.1
+  currency: EUR
+  incoterm: EXW
+  incoterm_place: Hannover
+  lead_time: 14 weeks
+  lead_time_condition: after receipt of order
+  lead_time_days: 98
+  validity_date: '2026-10-31'
+  surcharge_pct: 3.5
+  payment_terms: Net 30 (was 45)
+  conditions: 'Material surcharge 3.5% on net value. 30% prepayment on orders above EUR 25,000 net: 100 pcs is EUR 38,950, so it applies. Supplier
+    is in a protective-shield insolvency procedure (a court-appointed monitor signs the quote). Prices exclude duties.'
+  prepayment: 30% on orders above EUR 25,000 net

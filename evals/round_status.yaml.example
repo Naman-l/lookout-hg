@@ -1,0 +1,4 @@
+# Copy to evals/round_status.yaml while a round is running; delete it when the round's result is committed.
+# While it exists, the README block says so in one generated line, instead of a result that is not in yet.
+running: 10
+fixes: [one thread per contact, no early chase, clause-bound figures, quote triage with tariff, carry-through]

@@ -1,0 +1,18 @@
+id: import-recipe-diff
+stale: "same: the recipe's changes are not proposed by a model in the product; the dry-run checks in import-deck pin the result."
+category: hard
+kind: import
+item_key: null
+expected:
+  steward_recipe_vs_bootstrap:
+    clean_tables_equal: [suppliers, supplier_identities, parts, bom_lines, po_lines, demand_forecast, messages]   # row counts and per-column checksums, ignoring generated ids and timestamps
+    bootstrap_issue_keys_found: "every data_issues key in the bootstrap build (50 issues, 16 steps at the time of writing; frozen from DOMAIN's table when this case first runs)"
+    extra_issues_found: "reported separately, each judged by a person as real or noise; never counted as a pass"
+    missed_issues: "listed by key with the consequence; any missed issue with a consequence on a headline number (tariff, shortage, past due) is a failure"
+    headline_numbers_identical: [tariff_t1_net_usd, tariff_t1_gross_usd, tariff_t2_net_usd, unknown_origin_net_usd, po_lines_past_due, force_majeure_open_qty]
+  questions_asked_max: 12
+  replay_without_model: "make build-data on the steward's recipe runs with no key and gives the same tables"
+  steward_scripts: "pass the sandbox's AST check; no network; read-only raw directory"
+reason: "Proves the steward is a way to the same clean data, not a different dataset: the hand-written bootstrap is the oracle, and what the steward finds beyond it is reported honestly."
+oracle: "the bootstrap build (recipes/halden/steps/*, backend/lookout.db) built from the same data hash"
+source: "recipes/halden/steps; backend/app/domain/imports; PLAN.md section 6"

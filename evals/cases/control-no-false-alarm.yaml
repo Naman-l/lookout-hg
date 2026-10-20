@@ -1,0 +1,22 @@
+id: control-no-false-alarm
+core: true            # part of THE answer sheet: written from the raw files before any agent ran
+category: control
+tests: code            # a stop the application enforces; no model decides it
+kind: detector
+item_key: null
+expected:
+  news_matches:
+    must_match: {N-014: SUP-0002, N-020: SUP-0001}        # Hallerbeck Antriebstechnik Schutzschirm; Yunzhan Motor fire
+    must_not_match: [N-007, N-013, N-016, N-018]          # Wrenfield Logistics (shares a word with Wrenfield Sensor Systems); Corvell Home Fitness; Hallerbeck Immobilien (Bremen landlord); Yunzhan Ceramics (Foshan)
+    place_not_company: [N-021, N-003]                     # Xiamen typhoon, Taoyuan quake: a location risk at most, never a supplier match
+  tariff:
+    bcx_ddp_lines_labelled: pass_through                  # HPO-26-00591/40, HPO-26-00490/50: BCX is importer of record and invoices duty at cost; never shown as Halden paying at entry
+  shortage:
+    raised_only_for_disrupted_parts: [HR-40110, HR-40120, HR-40130, HR-40210, HR-40230, HR-51110, HR-51120, HR-51130, HR-51310]   # the force-majeure parts and the four parts on Jadepeak's slipped lines
+  subsets:                                   # each listed value must be among the measured ones (the build lists every undisrupted part)
+    shortage.not_raised_for: [HR-51210, HR-50110]   # open with no demand; undisrupted with on-hand unknown
+  quotes:
+    alderpoint_hr31110_2500yr_unit_usd: 183.36            # the correction replaces 138.36; one offer, not two
+    alderpoint_hr31110_offers_at_2500yr: 1
+reason: "A system that flags everything passes the other controls; over-caution costs the buyer's attention too."
+source: "data/external/supplier_news.json N-003, N-013, N-014, N-016, N-018, N-020, N-021; data/quotes/2026-09-05_RE_Quote_request..._HR-31110...eml (Grace Liu's correction); data/suppliers.csv SUP-0061 incoterms DDP Reno; tariff_notice.md 'Who pays'"

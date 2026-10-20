@@ -1,0 +1,2333 @@
+openapi: 3.1.0
+info:
+  title: Lookout API
+  version: 0.1.0
+  description: >
+    Halden Robotics' procurement workspace. Records (the system of record) and runs, actions and approvals
+    (the system of action). Every number is a Money or Quantity with its Provenance; every date is measured
+    against the data snapshot (as_of). This file is the contract the UI, the evals and the scenarios are
+    written against; the server's generated schema must match it.
+paths:
+  /api/builds:
+    get:
+      summary: One line per product for its next build month, with readiness counts and a verdict (light, for Today)
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {type: array, items: {$ref: "#/components/schemas/BuildSummary"}}}}}
+  /api/phases:
+    get:
+      summary: The stage ladder of one PO line or one part; done and expected rungs cite a record, every other rung is unknown with who to ask
+      parameters:
+        - {name: po_line, in: query, required: false, schema: {type: string}}
+        - {name: part, in: query, required: false, schema: {type: string}}
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {$ref: "#/components/schemas/Ladder"}}}}
+        "404": {description: no such PO line or part}
+        "422": {description: give exactly one of po_line or part}
+  /api/builds/{product}/{month}/readiness:
+    get:
+      summary: Where each part of a named build stands, rolled up by sub-assembly, with a verdict in counts (never a percent)
+      parameters:
+        - {name: product, in: path, required: true, schema: {type: string}, description: a finished-good part number or its name}
+        - {name: month, in: path, required: true, schema: {type: string}, description: YYYY-MM}
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {$ref: "#/components/schemas/BuildReadiness"}}}}
+        "404": {description: no such product, or no forecast for that month}
+  /api/health:
+    get:
+      summary: Liveness and the data snapshot date
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {$ref: "#/components/schemas/Health"}}}}
+  /api/counts:
+    get:
+      summary: Live counts for the sidebar; with `buyer`, also how many waiting drafts that buyer owns and can sign
+      parameters:
+        - {name: buyer, in: query, schema: {type: string}, description: "a buyer's name: fills to_sign_mine"}
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {$ref: "#/components/schemas/Counts"}}}}
+  /api/action-items:
+    get:
+      summary: The Action list, ranked inside each group (fire, deadline, tariff, unknown)
+      parameters:
+        - {name: owner, in: query, schema: {type: string}}
+        - {name: kind, in: query, schema: {type: string, enum: [disruption, trust, deadline, tariff, unknown]}, description: the group}
+        - {name: category, in: query, schema: {type: string}, description: "the stage: Discovery, RFQ, Quote & risk, Purchasing"}
+        - {name: act_by_from, in: query, schema: {type: string, format: date}, description: "an act-by window; an item with no date is outside it"}
+        - {name: act_by_to, in: query, schema: {type: string, format: date}}
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {type: array, items: {$ref: "#/components/schemas/ActionItem"}}}}}
+  /api/action-items/{key}:
+    get:
+      summary: One action item with its evidence and the latest Recommendation
+      parameters: [{name: key, in: path, required: true, schema: {type: string}, example: "disruption:SUP-0001"}]
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {$ref: "#/components/schemas/ActionItemDetail"}}}}
+        "404": {description: no such item}
+  /api/action-items/{key}/options:
+    get:
+      summary: The ways through a supplier's disruption as data - what each needs, the earliest date the data supports, the cost where it can be computed, the unknown that decides it
+      parameters: [{name: key, in: path, required: true, schema: {type: string}, example: "disruption:SUP-0001"}]
+      responses:
+        "200": {description: "four options: allocation, air_freight, resequence, second_source", content: {application/json: {schema: {type: array, items: {$ref: "#/components/schemas/FireOption"}}}}}
+        "404": {description: this item has no options (only a supplier's disruption does)}
+  /api/action-items/{key}/runs:
+    post:
+      summary: Work this item with the agent (starts a run; returns at once)
+      parameters: [{name: key, in: path, required: true, schema: {type: string}}]
+      requestBody:
+        content: {application/json: {schema: {type: object, properties: {asked_by: {type: string, example: "Dana Reyes"}, live: {type: boolean, description: "Run live: work a recorded item live anyway (hybrid mode); 503 when no model is available"}}}}}
+      responses:
+        "202": {description: started, content: {application/json: {schema: {$ref: "#/components/schemas/RunRef"}}}}
+        "409": {description: a run is already in progress for this item; body is that run's RunRef}
+  /api/ask:
+    post:
+      summary: Ask Lookout a question, optionally about the record on screen; answered as a Recommendation through the same run stream
+      requestBody:
+        required: true
+        content: {application/json: {schema: {$ref: "#/components/schemas/AskBody"}}}
+      responses:
+        "202": {description: started, content: {application/json: {schema: {$ref: "#/components/schemas/RunRef"}}}}
+        "503": {description: no model is available (no API key and not live)}
+  /api/ask/examples:
+    get:
+      summary: Example questions with a recorded answer, which replay without an API key
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {type: array, items: {type: object, properties: {question: {type: string}, context: {oneOf: [{$ref: "#/components/schemas/EntityRef"}, {type: "null"}]}, recorded_at: {type: string, format: date}}}}}}}
+  /api/agents:
+    get:
+      summary: Lookout and its specialists, the stage each serves, its tools and what the recorded runs show it did (read only)
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {type: object, required: [recorded_runs, recorded_cost_usd, earlier_prompt, agents], properties: {recorded_runs: {type: integer}, recorded_cost_usd: {type: number}, earlier_prompt: {type: integer, description: "recordings made on an earlier prompt (recordings/STALE.md)"}, agents: {type: array, items: {type: object, required: [name, label, role, stages, works_on, tools, runs, lookups], properties: {name: {type: string}, label: {type: string}, role: {type: string, enum: [orchestrator, specialist]}, stages: {type: array, items: {type: string, enum: [overview, analysis, decision, approval, data]}}, works_on: {type: string}, tools: {type: array, items: {type: string}}, runs: {type: integer}, lookups: {type: integer}, drafts: {type: integer}, questions: {type: integer}, latest_run_id: {type: [string, "null"]}, by_stage: {type: object, description: "Lookout only: its words and tools per stage", additionalProperties: {type: object, properties: {works_on: {type: string}, tools: {type: array, items: {type: string}}}}}}}}}}}}}
+  /api/evals/summary:
+    get:
+      summary: The last measured eval round, dated, each kind of check as measured (never one pass rate); 404 when no report is committed
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {type: object, properties: {date: {type: string}, round: {type: [integer, "null"]}, model: {type: string}, trials: {type: integer}, git: {type: string}, code_controls: {type: string}, rows: {type: array, items: {type: object, properties: {label: {type: string}, sub: {type: string}, value: {type: string}}}}}}}}}
+        "404": {description: no eval report}
+  /api/parts/{part}/compare-runs:
+    post:
+      summary: Compare quotes for a part with the Sourcing analyst (starts a run)
+      parameters: [{name: part, in: path, required: true, schema: {type: string}}]
+      requestBody:
+        content: {application/json: {schema: {type: object, properties: {asked_by: {type: string}}}}}
+      responses:
+        "202": {description: started, content: {application/json: {schema: {$ref: "#/components/schemas/RunRef"}}}}
+        "404": {description: no such part}
+  /api/imports/steward-runs:
+    post:
+      summary: Ask the Data steward to read an unfamiliar export and propose how to load it (a proposal; nothing is loaded)
+      requestBody:
+        required: true
+        content: {application/json: {schema: {type: object, required: [filename, text, asked_by], properties: {filename: {type: string}, text: {type: string, description: the CSV text}, asked_by: {type: string}}}}}
+      responses:
+        "202": {description: started, content: {application/json: {schema: {$ref: "#/components/schemas/RunRef"}}}}
+        "409": {description: that file is already being read}
+        "422": {description: not a .csv file, or over 2 MB}
+        "503": {description: no model is available (the shipped example replays without one)}
+  /api/messages/{message_id}/triage-runs:
+    post:
+      summary: Ask the Inbox analyst what a message is, what it changes and what to do
+      parameters: [{name: message_id, in: path, required: true, schema: {type: string}}]
+      responses:
+        "202": {description: started, content: {application/json: {schema: {$ref: "#/components/schemas/RunRef"}}}}
+        "409": {description: a run is in progress for this message}
+  /api/messages/{message_id}/reply-runs:
+    post:
+      summary: Draft a reply to the contact on file (staged for approval; never to a sender not on file)
+      parameters: [{name: message_id, in: path, required: true, schema: {type: string}}]
+      responses:
+        "202": {description: started, content: {application/json: {schema: {$ref: "#/components/schemas/RunRef"}}}}
+        "409": {description: a run is in progress for this message}
+  /api/runs:
+    get:
+      summary: Agent activity (newest first)
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {type: array, items: {$ref: "#/components/schemas/Run"}}}}}
+  /api/runs/{run_id}:
+    get:
+      summary: One run with its stored events and, when finished, its Recommendation and verifier result
+      parameters: [{name: run_id, in: path, required: true, schema: {type: string}}]
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {$ref: "#/components/schemas/RunDetail"}}}}
+        "404": {description: no such run}
+  /api/runs/{run_id}/events:
+    get:
+      summary: Live run events (Server-Sent Events). Replays stored events, then streams; honours Last-Event-ID.
+      parameters: [{name: run_id, in: path, required: true, schema: {type: string}}]
+      responses:
+        "200":
+          description: "text/event-stream; each event's data is a RunEvent; stored events carry their row id as the SSE id; step.delta events are streamed, not stored, and carry no id"
+          content: {text/event-stream: {schema: {$ref: "#/components/schemas/RunEvent"}}}
+  /api/actions:
+    get:
+      summary: Drafts and app actions (Approvals tabs; state filters Awaiting approval / Sent (simulated) / Rejected)
+      parameters:
+        - {name: state, in: query, schema: {type: string, enum: [proposed, approved, rejected, executed]}}
+        - {name: item_key, in: query, schema: {type: string}, description: "only the drafts of this Action list item (exact key)"}
+        - {name: run_id, in: query, schema: {type: string}, description: "only the drafts one run wrote"}
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {type: array, items: {$ref: "#/components/schemas/Action"}}}}}
+  /api/actions/{action_id}:
+    patch:
+      operationId: editAction
+      summary: Edit a waiting draft's subject and body; the payload hash changes, so an approval of the old text is refused (409) and the new text needs its own approval
+      parameters: [{name: action_id, in: path, required: true, schema: {type: string}}]
+      requestBody: {required: true, content: {application/json: {schema: {$ref: "#/components/schemas/EditDraft"}}}}
+      responses:
+        "200": {description: the edited draft, content: {application/json: {schema: {$ref: "#/components/schemas/Action"}}}}
+        "404": {description: no such action}
+        "409": {description: the action is not a waiting draft}
+        "422": {description: the person editing is not one of Halden's buyers}
+    get:
+      summary: One action with the exact render a person approves
+      parameters: [{name: action_id, in: path, required: true, schema: {type: string}}]
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {$ref: "#/components/schemas/Action"}}}}
+  /api/actions/{action_id}/approve:
+    post:
+      summary: Approve exactly what was shown, then execute (simulated send). Refuses on a hash mismatch or a non-proposed state.
+      parameters: [{name: action_id, in: path, required: true, schema: {type: string}}]
+      requestBody:
+        required: true
+        content: {application/json: {schema: {type: object, required: [payload_hash, approved_by], properties: {payload_hash: {type: string}, approved_by: {type: string, description: "a buyer in the buyers table (id or full name); the ledger records the full name"}, confirm_unverified: {type: boolean, description: "required when the run that wrote the draft did not pass its checks (the Action lists them in unverified_checks)"}}}}}
+      responses:
+        "200": {description: approved and executed, content: {application/json: {schema: {$ref: "#/components/schemas/Action"}}}}
+        "409": {description: "refused (state is not proposed, the payload changed since it was shown, or the draft's run did not pass its checks and confirm_unverified is false)"}
+        "403": {description: "the draft belongs to another buyer (the owner of its item); LOOKOUT_ALLOW_DELEGATION=1 lets a team sign for each other"}
+        "422": {description: the approver is not one of Halden's buyers}
+  /api/actions/{action_id}/reject:
+    post:
+      summary: Reject with a reason
+      parameters: [{name: action_id, in: path, required: true, schema: {type: string}}]
+      requestBody:
+        required: true
+        content: {application/json: {schema: {type: object, required: [reason, rejected_by], properties: {reason: {type: string}, rejected_by: {type: string}}}}}
+      responses:
+        "200": {description: rejected, content: {application/json: {schema: {$ref: "#/components/schemas/Action"}}}}
+        "409": {description: refused (state is not proposed)}
+        "403": {description: the draft belongs to another buyer (see approve)}
+        "422": {description: the person rejecting is not one of Halden's buyers}
+  /api/outbox:
+    get:
+      summary: Simulated sends (the Sent tab of Approvals)
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {type: array, items: {$ref: "#/components/schemas/OutboxMessage"}}}}}
+  /api/orders:
+    get:
+      summary: The open PO report (open and partial lines; filter by buyer)
+      parameters:
+        - {name: buyer, in: query, schema: {type: string}}
+        - {name: supplier, in: query, schema: {type: string}, description: a supplier identity id}
+        - {name: status, in: query, schema: {type: string, enum: [OPEN, PARTIAL]}}
+        - {name: past_due, in: query, schema: {type: boolean}, description: "true: only lines behind their promise; false: the rest"}
+        - {name: include_stale, in: query, schema: {type: boolean, default: true}}
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {type: array, items: {$ref: "#/components/schemas/PoLine"}}}}}
+  /api/suppliers:
+    get:
+      summary: Suppliers, one row per company, vendor records counted
+      parameters:
+        - {name: country, in: query, schema: {type: string}, description: its country code}
+        - {name: risk, in: query, schema: {type: boolean}, description: "true: only suppliers whose quotes or news carry a warning"}
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {type: array, items: {$ref: "#/components/schemas/Supplier"}}}}}
+  /api/search:
+    get:
+      operationId: search
+      summary: Search across action items, messages, suppliers (names, former names, domains), parts (number, name), PO lines ('HPO-26-00450/10', 'PO 450/10') and people; deterministic, no model
+      parameters:
+        - {name: q, in: query, required: true, schema: {type: string}, description: "every word must be found; the query is also read for the records it names, so 'Yunzhan', 'HR-40110', 'PO 450/10' and 'Li Wei' resolve first"}
+        - {name: types, in: query, schema: {type: string}, description: "comma-separated: item, message, supplier, part, po_line, person"}
+        - {name: limit, in: query, schema: {type: integer, default: 30, maximum: 100}, description: "across types no one kind fills the list; with one type, all of the limit"}
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {type: array, items: {$ref: "#/components/schemas/SearchHit"}}}}}
+  /api/annotate:
+    post:
+      operationId: annotateText
+      summary: The things a text mentions, matched against the records (parts, suppliers, people, PO lines, money, dates, quantities); deterministic, no model; offsets are UTF-16 indices
+      requestBody:
+        required: true
+        content: {application/json: {schema: {type: object, required: [text], properties: {text: {type: string}, held: {type: boolean, default: false, description: "the text is from a message the code holds (look-alike sender, bank-detail change): names in it are claims, never records"}}}}}
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {type: array, items: {$ref: "#/components/schemas/Span"}}}}}
+  /api/consignments:
+    get:
+      summary: Material Halden owns at a contract manufacturer, the part it becomes there, its open orders' dates now and the products a slip reaches
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {type: array, items: {$ref: "#/components/schemas/Consignment"}}}}}
+  /api/people:
+    get:
+      summary: The buyers - who they are, what they buy, what is open on their desk (the "who are you" list; owners on every screen are these ids)
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {type: array, items: {$ref: "#/components/schemas/Person"}}}}}
+  /api/sources:
+    get:
+      summary: Outside sources on file (news items, regulatory notices) as received, newest first; read only
+      parameters:
+        - {name: type, in: query, schema: {type: string, enum: [news, notice]}}
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {type: array, items: {$ref: "#/components/schemas/Source"}}}}}
+  /api/sources/{source_type}/{source_id}:
+    get:
+      summary: One outside source as received - a news item (publisher, url, text) or a notice (its full text) - for a case's Overview
+      parameters:
+        - {name: source_type, in: path, required: true, schema: {type: string, enum: [news, notice]}}
+        - {name: source_id, in: path, required: true, schema: {type: string}}
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {$ref: "#/components/schemas/Source"}}}}
+        "404": {description: no such source}
+  /api/parts:
+    get:
+      summary: The item master as Halden uses it
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {type: array, items: {$ref: "#/components/schemas/Part"}}}}}
+  /api/messages:
+    get:
+      summary: The shared inbox, one row per message, trust computed before any model reads it; searched with q and filtered
+      parameters:
+        - {name: q, in: query, schema: {type: string}, description: "every word must be found in the subject, the sender, the company (names, former names, domain, contact), the part and PO numbers it names (also 'PO 450/10' and '450/10'), the facts read out of it, or the body; best match first, then newest; each row says where in `matches`"}
+        - {name: kind, in: query, schema: {type: string}, description: "force majeure, slip, quote, correction, payment change, spot offer, price change, closure"}
+        - {name: supplier, in: query, schema: {type: string}, description: a supplier identity id}
+        - {name: trust, in: query, schema: {type: string, enum: [on_file, new_sender, suspicious]}}
+        - {name: date_from, in: query, schema: {type: string, format: date}}
+        - {name: date_to, in: query, schema: {type: string, format: date}}
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {type: array, items: {$ref: "#/components/schemas/MessageSummary"}}}}}
+  /api/messages/review:
+    get:
+      summary: The messages the inbox ladder will not act on alone (blocked or for review), with the reason
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {type: array, items: {$ref: "#/components/schemas/Classification"}}}}}
+  /api/messages/{message_id}:
+    get:
+      summary: One message as quoted data, its trust flags, the lines it rests on and what it changes
+      parameters: [{name: message_id, in: path, required: true, schema: {type: string}}]
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {$ref: "#/components/schemas/MessageDetail"}}}}
+        "404": {description: no such message}
+  /api/suppliers/{supplier_id}:
+    get:
+      summary: One supplier's profile, its vendor records and the contact on file
+      parameters: [{name: supplier_id, in: path, required: true, schema: {type: string}}]
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {$ref: "#/components/schemas/SupplierDetail"}}}}
+  /api/data/steps:
+    get:
+      summary: The recipe steps that built the database, each with the defects it handled
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {type: array, items: {$ref: "#/components/schemas/BuildStep"}}}}}
+  /api/data/stamp:
+    get:
+      summary: The build stamp (built at, data hash, recipe version, checks passed)
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {$ref: "#/components/schemas/BuildStamp"}}}}
+  /api/orders/{po_line_id}:
+    get:
+      summary: One PO line, the clean values beside the source row exactly as it was
+      parameters: [{name: po_line_id, in: path, required: true, schema: {type: string}}]
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {$ref: "#/components/schemas/PoLineView"}}}}
+        "404": {description: no such PO line}
+  /api/parts/{part}:
+    get:
+      summary: One part, the item master row as exported beside the clean facts, where it is used, its tariff and origin status
+      parameters: [{name: part, in: path, required: true, schema: {type: string}}]
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {$ref: "#/components/schemas/PartDetail"}}}}
+        "404": {description: no such part}
+  /api/parts/{part}/where-used:
+    get:
+      summary: The robots a part goes into, with the quantity per robot and the path through the BOM
+      parameters: [{name: part, in: path, required: true, schema: {type: string}}]
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {type: array, items: {$ref: "#/components/schemas/WhereUsedRow"}}}}}
+        "404": {description: no such part}
+  /api/products:
+    get:
+      summary: The robots Halden builds
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {type: array, items: {$ref: "#/components/schemas/ProductOut"}}}}}
+  /api/products/{product}/bom:
+    get:
+      summary: A robot's indented BOM in drawing order, with defects marked
+      parameters: [{name: product, in: path, required: true, schema: {type: string}}]
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {$ref: "#/components/schemas/BomTree"}}}}
+        "404": {description: no such product}
+  /api/parts/{part}/offers:
+    get:
+      summary: Every offer for a part (PO history and quotes in the inbox), each with its conditions
+      parameters: [{name: part, in: path, required: true, schema: {type: string}}]
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {type: array, items: {$ref: "#/components/schemas/OfferView"}}}}}
+        "404": {description: no such part}
+  /api/parts/{part}/compare:
+    get:
+      summary: Quote comparison for a part at a quantity, landed cost per offer
+      parameters:
+        - {name: part, in: path, required: true, schema: {type: string}}
+        - {name: qty, in: query, schema: {type: integer}}
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {$ref: "#/components/schemas/BidTab"}}}}
+        "404": {description: no such part}
+  /api/imports/questions:
+    get:
+      summary: The current import's questions as a short deck (grouped entries, a proposed answer each)
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {$ref: "#/components/schemas/ImportDeck"}}}}
+  /api/imports/answers:
+    post:
+      summary: Accept, change or skip questions (one or many)
+      requestBody:
+        required: true
+        content: {application/json: {schema: {$ref: "#/components/schemas/ImportAnswers"}}}
+      responses:
+        "200": {description: the deck after the answers, content: {application/json: {schema: {$ref: "#/components/schemas/ImportDeck"}}}}
+  /api/imports/dry-run:
+    get:
+      summary: The recipe run on a copy with the current answers; before and after per file, the load checks
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {$ref: "#/components/schemas/ImportDryRun"}}}}
+  /api/imports/approve:
+    post:
+      summary: Load what the dry run showed. Refused if the answers changed since that dry run.
+      requestBody:
+        required: true
+        content: {application/json: {schema: {type: object, required: [hash, approved_by], properties: {hash: {type: string}, approved_by: {type: string}}}}}
+      responses:
+        "200": {description: loaded, content: {application/json: {schema: {type: object, properties: {loaded: {type: boolean}, built_at: {type: string, format: date-time}}}}}}
+        "409": {description: the answers changed since the dry run}
+  /api/forecast:
+    get:
+      summary: Robots to build per month, by product
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {type: array, items: {$ref: "#/components/schemas/ForecastRow"}}}}}
+  /api/data-issues:
+    get:
+      summary: Defects found in Halden's files and how each was handled
+      responses:
+        "200": {description: ok, content: {application/json: {schema: {type: array, items: {$ref: "#/components/schemas/DataIssue"}}}}}
+components:
+  schemas:
+    Source:
+      type: object
+      required: [type, id, kind, date, title]
+      properties:
+        type: {type: string, description: news or notice}
+        id: {type: string}
+        kind: {type: string, description: "the event's kind (news, tariff_notice)"}
+        date: {type: string, format: date}
+        title: {type: string}
+        summary: {type: [string, "null"], description: what the record says it changes, as the recipe wrote it down}
+        publisher: {type: [string, "null"]}
+        url: {type: [string, "null"]}
+        text: {type: [string, "null"], description: the source as received}
+    Grade:
+      properties:
+        reviewer_score:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Reviewer Score
+        checks_passed:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Checks Passed
+        checks_total:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Checks Total
+        summary:
+          type: string
+          title: Summary
+          default: ''
+        revised:
+          type: boolean
+          title: Revised
+          default: false
+        failed_checks:
+          type: array
+          items: {$ref: "#/components/schemas/FailedCheck"}
+          description: the Reviewer checks that failed, in plain words, so the strip can name them
+      type: object
+      title: Grade
+      description: 'The quiet strip under a Recommendation: the Reviewer''s score and whether it was revised.'
+    FailedCheck: {type: object, required: [name, reason], properties: {name: {type: string}, reason: {type: string}}}
+    EditDraft:
+      properties:
+        subject:
+          type: string
+          title: Subject
+        body:
+          type: string
+          title: Body
+        edited_by:
+          type: string
+          title: Edited By
+      type: object
+      required:
+      - subject
+      - body
+      - edited_by
+      title: EditDraft
+    Decision:
+      description: One decision a person took on an item, from the ledger.
+      properties:
+        action_id:
+          title: Action Id
+          type: string
+        type:
+          title: Type
+          type: string
+        state:
+          title: State
+          type: string
+        by:
+          title: By
+          type: string
+        at:
+          title: At
+          type: string
+        reason:
+          anyOf:
+          - type: string
+          - type: 'null'
+          default: null
+          title: Reason
+        text:
+          title: Text
+          type: string
+      required:
+      - action_id
+      - type
+      - state
+      - by
+      - at
+      - text
+      title: Decision
+      type: object
+    BuildSummary:
+      properties:
+        product:
+          $ref: '#/components/schemas/EntityRef'
+        month:
+          type: string
+          title: Month
+        units:
+          type: integer
+          title: Units
+        counts:
+          additionalProperties:
+            type: integer
+          type: object
+          title: Counts
+        verdict:
+          type: string
+          title: Verdict
+      type: object
+      required:
+      - product
+      - month
+      - units
+      - counts
+      - verdict
+      title: BuildSummary
+      description: 'GET /api/builds: one row per product, for its next build month: small enough to load on every screen.'
+    LinePromise:
+      properties:
+        date:
+          type: string
+          title: Date
+        erp_date:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Erp Date
+      type: object
+      required:
+      - date
+      title: LinePromise
+      description: The date an open line is now expected, and the ERP date when it differs (the supplier moved it).
+    Ask:
+      properties:
+        owner:
+          type: string
+          title: Owner
+        question:
+          type: string
+          title: Question
+      type: object
+      required:
+      - owner
+      - question
+      title: Ask
+    Qty:
+      properties:
+        value:
+          type: string
+          title: Value
+        uom:
+          type: string
+          title: Uom
+      type: object
+      required:
+      - value
+      - uom
+      title: Qty
+      description: A plain quantity for a row whose provenance is said once for the whole build (`need_source`) or by its ladder.
+    Shortage:
+      description: 'The first month with a shortfall that the records assert (supply under
+        a force-majeure notice): what is needed, what is covered, what is short.'
+      properties:
+        month:
+          title: Month
+          type: string
+        requirement:
+          $ref: '#/components/schemas/Quantity'
+        covered:
+          $ref: '#/components/schemas/Quantity'
+        short:
+          $ref: '#/components/schemas/Quantity'
+      required:
+      - month
+      - requirement
+      - covered
+      - short
+      title: Shortage
+      type: object
+    SupplyState:
+      description: The worst state among the part's open orders, as the stage ladder reads
+        it, with the record it comes from.
+      properties:
+        state:
+          title: State
+          type: string
+        date:
+          anyOf:
+          - type: string
+          - type: 'null'
+          default: null
+          title: Date
+        detail:
+          title: Detail
+          type: string
+        source:
+          anyOf:
+          - $ref: '#/components/schemas/EntityRef'
+          - type: 'null'
+          default: null
+      required:
+      - state
+      - detail
+      title: SupplyState
+      type: object
+    Ladder:
+      properties:
+        subject:
+          $ref: '#/components/schemas/EntityRef'
+        kind:
+          type: string
+          enum:
+          - po_line
+          - part
+          title: Kind
+        rungs:
+          items:
+            $ref: '#/components/schemas/Rung'
+          type: array
+          title: Rungs
+        counts:
+          additionalProperties:
+            type: integer
+          type: object
+          title: Counts
+        verdict:
+          type: string
+          title: Verdict
+        qty:
+          anyOf:
+          - $ref: '#/components/schemas/Quantity'
+          - type: 'null'
+        promised:
+          anyOf:
+          - $ref: '#/components/schemas/LinePromise'
+          - type: 'null'
+        lines:
+          items:
+            $ref: '#/components/schemas/Ladder'
+          type: array
+          title: Lines
+          default: []
+      type: object
+      required:
+      - subject
+      - kind
+      - rungs
+      - counts
+      - verdict
+      title: Ladder
+      description: 'GET /api/phases: the rungs of one PO line, or of one part (with the ladders of its open lines inside).'
+    Rung:
+      properties:
+        key:
+          type: string
+          title: Key
+        label:
+          type: string
+          title: Label
+        state:
+          type: string
+          enum:
+          - done
+          - expected
+          - late
+          - disrupted
+          - unknown
+          - na
+          title: State
+        date:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Date
+        detail:
+          type: string
+          title: Detail
+        source:
+          anyOf:
+          - $ref: '#/components/schemas/EntityRef'
+          - type: 'null'
+        unknown:
+          anyOf:
+          - $ref: '#/components/schemas/Unknown'
+          - type: 'null'
+        flag:
+          anyOf:
+          - type: string
+            enum:
+            - disrupted
+            - past_due
+            - slipped
+          - type: 'null'
+          title: Flag
+      type: object
+      required:
+      - key
+      - label
+      - state
+      - detail
+      title: Rung
+      description: One step in the life of an order or a part. `done` and `expected` carry the date and the record they come from;
+        `unknown` carries who to ask.
+    BuildReadiness:
+      properties:
+        product:
+          $ref: '#/components/schemas/EntityRef'
+        month:
+          type: string
+          title: Month
+        units:
+          type: integer
+          title: Units
+        verdict:
+          type: string
+          title: Verdict
+        need_source:
+          $ref: '#/components/schemas/Provenance'
+        counts:
+          additionalProperties:
+            type: integer
+          type: object
+          title: Counts
+        groups:
+          items:
+            $ref: '#/components/schemas/ReadyGroup'
+          type: array
+          title: Groups
+        stock_counted:
+          type: integer
+          title: Stock Counted
+        stock_note:
+          type: string
+          title: Stock Note
+      type: object
+      required:
+      - product
+      - month
+      - units
+      - verdict
+      - need_source
+      - counts
+      - groups
+      - stock_counted
+      - stock_note
+      title: BuildReadiness
+      description: 'GET /api/builds/{product}/{month}/readiness: every part of a build, its state, rolled up by sub-assembly,
+        with a verdict in counts.'
+    ReadyGroup:
+      properties:
+        assembly:
+          $ref: '#/components/schemas/EntityRef'
+        parts:
+          items:
+            $ref: '#/components/schemas/ReadyPart'
+          type: array
+          title: Parts
+        counts:
+          additionalProperties:
+            type: integer
+          type: object
+          title: Counts
+      type: object
+      required:
+      - assembly
+      - parts
+      - counts
+      title: ReadyGroup
+    ReadyPart:
+      properties:
+        part:
+          $ref: '#/components/schemas/EntityRef'
+        state:
+          type: string
+          title: State
+        detail:
+          type: string
+          title: Detail
+        need:
+          $ref: '#/components/schemas/Qty'
+        open_qty:
+          anyOf:
+          - $ref: '#/components/schemas/Qty'
+          - type: 'null'
+        po_lines:
+          items:
+            type: string
+          type: array
+          title: Po Lines
+          default: []
+        arrives:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Arrives
+        supplier:
+          anyOf:
+          - $ref: '#/components/schemas/EntityRef'
+          - type: 'null'
+        cause:
+          anyOf:
+          - $ref: '#/components/schemas/EntityRef'
+          - type: 'null'
+        on_hand:
+          anyOf:
+          - $ref: '#/components/schemas/Qty'
+          - type: 'null'
+        ask:
+          anyOf:
+          - $ref: '#/components/schemas/Ask'
+          - type: 'null'
+        cases:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Cases
+          description: the keys of Today's rows that hold this part or one of its lines (duty rows left out)
+      type: object
+      required:
+      - part
+      - state
+      - detail
+      - need
+      title: ReadyPart
+    Health:
+      type: object
+      required: [ok, as_of, company, company_short, id_patterns, agent_live]
+      properties:
+        ok: {type: boolean}
+        agent_live: {type: boolean, description: "true when runs and Ask use the live agent (a key, or LOOKOUT_LIVE=1); false when only saved runs and the example questions answer"}
+        boot: {type: string, description: "this server process; a restart (a demo reset) changes it, so choices a browser kept are dropped"}
+        as_of: {type: string, format: date, example: "2026-09-25"}
+        company: {type: string, description: "The customer's name as the build's recipe configures it; \"the company\" when none is configured", example: "Acme Robotics"}
+        company_short: {type: string, description: "Its first word, for short copy", example: "Acme"}
+        id_patterns:
+          type: object
+          description: "What each kind of id looks like in this customer's records, as regular expressions from the recipe (null when it names none); the screens match ids with these instead of writing a prefix"
+          properties:
+            part: {type: [string, "null"]}
+            po_number: {type: [string, "null"]}
+            po_line: {type: [string, "null"]}
+            supplier: {type: [string, "null"]}
+            legacy_supplier: {type: [string, "null"]}
+    Counts:
+      type: object
+      properties:
+        open_po_summary:
+          type: string
+          description: 'The Orders header, equal to its rows: "182 open · 3 may not really be open"'
+        action_items: {type: integer}
+        inbox: {type: integer}
+        suppliers: {type: integer}
+        parts: {type: integer}
+        open_po_lines: {type: integer}
+        stale_po_lines: {type: integer}
+        approvals_pending: {type: integer}
+        waiting_all: {type: integer, description: "every draft waiting for a signature, whoever owns it: show it only where it is labelled 'all'"}
+        to_sign_mine: {type: [integer, "null"], description: "the waiting drafts the asked buyer owns and can sign (give `buyer`); the one number Today and Approvals' 'To sign' show"}
+        runs_running: {type: integer}
+        data_issues: {type: integer}
+    EntityRef: {type: object, required: [type, id], properties: {type: {type: string}, id: {type: string}, label: {type: [string, "null"]}}}
+    Provenance:
+      type: object
+      required: [method, source]
+      properties:
+        method: {type: string, enum: [stated, computed, inferred, flagged, unknown, extracted]}
+        source: {type: string}
+        row: {type: [string, "null"]}
+        raw: {type: [string, "null"]}
+        inputs: {type: array, items: {$ref: "#/components/schemas/EntityRef"}}
+        rule: {type: [string, "null"]}
+        by: {type: string}
+    Money: {type: object, required: [amount, currency, provenance], properties: {amount: {type: string, description: decimal as string}, currency: {type: string}, usd: {type: [string, "null"]}, rate: {type: [string, "null"]}, rate_month: {type: [string, "null"]}, provenance: {$ref: "#/components/schemas/Provenance"}}}
+    Quantity: {type: object, required: [value, uom, provenance], properties: {value: {type: string}, uom: {type: string}, ea: {type: [string, "null"]}, provenance: {$ref: "#/components/schemas/Provenance"}}}
+    Unknown: {type: object, required: [what, why_it_blocks, owner, question], properties: {what: {type: string}, why_it_blocks: {type: string}, owner: {type: string}, question: {type: string}, refs: {type: array, items: {$ref: "#/components/schemas/EntityRef"}}}}
+    Span:
+      type: object
+      required: [start, end, type, ref, label, text]
+      properties:
+        start: {type: integer, description: "JavaScript string index (UTF-16 code units) where the match starts"}
+        end: {type: integer, description: "... and where it ends (exclusive)"}
+        type: {type: string, enum: [part, supplier, supplier_claimed, supplier_lookalike, person, po_line, money, date, quantity, duration]}
+        ref: {type: string, description: "the record id (a part number, a supplier id, a buyer id, a PO line id), the normalised value (money, date, quantity), the address of a look-alike sender, or 'claimed:<text>' for a name in a held message; neither of the last two ever resolves to a real supplier"}
+        label: {type: string, description: "what the chip shows, name first (a part carries its product)"}
+        text: {type: string, description: "the matched substring, so a renderer can check the span and drop it if the text has changed"}
+    ActionItem:
+      type: object
+      required: [key, group, severity, title, owner]
+      properties:
+        at_stake_note:
+          type: string
+          nullable: true
+          description: What the at-stake figure means in builds, e.g. "182 Tern robots in October"
+        key: {type: string, example: "disruption:SUP-0001"}
+        group: {type: string, enum: [disruption, trust, deadline, tariff, unknown]}
+        severity: {type: string, enum: [high, medium, low]}
+        waits_until: {type: [string, "null"], format: date, description: "a date before which nothing is chased (the supplier promised something by then): the item states this trigger and the agent drafts nothing earlier"}
+        title: {type: string}
+        at_stake: {oneOf: [{$ref: "#/components/schemas/Money"}, {$ref: "#/components/schemas/Quantity"}, {$ref: "#/components/schemas/Unknown"}]}
+        at_stake_gross: {oneOf: [{$ref: "#/components/schemas/Money"}, {type: "null"}]}
+        act_by: {type: [string, "null"], format: date}
+        days_left: {type: [integer, "null"]}
+        owner: {type: string}
+        next_action: {type: string}
+        title_entities: {type: array, items: {$ref: "#/components/schemas/Span"}, description: "what the title mentions, matched against the records; offsets are UTF-16 indices"}
+        next_action_entities: {type: array, items: {$ref: "#/components/schemas/Span"}, description: "what the next step mentions"}
+        refs: {type: array, items: {$ref: "#/components/schemas/EntityRef"}, description: "each carries id and label (the name it shows)"}
+        robots_short: {type: array, items: {$ref: "#/components/schemas/RobotsShort"}, description: "fire rows: robots per product and month the short parts stop, as numbers"}
+        robots: {type: array, items: {$ref: "#/components/schemas/EntityRef"}, description: "every robot (product) whose BOM uses a part this item names, in product order; empty when it names no parts"}
+        robot_notes: {type: object, additionalProperties: {type: string}, description: "product id -> the one fact tying this item to that robot, where there is one (\"HR-40320 30 d late\")"}
+        summary: {type: [string, "null"], description: "the row's one line of facts under the title, in a buyer's words"}
+        lines_in_scope: {type: [integer, "null"], description: "fire rows: open lines under the notice"}
+        lines_already_late: {type: [integer, "null"], description: "fire rows: of those, lines promised before the data date"}
+        dated:
+          type: array
+          description: "a disruption's own dated steps (the supplier's closure, the revised dates it promised, a quote that lapses), folded under it instead of listed as rows, soonest first; each still opens by its own key"
+          items:
+            type: object
+            required: [key, title]
+            properties:
+              key: {type: string}
+              title: {type: string}
+              act_by: {type: [string, "null"]}
+              days_left: {type: [integer, "null"]}
+              at_stake: {oneOf: [{$ref: "#/components/schemas/Money"}, {$ref: "#/components/schemas/Quantity"}, {$ref: "#/components/schemas/Unknown"}, {type: "null"}]}
+        category:
+          type: [string, "null"]
+          enum: [Discovery, RFQ, "Quote & risk", Purchasing, null]
+          description: Which of the procurement stages the item belongs to, where it belongs to one (a quiet tag); null where none applies
+        stage: {oneOf: [{$ref: "#/components/schemas/Stage"}, {type: "null"}], description: "where the work stands, derived on every request from the runs and the ledger (list and item)"}
+    RobotsShort:
+      type: object
+      required: [product, month, robots, short_parts]
+      properties:
+        product: {$ref: "#/components/schemas/EntityRef"}
+        month: {type: string, example: "2026-10"}
+        robots: {type: integer, description: the forecast for that month}
+        short_parts: {type: array, items: {$ref: "#/components/schemas/EntityRef"}}
+    Need:
+      type: object
+      required: [what, owner]
+      properties:
+        what: {type: string}
+        owner: {type: string}
+        ref: {oneOf: [{$ref: "#/components/schemas/EntityRef"}, {type: "null"}]}
+    ProductExposure:
+      type: object
+      required: [product, robots, short_parts]
+      properties:
+        product: {$ref: "#/components/schemas/EntityRef"}
+        robots: {type: integer}
+        short_parts: {type: array, items: {$ref: "#/components/schemas/EntityRef"}}
+    FireOption:
+      type: object
+      required: [kind, label, decided_by]
+      properties:
+        kind: {type: string, enum: [allocation, air_freight, resequence, second_source]}
+        label: {type: string}
+        needs: {type: array, items: {$ref: "#/components/schemas/Need"}}
+        earliest: {oneOf: [{type: object, required: [date, provenance], properties: {date: {type: string, format: date}, provenance: {$ref: "#/components/schemas/Provenance"}}}, {type: "null"}], description: the first date the data supports}
+        earliest_basis: {type: [string, "null"], description: "where that date comes from, or why there is none"}
+        not_before: {oneOf: [{type: object, required: [date, provenance], properties: {date: {type: string, format: date}, provenance: {$ref: "#/components/schemas/Provenance"}}}, {type: "null"}], description: a floor when the real date is unknown}
+        cost_delta: {oneOf: [{$ref: "#/components/schemas/Money"}, {type: "null"}], description: "versus what is paid today, where it can be computed"}
+        cost_basis: {type: [string, "null"]}
+        duty_effect: {oneOf: [{$ref: "#/components/schemas/Money"}, {type: "null"}], description: duty owed only if the goods ship late; shipping in time avoids it}
+        cost_unknowns: {type: array, items: {$ref: "#/components/schemas/Unknown"}}
+        decided_by: {$ref: "#/components/schemas/Unknown"}
+        products: {type: array, items: {$ref: "#/components/schemas/ProductExposure"}, description: "resequence: every product with its short parts and forecast, in part-number order (laid out, not ranked)"}
+        moq: {type: [integer, "null"]}
+        refs: {type: array, items: {$ref: "#/components/schemas/EntityRef"}}
+    Stage:
+      type: object
+      required: [key, label, step, of, next_act]
+      properties:
+        key: {type: string, enum: [found, worked, decision_ready, drafted, approved, sent, answered]}
+        label: {type: string, description: "Found, Worked, Decision ready, Needs your OK, Approved, Sent, Answered; with ' (in <supplier>'s request)' when another item of the same supplier's request covers this one"}
+        step: {type: integer, minimum: 1, maximum: 7}
+        of: {type: integer, example: 7}
+        next_act: {type: string, description: the one thing to do now, in plain words}
+        at: {type: [string, "null"], description: when it got here, if a record says}
+        waiting_on: {type: [string, "null"], description: "who has the move: you, the supplier, or null when nothing is owed"}
+        action: {oneOf: [{$ref: "#/components/schemas/EntityRef"}, {type: "null"}], description: "the draft or request this stage is about; the one on another item of the same supplier when this item is covered by it"}
+    ActionItemDetail:
+      allOf:
+        - {$ref: "#/components/schemas/ActionItem"}
+        - type: object
+          properties:
+            finding: {type: string}
+            finding_entities: {type: array, items: {$ref: "#/components/schemas/Span"}, description: "what the finding mentions"}
+            numbers: {type: array, items: {type: object, properties: {id: {type: string}, label: {type: string}, value: {oneOf: [{$ref: "#/components/schemas/Money"}, {$ref: "#/components/schemas/Quantity"}, {$ref: "#/components/schemas/Unknown"}, {$ref: "#/components/schemas/DateValue"}]}}}}
+            unknowns: {type: array, items: {$ref: "#/components/schemas/Unknown"}}
+            evidence: {type: array, items: {$ref: "#/components/schemas/EntityRef"}}
+            latest_run: {type: [object, "null"], description: "the newest finished run on the item: run_id, status, verifier_passed, reviewer_score (null while pending), cost_usd, duration_ms, started_at, recorded, recorded_at"}
+            linked: {type: array, description: "other cases on the list that share an order line, part, supplier or message (the agent packet's rule)", items: {type: object, required: [key, title, why], properties: {key: {type: string}, title: {type: string}, why: {type: string}, owner: {type: [string, "null"]}}}}
+            recommendation: {oneOf: [{$ref: "#/components/schemas/Recommendation"}, {type: "null"}]}
+            po_lines: {type: array, items: {$ref: "#/components/schemas/PoLine"}}
+            messages: {type: array, items: {$ref: "#/components/schemas/MessageSummary"}}
+            short_names: {type: object, additionalProperties: {type: string}, description: "each supplier ref's id to the name a buyer says ('Acme' for 'Acme Industrial Co., Ltd.')"}
+            time_phased: {oneOf: [{$ref: "#/components/schemas/TimePhased"}, {type: "null"}]}
+            decisions:
+              type: array
+              items: {$ref: '#/components/schemas/Decision'}
+              description: Decided actions on this item from the ledger, newest first; empty when nobody has decided anything
+    RunRef: {type: object, required: [run_id, status], properties: {run_id: {type: string}, status: {type: string, enum: [running, ok, failed, refused, did_not_pass]}}}
+    Run:
+      type: object
+      properties:
+        run_id: {type: string}
+        item_key: {type: string}
+        asked_by: {type: string}
+        status: {type: string, enum: [running, ok, failed, refused, did_not_pass]}
+        started_at: {type: string, format: date-time}
+        first_step_ms: {type: [integer, "null"]}
+        duration_ms: {type: [integer, "null"]}
+        tool_calls: {type: integer}
+        denied_calls: {type: integer}
+        cost_usd: {type: [string, "null"], description: "USD as a 4-decimal string; 0 for a replay"}
+        original_cost_usd: {type: [string, "null"], description: "for a replay: what the recorded run cost, as a 4-decimal string"}
+        original_tokens_in: {type: [integer, "null"], description: "for a replay: the tokens the recorded run read (its own tokens_in is 0)"}
+        original_tokens_out: {type: [integer, "null"], description: "for a replay: the tokens the recorded run wrote"}
+        title: {type: [string, "null"], description: "an Ask run's question, so a list can name it in words"}
+        model: {type: string}
+        prompt_hash: {type: string}
+        recorded: {type: boolean, description: "true when this run is a recording from the build, served because no API key is set"}
+        recorded_at: {type: [string, "null"], format: date, description: the date the recorded run was made}
+        workflow: {"type": "string", "title": "Workflow", "default": ""}
+        specialists: {"items": {"additionalProperties": {"type": "string"}, "type": "object"}, "type": "array", "title": "Specialists"}
+        first_token_ms: {"anyOf": [{"type": "integer"}, {"type": "null"}], "title": "First Token Ms"}
+        tokens_in: {"anyOf": [{"type": "integer"}, {"type": "null"}], "title": "Tokens In"}
+        tokens_out: {"anyOf": [{"type": "integer"}, {"type": "null"}], "title": "Tokens Out"}
+        verifier_passed: {"anyOf": [{"type": "boolean"}, {"type": "null"}], "title": "Verifier Passed"}
+        reviewer_score: {"anyOf": [{"type": "integer"}, {"type": "null"}], "title": "Reviewer Score"}
+        checks_passed: {"anyOf": [{"type": "integer"}, {"type": "null"}], "title": "Checks Passed"}
+        checks_total: {"anyOf": [{"type": "integer"}, {"type": "null"}], "title": "Checks Total"}
+        revised: {"type": "boolean", "title": "Revised", "default": false}
+    RunDetail:
+      allOf:
+        - {$ref: "#/components/schemas/Run"}
+        - type: object
+          properties:
+            events: {type: array, items: {$ref: "#/components/schemas/RunEvent"}}
+            recommendation: {oneOf: [{$ref: "#/components/schemas/Recommendation"}, {type: "null"}]}
+            verifier: {oneOf: [{$ref: "#/components/schemas/VerifierResult"}, {type: "null"}]}
+            tables: {type: array, items: {$ref: "#/components/schemas/AskTable"}, description: "an Ask answer's tables (F100), built by code when the run is read from its own tool results; empty on any other run"}
+    AskTable:
+      type: object
+      required: [kind, title, by, columns, rows, more]
+      properties:
+        kind: {type: string, enum: [shortfall, po_lines, exposure, quotes]}
+        title: {type: string, example: "Short by month"}
+        by: {type: string, example: "Supply planner", description: "the specialist whose lookup returned the figures"}
+        columns: {type: array, items: {type: string}, example: ["Oct", "Nov"]}
+        rows:
+          type: array
+          maxItems: 6
+          items:
+            type: object
+            required: [label, cells]
+            properties:
+              label: {type: string, example: "HR-40110"}
+              ref: {type: object, description: "{type, id}: a part, a PO line or a quote"}
+              part: {type: [string, "null"], description: "the part a PO line or quote is for"}
+              cells: {type: array, items: {oneOf: [{type: object, required: [say, id], properties: {say: {type: string, example: "364"}, id: {type: string, example: "shortage:HR-40110:2026-10:short", description: "the evidence id of the figure a tool returned in this run"}}}, {type: "null"}]}}
+        more: {type: integer, description: "rows left out after the first 6"}
+    RunEvent:
+      type: object
+      required: [run_id, seq, ts, t_ms, type, summary]
+      properties:
+        run_id: {type: string}
+        parent_run_id: {type: [string, "null"]}
+        seq: {type: integer}
+        ts: {type: string, format: date-time}
+        t_ms: {type: integer}
+        type: {type: string, enum: [run.started, step.text, step.delta, child.started, child.finished, tool.called, tool.result, action.staged, verifier.result, revision.started, run.finished, run.failed, run.status, review.result]}
+        agent: {type: [string, "null"], description: "agent_type: lookout, supply_planner, buyers_clerk"}
+        agent_label: {type: [string, "null"], example: "Supply planner"}
+        tool_use_id: {type: [string, "null"]}
+        summary: {type: string, description: one line in the buyer's words}
+        refs: {type: array, items: {$ref: "#/components/schemas/EntityRef"}}
+        payload: {type: object, description: "details shown only behind 'details': a tool.called step carries `why` (the reason, in words, written by code); a step.text from Lookout carries `superseded: true` in GET /api/runs/{id} when Lookout said it after being nudged and before its last read of the handoffs, so the final answer replaces it (the page folds it; nothing is removed); tool.called/tool.result carry tool and name (the short tool name), gate and gate_reason; child.started carries question and specialist (agent is the specialist); tool.result carries numbers and unknowns; run.finished carries status"}
+    Recommendation:
+      type: object
+      required: [finding, numbers, assumptions, would_change, open_questions, action_ids]
+      properties:
+        finding: {type: string, description: "one decision sentence of at most 20 words"}
+        answer_entities: {type: array, items: {$ref: "#/components/schemas/Span"}, description: "spans over `finding`, attached by the server (UTF-16 offsets)"}
+        recommendation_entities: {type: array, items: {type: array, items: {$ref: "#/components/schemas/Span"}}, description: "spans over each assumption, then each would_change line, in that order"}
+        points: {type: array, maxItems: 4, description: "the skimmable rows under the finding", items: {type: object, required: [label, text], properties: {label: {type: string}, text: {type: string}, entities: {type: array, items: {type: object}}}}}
+        numbers: {type: array, items: {type: object, required: [id, value, unit], properties: {id: {type: string, example: "shortage:HR-40110:2026-10:short"}, value: {type: string}, unit: {type: string}, name: {type: [string, "null"], description: "the label in the buyer's words"}, say: {type: [string, "null"], description: "the value as a buyer says it, e.g. $188.99 or $1.54M"}, headline: {type: boolean, description: "shown in the Recommendation's key numbers"}, provenance: {oneOf: [{$ref: "#/components/schemas/Provenance"}, {type: "null"}]}}}}
+        assumptions: {type: array, items: {type: string}}
+        would_change: {type: array, items: {type: string}}
+        open_questions: {type: array, items: {$ref: "#/components/schemas/Unknown"}}
+        action_ids: {type: array, items: {type: string}}
+        grade: {oneOf: [{$ref: "#/components/schemas/Grade"}, {type: "null"}]}
+    VerifierResult: {type: object, properties: {passed: {type: boolean}, numbers_checked: {type: integer}, numbers_from_tools: {type: integer}, open_questions_with_owner: {type: integer}, open_questions: {type: integer, description: every open question the Recommendation carries (the strip says N of M owned)}, reasons: {type: array, items: {type: string}, description: "each failed check in words a buyer reads (never an id or a check's name); the screen shows these, not `failures`"}, failures: {type: array, items: {type: string}}}}
+    Action:
+      type: object
+      required: [action_id, type, state, payload_hash]
+      properties:
+        action_id: {type: string}
+        type: {type: string, enum: [supplier_request, supplier_alias, note]}
+        state: {type: string, enum: [proposed, approved, rejected, executed]}
+        item_key: {type: [string, "null"]}
+        run_id: {type: [string, "null"]}
+        target: {$ref: "#/components/schemas/EntityRef"}
+        recipient: {type: [string, "null"], description: the contact on file, never an address taken from a message}
+        subject: {type: [string, "null"]}
+        body: {type: [string, "null"]}
+        subject_entities: {type: array, items: {$ref: "#/components/schemas/Span"}, description: "what the draft's subject mentions, matched against the records; offsets are UTF-16 indices"}
+        body_entities: {type: array, items: {$ref: "#/components/schemas/Span"}, description: "what the draft's body mentions"}
+        change: {type: [object, "null"], description: "a note: {owner, ...}; a supplier link: {link: [a, b], merge: false}"}
+        payload_hash: {type: string}
+        proposed_at: {type: string, format: date-time}
+        decided_at: {type: [string, "null"], format: date-time}
+        decided_by: {type: [string, "null"]}
+        reason: {type: [string, "null"]}
+        attempted_at: {type: [string, "null"], format: date-time}
+        confirmed_at: {type: [string, "null"], format: date-time}
+        outbox_id: {type: [string, "null"]}
+        unverified_checks: {type: array, items: {type: string}, description: "the failed code checks of the run that wrote this waiting draft; empty when the run passed"}
+        edited_by: {type: [string, "null"], description: "the buyer who last edited the text by hand; its figures were not re-checked by a run"}
+        title: {type: string, description: "one line in words, e.g. Request to Shenzhen Yunzhan Precision Motor: revised promise dates"}
+    OutboxMessage: {type: object, properties: {outbox_id: {type: string}, action_id: {type: string}, to: {type: string}, subject: {type: string}, body: {type: string}, sent_at: {type: string, format: date-time}, status: {type: string, enum: [sent_simulated]}}}
+    DataIssue: {type: object, properties: {issue: {type: string}, file: {type: string}, count: {type: integer}, handling: {type: string, enum: [fix, infer, flag, link, leave, drop]}, key: {type: string}, rule: {type: string}, consequence: {type: string}, example: {type: string}, owner: {type: string}, step: {type: string}}}
+    DateValue: {type: object, required: [date, provenance], properties: {date: {type: string, format: date}, provenance: {$ref: "#/components/schemas/Provenance"}}}
+    PoLine:
+      type: object
+      required: [ref, part, supplier, qty, status, buyer]
+      properties:
+        ref: {$ref: "#/components/schemas/EntityRef"}
+        part: {$ref: "#/components/schemas/EntityRef"}
+        supplier: {$ref: "#/components/schemas/EntityRef"}
+        qty: {$ref: "#/components/schemas/Quantity"}
+        unit_price: {oneOf: [{$ref: "#/components/schemas/Money"}, {type: "null"}]}
+        promise_date: {type: [string, "null"], format: date}
+        revised_date: {type: [string, "null"], format: date}
+        days_past_due: {type: integer}
+        status: {type: string}
+        disrupted_by: {oneOf: [{$ref: "#/components/schemas/EntityRef"}, {type: "null"}]}
+        buyer: {type: string}
+        stale: {type: boolean, description: open in the export but probably not really open; excluded from open and past-due counts}
+        unknown: {oneOf: [{$ref: "#/components/schemas/Unknown"}, {type: "null"}]}
+    MessageSummary:
+      type: object
+      required: [ref, date, from, trust, summary]
+      properties:
+        company:
+          type: string
+          description: The sender's company as the supplier master knows it, or "not on file"
+        ref: {$ref: "#/components/schemas/EntityRef"}
+        date: {type: string, format: date}
+        from: {type: string}
+        from_email: {type: [string, "null"], description: "the address it came from, exactly as the message carries it (a look-alike sender shows as the look-alike)"}
+        supplier: {oneOf: [{$ref: "#/components/schemas/EntityRef"}, {type: "null"}]}
+        trust: {type: string, enum: [on_file, new_sender, suspicious]}
+        trust_flags: {type: array, items: {type: string}}
+        kind: {type: [string, "null"], description: "force majeure, slip, price change, quote, correction, payment change, spot offer"}
+        summary: {type: string, description: what it changes, one line}
+        replied: {type: boolean, description: "a request to this sender's company was sent (state executed) on or after the day the message arrived; read from the ledger on every call"}
+        owner: {type: [string, "null"], description: "the buyer who owns what the message is about"}
+        supplier_short: {type: [string, "null"], description: "the sender's company as a buyer says it"}
+        robots: {type: array, items: {$ref: "#/components/schemas/EntityRef"}, description: "robots whose BOM uses a part the message changes or names; none for a held message"}
+        related_item: {type: [string, "null"], description: the case the message moves}
+        link: {type: [string, "null"], enum: [message, supplier, part, null], description: "how the case was found"}
+        related_stage:
+          oneOf:
+            - type: "null"
+            - type: object
+              required: [key, label]
+              properties: {key: {type: string}, label: {type: string}, waiting_on: {type: [string, "null"]}, draft_owner: {type: [string, "null"], description: the owner of the waiting draft}}
+        changes: {type: array, items: {$ref: "#/components/schemas/MessageChange"}, description: "what it changes (as on the detail), for the row's one-line fact"}
+        matches:
+          type: array
+          description: "only when q was given: where the words were found, best field first"
+          items: {type: object, required: [field, snippet, start, end], properties: {field: {type: string, enum: [subject, from, supplier, refs, facts, tags, body]}, snippet: {type: string, description: the text around the match}, start: {type: integer, description: "UTF-16 index of the match in the snippet"}, end: {type: integer}}}
+    MonthBucket:
+      type: object
+      properties:
+        month: {type: string, example: "2026-10"}
+        requirements: {$ref: "#/components/schemas/Quantity"}
+        scheduled_receipts: {$ref: "#/components/schemas/Quantity"}
+        under_disruption: {$ref: "#/components/schemas/Quantity"}
+        short: {oneOf: [{$ref: "#/components/schemas/Quantity"}, {type: "null"}]}
+    TimePhased:
+      type: object
+      properties:
+        part: {$ref: "#/components/schemas/EntityRef"}
+        per_unit: {type: string, example: "2 per Tern T2"}
+        past_due_receipts: {$ref: "#/components/schemas/Quantity"}
+        buckets: {type: array, items: {$ref: "#/components/schemas/MonthBucket"}}
+        on_hand: {$ref: "#/components/schemas/Unknown"}
+        disrupted: {type: boolean, description: "true when a supplier of this part has declared force majeure (the row \"under force majeure\" applies); false for an allocation or slip notice"}
+    Consignment:
+      type: object
+      required: [id, material, holder, into, evidence, method, material_lines, reaches]
+      properties:
+        id: {type: integer}
+        material: {$ref: "#/components/schemas/EntityRef"}
+        holder: {$ref: "#/components/schemas/EntityRef", description: the contract manufacturer that holds the material and builds it in}
+        into: {$ref: "#/components/schemas/EntityRef", description: the part built from it}
+        evidence: {type: string, description: the message that says so}
+        method: {type: string, description: "stated: a person's answer, bootstrapped from that evidence"}
+        material_lines:
+          type: array
+          items:
+            type: object
+            required: [po_line]
+            properties:
+              po_line: {$ref: "#/components/schemas/EntityRef"}
+              promised: {type: [string, "null"], description: the date in the ERP}
+              now: {type: [string, "null"], description: the date now expected (the supplier's revision when there is one)}
+              days_later: {type: [integer, "null"]}
+        slip_days: {type: [integer, "null"], description: the longest slip among the open orders; null when none has slipped}
+        reaches:
+          type: array
+          items:
+            type: object
+            required: [product, qty_per_robot]
+            properties:
+              product: {$ref: "#/components/schemas/EntityRef"}
+              qty_per_robot: {type: string, description: "of the part the material is built into"}
+    Person:
+      type: object
+      required: [id, name, initials, categories, parts, open_lines, open_value, past_due_lines]
+      properties:
+        id: {type: string, description: "the buyer's id as the buyers table has it; Unknown.owner and ActionItem.owner name people by name, ledger rows by this id"}
+        name: {type: string}
+        initials: {type: string, description: how the legacy ERP signs their orders}
+        categories: {type: array, items: {type: string}, description: the categories they buy, most parts first}
+        parts: {type: integer}
+        open_lines: {type: integer, description: open order lines on their desk; old lines flagged probably-not-open are not counted}
+        open_value: {$ref: "#/components/schemas/Money"}
+        past_due_lines: {type: integer}
+    Supplier:
+      type: object
+      properties:
+        ref: {$ref: "#/components/schemas/EntityRef"}
+        short: {type: string, description: "the name a buyer says (the brand word, not the legal form), as Today, the Inbox and the cases use it; ref.label is the legal name"}
+        country: {type: string}
+        terms: {type: string}
+        incoterms: {type: string}
+        status: {type: string, enum: [active, hold, inactive]}
+        open_value: {$ref: "#/components/schemas/Money"}
+        past_due_lines: {type: integer}
+        records: {type: integer, description: vendor records for this company (aliases kept)}
+        risk:
+          type: array
+          description: "warnings its own quotes and the news carry (insolvency, prepayment demanded, payment terms cut, a quote far above the last PO), for the banner on its page"
+          items: {$ref: "#/components/schemas/RiskFlag"}
+    RiskFlag:
+      type: object
+      required: [kind, severity, text]
+      properties:
+        kind: {type: string, enum: [insolvency, prepayment, terms_cut, price_jump]}
+        severity: {type: string, enum: [high, medium]}
+        text: {type: string}
+        evidence: {type: [string, "null"], description: the words it was read from}
+        sources: {type: array, items: {$ref: "#/components/schemas/EntityRef"}}
+    SearchHit:
+      type: object
+      required: [type, ref, label, sublabel, matched_text, highlight, url, score]
+      properties:
+        type: {type: string, enum: [item, message, supplier, part, po_line, person]}
+        ref: {type: string, description: "the record id: an item key, a message id, a supplier id, a part number, a PO line id, a buyer id, or 'supplier id/contact name'"}
+        label: {type: string, description: name first}
+        sublabel: {type: string}
+        matched_text: {type: string, description: the text around the match}
+        highlight: {type: object, required: [start, end], properties: {start: {type: integer, description: "UTF-16 index into matched_text"}, end: {type: integer}}}
+        url: {type: string, description: the route that shows it}
+        score: {type: integer}
+    Part:
+      type: object
+      properties:
+        ref: {$ref: "#/components/schemas/EntityRef"}
+        description: {type: string}
+        category: {type: string}
+        coo: {oneOf: [{type: string}, {$ref: "#/components/schemas/Unknown"}]}
+        hts: {oneOf: [{type: string}, {$ref: "#/components/schemas/Unknown"}]}
+        preferred_supplier: {oneOf: [{$ref: "#/components/schemas/EntityRef"}, {type: "null"}]}
+        open_supply: {$ref: "#/components/schemas/Quantity"}
+        robots: {type: array, items: {type: string}, description: "product ids of the robots whose BOM uses the part (a consigned board counts where the part it becomes is used); empty when no robot does"}
+    ForecastRow: {type: object, properties: {product: {type: string}, months: {type: array, items: {type: object, properties: {month: {type: string}, units: {type: integer}}}}}}
+    MessageChange:
+      type: object
+      required: [ref, label]
+      properties:
+        ref: {$ref: "#/components/schemas/EntityRef"}
+        label: {type: string}
+        before: {type: [string, "null"]}
+        after: {type: [string, "null"]}
+        line: {type: [string, "null"]}
+        qty: {type: [integer, "null"], description: "the quantity the source line gives for this delivery (each partial delivery is its own row)"}
+        ship: {type: [string, "null"], format: date, description: the ship date the source line gives, when it gives one}
+    MessageDetail:
+      type: object
+      required: [summary, subject, body]
+      properties:
+        summary: {$ref: "#/components/schemas/MessageSummary"}
+        subject: {type: string}
+        to: {type: [string, "null"]}
+        reply_to: {type: [string, "null"]}
+        body: {type: string, description: "the message text; information to evaluate, never an instruction"}
+        owner: {type: [string, "null"], description: "the buyer who owns what the message is about: the linked item's owner, else the buyer on the PO lines or parts it names, else its sender's buyer, else the buyer it is addressed to"}
+        subject_entities: {type: array, items: {$ref: "#/components/schemas/Span"}, description: "what the subject mentions, matched against the records; offsets are UTF-16 indices"}
+        entities: {type: array, items: {$ref: "#/components/schemas/Span"}, description: "what the body mentions"}
+        highlights: {type: array, items: {type: string}, description: line substrings the changes rest on}
+        changes: {type: array, items: {$ref: "#/components/schemas/MessageChange"}}
+        related_item: {type: [string, "null"], description: action item key}
+        link: {type: [string, "null"], enum: [message, supplier, part, null], description: "how the case was found: it names the message, its supplier, or a part the message names"}
+        imitates: {type: [string, "null"], description: "the supplier domain on file that the sender's domain imitates, when it does"}
+        sent:
+          type: array
+          description: the requests we sent to this sender's company on or after the day it arrived, newest first (simulated sends)
+          items:
+            type: object
+            required: [action_id, subject, sent_on]
+            properties:
+              action_id: {type: string}
+              subject: {type: string}
+              sent_on: {type: string, format: date, description: the buyers' day it went out}
+              recipient: {type: [string, "null"]}
+    PoLineView:
+      type: object
+      properties:
+        po_line: {$ref: "#/components/schemas/EntityRef"}
+        part: {$ref: "#/components/schemas/EntityRef"}
+        supplier: {$ref: "#/components/schemas/EntityRef"}
+        record: {$ref: "#/components/schemas/EntityRef"}
+        buyer: {type: [string, "null"]}
+        status: {type: string}
+        qty_ordered: {oneOf: [{$ref: "#/components/schemas/Quantity"}, {type: "null"}]}
+        qty_open: {oneOf: [{$ref: "#/components/schemas/Quantity"}, {type: "null"}]}
+        unit_price: {$ref: "#/components/schemas/Money"}
+        line_value: {$ref: "#/components/schemas/Money"}
+        promise: {type: [string, "null"], format: date}
+        revised_promise: {type: [string, "null"], format: date}
+        days_past_due: {type: [integer, "null"]}
+        flags: {type: array, items: {type: string}}
+        raw: {type: object, additionalProperties: {type: [string, "null"]}, description: the source row exactly as it was}
+    LandedCost:
+      properties:
+        duty_rule:
+          type: [object, "null"]
+          description: "the tariff rule the part falls under (null when not on the list), with the in-transit window the notice gives"
+          properties:
+            tranche: {type: integer}
+            rate: {type: number}
+            effective_date: {type: string, format: date}
+            exported_before: {type: [string, "null"]}
+            entered_before: {type: [string, "null"]}
+        offer:
+          $ref: '#/components/schemas/OfferView'
+        unit_price_usd:
+          $ref: '#/components/schemas/Money'
+        surcharge_usd:
+          anyOf:
+          - $ref: '#/components/schemas/Money'
+          - type: 'null'
+        duty_status:
+          type: string
+          enum:
+          - owed
+          - at_cost_on_top
+          - none
+          - unknown_origin
+          - no_rule
+          title: Duty Status
+        duty_usd:
+          anyOf:
+          - $ref: '#/components/schemas/Money'
+          - type: 'null'
+        duty_if_china_usd:
+          anyOf:
+          - $ref: '#/components/schemas/Money'
+          - type: 'null'
+        tooling_per_unit_usd:
+          anyOf:
+          - $ref: '#/components/schemas/Money'
+          - type: 'null'
+        total_known_usd:
+          $ref: '#/components/schemas/Money'
+        total_if_china_usd:
+          anyOf:
+          - $ref: '#/components/schemas/Money'
+          - type: 'null'
+        unknowns:
+          items:
+            $ref: '#/components/schemas/Unknown'
+          type: array
+          title: Unknowns
+        notes:
+          items:
+            type: string
+          type: array
+          title: Notes
+      type: object
+      required:
+      - offer
+      - unit_price_usd
+      - surcharge_usd
+      - duty_status
+      - duty_usd
+      - duty_if_china_usd
+      - tooling_per_unit_usd
+      - total_known_usd
+      - total_if_china_usd
+      - unknowns
+      - notes
+      title: LandedCost
+      description: Unit cost incl. surcharge and duty, with what is not known kept apart. Code does the sum.
+    OfferView:
+      properties:
+        incoterm_term: {type: [string, "null"], description: "the Incoterm alone, e.g. EXW"}
+        incoterm_place: {type: [string, "null"], description: "its named place, e.g. Hannover"}
+        lead_time_days: {type: [integer, "null"]}
+        surcharge_pct: {type: [number, "null"]}
+        surcharge_included: {type: [boolean, "null"], description: "true: the quoted price already contains the surcharge"}
+        prepayment: {type: [string, "null"], description: "what must be paid before the goods ship, as the document states it"}
+        available_from: {type: [string, "null"], description: "ISO date this offer (an alternative origin, a new site) can start, when the document gives one"}
+        site: {type: [string, "null"], description: "the plant the goods come from as the quote names it in the origin claim (not the port in the Incoterm)"}
+        line_ref: {type: [string, "null"], description: "the line of the quote the price was read from"}
+        offer_id:
+          type: integer
+          title: Offer Id
+        supplier:
+          anyOf:
+          - $ref: '#/components/schemas/EntityRef'
+          - type: 'null'
+        supplier_name:
+          type: string
+          title: Supplier Name
+        message:
+          $ref: '#/components/schemas/EntityRef'
+        quote_no:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Quote No
+        part:
+          $ref: '#/components/schemas/EntityRef'
+        qty_break:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Qty Break
+        price:
+          $ref: '#/components/schemas/Money'
+        price_basis:
+          type: string
+          enum:
+          - each
+          - per_1000
+          title: Price Basis
+        unit_price_usd:
+          $ref: '#/components/schemas/Money'
+        incoterm:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Incoterm
+        origin_claim:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Origin Claim
+        origin:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Origin
+        lead_time:
+          anyOf:
+          - $ref: '#/components/schemas/Conditional'
+          - type: 'null'
+        valid_until:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Valid Until
+        days_left:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Days Left
+        expired:
+          type: boolean
+          title: Expired
+        moq:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Moq
+        tooling_usd:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Tooling Usd
+        payment_terms:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Payment Terms
+        conditions:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Conditions
+        trust:
+          type: string
+          title: Trust
+        origin_source:
+          type:
+          - string
+          - 'null'
+          description: where the origin comes from, e.g. stated in the part master
+      type: object
+      required:
+      - offer_id
+      - supplier
+      - supplier_name
+      - message
+      - quote_no
+      - part
+      - qty_break
+      - price
+      - price_basis
+      - unit_price_usd
+      - incoterm
+      - origin_claim
+      - origin
+      - lead_time
+      - valid_until
+      - days_left
+      - expired
+      - moq
+      - tooling_usd
+      - payment_terms
+      - conditions
+      - trust
+      title: OfferView
+      description: One supplier price for one part at one quantity break, with everything that comes with it.
+    Conditional:
+      properties:
+        value:
+          anyOf:
+          - $ref: '#/components/schemas/Money'
+          - $ref: '#/components/schemas/Quantity'
+          - type: string
+          title: Value
+        condition:
+          type: string
+          title: Condition
+        provenance:
+          $ref: '#/components/schemas/Provenance'
+      type: object
+      required:
+      - value
+      - condition
+      - provenance
+      title: Conditional
+      description: 'A value that only holds under a condition, kept together: "6 weeks after sample approval".'
+    BidTab:
+      properties:
+        part:
+          $ref: '#/components/schemas/EntityRef'
+        qty:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Qty
+        columns:
+          items:
+            $ref: '#/components/schemas/BidColumn'
+          type: array
+          title: Columns
+        note:
+          type: string
+          title: Note
+      type: object
+      required:
+      - part
+      - qty
+      - columns
+      - note
+      title: BidTab
+    BidColumn:
+      properties:
+        label:
+          type: string
+          title: Label
+        landed:
+          $ref: '#/components/schemas/LandedCost'
+        is_current:
+          type: boolean
+          title: Is Current
+          default: false
+      type: object
+      required:
+      - label
+      - landed
+      title: BidColumn
+    ImportQuestion:
+      type: object
+      required: [id, kind, question, covers, proposed, state]
+      properties:
+        id: {type: string}
+        kind: {type: string, enum: [alias, currency, origin, duplicate_row, possible_duplicate, stock_count, other]}
+        question: {type: string}
+        covers: {type: integer, description: how many entries this one answer settles}
+        file: {type: string}
+        examples: {type: array, maxItems: 3, items: {type: object, properties: {from: {type: string}, to: {type: string}, note: {type: [string, "null"]}}}}
+        entries: {type: array, items: {type: string}}
+        proposed: {type: object, properties: {answer: {type: string}, effect: {type: string}}}
+        state: {type: string, enum: [open, accepted, changed, skipped]}
+        answer: {type: [string, "null"]}
+    ImportDeck:
+      type: object
+      properties:
+        import_id: {type: string}
+        questions: {type: array, items: {$ref: "#/components/schemas/ImportQuestion"}}
+    ImportAnswers:
+      type: object
+      required: [answered_by, answers]
+      properties:
+        answered_by: {type: string}
+        answers: {type: array, items: {type: object, required: [question_id, action], properties: {question_id: {type: string}, action: {type: string, enum: [accept, change, skip]}, value: {type: [string, "null"]}}}}
+    ImportDryRun:
+      type: object
+      properties:
+        hash: {type: string}
+        files: {type: array, items: {type: object, properties: {file: {type: string}, rows_in: {type: integer}, rows_out: {type: integer}, changes: {type: array, items: {type: string}}}}}
+        checks: {type: array, items: {type: object, properties: {name: {type: string}, passed: {type: boolean}}}}
+        answers: {type: object, properties: {total: {type: integer}, changed: {type: integer}, skipped: {type: integer}}}
+        recipe_steps: {type: integer}
+    LeadTimeActual:
+      type: object
+      required: [planned_days, median_days, receipts, later, lines]
+      properties:
+        planned_days: {type: [integer, "null"]}
+        median_days: {type: integer}
+        receipts: {type: integer, description: "closed lines with an order and a receipt date"}
+        later: {type: integer, description: "of those, how many took longer than the planned lead time"}
+        lines: {type: array, items: {$ref: "#/components/schemas/EntityRef"}}
+        rule: {type: string}
+    PartDetail:
+      properties:
+        shortage:
+          anyOf:
+          - $ref: '#/components/schemas/Shortage'
+          - type: 'null'
+        lead_time_actual:
+          description: "how long the part's closed lines really took, order to receipt, beside the planned lead time; null when no closed line has both dates"
+          anyOf:
+          - $ref: '#/components/schemas/LeadTimeActual'
+          - type: 'null'
+        supply_state:
+          anyOf:
+          - $ref: '#/components/schemas/SupplyState'
+          - type: 'null'
+        part:
+          $ref: '#/components/schemas/Part'
+        kind:
+          type: string
+          title: Kind
+        mpn:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Mpn
+        manufacturer:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Manufacturer
+        uom:
+          type: string
+          title: Uom
+        status:
+          type: string
+          title: Status
+        buyer:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Buyer
+        buyer_method:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Buyer Method
+        planned_lead_time:
+          anyOf:
+          - $ref: '#/components/schemas/Quantity'
+          - $ref: '#/components/schemas/Unknown'
+          title: Planned Lead Time
+        raw:
+          additionalProperties:
+            anyOf:
+            - type: string
+            - type: 'null'
+          type: object
+          title: Raw
+        where_used:
+          items:
+            $ref: '#/components/schemas/WhereUsedRow'
+          type: array
+          title: Where Used
+        tariff:
+          $ref: '#/components/schemas/TariffStatus'
+        origin:
+          $ref: '#/components/schemas/CooStatus'
+        reference_price:
+          anyOf:
+          - $ref: '#/components/schemas/Money'
+          - type: 'null'
+        open_lines:
+          type: integer
+          title: Open Lines
+        linked_parts:
+          items:
+            $ref: '#/components/schemas/EntityRef'
+          type: array
+          title: Linked Parts
+        exposure:
+          anyOf:
+          - $ref: '#/components/schemas/PartExposure'
+          - type: 'null'
+      type: object
+      required:
+      - part
+      - kind
+      - mpn
+      - manufacturer
+      - uom
+      - status
+      - buyer
+      - buyer_method
+      - planned_lead_time
+      - raw
+      - where_used
+      - tariff
+      - origin
+      - reference_price
+      - open_lines
+      - linked_parts
+      - exposure
+      title: PartDetail
+      description: 'Everything the part page needs, each fact with its source: the item master row beside what the other records say about the part.'
+    PartExposure:
+      properties:
+        open_value_total:
+          $ref: '#/components/schemas/Money'
+          nullable: true
+          description: Open value of the lines that have an exchange rate; a line without one is in no total
+        open_duty_total:
+          $ref: '#/components/schemas/Money'
+          nullable: true
+        owed:
+          $ref: '#/components/schemas/Money'
+          nullable: true
+          description: Duty certain to be paid (confirmed China origin, entering on or after the duty date). The headline; `net` carries the same figure. Its provenance rule is the one-sentence rule.
+        conditional:
+          $ref: '#/components/schemas/Money'
+          nullable: true
+          description: Duty on open orders that owe nothing if the supplier ships them before the exported-before date and they enter before the entered-before date. Shown beside the headline, never summed into it.
+        if_china:
+          $ref: '#/components/schemas/Money'
+          nullable: true
+          description: For a part of unknown origin only - what it would owe if made in China. Never in the headline.
+        rule_sentences:
+          type: object
+          additionalProperties: {type: string}
+          description: 'bucket (owed, conditional, if_china) -> the one-sentence rule shown beside the figure'
+        lines_without_rate:
+          type: array
+          items: {$ref: '#/components/schemas/EntityRef'}
+        part:
+          $ref: '#/components/schemas/EntityRef'
+        tariff:
+          $ref: '#/components/schemas/TariffStatus'
+        coo:
+          $ref: '#/components/schemas/CooStatus'
+        status:
+          type: string
+          enum:
+          - china_listed
+          - unknown_origin
+          - unknown_hts
+          - not_applicable
+          title: Status
+        rate:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Rate
+        net:
+          anyOf:
+          - $ref: '#/components/schemas/Money'
+          - type: 'null'
+        gross:
+          anyOf:
+          - $ref: '#/components/schemas/Money'
+          - type: 'null'
+        open_lines:
+          items:
+            $ref: '#/components/schemas/ExposureLine'
+          type: array
+          title: Open Lines
+        uncovered_qty:
+          type: number
+          title: Uncovered Qty
+        reference_price:
+          anyOf:
+          - $ref: '#/components/schemas/Money'
+          - type: 'null'
+        unpriced:
+          type: boolean
+          title: Unpriced
+        effective_date:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Effective Date
+        pass_through:
+          anyOf:
+          - $ref: '#/components/schemas/Money'
+          - type: 'null'
+        unknown:
+          anyOf:
+          - $ref: '#/components/schemas/Unknown'
+          - type: 'null'
+      type: object
+      required:
+      - part
+      - tariff
+      - coo
+      - status
+      - rate
+      - net
+      - gross
+      - open_lines
+      - uncovered_qty
+      - reference_price
+      - unpriced
+      - effective_date
+      title: PartExposure
+      description: 'New duty on one part: net first (the figure to act on), gross beside it, both with their rule.'
+    ExposureLine:
+      properties:
+        po_line:
+          $ref: '#/components/schemas/EntityRef'
+        open_value:
+          $ref: '#/components/schemas/Money'
+        exposed:
+          type: boolean
+          title: Exposed
+          description: In the exposure at all (owed or conditional)
+        bucket:
+          type: string
+          enum: [owed, conditional, not_owed, pass_through, out]
+          description: 'owed: certain; conditional: owed unless it ships in time; not_owed: enters before the duty date; pass_through: DDP, the supplier pays; out: probably not open or no rate'
+        importer:
+          type: string
+          enum:
+          - company
+          - supplier
+          title: Importer
+        why:
+          type: string
+          title: Why
+      type: object
+      required:
+      - po_line
+      - open_value
+      - exposed
+      - importer
+      - why
+      title: ExposureLine
+    CooStatus:
+      properties:
+        part:
+          $ref: '#/components/schemas/EntityRef'
+        status:
+          type: string
+          enum:
+          - china
+          - other
+          - unknown
+          title: Status
+        coo:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Coo
+        unknown:
+          anyOf:
+          - $ref: '#/components/schemas/Unknown'
+          - type: 'null'
+      type: object
+      required:
+      - part
+      - status
+      - coo
+      title: CooStatus
+    TariffStatus:
+      properties:
+        part:
+          $ref: '#/components/schemas/EntityRef'
+        status:
+          type: string
+          enum:
+          - listed
+          - excluded
+          - not_listed
+          - unknown_hts
+          title: Status
+        rule:
+          anyOf:
+          - $ref: '#/components/schemas/TariffRuleView'
+          - type: 'null'
+        excluded_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Excluded By
+        unknown:
+          anyOf:
+          - $ref: '#/components/schemas/Unknown'
+          - type: 'null'
+      type: object
+      required:
+      - part
+      - status
+      title: TariffStatus
+      description: Does the new duty apply to this part? By code (HTS prefix) and origin, never by supplier country.
+    TariffRuleView:
+      properties:
+        id:
+          type: integer
+          title: Id
+        tranche:
+          type: integer
+          title: Tranche
+        hts_prefix:
+          type: string
+          title: Hts Prefix
+        description:
+          type: string
+          title: Description
+        rate:
+          type: number
+          title: Rate
+        effective_date:
+          type: string
+          title: Effective Date
+        origin:
+          type: string
+          title: Origin
+        in_transit:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: In Transit
+        exported_before:
+          type: string
+          nullable: true
+          description: Goods exported before this date and entered before entered_before owe nothing (tranches with in-transit relief)
+        entered_before:
+          type: string
+          nullable: true
+        source_line: {type: [string, "null"], description: "the row of the advisory this rule was read from, as written"}
+        advisory_no: {type: [string, "null"]}
+        issued: {type: [string, "null"], format: date}
+      type: object
+      required:
+      - id
+      - tranche
+      - hts_prefix
+      - description
+      - rate
+      - effective_date
+      - origin
+      - in_transit
+      title: TariffRuleView
+    WhereUsedRow:
+      properties:
+        product:
+          $ref: '#/components/schemas/EntityRef'
+        part:
+          $ref: '#/components/schemas/EntityRef'
+        qty_per_robot:
+          type: string
+          title: Qty Per Robot
+        paths:
+          items:
+            items:
+              type: string
+            type: array
+          type: array
+          title: Paths
+      type: object
+      required:
+      - product
+      - part
+      - qty_per_robot
+      - paths
+      title: WhereUsedRow
+    Classification:
+      properties:
+        message:
+          $ref: '#/components/schemas/EntityRef'
+        level:
+          type: integer
+          enum:
+          - 0
+          - 1
+          - 2
+          - 3
+          title: Level
+        kind:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Kind
+        confidence:
+          type: number
+          title: Confidence
+        evidence:
+          items:
+            type: string
+          type: array
+          title: Evidence
+        agrees:
+          type: boolean
+          title: Agrees
+        decision:
+          type: string
+          enum:
+          - auto
+          - review
+          - blocked
+          title: Decision
+        reason:
+          type: string
+          title: Reason
+      type: object
+      required:
+      - message
+      - level
+      - kind
+      - confidence
+      - evidence
+      - agrees
+      - decision
+      - reason
+      title: Classification
+      description: How a message was understood, and how sure the code is. The ladder stops at the first level that decides; the model (L3) is only for the rest.
+    BomTree:
+      properties:
+        product:
+          $ref: '#/components/schemas/EntityRef'
+        rows:
+          items:
+            $ref: '#/components/schemas/BomTreeRow'
+          type: array
+          title: Rows
+        defects:
+          additionalProperties:
+            type: integer
+          type: object
+          title: Defects
+      type: object
+      required:
+      - product
+      - rows
+      - defects
+      title: BomTree
+    BomTreeRow:
+      properties:
+        part:
+          $ref: '#/components/schemas/EntityRef'
+        parent:
+          $ref: '#/components/schemas/EntityRef'
+        level:
+          type: integer
+          title: Level
+        find_no:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Find No
+        qty_per:
+          $ref: '#/components/schemas/Quantity'
+        qty_per_robot:
+          $ref: '#/components/schemas/Quantity'
+        is_assembly:
+          type: boolean
+          title: Is Assembly
+        in_master:
+          type: boolean
+          title: In Master
+        obsolete:
+          type: boolean
+          title: Obsolete
+        defects:
+          items:
+            type: string
+          type: array
+          title: Defects
+      type: object
+      required:
+      - part
+      - parent
+      - level
+      - find_no
+      - qty_per
+      - qty_per_robot
+      - is_assembly
+      - in_master
+      - obsolete
+      - defects
+      title: BomTreeRow
+      description: 'One line of the indented BOM, in drawing order: the part, how many sit in its parent and in the whole robot, and anything wrong with the line.'
+    ProductOut:
+      properties:
+        part_number:
+          type: string
+          title: Part Number
+        name:
+          type: string
+          title: Name
+        family:
+          type: string
+          title: Family
+      type: object
+      required:
+      - part_number
+      - name
+      - family
+      title: ProductOut
+    BuildStep:
+      properties:
+        seq:
+          type: integer
+          title: Seq
+        step:
+          type: string
+          title: Step
+        title:
+          type: string
+          title: Title
+        rows_in:
+          type: integer
+          title: Rows In
+        rows_out:
+          type: integer
+          title: Rows Out
+        issues:
+          type: integer
+          title: Issues
+        seconds:
+          type: number
+          title: Seconds
+      type: object
+      required:
+      - seq
+      - step
+      - title
+      - rows_in
+      - rows_out
+      - issues
+      - seconds
+      title: BuildStep
+    BuildStamp:
+      properties:
+        as_of:
+          type: string
+          title: As Of
+        recipe:
+          type: string
+          title: Recipe
+        recipe_hash:
+          type: string
+          title: Recipe Hash
+        built_at:
+          type: string
+          title: Built At
+        counts:
+          additionalProperties:
+            type: integer
+          type: object
+          title: Counts
+        gate_checks:
+          type: integer
+          title: Gate Checks
+        gate_failed:
+          type: integer
+          title: Gate Failed
+      type: object
+      required:
+      - as_of
+      - recipe
+      - recipe_hash
+      - built_at
+      - counts
+      - gate_checks
+      - gate_failed
+      title: BuildStamp
+    SupplierDetail:
+      properties:
+        open_summary:
+          type: string
+          description: 'The header over the supplier''s order rows: "10 open · 2 may not really be open"'
+        ref:
+          $ref: '#/components/schemas/EntityRef'
+        country:
+          type: string
+          title: Country
+        terms:
+          type: string
+          title: Terms
+        incoterms:
+          type: string
+          title: Incoterms
+        status:
+          type: string
+          enum:
+          - active
+          - hold
+          - inactive
+          title: Status
+        open_value:
+          $ref: '#/components/schemas/Money'
+        past_due_lines:
+          type: integer
+          title: Past Due Lines
+        records:
+          type: integer
+          title: Records
+        contact:
+          $ref: '#/components/schemas/Contact'
+        tier:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Tier
+        record_ids:
+          items:
+            type: string
+          type: array
+          title: Record Ids
+        open_lines:
+          type: integer
+          title: Open Lines
+        stale_lines:
+          type: integer
+          title: Stale Lines
+          default: 0
+        messages:
+          items:
+            $ref: '#/components/schemas/EntityRef'
+          type: array
+          title: Messages
+        news:
+          items:
+            $ref: '#/components/schemas/EntityRef'
+          type: array
+          title: News
+      type: object
+      required:
+      - ref
+      - country
+      - terms
+      - incoterms
+      - status
+      - open_value
+      - past_due_lines
+      - records
+      - contact
+      - tier
+      - record_ids
+      - open_lines
+      - messages
+      - news
+      title: SupplierDetail
+      description: 'One company: its records, the contact on file, its open lines (stale ones counted apart) and the messages and news about it.'
+    Contact:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Email
+      type: object
+      required:
+      - name
+      - email
+      title: Contact
+    AskBody:
+      type: object
+      required: [question, asked_by]
+      properties:
+        question: {type: string}
+        context: {oneOf: [{$ref: "#/components/schemas/EntityRef"}, {type: "null"}], description: the record on screen}
+        thread_id: {type: [string, "null"], description: "the run id of the answer this question follows (a follow-up): its question, its answer and what it was about are given to the agent, so 'those' and 'it' mean something"}
+        asked_by: {type: string}
+

@@ -1,0 +1,9 @@
+/* the stage line (header): a dot, the word, who has the move, a text toggle; opened, one row of the seven step words */
+.stl{display:inline-flex;flex-wrap:wrap;max-width:100%;align-items:center;gap:var(--s2);font-size:var(--t-small);color:var(--ink-2);min-height:24px} .stl b{font-weight:600;color:var(--ink)}
+.stl-dot{width:8px;height:8px;border-radius:50%;background:var(--ink-4);flex:none} .stl-dot.amber{background:var(--amber)} .stl-dot.green{background:var(--positive)} .stl-dot.red{background:var(--critical)}
+.stl-wait{color:var(--ink-3)}
+.stl-tog{all:unset;cursor:pointer;color:var(--ink-3);text-decoration:underline;text-underline-offset:2px;margin-left:var(--s1)} .stl-tog:hover{color:var(--ink)} .stl-tog:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:var(--r-xs)}
+.stl-steps{list-style:none;margin:0;padding:0;flex-basis:100%;display:flex;flex-wrap:wrap;column-gap:var(--s2);font-size:var(--t-small);line-height:24px;color:var(--ink-4)}
+.stl-steps li+li::before{content:"›";margin-right:var(--s2);color:var(--ink-5)}
+.stl-steps .s-done{color:var(--ink-3)} .stl-steps .s-current{color:var(--ink);font-weight:600} .stl-steps .s-problem{color:var(--critical);font-weight:600} .stl-steps .s-todo,.stl-steps .s-unknown{color:var(--ink-4)}
+.stl-more{flex-basis:100%;font-size:var(--t-small);color:var(--ink-3)}

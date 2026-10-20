@@ -1,0 +1,19 @@
+id: readiness-tern-oct
+category: ordinary
+kind: api                 # the build-readiness roll-up is code: forecast x bill of materials x open order lines; no model
+item_key: null
+checks:
+  - id: tern-t2-october-roll-up
+    get: /api/builds/Tern%20T2/2026-10/readiness
+    expect:
+      units: 182                       # data/demand_forecast.csv
+      counts.in_house: 7               # assemblies below the product in data/bom.csv that Halden builds
+      counts.covered: 35               # open, non-stale supply landing by 31 October
+      counts.disrupted: 3              # under the Yunzhan force-majeure notice
+      counts.no_order: 80              # a bought part with no open order line: unknown, because no stock count is loaded
+  - id: nothing-in-stock-is-claimed
+    get: /api/builds/Tern%20T2/2026-10/readiness
+    expect: {stock_counted: 0}
+reason: "Where each bought part of the October Tern build stands. 134 bought parts (the leaves of the BOM tree under HR-90020) times 182 robots; stock is not in the data, so a part with no open order is unknown, never 'covered'."
+oracle: "evals/oracle.py readiness(): the BOM exploded in pandas, supply from open non-stale PO lines, a supplier's own revised date (the tables in its notices) taking the place of the PO date"
+source: "data/demand_forecast.csv (Tern T2, 2026-10, 182); data/bom.csv; data/purchase_orders.csv; data/quotes/2026-09-18_Jadepeak_Customer_Notice_CN-2026-09.txt (revised ship dates)"

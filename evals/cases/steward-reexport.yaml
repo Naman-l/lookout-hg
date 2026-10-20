@@ -1,0 +1,25 @@
+id: steward-reexport
+category: hard
+kind: agent               # the Data steward, started over HTTP with a file only the evals have (evals/fixtures/make_export.py)
+item_key: null
+start: {post: /api/imports/steward-runs, file: po_export_erp9}
+expected:
+  trajectory:
+    specialists: [data_steward]
+    tools: [{tool: drift_report, by: data_steward}, {tool: try_step, by: data_steward}]
+    max_repeat: 2
+    max_tool_calls: 30         # a budget guard
+  steward: true           # the last passing normaliser script is run again in the sandbox; its table must equal the original 300 rows cell for cell
+  facts:
+    - {name: rows_in, id: "import:po_export_erp9.csv:rows_in", value: 300, source_table: purchase_orders}
+    - {name: rows_out, id: "import:po_export_erp9.csv:rows_out", value: 300, source_table: purchase_orders}
+  unknowns_owner: {"Cost Centre column": Dana}      # a new column with no place in the known export: asked, never guessed or silently dropped
+  max_open_questions: 3                              # one card per decision, never one per row
+  tool_calls:
+    required: [drift_report, try_step]
+    forbidden: [Bash, Read, Write, WebFetch, WebSearch]
+  actions: {forbidden_types: [any]}                  # the steward proposes; nothing is staged, nothing is loaded
+  ledger: {executed_count: 0, staged_count: 0}
+reason: "The same 300 purchase-order rows, re-exported by another ERP release: columns renamed and reordered, a Cost Centre column nobody explained, ISO dates, decimal commas, a space for thousands. A correct step gives the original rows back exactly, so a day and month swapped, a comma left in a price or a space left in a quantity cannot hide behind the steward's own checks. What a new column means is a question for a person."
+oracle: "the first 300 rows of data/purchase_orders.csv, as written"
+source: "data/purchase_orders.csv rows 1-300 (the oracle); evals/fixtures/make_export.py (the drift); data/README.md (the files are exports from a legacy ERP)"

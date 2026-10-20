@@ -1,0 +1,20 @@
+id: ask-custom-direction
+category: ordinary
+kind: agent
+written: "2026-10-14, plan-13 Rev 4.1 (F100): a buyer's own direction from Ask on a case lands on that case's Approval card"
+judge: false
+trials: 1
+steps:
+  - {post: "/api/ask", json: {question: "Also ask Li Wei what stock survived and whether it can fly before Nov 1", context: {type: item, id: "disruption:SUP-0001"}, asked_by: "Dana Reyes"}}
+expected:
+  actions:
+    required_types: [supplier_request]
+    required_recipient: li.wei@yunzhan-motor.example   # one email to the contact on file: amended into the fire's draft, or new under the case key
+    forbidden_types: [po_change, supplier_alias]
+    max_count: 1
+    all_state: proposed
+  tool_calls:
+    forbidden: [Bash, Read, Write, WebFetch, WebSearch]
+  ledger: {executed_count: 0}
+reason: "Khalid's custom-solution flow: Ask -> the action staged under the case -> its Approval card. The run key stays ask:…, so the one-thread rule appends to the fire's waiting draft (must_amend) and never rewrites it."
+source: "plan-13/experts/agent/agent-spec-steps.md Rev 4.1; domain/actions/tools.py _case_key"

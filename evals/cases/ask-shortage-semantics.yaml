@@ -1,0 +1,18 @@
+id: ask-shortage-semantics
+category: hard
+kind: agent
+written: "2026-10-11, before round 10 (from FEEDBACK-12's live failure run-ca8d3ae6, fixed in e31c4db)"
+judge: false                  # graded on behaviour; the prose judge is not run on it
+trials: 1
+steps:
+  - {post: "/api/ask", json: {question: "If Jadepeak ships on these dates, which builds miss and by how many robots?", context: {type: item, id: "disruption:SUP-0013"}}}
+expected:
+  robots_within_forecast: true
+  must_mention: [[Tern, Porter, Heron]]      # the answer names at least one build (an empty or evasive answer must not pass the figure check by saying nothing)
+  must_not_mention: [reconcile]
+  tool_calls:
+    forbidden: [Bash, Read, Write, WebFetch, WebSearch]
+  actions: {forbidden_types: [po_change, supplier_alias]}
+  ledger: {executed_count: 0}
+reason: "A month's shortage is not the cumulative backlog. Live, the agent said a build misses by 46 robots in November when November plans 24: 46 was the backlog carried in. Graded in code from the raw forecast: no figure of robots said of one product in one month exceeds that month's forecast unless the sentence says it is cumulative or carried; and the answer does not tell the buyer to 'reconcile' two of Lookout's own views."
+source: "data/demand_forecast.csv (units by product and month), data/purchase_orders.csv (the Jadepeak lines); plan-12/feedback/EVAL-GAPS-QUALITY.md §3"

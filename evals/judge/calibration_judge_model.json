@@ -1,0 +1,32 @@
+{
+ "items": 238,
+ "agreement": {
+  "rate": 0.71,
+  "ci": [
+   0.65,
+   0.76
+  ],
+  "n": 238
+ },
+ "judge_passes_what_labeller_passes": {
+  "rate": 0.64,
+  "ci": [
+   0.57,
+   0.71
+  ],
+  "n": 181
+ },
+ "judge_rejects_what_labeller_rejects": {
+  "rate": 0.93,
+  "ci": [
+   0.83,
+   0.97
+  ],
+  "n": 57
+ },
+ "kappa": 0.42,
+ "packets_unread": 0,
+ "labeller": "a model reading the rubric (the integration lead), not a person",
+ "judge_model": "claude-opus-5-5",
+ "cost_usd": 1.06
+}

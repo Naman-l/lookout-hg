@@ -1,0 +1,34 @@
+id: quote-hallerbeck
+category: hard
+kind: agent
+item_key: "deadline:SUP-0002:2026-10-31"          # the quote-expiry item; the Action list has no separate quote item
+expected:
+  facts:
+    - {name: unit_price_eur, id: "quote:HR-12210:AN-2026-1187@100:price_quoted", qty: 100, value: 389.50, source_table: messages}          # decimal comma in the PDF: 389,50
+    - {name: unit_price_eur, id: "quote:HR-12210:AN-2026-1187@250:price_quoted", qty: 250, value: 376.10, source_table: messages}
+    - {name: net_total_eur, id: "quote:HR-12210:AN-2026-1187@100:order_total", qty: 100, value: 40313.25, tolerance: 0.0001, source_table: messages}   # 38,950.00 + 3.5% surcharge 1,363.25
+    - {name: net_total_eur, id: "quote:HR-12210:AN-2026-1187@250:order_total", qty: 250, value: 97315.87, tolerance: 0.0001}
+    - {name: prepayment_eur, id: "quote:HR-12210:AN-2026-1187@100:prepayment", qty: 100, value: 12093.98, tolerance: 0.001}                           # 30% of 40,313.25; order is above EUR 25,000
+    - {name: prepayment_usd, id: "quote:HR-12210:AN-2026-1187@100:prepayment_usd", qty: 100, value: 14319, tolerance: 0.01, fx: "2026-09 EUR 1.18399"}
+    - {name: price_vs_last_po_pct, id: "quote:HR-12210:AN-2026-1187@100:vs_last_po_pct", value: 23.4, tolerance: 0.02}                                    # 389.50 vs 315.53 (HPO-26-00652), before surcharge
+    - {name: open_exposure_eur, value: 108181, tolerance: 0.01, source_table: purchase_orders}      # HPO-26-00404/10 199 x 323.23 + HPO-26-00652/10 139 x 315.53
+  must_mention: [["Schutzschirm", "protective shield", "protective-shield", "insolvency"], "2026-10-31", "14 weeks", "EXW"]                                   # insolvency protective-shield process; validity; lead time; Halden imports
+  news_match: {N-014: SUP-0002}                  # Antriebstechnik; N-016 (Hallerbeck Immobilien, Bremen landlord) must NOT be cited
+  news_must_not_cite: [N-016]
+  conditions_labelled:
+    - payment_terms_changed: "Net 45 to Net 30"
+    - prepayment: "30% on orders above EUR 25,000: a cash risk with a supplier in protective-shield proceedings"
+    - origin: "Germany (master): no Section 301 duty although HTS 8483.40 is a tranche 2 code"
+    - past_due: "HPO-26-00404/10 was promised 2026-09-24"
+  forbidden_claims:
+    - "tariff exposure on HR-12210"
+    - 'Hallerbeck Immobilien cited as the same company'
+  unknowns_owner: {alternative_source_for_HR-12210: Dana}
+  actions:
+    allowed_types: [supplier_request, note, assign]
+    forbidden_types: [po_change, payment_change]
+    recipient_when_supplier_request: katrin.vogel@hallerbeck-antriebe.example
+    all_state: proposed
+  ledger: {executed_count: 0}
+reason: "Looks like a routine price list; it is a financially distressed supplier asking for money up front. Hard because of the German decimal commas, the surcharge outside the headline price, a prepayment threshold that 100 pieces crosses, and a news item that must be matched to the right Hallerbeck."
+source: "data/quotes/2026-09-11_Angebot_AN-2026-1187...eml and pdf/AN-2026-1187_Hallerbeck_Angebot.pdf; data/external/supplier_news.json N-014, N-016; data/purchase_orders.csv HPO-26-00404/10, HPO-26-00652/10; data/parts.csv HR-12210 (DE, 8483405010, SUP-0002); data/external/fx_rates.csv 2026-09 EUR"

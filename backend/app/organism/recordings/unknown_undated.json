@@ -1,0 +1,1525 @@
+{
+ "recorded_at": "2026-10-12T01:16:44.915659+00:00",
+ "run_id": "run-recorded",
+ "item_key": "unknown:undated",
+ "run": {
+  "status": "ok",
+  "model": "claude-sonnet-5-5",
+  "prompt_hash": "207921b2b686",
+  "toolset_hash": "e38cbefe3035",
+  "sdk_version": "0.2.165",
+  "cost_usd": 0.13686584499999999,
+  "wall_ms": 34430,
+  "first_step_ms": 13,
+  "turns": 3,
+  "tool_calls": 14,
+  "denied_calls": 2
+ },
+ "shape": "tree",
+ "reviewer_mode": "after",
+ "events": [
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 1,
+   "ts": "2026-10-12T01:16:02.886250+00:00",
+   "t_ms": 13,
+   "type": "run.started",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Working unknown:undated",
+   "refs": [],
+   "payload": {
+    "workflow": "work_item",
+    "item_key": "unknown:undated",
+    "model": "claude-sonnet-5-5",
+    "prompt_hash": "207921b2b686",
+    "toolset_hash": "e38cbefe3035",
+    "specialist_prompts": {
+     "supply_planner": "5a93b2d343e2",
+     "buyers_clerk": "f7dbc2cb5d94"
+    },
+    "tool_count": 22,
+    "sdk_version": "0.2.165"
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 2,
+   "ts": "2026-10-12T01:16:02.886799+00:00",
+   "t_ms": 13,
+   "type": "tool.called",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Lookout reads the item",
+   "refs": [],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "args": {},
+    "gate": "allowed",
+    "gate_reason": "system step before the model runs",
+    "why": "Read what the system already worked out for this item: its finding, dates and figures."
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 3,
+   "ts": "2026-10-12T01:16:02.887273+00:00",
+   "t_ms": 14,
+   "type": "tool.result",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Read the item: 5 open orders with no promised date ($497K open). Owner Marcus Chen · Priya Nair · Sofia Marino.",
+   "refs": [
+    {
+     "type": "item",
+     "id": "unknown:undated",
+     "label": "5 open orders with no promised date ($497K open)"
+    },
+    {
+     "type": "po_line",
+     "id": "HPO-26-00422/70",
+     "label": "Capacitor, aluminum electrolytic order (HPO-26-00422 line 70)"
+    },
+    {
+     "type": "part",
+     "id": "HR-33116",
+     "label": "Capacitor, aluminum electrolytic"
+    },
+    {
+     "type": "supplier",
+     "id": "SUP-0028",
+     "label": "Yokohama Denshi Co., Ltd."
+    },
+    {
+     "type": "po_line",
+     "id": "HPO-26-00613/20",
+     "label": "Nameplate, rating label order (HPO-26-00613 line 20)"
+    },
+    {
+     "type": "part",
+     "id": "HR-77102",
+     "label": "Nameplate, rating label"
+    },
+    {
+     "type": "supplier",
+     "id": "SUP-0053",
+     "label": "LabelCraft Industries"
+    },
+    {
+     "type": "po_line",
+     "id": "HPO-26-00627/20",
+     "label": "Lidar, 2D safety order (HPO-26-00627 line 20)"
+    },
+    {
+     "type": "part",
+     "id": "HR-60110",
+     "label": "Lidar, 2D safety"
+    },
+    {
+     "type": "supplier",
+     "id": "SUP-0029",
+     "label": "Hangzhou Vistaray Technology Co., Ltd."
+    },
+    {
+     "type": "po_line",
+     "id": "HPO-26-00639/10",
+     "label": "Threadlocker, medium strength order (HPO-26-00639 line 10)"
+    },
+    {
+     "type": "part",
+     "id": "HR-78101",
+     "label": "Threadlocker, medium strength"
+    },
+    {
+     "type": "supplier",
+     "id": "SUP-0058",
+     "label": "Tri-State Industrial Supply"
+    },
+    {
+     "type": "po_line",
+     "id": "HPO-26-00683/10",
+     "label": "Charging dock power unit, 48 V 40 A order (HPO-26-00683 line 10)"
+    },
+    {
+     "type": "part",
+     "id": "HR-51220",
+     "label": "Charging dock power unit, 48 V 40 A"
+    },
+    {
+     "type": "supplier",
+     "id": "SUP-0014",
+     "label": "Xiamen Brightcharge Technology Co., Ltd."
+    }
+   ],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "ok": true,
+    "numbers": [],
+    "unknowns": [],
+    "item_key": "unknown:undated",
+    "item_kind": "unknown"
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 4,
+   "ts": "2026-10-12T01:16:04.673404+00:00",
+   "t_ms": 1800,
+   "type": "step.text",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "I'm asking the supply side to map the five undated order lines first.",
+   "refs": [],
+   "payload": {}
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 5,
+   "ts": "2026-10-12T01:16:06.077728+00:00",
+   "t_ms": 3204,
+   "type": "child.started",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01My7oQ2dQmYNu85meHPy8JQ",
+   "summary": "Map undated PO lines",
+   "refs": [],
+   "payload": {
+    "child_run_id": "run-recorded.1",
+    "specialist": "supply_planner",
+    "question": "Map undated PO lines",
+    "task": "Map undated PO lines",
+    "asked_by": "lookout"
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 1,
+   "ts": "2026-10-12T01:16:06.078862+00:00",
+   "t_ms": 3205,
+   "type": "run.started",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": null,
+   "summary": "Supply planner started",
+   "refs": [],
+   "payload": {
+    "workflow": "specialist:supply_planner",
+    "item_key": "unknown:undated"
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 6,
+   "ts": "2026-10-12T01:16:07.318333+00:00",
+   "t_ms": 4445,
+   "type": "step.text",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "The supply side is working through the five undated order lines now. It will name what is open on each line, the build it feeds and who owns it. I'm waiting for it to finish before I ask for the supplier requests.",
+   "refs": [],
+   "payload": {}
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 2,
+   "ts": "2026-10-12T01:16:07.463894+00:00",
+   "t_ms": 4590,
+   "type": "tool.called",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01XnbGQhWWeYaCXfBRiQxkHa",
+   "summary": "Supply planner calls get_item",
+   "refs": [],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "args": {
+     "item_key": "unknown:undated"
+    },
+    "gate": "allowed",
+    "gate_reason": "part of this role's work",
+    "why": "Read what the system already worked out for this item: its finding, dates and figures."
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 3,
+   "ts": "2026-10-12T01:16:07.481815+00:00",
+   "t_ms": 4608,
+   "type": "tool.result",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01XnbGQhWWeYaCXfBRiQxkHa",
+   "summary": "Item 5 open orders with no promised date ($497K open): 0 computed numbers, 6 open questions",
+   "refs": [],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "ok": true,
+    "numbers": [],
+    "unknowns": [
+     {
+      "what": "the promised date",
+      "owner": "Marcus",
+      "question": "What date has Yokohama promised for Capacitor, aluminum electrolytic order (HPO-26-00422 line 70) (HR-33116)?",
+      "why_it_blocks": "Capacitor, aluminum electrolytic order (HPO-26-00422 line 70) is open ($3,107) and the ERP holds no promise date: it can never be late by date and no build can count on it"
+     },
+     {
+      "what": "the promised date",
+      "owner": "Sofia",
+      "question": "What date has Labelcraft promised for Nameplate, rating label order (HPO-26-00613 line 20) (HR-77102)?",
+      "why_it_blocks": "Nameplate, rating label order (HPO-26-00613 line 20) is open ($262) and the ERP holds no promise date: it can never be late by date and no build can count on it"
+     },
+     {
+      "what": "the promised date",
+      "owner": "Marcus",
+      "question": "What date has Vistaray promised for Lidar, 2D safety order (HPO-26-00627 line 20) (HR-60110)?",
+      "why_it_blocks": "Lidar, 2D safety order (HPO-26-00627 line 20) is open ($470K) and the ERP holds no promise date: it can never be late by date and no build can count on it"
+     },
+     {
+      "what": "the promised date",
+      "owner": "Sofia",
+      "question": "What date has Tri-State Industrial promised for Threadlocker, medium strength order (HPO-26-00639 line 10) (HR-78101)?",
+      "why_it_blocks": "Threadlocker, medium strength order (HPO-26-00639 line 10) is open ($1,870) and the ERP holds no promise date: it can never be late by date and no build can count on it"
+     },
+     {
+      "what": "the promised date",
+      "owner": "Priya",
+      "question": "What date has Brightcharge promised for Charging dock power unit, 48 V 40 A order (HPO-26-00683 line 10) (HR-51220)?",
+      "why_it_blocks": "Charging dock power unit, 48 V 40 A order (HPO-26-00683 line 10) is open ($22K) and the ERP holds no promise date: it can never be late by date and no build can count on it"
+     },
+     {
+      "what": "open orders with no promised date",
+      "owner": "Marcus",
+      "question": "What date has each supplier promised?",
+      "why_it_blocks": "open orders the ERP holds no promise date for: they can never be late by date and no build can count on them"
+     }
+    ]
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 4,
+   "ts": "2026-10-12T01:16:07.626897+00:00",
+   "t_ms": 4753,
+   "type": "tool.called",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01RSh7cZ8Mkv3p7sQHL1vsin",
+   "summary": "Supply planner calls open_supply",
+   "refs": [],
+   "payload": {
+    "tool": "open_supply",
+    "name": "open_supply",
+    "args": {
+     "part_number": "HR-33116"
+    },
+    "gate": "allowed",
+    "gate_reason": "part of this role's work",
+    "why": "Find what is on order for the part and what is stuck."
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 5,
+   "ts": "2026-10-12T01:16:07.638665+00:00",
+   "t_ms": 4765,
+   "type": "tool.result",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01RSh7cZ8Mkv3p7sQHL1vsin",
+   "summary": "Open supply for HR-33116: 1 lines, 8,500 EA (0 EA on disrupted lines)",
+   "refs": [],
+   "payload": {
+    "tool": "open_supply",
+    "name": "open_supply",
+    "ok": true,
+    "numbers": [
+     {
+      "id": "supply:HR-33116:open_lines",
+      "name": "Open PO lines for HR-33116",
+      "value": "1",
+      "unit": "lines"
+     },
+     {
+      "id": "supply:HR-33116:open_qty",
+      "name": "Quantity on open orders for HR-33116",
+      "value": "8500",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:HR-33116:stuck_qty",
+      "name": "Quantity on disrupted lines for HR-33116",
+      "value": "0",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:HR-33116:unaffected_qty",
+      "name": "Quantity on open orders not disrupted for HR-33116",
+      "value": "8500",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:HR-33116:HPO-26-00422/70:qty",
+      "name": "Quantity on HPO-26-00422/70",
+      "value": "8500",
+      "unit": "EA"
+     }
+    ],
+    "unknowns": []
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 6,
+   "ts": "2026-10-12T01:16:07.757074+00:00",
+   "t_ms": 4883,
+   "type": "tool.called",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01FjvrXzabKFakqF7SZP8gbu",
+   "summary": "Supply planner calls open_supply",
+   "refs": [],
+   "payload": {
+    "tool": "open_supply",
+    "name": "open_supply",
+    "args": {
+     "part_number": "HR-77102"
+    },
+    "gate": "allowed",
+    "gate_reason": "part of this role's work",
+    "why": "Find what is on order for the part and what is stuck."
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 7,
+   "ts": "2026-10-12T01:16:07.768508+00:00",
+   "t_ms": 4895,
+   "type": "tool.result",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01FjvrXzabKFakqF7SZP8gbu",
+   "summary": "Open supply for HR-77102: 1 lines, 300 EA (0 EA on disrupted lines)",
+   "refs": [],
+   "payload": {
+    "tool": "open_supply",
+    "name": "open_supply",
+    "ok": true,
+    "numbers": [
+     {
+      "id": "supply:HR-77102:open_lines",
+      "name": "Open PO lines for HR-77102",
+      "value": "1",
+      "unit": "lines"
+     },
+     {
+      "id": "supply:HR-77102:open_qty",
+      "name": "Quantity on open orders for HR-77102",
+      "value": "300",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:HR-77102:stuck_qty",
+      "name": "Quantity on disrupted lines for HR-77102",
+      "value": "0",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:HR-77102:unaffected_qty",
+      "name": "Quantity on open orders not disrupted for HR-77102",
+      "value": "300",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:HR-77102:HPO-26-00613/20:qty",
+      "name": "Quantity on HPO-26-00613/20",
+      "value": "300",
+      "unit": "EA"
+     }
+    ],
+    "unknowns": []
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 8,
+   "ts": "2026-10-12T01:16:07.915994+00:00",
+   "t_ms": 5042,
+   "type": "tool.called",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01YUt1XXafB69Qet7nxNdKKq",
+   "summary": "Supply planner calls open_supply",
+   "refs": [],
+   "payload": {
+    "tool": "open_supply",
+    "name": "open_supply",
+    "args": {
+     "part_number": "HR-60110"
+    },
+    "gate": "allowed",
+    "gate_reason": "part of this role's work",
+    "why": "Find what is on order for the part and what is stuck."
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 9,
+   "ts": "2026-10-12T01:16:07.922788+00:00",
+   "t_ms": 5049,
+   "type": "tool.result",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01YUt1XXafB69Qet7nxNdKKq",
+   "summary": "Open supply for HR-60110: 5 lines, 1,520 EA (0 EA on disrupted lines)",
+   "refs": [],
+   "payload": {
+    "tool": "open_supply",
+    "name": "open_supply",
+    "ok": true,
+    "numbers": [
+     {
+      "id": "supply:HR-60110:open_lines",
+      "name": "Open PO lines for HR-60110",
+      "value": "5",
+      "unit": "lines"
+     },
+     {
+      "id": "supply:HR-60110:open_qty",
+      "name": "Quantity on open orders for HR-60110",
+      "value": "1520",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:HR-60110:stuck_qty",
+      "name": "Quantity on disrupted lines for HR-60110",
+      "value": "0",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:HR-60110:unaffected_qty",
+      "name": "Quantity on open orders not disrupted for HR-60110",
+      "value": "1520",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:HR-60110:HPO-26-00627/20:qty",
+      "name": "Quantity on HPO-26-00627/20",
+      "value": "314",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:HR-60110:HPO-26-00505/10:qty",
+      "name": "Quantity on HPO-26-00505/10",
+      "value": "248",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:HR-60110:HPO-26-00627/10:qty",
+      "name": "Quantity on HPO-26-00627/10",
+      "value": "338",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:HR-60110:HPO-26-00627/30:qty",
+      "name": "Quantity on HPO-26-00627/30",
+      "value": "293",
+      "unit": "EA"
+     },
+     {
+      "id": "supply:HR-60110:HPO-26-00678/10:qty",
+      "name": "Quantity on HPO-26-00678/10",
+      "value": "327",
+      "unit": "EA"
+     }
+    ],
+    "unknowns": []
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 10,
+   "ts": "2026-10-12T01:16:08.059002+00:00",
+   "t_ms": 5185,
+   "type": "tool.called",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01AGrNaBq9ZuVAmuCCtZC4jH",
+   "summary": "Supply planner was refused open_supply: open_supply has been used 3 times for this item, which is enough: work with what you have",
+   "refs": [],
+   "payload": {
+    "tool": "open_supply",
+    "name": "open_supply",
+    "args": {
+     "part_number": "HR-78101"
+    },
+    "gate": "denied",
+    "gate_reason": "open_supply has been used 3 times for this item, which is enough: work with what you have"
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 11,
+   "ts": "2026-10-12T01:16:08.224828+00:00",
+   "t_ms": 5351,
+   "type": "tool.called",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01Aj3Q1e5Y9PuHeB2Rn93Bjy",
+   "summary": "Supply planner was refused open_supply: open_supply has been used 3 times for this item, which is enough: work with what you have",
+   "refs": [],
+   "payload": {
+    "tool": "open_supply",
+    "name": "open_supply",
+    "args": {
+     "part_number": "HR-51220"
+    },
+    "gate": "denied",
+    "gate_reason": "open_supply has been used 3 times for this item, which is enough: work with what you have"
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 12,
+   "ts": "2026-10-12T01:16:08.435859+00:00",
+   "t_ms": 5562,
+   "type": "tool.called",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01YKX9o3CK8mhdHtwRy7MgYp",
+   "summary": "Supply planner calls where_used_for_parts",
+   "refs": [],
+   "payload": {
+    "tool": "where_used_for_parts",
+    "name": "where_used_for_parts",
+    "args": {
+     "part_numbers": [
+      "HR-33116",
+      "HR-77102",
+      "HR-60110",
+      "HR-78101",
+      "HR-51220"
+     ]
+    },
+    "gate": "allowed",
+    "gate_reason": "part of this role's work",
+    "why": "Find which robots use 5 parts, so the shortage is stated per build."
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 13,
+   "ts": "2026-10-12T01:16:08.451956+00:00",
+   "t_ms": 5578,
+   "type": "tool.result",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": "toolu_01YKX9o3CK8mhdHtwRy7MgYp",
+   "summary": "Where used: 5 parts checked",
+   "refs": [],
+   "payload": {
+    "tool": "where_used_for_parts",
+    "name": "where_used_for_parts",
+    "ok": true,
+    "numbers": [
+     {
+      "id": "bom:HR-77102:HR-90050:per_robot",
+      "name": "HR-77102 per Porter P5",
+      "value": "1",
+      "unit": "EA"
+     },
+     {
+      "id": "bom:HR-60110:HR-90020:per_robot",
+      "name": "HR-60110 per Tern T2",
+      "value": "1",
+      "unit": "EA"
+     },
+     {
+      "id": "bom:HR-60110:HR-90050:per_robot",
+      "name": "HR-60110 per Porter P5",
+      "value": "2",
+      "unit": "EA"
+     }
+    ],
+    "unknowns": []
+   }
+  },
+  {
+   "run_id": "run-recorded.1",
+   "parent_run_id": "run-recorded",
+   "seq": 14,
+   "ts": "2026-10-12T01:16:16.755320+00:00",
+   "t_ms": 13882,
+   "type": "run.finished",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": null,
+   "summary": "Supply planner finished",
+   "refs": [],
+   "payload": {
+    "status": "ok",
+    "tool_calls": 7,
+    "first_step_ms": 4590
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 7,
+   "ts": "2026-10-12T01:16:16.759578+00:00",
+   "t_ms": 13886,
+   "type": "child.finished",
+   "agent": "supply_planner",
+   "agent_label": "Supply planner",
+   "tool_use_id": null,
+   "summary": "Five open PO lines have no promised date, so none can be counted as late and no build can rely on them. HPO-26-00422/70 (Capacitor, aluminum electrolytic, HR-33116, Yokohama Denshi Co., Ltd.): 8,500 EA open, $3,107; no parent assembly is found in the bill of materials, so the build it feeds is unknown; owner Marcus Chen. HPO-26-00613/20 (Nameplate, rating label, HR-77102, LabelCraft Industries): 300 EA open, $262; feeds Porter P5 at 1 per robot; owner Sofia Marino.",
+   "refs": [],
+   "payload": {
+    "child_run_id": "run-recorded.1",
+    "status": "ok",
+    "handoff_ok": true
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 8,
+   "ts": "2026-10-12T01:16:16.866694+00:00",
+   "t_ms": 13993,
+   "type": "step.text",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Still waiting for Buyer's clerk to finish",
+   "refs": [],
+   "payload": {
+    "system": true
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 9,
+   "ts": "2026-10-12T01:16:17.899239+00:00",
+   "t_ms": 15025,
+   "type": "step.text",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Step 2 is next: I'm asking the clerk to draft the supplier requests and log the buyer questions.",
+   "refs": [],
+   "payload": {}
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 10,
+   "ts": "2026-10-12T01:16:19.390192+00:00",
+   "t_ms": 16516,
+   "type": "child.started",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01BBiuswwpAkTFTuh9dEHdkb",
+   "summary": "Draft promise-date requests",
+   "refs": [],
+   "payload": {
+    "child_run_id": "run-recorded.2",
+    "specialist": "buyers_clerk",
+    "question": "Draft promise-date requests",
+    "task": "Draft promise-date requests",
+    "asked_by": "lookout"
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 1,
+   "ts": "2026-10-12T01:16:19.390903+00:00",
+   "t_ms": 16517,
+   "type": "run.started",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": null,
+   "summary": "Buyer's clerk started",
+   "refs": [],
+   "payload": {
+    "workflow": "specialist:buyers_clerk",
+    "item_key": "unknown:undated"
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 2,
+   "ts": "2026-10-12T01:16:20.793939+00:00",
+   "t_ms": 17920,
+   "type": "tool.called",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01YBi125bz27v1Nix2o8nFGp",
+   "summary": "Buyer's clerk calls get_handoffs",
+   "refs": [],
+   "payload": {
+    "tool": "get_handoffs",
+    "name": "get_handoffs",
+    "args": {},
+    "gate": "allowed",
+    "gate_reason": "part of this role's work",
+    "why": "Read what the earlier steps found, with the figures their lookups returned."
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 3,
+   "ts": "2026-10-12T01:16:20.808487+00:00",
+   "t_ms": 17935,
+   "type": "tool.called",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01CFAtky5tL4vHDY4yP5GcnY",
+   "summary": "Buyer's clerk calls get_item",
+   "refs": [],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "args": {
+     "item_key": "unknown:undated"
+    },
+    "gate": "allowed",
+    "gate_reason": "part of this role's work",
+    "why": "Read what the system already worked out for this item: its finding, dates and figures."
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 4,
+   "ts": "2026-10-12T01:16:20.813250+00:00",
+   "t_ms": 17939,
+   "type": "tool.result",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01YBi125bz27v1Nix2o8nFGp",
+   "summary": "Supply planner handed back their findings",
+   "refs": [],
+   "payload": {
+    "tool": "get_handoffs",
+    "name": "get_handoffs",
+    "ok": true,
+    "numbers": [],
+    "unknowns": []
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 5,
+   "ts": "2026-10-12T01:16:20.817925+00:00",
+   "t_ms": 17944,
+   "type": "tool.result",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01CFAtky5tL4vHDY4yP5GcnY",
+   "summary": "Item 5 open orders with no promised date ($497K open): 0 computed numbers, 6 open questions",
+   "refs": [],
+   "payload": {
+    "tool": "get_item",
+    "name": "get_item",
+    "ok": true,
+    "numbers": [],
+    "unknowns": [
+     {
+      "what": "the promised date",
+      "owner": "Marcus",
+      "question": "What date has Yokohama promised for Capacitor, aluminum electrolytic order (HPO-26-00422 line 70) (HR-33116)?",
+      "why_it_blocks": "Capacitor, aluminum electrolytic order (HPO-26-00422 line 70) is open ($3,107) and the ERP holds no promise date: it can never be late by date and no build can count on it"
+     },
+     {
+      "what": "the promised date",
+      "owner": "Sofia",
+      "question": "What date has Labelcraft promised for Nameplate, rating label order (HPO-26-00613 line 20) (HR-77102)?",
+      "why_it_blocks": "Nameplate, rating label order (HPO-26-00613 line 20) is open ($262) and the ERP holds no promise date: it can never be late by date and no build can count on it"
+     },
+     {
+      "what": "the promised date",
+      "owner": "Marcus",
+      "question": "What date has Vistaray promised for Lidar, 2D safety order (HPO-26-00627 line 20) (HR-60110)?",
+      "why_it_blocks": "Lidar, 2D safety order (HPO-26-00627 line 20) is open ($470K) and the ERP holds no promise date: it can never be late by date and no build can count on it"
+     },
+     {
+      "what": "the promised date",
+      "owner": "Sofia",
+      "question": "What date has Tri-State Industrial promised for Threadlocker, medium strength order (HPO-26-00639 line 10) (HR-78101)?",
+      "why_it_blocks": "Threadlocker, medium strength order (HPO-26-00639 line 10) is open ($1,870) and the ERP holds no promise date: it can never be late by date and no build can count on it"
+     },
+     {
+      "what": "the promised date",
+      "owner": "Priya",
+      "question": "What date has Brightcharge promised for Charging dock power unit, 48 V 40 A order (HPO-26-00683 line 10) (HR-51220)?",
+      "why_it_blocks": "Charging dock power unit, 48 V 40 A order (HPO-26-00683 line 10) is open ($22K) and the ERP holds no promise date: it can never be late by date and no build can count on it"
+     },
+     {
+      "what": "open orders with no promised date",
+      "owner": "Marcus",
+      "question": "What date has each supplier promised?",
+      "why_it_blocks": "open orders the ERP holds no promise date for: they can never be late by date and no build can count on them"
+     }
+    ]
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 11,
+   "ts": "2026-10-12T01:16:21.047705+00:00",
+   "t_ms": 18174,
+   "type": "step.text",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "I've already asked the clerk to draft the supplier requests and log the buyer questions for the five undated lines, and it's still working. I'll read both sets of answers and write the Recommendation once it finishes.",
+   "refs": [],
+   "payload": {}
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 6,
+   "ts": "2026-10-12T01:16:23.560113+00:00",
+   "t_ms": 20686,
+   "type": "tool.called",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01FS6y9HTQmAFNYVHu1FUMVa",
+   "summary": "Buyer's clerk calls log_buyer_question",
+   "refs": [],
+   "payload": {
+    "tool": "log_buyer_question",
+    "name": "log_buyer_question",
+    "args": {
+     "owner": "Marcus Chen",
+     "question": "Two open lines have no promised date. (1) HPO-26-00422 line 70, Capacitor aluminum electrolytic HR-33116, Yokohama Denshi: 8,500 EA open, what date has Yokohama promised, and is the line still open? No parent assembly is found, so which build it feeds is unknown. (2) HPO-26-00627 line 20, Lidar 2D safety HR-60110, Hangzhou Vistaray: 314 EA open, what date has Vistaray promised, and is the line still open? It feeds Tern T2 at 1 per robot and Porter P5 at 2 per robot. Please enter the dates in the ERP."
+    },
+    "gate": "staged",
+    "gate_reason": "part of this role's work",
+    "why": "Leave a question for the buyer who owns the answer. An internal note; nothing leaves Halden."
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 7,
+   "ts": "2026-10-12T01:16:23.574187+00:00",
+   "t_ms": 20700,
+   "type": "tool.result",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01FS6y9HTQmAFNYVHu1FUMVa",
+   "summary": "Logged a question for Marcus (an internal note, not sent outside Halden)",
+   "refs": [],
+   "payload": {
+    "tool": "log_buyer_question",
+    "name": "log_buyer_question",
+    "ok": true,
+    "numbers": [],
+    "unknowns": []
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 8,
+   "ts": "2026-10-12T01:16:24.723649+00:00",
+   "t_ms": 21850,
+   "type": "tool.called",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01X7jKFMwYhP2xfkmjuaNDRf",
+   "summary": "Buyer's clerk calls log_buyer_question",
+   "refs": [],
+   "payload": {
+    "tool": "log_buyer_question",
+    "name": "log_buyer_question",
+    "args": {
+     "owner": "Sofia Marino",
+     "question": "Two open lines have no promised date. (1) HPO-26-00613 line 20, Nameplate rating label HR-77102, LabelCraft Industries: 300 EA open, what date has LabelCraft promised, and is the line still open? It feeds Porter P5 at 1 per robot. (2) HPO-26-00639 line 10, Threadlocker medium strength HR-78101, Tri-State Industrial Supply: what date has Tri-State promised, and is the line still open? No parent assembly is found, so the build it feeds is unknown. Please enter the dates in the ERP."
+    },
+    "gate": "staged",
+    "gate_reason": "part of this role's work",
+    "why": "Leave a question for the buyer who owns the answer. An internal note; nothing leaves Halden."
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 9,
+   "ts": "2026-10-12T01:16:24.736734+00:00",
+   "t_ms": 21863,
+   "type": "tool.result",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_01X7jKFMwYhP2xfkmjuaNDRf",
+   "summary": "Logged a question for Sofia (an internal note, not sent outside Halden)",
+   "refs": [],
+   "payload": {
+    "tool": "log_buyer_question",
+    "name": "log_buyer_question",
+    "ok": true,
+    "numbers": [],
+    "unknowns": []
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 10,
+   "ts": "2026-10-12T01:16:25.452479+00:00",
+   "t_ms": 22579,
+   "type": "tool.called",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_016GBauzTNKN23DaDJqepx2Q",
+   "summary": "Buyer's clerk calls log_buyer_question",
+   "refs": [],
+   "payload": {
+    "tool": "log_buyer_question",
+    "name": "log_buyer_question",
+    "args": {
+     "owner": "Priya Nair",
+     "question": "HPO-26-00683 line 10, Charging dock power unit 48 V 40 A HR-51220, Xiamen Brightcharge Technology: open with no promised date. What date has Brightcharge promised, and is the line still open? No parent assembly is found, so the build it feeds is unknown. Please enter the date in the ERP."
+    },
+    "gate": "staged",
+    "gate_reason": "part of this role's work",
+    "why": "Leave a question for the buyer who owns the answer. An internal note; nothing leaves Halden."
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 11,
+   "ts": "2026-10-12T01:16:25.466175+00:00",
+   "t_ms": 22592,
+   "type": "tool.result",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": "toolu_016GBauzTNKN23DaDJqepx2Q",
+   "summary": "Logged a question for Priya (an internal note, not sent outside Halden)",
+   "refs": [],
+   "payload": {
+    "tool": "log_buyer_question",
+    "name": "log_buyer_question",
+    "ok": true,
+    "numbers": [],
+    "unknowns": []
+   }
+  },
+  {
+   "run_id": "run-recorded.2",
+   "parent_run_id": "run-recorded",
+   "seq": 12,
+   "ts": "2026-10-12T01:16:28.815592+00:00",
+   "t_ms": 25942,
+   "type": "run.finished",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": null,
+   "summary": "Buyer's clerk finished",
+   "refs": [],
+   "payload": {
+    "status": "ok",
+    "tool_calls": 5,
+    "first_step_ms": 17920
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 12,
+   "ts": "2026-10-12T01:16:28.818812+00:00",
+   "t_ms": 25945,
+   "type": "child.finished",
+   "agent": "buyers_clerk",
+   "agent_label": "Buyer's clerk",
+   "tool_use_id": null,
+   "summary": "Logged a question for Marcus",
+   "refs": [],
+   "payload": {
+    "child_run_id": "run-recorded.2",
+    "status": "ok",
+    "handoff_ok": true
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 13,
+   "ts": "2026-10-12T01:16:29.710595+00:00",
+   "t_ms": 26837,
+   "type": "tool.called",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": "toolu_01KHEVbWStjcAwuBa7ZyR12P",
+   "summary": "Lookout calls get_handoffs",
+   "refs": [],
+   "payload": {
+    "tool": "get_handoffs",
+    "name": "get_handoffs",
+    "args": {},
+    "gate": "allowed",
+    "gate_reason": "part of this role's work",
+    "why": "Read what the earlier steps found, with the figures their lookups returned."
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 14,
+   "ts": "2026-10-12T01:16:29.718713+00:00",
+   "t_ms": 26845,
+   "type": "tool.result",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": "toolu_01KHEVbWStjcAwuBa7ZyR12P",
+   "summary": "Supply planner and Buyer's clerk handed back their findings",
+   "refs": [],
+   "payload": {
+    "tool": "get_handoffs",
+    "name": "get_handoffs",
+    "ok": true,
+    "numbers": [],
+    "unknowns": []
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 15,
+   "ts": "2026-10-12T01:16:36.995969+00:00",
+   "t_ms": 34122,
+   "type": "verifier.result",
+   "agent": "verifier",
+   "agent_label": "Verifier",
+   "tool_use_id": null,
+   "summary": "5 of 5 numbers from tools · 6 open questions with an owner",
+   "refs": [],
+   "payload": {
+    "passed": true,
+    "warnings": [
+     "prose: 'HPO-26-00627/20' is an id; say the name"
+    ],
+    "numbers_checked": 5,
+    "numbers_from_tools": 5,
+    "open_questions_with_owner": 6,
+    "open_questions": 6,
+    "failures": []
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 16,
+   "ts": "2026-10-12T01:16:37.318836+00:00",
+   "t_ms": 34445,
+   "type": "run.finished",
+   "agent": "lookout",
+   "agent_label": "Lookout",
+   "tool_use_id": null,
+   "summary": "Run ok",
+   "refs": [],
+   "payload": {
+    "status": "ok",
+    "turns": 3,
+    "tool_calls": 14,
+    "cost_usd": 0.1353,
+    "wall_ms": 34430,
+    "first_step_ms": 13,
+    "first_token_ms": 1443,
+    "recommendation_id": "run-recorded",
+    "tokens_in": 232483,
+    "tokens_out": 6972,
+    "tokens_cache_read": 209365,
+    "tokens_cache_creation": 21261,
+    "tokens_by_agent": {
+     "supply_planner": {
+      "tokens": 16958,
+      "tool_uses": 8,
+      "duration_ms": 10700
+     },
+     "buyers_clerk": {
+      "tokens": 16162,
+      "tool_uses": 6,
+      "duration_ms": 9438
+     }
+    }
+   }
+  },
+  {
+   "run_id": "run-recorded",
+   "parent_run_id": null,
+   "seq": 17,
+   "ts": "2026-10-12T01:16:44.911747+00:00",
+   "t_ms": 42038,
+   "type": "review.result",
+   "agent": "reviewer",
+   "agent_label": "Reviewer",
+   "tool_use_id": null,
+   "summary": "Reviewer 83/100: Clear finding and next steps; closure-confirmation trigger is too vague to check.",
+   "refs": [],
+   "payload": {
+    "score": 83,
+    "checks": [
+     {
+      "name": "answers the buyer's question",
+      "passed": true,
+      "critique": "",
+      "critical": false
+     },
+     {
+      "name": "assumptions are really assumptions",
+      "passed": true,
+      "critique": "",
+      "critical": false
+     },
+     {
+      "name": "nothing in it commits Halden",
+      "passed": true,
+      "critique": "",
+      "critical": true
+     },
+     {
+      "name": "what would change it is specific",
+      "passed": false,
+      "critique": "Closure-confirmation line names no person, document or date to check against.",
+      "critical": false
+     },
+     {
+      "name": "buyer's words",
+      "passed": true,
+      "critique": "",
+      "critical": false
+     },
+     {
+      "name": "names the unknown, its owner and the question",
+      "passed": true,
+      "critique": "",
+      "critical": false
+     }
+    ],
+    "failed": [
+     "what would change it is specific: Closure-confirmation line names no person, document or date to check against."
+    ],
+    "cost_usd": 0.0015
+   }
+  }
+ ],
+ "recommendation": {
+  "finding": "Five open orders have no promised date, so none can be late by date and no build can count on them. The one that matters is the Vistaray safety lidar line (HPO-26-00627/20, 314 EA), which feeds Tern T2 at 1 per robot and Porter P5 at 2 per robot. The other four are small, and for three of them (the Yokohama capacitor, the Tri-State threadlocker and the Brightcharge charging dock unit) no parent build was found. I logged a question for Marcus Chen, Sofia Marino and Priya Nair on their lines, asking for the promised date and whether the line is still open. No supplier email was staged, because all five questions sit with Halden buyers.",
+  "numbers": [
+   {
+    "id": "bom:HR-60110:HR-90020:per_robot",
+    "value": "1",
+    "unit": "EA",
+    "name": "HR-60110 per Tern T2",
+    "headline": false,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "bom",
+     "row": "bom:HR-60110:HR-90020:per_robot",
+     "raw": null,
+     "inputs": [],
+     "rule": "HR-60110 per Tern T2",
+     "by": "agent tools"
+    }
+   },
+   {
+    "id": "bom:HR-60110:HR-90050:per_robot",
+    "value": "2",
+    "unit": "EA",
+    "name": "HR-60110 per Porter P5",
+    "headline": false,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "bom",
+     "row": "bom:HR-60110:HR-90050:per_robot",
+     "raw": null,
+     "inputs": [],
+     "rule": "HR-60110 per Porter P5",
+     "by": "agent tools"
+    }
+   },
+   {
+    "id": "supply:HR-33116:HPO-26-00422/70:qty",
+    "value": "8500",
+    "unit": "EA",
+    "name": "Quantity on HPO-26-00422/70",
+    "headline": false,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": "supply:HR-33116:HPO-26-00422/70:qty",
+     "raw": null,
+     "inputs": [],
+     "rule": "Quantity on HPO-26-00422/70",
+     "by": "agent tools"
+    }
+   },
+   {
+    "id": "supply:HR-60110:HPO-26-00627/20:qty",
+    "value": "314",
+    "unit": "EA",
+    "name": "Quantity on HPO-26-00627/20",
+    "headline": false,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": "supply:HR-60110:HPO-26-00627/20:qty",
+     "raw": null,
+     "inputs": [],
+     "rule": "Quantity on HPO-26-00627/20",
+     "by": "agent tools"
+    }
+   },
+   {
+    "id": "supply:HR-77102:HPO-26-00613/20:qty",
+    "value": "300",
+    "unit": "EA",
+    "name": "Quantity on HPO-26-00613/20",
+    "headline": false,
+    "say": null,
+    "provenance": {
+     "method": "computed",
+     "source": "po_lines",
+     "row": "supply:HR-77102:HPO-26-00613/20:qty",
+     "raw": null,
+     "inputs": [],
+     "rule": "Quantity on HPO-26-00613/20",
+     "by": "agent tools"
+    }
+   }
+  ],
+  "assumptions": [
+   "Stock on hand is unknown, so these lines cannot be said to cover or miss any build."
+  ],
+  "would_change": [
+   "The promised dates from Marcus Chen, Sofia Marino and Priya Nair, once they get them from the suppliers.",
+   "A confirmation that any of the five lines is already closed, which would remove it from supply."
+  ],
+  "open_questions": [
+   {
+    "what": "the promised date",
+    "why_it_blocks": "Capacitor, aluminum electrolytic order (HPO-26-00422 line 70) is open ($3,107) and the ERP holds no promise date: it can never be late by date and no build can count on it",
+    "owner": "Marcus",
+    "question": "What date has Yokohama promised for Capacitor, aluminum electrolytic order (HPO-26-00422 line 70) (HR-33116)?",
+    "refs": []
+   },
+   {
+    "what": "the promised date",
+    "why_it_blocks": "Nameplate, rating label order (HPO-26-00613 line 20) is open ($262) and the ERP holds no promise date: it can never be late by date and no build can count on it",
+    "owner": "Sofia",
+    "question": "What date has Labelcraft promised for Nameplate, rating label order (HPO-26-00613 line 20) (HR-77102)?",
+    "refs": []
+   },
+   {
+    "what": "the promised date",
+    "why_it_blocks": "Lidar, 2D safety order (HPO-26-00627 line 20) is open ($470K) and the ERP holds no promise date: it can never be late by date and no build can count on it",
+    "owner": "Marcus",
+    "question": "What date has Vistaray promised for Lidar, 2D safety order (HPO-26-00627 line 20) (HR-60110)?",
+    "refs": []
+   },
+   {
+    "what": "the promised date",
+    "why_it_blocks": "Threadlocker, medium strength order (HPO-26-00639 line 10) is open ($1,870) and the ERP holds no promise date: it can never be late by date and no build can count on it",
+    "owner": "Sofia",
+    "question": "What date has Tri-State Industrial promised for Threadlocker, medium strength order (HPO-26-00639 line 10) (HR-78101)?",
+    "refs": []
+   },
+   {
+    "what": "the promised date",
+    "why_it_blocks": "Charging dock power unit, 48 V 40 A order (HPO-26-00683 line 10) is open ($22K) and the ERP holds no promise date: it can never be late by date and no build can count on it",
+    "owner": "Priya",
+    "question": "What date has Brightcharge promised for Charging dock power unit, 48 V 40 A order (HPO-26-00683 line 10) (HR-51220)?",
+    "refs": []
+   },
+   {
+    "what": "open orders with no promised date",
+    "why_it_blocks": "open orders the ERP holds no promise date for: they can never be late by date and no build can count on them",
+    "owner": "Marcus",
+    "question": "What date has each supplier promised?",
+    "refs": [
+     {
+      "type": "po_line",
+      "id": "HPO-26-00422/70",
+      "label": "Capacitor, aluminum electrolytic order (HPO-26-00422 line 70)"
+     },
+     {
+      "type": "part",
+      "id": "HR-33116",
+      "label": "Capacitor, aluminum electrolytic"
+     },
+     {
+      "type": "supplier",
+      "id": "SUP-0028",
+      "label": "Yokohama Denshi Co., Ltd."
+     },
+     {
+      "type": "po_line",
+      "id": "HPO-26-00613/20",
+      "label": "Nameplate, rating label order (HPO-26-00613 line 20)"
+     },
+     {
+      "type": "part",
+      "id": "HR-77102",
+      "label": "Nameplate, rating label"
+     },
+     {
+      "type": "supplier",
+      "id": "SUP-0053",
+      "label": "LabelCraft Industries"
+     },
+     {
+      "type": "po_line",
+      "id": "HPO-26-00627/20",
+      "label": "Lidar, 2D safety order (HPO-26-00627 line 20)"
+     },
+     {
+      "type": "part",
+      "id": "HR-60110",
+      "label": "Lidar, 2D safety"
+     },
+     {
+      "type": "supplier",
+      "id": "SUP-0029",
+      "label": "Hangzhou Vistaray Technology Co., Ltd."
+     },
+     {
+      "type": "po_line",
+      "id": "HPO-26-00639/10",
+      "label": "Threadlocker, medium strength order (HPO-26-00639 line 10)"
+     },
+     {
+      "type": "part",
+      "id": "HR-78101",
+      "label": "Threadlocker, medium strength"
+     },
+     {
+      "type": "supplier",
+      "id": "SUP-0058",
+      "label": "Tri-State Industrial Supply"
+     }
+    ]
+   }
+  ],
+  "action_ids": [
+   "A-4837c17b",
+   "A-abe27038",
+   "A-e35dd9ef"
+  ],
+  "findings": [],
+  "grade": {
+   "reviewer_score": 83,
+   "checks_passed": 5,
+   "checks_total": 6,
+   "summary": "Clear finding and next steps; closure-confirmation trigger is too vague to check.",
+   "revised": false,
+   "failed_checks": [
+    {
+     "name": "what would change it is specific",
+     "reason": "Closure-confirmation line names no person, document or date to check against."
+    }
+   ]
+  }
+ },
+ "verifier": {
+  "passed": true,
+  "warnings": [
+   "prose: 'HPO-26-00627/20' is an id; say the name"
+  ],
+  "numbers_checked": 5,
+  "numbers_from_tools": 5,
+  "open_questions_with_owner": 6,
+  "open_questions": 6,
+  "failures": []
+ },
+ "actions": [
+  {
+   "action_id": "A-4837c17b",
+   "type": "note",
+   "item_key": "unknown:undated",
+   "target": {
+    "type": "item",
+    "id": "unknown:undated",
+    "label": null
+   },
+   "recipient": null,
+   "subject": null,
+   "body": "Question for Priya: HPO-26-00683 line 10, Charging dock power unit 48 V 40 A HR-51220, Xiamen Brightcharge Technology: open with no promised date. What date has Brightcharge promised, and is the line still open? No parent assembly is found, so the build it feeds is unknown. Please enter the date in the ERP.",
+   "change": {
+    "owner": "Priya"
+   }
+  },
+  {
+   "action_id": "A-abe27038",
+   "type": "note",
+   "item_key": "unknown:undated",
+   "target": {
+    "type": "item",
+    "id": "unknown:undated",
+    "label": null
+   },
+   "recipient": null,
+   "subject": null,
+   "body": "Question for Sofia: Two open lines have no promised date. (1) HPO-26-00613 line 20, Nameplate rating label HR-77102, LabelCraft Industries: 300 EA open, what date has LabelCraft promised, and is the line still open? It feeds Porter P5 at 1 per robot. (2) HPO-26-00639 line 10, Threadlocker medium strength HR-78101, Tri-State Industrial Supply: what date has Tri-State promised, and is the line still open? No parent assembly is found, so the build it feeds is unknown. Please enter the dates in the ERP.",
+   "change": {
+    "owner": "Sofia"
+   }
+  },
+  {
+   "action_id": "A-e35dd9ef",
+   "type": "note",
+   "item_key": "unknown:undated",
+   "target": {
+    "type": "item",
+    "id": "unknown:undated",
+    "label": null
+   },
+   "recipient": null,
+   "subject": null,
+   "body": "Question for Marcus: Two open lines have no promised date. (1) HPO-26-00422 line 70, Capacitor aluminum electrolytic HR-33116, Yokohama Denshi: 8,500 EA open, what date has Yokohama promised, and is the line still open? No parent assembly is found, so which build it feeds is unknown. (2) HPO-26-00627 line 20, Lidar 2D safety HR-60110, Hangzhou Vistaray: 314 EA open, what date has Vistaray promised, and is the line still open? It feeds Tern T2 at 1 per robot and Porter P5 at 2 per robot. Please enter the dates in the ERP.",
+   "change": {
+    "owner": "Marcus"
+   }
+  }
+ ]
+}
