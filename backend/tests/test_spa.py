@@ -25,7 +25,7 @@ def test_root_file_is_served(tmp_path, monkeypatch):
 def test_client_route_gets_index(tmp_path, monkeypatch):
     c = _client(tmp_path, monkeypatch)
     assert c.get("/").text == "<html>app</html>"
-    assert c.get("/items/disruption:SUP-0001").text == "<html>app</html>"
+    assert c.get("/items/pr-late:some-line").text == "<html>app</html>"
 
 
 def test_nothing_outside_dist(tmp_path, monkeypatch):

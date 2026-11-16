@@ -30,20 +30,22 @@ from app.domain.imports import helpers
 from app.domain.imports.context import Ctx
 from app.domain.imports.gate import run_gate
 
-# importing the models registers their tables on Base.metadata
-from app.domain.bom import model as _bom  # noqa: F401
-from app.domain.consignments import model as _consignments  # noqa: F401
-from app.domain.demand import model as _demand  # noqa: F401
-from app.domain.events import model as _events  # noqa: F401
-from app.domain.imports import model as _imports  # noqa: F401
-from app.domain.inbox import model as _inbox  # noqa: F401
-from app.domain.news import model as _news  # noqa: F401
-from app.domain.orders import model as _orders  # noqa: F401
-from app.domain.parts import model as _parts  # noqa: F401
-from app.domain.quotes import model as _quotes  # noqa: F401
-from app.domain.stock import model as _stock  # noqa: F401
-from app.domain.suppliers import model as _suppliers  # noqa: F401
-from app.domain.tariffs import model as _tariffs  # noqa: F401
+
+
+def register_models() -> None:
+    """Import every domain package's `model` module, so its tables are on Base.metadata: one package per concept, none listed here by name."""
+    import pkgutil  # noqa: PLC0415
+
+    import app.domain as domain  # noqa: PLC0415
+
+    for mod in pkgutil.iter_modules(domain.__path__):
+        if mod.ispkg and importlib.util.find_spec(f"app.domain.{mod.name}.model") is not None:
+            importlib.import_module(f"app.domain.{mod.name}.model")
+
+
+import importlib  # noqa: E402
+
+register_models()
 
 ROOT = Path(__file__).resolve().parents[4]
 
@@ -59,29 +61,22 @@ def _rows(ctx: Ctx) -> int:
     return sum(len(df) for name, df in ctx.t.items() if not name.startswith("raw_"))
 
 
-IT_ADMIN = "IT (ERP admin)"   # the role that owns master-data questions; no person is named in the data
+IT_ADMIN = "IT (SAP admin)"   # the role that owns master-data questions; no person is named in the data
 
 
 def _resolve_owners(ctx: Ctx) -> None:
-    """Turn "@part:HR-1", "@parts:HR-1,HR-2" and "@suppliers:SUP-1" into the buyer who owns them (modal buyer)."""
-    parts, po = ctx.t["parts"], ctx.t["po_lines"]
-    names = {r.id: r.name for r in ctx.t["buyers"].itertuples()}
-
-    def modal(series: pd.Series) -> str:
-        s = series.dropna()
-        return names[s.value_counts().idxmax()] if len(s) else IT_ADMIN
-
-    full = {**names, **{r.name.split()[0]: r.name for r in ctx.t["buyers"].itertuples()}, "ERP admin": IT_ADMIN}
+    """Turn a person's first name into the full name, and "@groups:R01,L02" (purchasing groups) into the member who owns most of them."""
+    names = {r.id: r.name for r in ctx.t["buyers"].itertuples()} if "buyers" in ctx.t else {}
+    by_group = {}
+    if "purchasing_groups" in ctx.t:
+        by_group = {r.code: names.get(r.person_id) for r in ctx.t["purchasing_groups"].itertuples() if r.person_id}
+    full = {**names, "SAP admin": IT_ADMIN}
     for i in ctx.issues:
         i["owner"] = full.get(i["owner"], i["owner"])
-        m = re.fullmatch(r"@(part|parts|suppliers):(.+)", i["owner"])
-        if not m:
-            continue
-        ids = m.group(2).split(",")
-        if m.group(1) in ("part", "parts"):
-            i["owner"] = modal(parts[parts.part_number.isin(ids)].buyer_id)
-        else:
-            i["owner"] = modal(po[po.identity_id.isin(ids) | po.record_id.isin(ids)].buyer_id)
+        m = re.fullmatch(r"@groups:(.+)", i["owner"])
+        if m:
+            owners = pd.Series([by_group.get(g) for g in m.group(1).split(",") if by_group.get(g)])
+            i["owner"] = owners.value_counts().idxmax() if len(owners) else IT_ADMIN
 
 
 def approved_links(db: Path) -> list[dict]:
@@ -104,11 +99,11 @@ def run_recipe(recipe_dir: Path, data_dir: Path, decisions: dict | None = None, 
     `links` are supplier links a person approved in the ledger: identity resolution applies them, as the person's stated answer, and never merges a record."""
     answers = yaml.safe_load((recipe_dir / "answers.yaml").read_text())
     answers["approved_links"] = list(links or [])
+    gate_cfg = yaml.safe_load((recipe_dir / "gate.yaml").read_text()) if (recipe_dir / "gate.yaml").exists() else {}
     saved = recipe_dir / "decisions.yaml"
     kept = lambda p: (yaml.safe_load(p.read_text()) or {}).get("decisions") or {} if p and p.exists() else {}      # noqa: E731
     answers["decisions"] = {**kept(saved), **kept(runtime), **(decisions or {})}
-    ctx = Ctx(data=data_dir, answers=answers)
-    helpers.configure_part_format(answers)
+    ctx = Ctx(data=data_dir, answers=answers, gate=gate_cfg)
     step_rows = []
     steps = sorted((recipe_dir / "steps").glob("[0-9][0-9]_*.py"))
     watcher.emit("data", "build_started", f"replaying {len(steps)} steps from {recipe_dir.name}", steps=len(steps))
@@ -197,7 +192,10 @@ def load(ctx: Ctx, gate: list[tuple[str, bool, str]], out: Path, recipe_dir: Pat
     ctx.t["build_meta"] = pd.DataFrame([
         dict(key="as_of", value=AS_OF.isoformat()),
         dict(key="company", value=str(ctx.answers.get("company", ""))),
-        dict(key="supplier_risk", value=json.dumps(ctx.answers.get("supplier_risk") or {}, sort_keys=True)),
+        dict(key="company_short", value=str(ctx.answers.get("company_short", ""))),
+        dict(key="base_currency", value=str(ctx.answers.get("base_currency", "INR"))),
+        dict(key="internal_domain", value=str(ctx.answers.get("internal_domain", ""))),
+        dict(key="settings", value=json.dumps(ctx.answers.get("settings") or {}, sort_keys=True)),
         dict(key="id_shapes", value=json.dumps(ctx.answers.get("id_shapes", {}))),
         dict(key="recipe", value=f"{recipe_dir.name} ({ctx.answers.get('kind', 'recipe')})"),
         dict(key="recipe_hash", value=_recipe_hash(recipe_dir)),

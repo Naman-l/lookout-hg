@@ -5,7 +5,7 @@
 .apx-tabs button:hover{color:var(--ink)} .apx-tabs button.on{color:var(--ink);border-bottom-color:var(--ink);font-weight:500}
 .apx-tabs em{font-style:normal;color:var(--ink-3);font-size:var(--t-small);font-weight:400;font-variant-numeric:tabular-nums}
 .apx-grid{display:flex;flex-direction:column;gap:var(--s5);margin-top:var(--s5);padding-bottom:96px}
-.apx.three .apx-grid{display:grid;grid-template-columns:240px minmax(0,1fr) 288px;gap:32px;align-items:start;padding-bottom:0} .apx.three .apd{padding-bottom:140px}
+.apx.three .apx-grid{display:grid;grid-template-columns:300px minmax(0,1fr);gap:32px;align-items:start;padding-bottom:0} .apx.three .apd{padding-bottom:140px}
 .apx:not(.three) .apx-grid{flex-direction:column} .apx:not(.three) .apr{order:-1}
 .apx-pick{order:-2;display:flex;gap:var(--s2);align-items:center;font-size:var(--t-small);color:var(--ink-3)} .apx-pick select{font:inherit;color:var(--ink);padding:6px 8px;border-radius:var(--r-sm);border:0;background:var(--raised);max-width:100%}
 /* queue */
@@ -32,7 +32,7 @@
   .apx{flex:1;min-height:0;display:flex;flex-direction:column}
   .apx-h,.apx-tabs{flex:none}
   .apx .apx-grid{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 256px;grid-template-rows:auto minmax(0,1fr);gap:0;margin-top:0;padding-bottom:0;align-items:stretch}
-  .apx.three .apx-grid{grid-template-columns:200px minmax(0,1fr) 256px;grid-template-rows:minmax(0,1fr);align-items:stretch}
+  .apx.three .apx-grid{grid-template-columns:280px minmax(0,1fr);grid-template-rows:minmax(0,1fr);align-items:stretch}
   .apx-pick{grid-column:1/-1;padding:var(--s3) 0;border-bottom:1px solid var(--line)}
   .apx:not(.three) .apr{order:0}
   .apx .apq,.apx .apd,.apx .apr{min-height:0;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:none;padding-top:var(--s4);padding-bottom:var(--s5)}
@@ -47,8 +47,9 @@
   .apx .db-sent{display:none}
 }
 @media (max-width:1439px){.apx .apd .db-tb td:nth-child(n+4),.apx .apd .db-tb th{white-space:normal} .apx.three .apd{padding-left:var(--s4)} .apx .apd .db-tb{margin-left:var(--s2);max-width:calc(100% - var(--s2))}}
-@media (min-width:1440px){.apx.three .apx-grid{grid-template-columns:216px minmax(0,1fr) 272px} .apx .apr{padding-left:var(--s5)} .apx .apd .db-tb{margin-left:var(--s2);max-width:calc(100% - var(--s2))}}
+@media (min-width:1440px){.apx.three .apx-grid{grid-template-columns:320px minmax(0,1fr)} .apx .apr{padding-left:var(--s5)} .apx .apd .db-tb{margin-left:var(--s2);max-width:calc(100% - var(--s2))}}
 /* a row: who · subject · what is at stake (from the case) · Approve and the act-by, or how late its own lines are */
 .apq-stake{font-size:var(--t-caption);color:var(--ink-2);font-variant-numeric:tabular-nums;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .apq-stake em{font-style:normal;color:var(--critical)}
 @media (min-width:1024px){.apx-pick{min-width:0} .apx-pick select{flex:1;min-width:0;text-overflow:ellipsis}}
+.apq-g{margin:var(--s3) 0 var(--s1);font-size:var(--t-caption);color:var(--ink-3);font-weight:600;text-transform:none}

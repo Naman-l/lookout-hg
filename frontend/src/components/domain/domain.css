@@ -119,9 +119,9 @@ a.dm-inline:hover{background:var(--hover)}
 .ds-quote .dm-dot,.ds-quote .dm-inline svg{display:none}
 .ds-quote .dm-sr{display:inline-block}
 
-/* Robot identity: the icon takes its robot's colour */
-.robot-ic{flex:none} .robot-1{color:var(--robot-1)} .robot-2{color:var(--robot-2)} .robot-3{color:var(--robot-3)}
-.robot-draw *{vector-effect:non-scaling-stroke}
+/* Vertical identity: the icon takes its vertical's colour */
+.vert-ic{flex:none} .v-roads{color:var(--vert-roads)} .v-railway{color:var(--vert-railway)} .v-bess{color:var(--vert-bess)} .v-solar{color:var(--vert-solar)} .v-td{color:var(--vert-td)}
+.vert-ic *{vector-effect:non-scaling-stroke}
 /* The stage strip (StageStrip.tsx): a hairline through the stops, passed dots filled, the current stop a ring. */
 .ss{display:grid;column-gap:16px;list-style:none;margin:0;padding:0}
 .ss-stop{position:relative;padding-top:18px;display:flex;flex-direction:column;gap:2px;min-width:0}

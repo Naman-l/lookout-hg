@@ -1,0 +1,31 @@
+Project,Vertical,Stage,State,District,Plant,Tracking No.,Project Head,Head Email,Planner,Planner Email,SAP Plant Name
+Tumkur,Roads,New,Karnataka,Tumakuru,1138,RD-TUMKUR,Dinesh Rajput,dinesh.rajput@hginfra.example,Usha Arora,usha.arora@hginfra.example,Neelmangala-Tumkur
+JH-10,Roads,New,Jharkhand,Ranchi,1142,RD-JH10,Alok Bose,alok.bose@hginfra.example,Vandana Tripathi,vandana.tripathi@hginfra.example,Jharkhand Pkg-10
+JH-13,Roads,New,Jharkhand,Khunti,1143,RD-JH13,Jitendra Shah,jitendra.shah@hginfra.example,Sachin Shah,sachin.shah@hginfra.example,Jharkhand Pkg-13
+JEC,Roads,New,Jharkhand,East Singhbhum,1147,RD-JEC,Rashmi Rajput,rashmi.rajput@hginfra.example,Priyanka Bose,priyanka.bose@hginfra.example,Jamshedpur Elevated Corridor
+Tirupati,Roads,New,Andhra Pradesh,Tirupati,1148,RD-TIRUP,Vivek Awasthi,vivek.awasthi@hginfra.example,Abhishek Srivastava,abhishek.srivastava@hginfra.example,Chennai Tirupati Pkg-2
+Ayodhya,Roads,New,Uttar Pradesh,Ayodhya,1151,RD-AYODH,Usha Khanna,usha.khanna@hginfra.example,Bhavna Chopra,bhavna.chopra@hginfra.example,NH-227B Bahuvan Ayodhya UP
+Narol,Roads,New,Gujarat,Ahmedabad,1152,RD-NAROL,Pradeep Srivastava,pradeep.srivastava@hginfra.example,Sandeep Arora,sandeep.arora@hginfra.example,Narol Jn to Sarkhej Jn-Aho-GJ
+Pune-Shirur,Roads,New,Maharashtra,Pune,,RD-PUNESH,Madhuri Pandey,madhuri.pandey@hginfra.example,Jyoti Panda,jyoti.panda@hginfra.example,
+KD-01,Roads,Nearing completion,Telangana,Khammam,1131,RD-KD01,Madhuri Awasthi,madhuri.awasthi@hginfra.example,Sandeep Jain,sandeep.jain@hginfra.example,Khammam-Devarapalle (KD-1)
+KD-02,Roads,Nearing completion,Telangana,Khammam,1132,RD-KD02,Aarti Naidu,aarti.naidu@hginfra.example,Prateek Bisht,prateek.bisht@hginfra.example,Khammam Devarapalle (KD-2)
+AP-01,Roads,Nearing completion,Andhra Pradesh,Krishna,1133,RD-AP01,Alok Srivastava,alok.srivastava@hginfra.example,Ramesh Bisht,ramesh.bisht@hginfra.example,Raipur Visakhapatnam (RVAP-1)
+Karnal,Roads,Nearing completion,Haryana,Karnal,1141,RD-KARNAL,Mukesh Saini,mukesh.saini@hginfra.example,Alok Sen,alok.sen@hginfra.example,Karnal Ring Road
+GEW-05,Roads,Nearing completion,Uttar Pradesh,Unnao,1145,RD-GEW05,Bhavna Kale,bhavna.kale@hginfra.example,Saurabh Bajaj,saurabh.bajaj@hginfra.example,Ganga Expressway Pkg-5
+RVNL,Railway,Running,Chhattisgarh,Bilaspur,1902,RL-RVNL,Sandeep Solanki,sandeep.solanki@hginfra.example,Shailesh Khanna,shailesh.khanna@hginfra.example,Bilaspur RVNL
+Kanpur,Railway,Running,Uttar Pradesh,Kanpur Nagar,1903,RL-KANPUR,Jyoti Gaikwad,jyoti.gaikwad@hginfra.example,Pallavi Sen,pallavi.sen@hginfra.example,Kanpur Station Modification
+Dhule,Railway,Running,Maharashtra,Dhule,1904,RL-DHULE,Nitin Gaikwad,nitin.gaikwad@hginfra.example,Rashmi Saini,rashmi.saini@hginfra.example,DHULE-NARDANA RAILWAY
+Aurangabad,Railway,Running,Maharashtra,Chhatrapati Sambhajinagar,1905,RL-AURANG,Mahesh Pandey,mahesh.pandey@hginfra.example,Chetan Ghosh,chetan.ghosh@hginfra.example,KARANJGAON_AURANGABAD_RVNL_PK9
+Gaya,Railway,Running,Bihar,Gaya,1906,RL-GAYA,Nitin Rathod,nitin.rathod@hginfra.example,Naresh Bisht,naresh.bisht@hginfra.example,GAYA-SON NAGAR-RVNL
+NDLS,Railway,Running,Delhi,New Delhi,1907,RL-NDLS,Harish Chaturvedi,harish.chaturvedi@hginfra.example,Usha Rajput,usha.rajput@hginfra.example,DELHI STATION MODIFICATION
+Thane,Railway,Running,Maharashtra,Thane,2002,RL-THANE,Bharat Panda,bharat.panda@hginfra.example,Ankit Panda,ankit.panda@hginfra.example,THANE METRO
+Anuppur,Railway,Running,Madhya Pradesh,Anuppur,1908,RL-ANUPP,Devendra Pawar,devendra.pawar@hginfra.example,Naresh Dutta,naresh.dutta@hginfra.example,Anuppur Thermal Energy - Rail
+DLF,Railway,Running,Haryana,Gurugram,1153,RL-DLF,Prateek Mittal,prateek.mittal@hginfra.example,Nikhil Mohanty,nikhil.mohanty@hginfra.example,DLF Cyber City Gurugram
+Banaskantha,BESS,Running,Gujarat,Banaskantha,2109,NE-BANAS,Ramesh Dwivedi,ramesh.dwivedi@hginfra.example,Aarti Grewal,aarti.grewal@hginfra.example,NVVN1/BESS-01 185 MW
+Dholera,BESS,Running,Gujarat,Ahmedabad,2110,NE-DHOLERA,Nitin Grewal,nitin.grewal@hginfra.example,Subhash Thakur,subhash.thakur@hginfra.example,GUVNL/BESS/PHASE-IV 250 MW
+BESS Chorniya,BESS,New,Gujarat,Patan,,NE-CHORN,Devendra Bhosale,devendra.bhosale@hginfra.example,Vandana Bisht,vandana.bisht@hginfra.example,
+Bikaner,Solar,Running,Rajasthan,Bikaner,2104,NE-BIKANER,Yogesh Sethi,yogesh.sethi@hginfra.example,Sachin Bisht,sachin.bisht@hginfra.example,Solar Bikaner (HGIEL)
+Jodhpur,Solar,Running,Rajasthan,Jodhpur,2108,NE-JODHPUR,Vivek Gaikwad,vivek.gaikwad@hginfra.example,Pallavi Bajaj,pallavi.bajaj@hginfra.example,Solar Jodhpur (HGIEL)
+TBCB Angul,T&D,Running,Odisha,Angul,2501,TD-ANGUL,Ramesh Awasthi,ramesh.awasthi@hginfra.example,Swati Shetty,swati.shetty@hginfra.example,TRANSMISSION PROJECT (ERGS-I)
+UPPTCL Mirzapur-Chunar,T&D,New,Uttar Pradesh,Mirzapur,,TD-UPPTCL,Jitendra Kale,jitendra.kale@hginfra.example,Rakesh Khanna,rakesh.khanna@hginfra.example,
+Jamshedpur 400 kV,T&D,New,Jharkhand,East Singhbhum,,TD-JSR400,Lata Parmar,lata.parmar@hginfra.example,Vandana Grewal,vandana.grewal@hginfra.example,

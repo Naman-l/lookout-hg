@@ -58,11 +58,15 @@ def _only_the_owner(action: Action | None, who: str) -> None:
 
 
 def _entities(a: Action) -> dict:
-    """What the draft's subject and body mention, matched against the records. A nicety for the screen: if the records cannot be read, the draft is shown without it."""
+    """What the draft's subject and body mention, matched against the records, and its recipient's name on file. A nicety for the screen: if the
+    records cannot be read, the draft is shown without it."""
     try:
         with Session(create_engine(f"sqlite:///{_db.DB_PATH}", future=True)) as s:
-            out = {"subject_entities": annotate.annotate(s, a.subject), "body_entities": annotate.annotate(s, a.body)}
-            if a.target is not None and a.target.type == "supplier":      # the name a buyer says (the short form), for the queue and the heading
+            from ..attention.stage import _with_names  # noqa: PLC0415
+
+            out = {"subject_entities": annotate.annotate(s, a.subject), "body_entities": annotate.annotate(s, a.body),
+                   "recipient_name": _with_names(s, [a])[0].recipient_name, "doa_line": (a.change or {}).get("doa_line")}
+            if a.target is not None and a.target.type == "supplier":
                 out["target"] = a.target.model_copy(update={"label": naming.supplier_name(s, a.target.id)})
             return out
     except Exception:  # noqa: BLE001
@@ -94,7 +98,7 @@ def _shown(a: Action, chosen: dict | None = None) -> Action:
     c = (chosen if chosen is not None else _picks()).get(a.action_id)
     if c:
         update.update(chosen=True, chosen_route=c["option_kind"], chosen_routes=c.get("routes") or [c["option_kind"]], chosen_by=c["by"], chosen_at=c["at"])
-    if a.state == "proposed":
+    if a.state in ("proposed", "signed"):
         update["unverified_checks"] = approvers.unverified_checks_of(_db.DB_PATH, a)
     return a.model_copy(update=update) if update else a
 
@@ -125,8 +129,12 @@ def approve(action_id: str, body: Approve):
     """Approve exactly what was shown, then execute (simulated send). 409 on a stale hash or a non-proposed state."""
     who = _buyer(body.approved_by)
     current = ledger.get(_db.DB_PATH, action_id)
-    _only_the_owner(current, who)
-    if current is not None and current.state == "proposed":
+    if current is not None and current.state == "signed":      # the countersign: only the person the DoA names may give it (the ledger refuses anyone else)
+        if who != current.countersign:
+            raise HTTPException(403, f"Signed by {current.signed_by}; it waits for {current.countersign}'s countersign, and you are {who}.")
+    else:
+        _only_the_owner(current, who)
+    if current is not None and current.state in ("proposed", "signed"):
         failed = approvers.unverified_checks_of(_db.DB_PATH, current)
         if failed and not body.confirm_unverified:
             raise HTTPException(409, "the run that wrote this draft did not pass its checks (" + "; ".join(failed[:3]) + "); confirm to approve it anyway")
@@ -167,7 +175,9 @@ def edit_action(action_id: str, body: EditDraft):
 @router.post("/actions/{action_id}/reject", response_model=Action, operation_id="rejectAction")
 def reject(action_id: str, body: Reject):
     who = _buyer(body.rejected_by)
-    _only_the_owner(ledger.get(_db.DB_PATH, action_id), who)
+    held = ledger.get(_db.DB_PATH, action_id)
+    if not (held is not None and held.state == "signed" and who == held.countersign):      # the countersigner may send a signed draft back
+        _only_the_owner(held, who)
     try:
         return _shown(ledger.reject(_db.DB_PATH, action_id, body.reason, who))
     except ledger.LedgerError as e:
@@ -197,7 +207,7 @@ class StageAction(BaseModel):
 _KIND_SUBJECT = {"note": "Note to {to}", "record": "Decision", "erp_update": "PO lines to update · enter in the ERP"}
 
 
-@router.post("/action-items/{key}/actions", response_model=Action, status_code=201, operation_id="stageCaseAction")
+@router.post("/action-items/{key:path}/actions", response_model=Action, status_code=201, operation_id="stageCaseAction")
 def stage_case_action(key: str, body: StageAction):
     """Stage a note, a decision or an ERP update on a case for its owner's signature (F101: Approvals hold everything that needs a signature).
     Only an owner of the case may stage it, and only that person may approve it. Never on a trust item: nothing is acted on from a message that failed the checks."""
@@ -234,7 +244,7 @@ class ChooseRoute(BaseModel):
     reason: str = ""  # a decision on record must say why
 
 
-@router.post("/action-items/{key}/routes/{kind}/choose", response_model=Action, operation_id="chooseRoute")
+@router.post("/action-items/{key:path}/routes/{kind}/choose", response_model=Action, operation_id="chooseRoute")
 def choose_route(key: str, kind: str, body: ChooseRoute):
     """The buyer chooses a route on a case (the main one, or each "Also start"): the choice is recorded with who and when, and its draft is returned:
     the one the morning run prepared for that route, or one drafted now in code from the route's template, to its recipient on file. Owner only; no model;
@@ -246,12 +256,12 @@ def choose_route(key: str, kind: str, body: ChooseRoute):
     who = _buyer(body.by)
     with _S(create_engine(f"sqlite:///{_db.DB_PATH}", future=True)) as s:
         try:
-            a, how = choose(s, _db.DB_PATH, key, kind, who, body.reason)
+            a, how, drafts = choose(s, _db.DB_PATH, key, kind, who, body.reason)
         except RouteError as e:
             raise HTTPException(e.status, e.message) from e
         except ledger.LedgerError as e:
             raise _refuse(e) from e
-    return _shown(a).model_copy(update={"change": {**(a.change or {}), "how": how}})
+    return _shown(a).model_copy(update={"change": {**(a.change or {}), "how": how, "drafts": [d.action_id for d in drafts]}})
 
 
 class HeldControl(BaseModel):
@@ -259,7 +269,7 @@ class HeldControl(BaseModel):
     by: str
 
 
-@router.post("/action-items/{key}/controls", response_model=Action, status_code=201, operation_id="recordHeldControl")
+@router.post("/action-items/{key:path}/controls", response_model=Action, status_code=201, operation_id="recordHeldControl")
 def record_held_control(key: str, body: HeldControl):
     """A held message's required action, done: recorded on the case at once with who and when (BUYER 02: ticks kept only in the browser were gone in a
     new tab). Nothing is staged or sent; the record is append-only, so a done control stays done."""

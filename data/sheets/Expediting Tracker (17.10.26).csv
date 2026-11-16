@@ -1,0 +1,27 @@
+PO No.,PO Item,Project,Item,Vendor,MFC Requested,MFC Issued,Mfg Period (days),Inspection Call,Inspection Planned,Inspection Done,Dispatch Clearance,Delivered,Site Ready (Planned),Commissioned,Warranty (months),Warranty From,Remarks
+4500120419,10,Dholera,Inverter duty transformer 12.5 MVA,Ujjwal Transformers Pvt Ltd,30.01.2026,15.02.2026,120,,,,,,,,18,Supply,Delivery delayed by vendor: revised to Dec 2026
+4500120430,10,RVNL,Traction transformer 30.24 MVA,Kalinga Power Transformers Pvt Ltd,20.01.2026,31.01.2026,120,15.08.2026,25.08.2026,25.08.2026,09.09.2026,13.09.2026,,,18,Supply,
+4500120461,10,Dholera,Power conversion system 2.5 MW,Tejas PCS Systems,10.01.2026,22.01.2026,90,31.05.2026,13.06.2026,13.06.2026,28.06.2026,02.07.2026,,12.09.2026,18,Supply,
+4500120511,10,Banaskantha,BESS container 5 MWh,"Huaxin Energy Storage Co., Ltd.",13.01.2026,25.01.2026,90,08.08.2026,15.08.2026,17.08.2026,25.08.2026,01.09.2026,,,18,Supply,
+4500120556,10,Bikaner,Solar string inverter 320 kW,Mahakal Tower Structures,,,,,,,25.03.2026,29.03.2026,,31.05.2026,18,Supply,
+4500120731,10,Jodhpur,Solar string inverter 320 kW,Suryamitra Inverters Pvt Ltd,,,,,,,03.04.2026,08.04.2026,,02.05.2026,18,Supply,
+4500120738,10,Banaskantha,Power conversion system 2.5 MW,Tejas PCS Systems,08.02.2026,17.02.2026,90,29.06.2026,12.07.2026,13.07.2026,26.07.2026,01.08.2026,,22.08.2026,18,Supply,
+4500120768,10,Aurangabad,Traction transformer 30.24 MVA,Kalinga Power Transformers Pvt Ltd,20.08.2026,,120,,,,,,,,18,Supply,MFC on hold: TSS plinth readiness (Projects)
+4500120796,10,Dholera,GIS 220 kV (per bay lot),Arya Switchgear and GIS Ltd,21.02.2026,01.03.2026,120,,,,,,,,18,Supply,
+4500121032,10,TBCB Angul,Lattice transmission tower (galvanised),Mahakal Tower Structures,20.03.2026,30.03.2026,90,,,,,,,,,,
+4500121087,10,TBCB Angul,Conductor ACSR Zebra,Utkal Conductors Pvt Ltd,15.04.2026,27.04.2026,90,19.06.2026,03.07.2026,03.07.2026,16.07.2026,21.07.2026,,,,,Section A: 240 km received; PV claim on September lots under review
+4500121346,10,Gaya,Traction transformer 30.24 MVA,Kalinga Power Transformers Pvt Ltd,02.06.2026,10.06.2026,120,16.10.2026,28.10.2026,,,,15.12.2026,,18,Supply,Final inspection called 28.10.2026; TSS plinth expected 15.12.2026
+4500121356,10,Dholera,33 kV switchgear panel,Meghdoot Electricals,01.04.2026,08.04.2026,120,25.06.2026,09.07.2026,10.07.2026,16.07.2026,19.07.2026,,20.08.2026,18,Supply,
+4500121372,10,Banaskantha,Energy management system,Meghdoot Electricals,01.05.2026,06.05.2026,90,15.06.2026,24.06.2026,24.06.2026,03.07.2026,06.07.2026,,10.08.2026,18,Supply,
+4500121591,10,Bikaner,Inverter duty transformer 12.5 MVA,Ujjwal Transformers Pvt Ltd,20.05.2026,25.05.2026,120,30.08.2026,12.09.2026,13.09.2026,20.09.2026,28.09.2026,,,18,Supply,
+4500121746,10,Dholera,Energy management system,Meghdoot Electricals,28.04.2026,13.05.2026,90,14.06.2026,24.06.2026,24.06.2026,04.07.2026,11.07.2026,,05.08.2026,18,Supply,
+4500122024,10,Gaya,DG set 500 kVA,Pavan Gensets Pvt Ltd,,,,25.07.2026,01.08.2026,03.08.2026,11.08.2026,19.08.2026,,,18,Supply,
+4500122088,10,TBCB Angul,Insulator string set (composite),Neelachal Insulators,,,,,,,,,,,,,
+4500122401,10,Jodhpur,CT and CVT 220/145 kV,Meghdoot Electricals,10.07.2026,20.07.2026,120,,,,,,,,18,Supply,
+4500122418,10,Banaskantha,CT and CVT 220/145 kV,Vardaan Instrument Transformers,26.07.2026,01.08.2026,120,,,,,,,,18,Supply,
+4500122423,10,Dholera,CT and CVT 220/145 kV,Vardaan Instrument Transformers,31.07.2026,04.08.2026,120,,,,,,,,18,Supply,
+4500122468,10,Bikaner,CT and CVT 220/145 kV,Meghdoot Electricals,12.08.2026,18.08.2026,120,,,,,,,,18,Supply,
+4500123317,10,Gaya,OHE mast B-150 (galvanised),Uttara OHE Structures Pvt Ltd,,,,,,,,,,,,,Dispatch 06.11.2026 (galvanizing)
+4500123317,20,Gaya,OHE mast B-250 (galvanised),Uttara OHE Structures Pvt Ltd,,,,,,,,,,,,,Dispatch 06.11.2026 (galvanizing)
+4500123578,10,Dholera,BESS container 5 MWh,"Huaxin Energy Storage Co., Ltd.",,,90,,,,,,,,18,Supply,Production slot Nov 2026 subject to LC
+4500087611,10,Kanpur,DG set 500 kVA,Pavan Gensets Pvt Ltd,,,,21.04.2025,28.04.2025,29.04.2025,05.05.2025,12.05.2025,,,18,Supply,Commissioning not planned yet (site): warranty runs from supply

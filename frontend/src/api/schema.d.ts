@@ -4,143 +4,6 @@
  */
 
 export interface paths {
-    "/api/builds": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** One line per product for its next build month, with readiness counts and a verdict (light, for Today) */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description ok */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["BuildSummary"][];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/phases": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** The stage ladder of one PO line or one part; done and expected rungs cite a record, every other rung is unknown with who to ask */
-        get: {
-            parameters: {
-                query?: {
-                    po_line?: string;
-                    part?: string;
-                };
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description ok */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["Ladder"];
-                    };
-                };
-                /** @description no such PO line or part */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-                /** @description give exactly one of po_line or part */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/builds/{product}/{month}/readiness": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Where each part of a named build stands, rolled up by sub-assembly, with a verdict in counts (never a percent) */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description a finished-good part number or its name */
-                    product: string;
-                    /** @description YYYY-MM */
-                    month: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description ok */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["BuildReadiness"];
-                    };
-                };
-                /** @description no such product */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/api/health": {
         parameters: {
             query?: never;
@@ -148,27 +11,8 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Liveness and the data snapshot date */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description ok */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["Health"];
-                    };
-                };
-            };
-        };
+        /** Health */
+        get: operations["health_api_health_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -177,1403 +21,15 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/counts": {
+    "/api/data-issues": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Live counts for the sidebar; with `buyer`, also how many waiting drafts that buyer owns and can sign */
-        get: {
-            parameters: {
-                query?: {
-                    /** @description a buyer's name: fills to_sign_mine */
-                    buyer?: string;
-                };
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description ok */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["Counts"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/action-items": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** The Action list, ranked inside each group (fire, deadline, tariff, unknown) */
-        get: {
-            parameters: {
-                query?: {
-                    owner?: string;
-                    /** @description the group */
-                    kind?: "disruption" | "trust" | "deadline" | "tariff" | "unknown";
-                    /** @description the stage: Discovery, RFQ, Quote & risk, Purchasing */
-                    category?: string;
-                    /** @description an act-by window; an item with no date is outside it */
-                    act_by_from?: string;
-                    act_by_to?: string;
-                };
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description ok */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["ActionItem"][];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/action-items/{key}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** One action item with its evidence and the latest Recommendation */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @example disruption:SUP-0001 */
-                    key: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description ok */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["ActionItemDetail"];
-                    };
-                };
-                /** @description no such item */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/action-items/{key}/options": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** The ways through a supplier's disruption as data - what each needs, the earliest date the data supports, the cost where it can be computed, the unknown that decides it */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @example disruption:SUP-0001 */
-                    key: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description four options: allocation, air_freight, resequence, second_source */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["FireOption"][];
-                    };
-                };
-                /** @description this item has no options (only a supplier's disruption does) */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/action-items/{key}/runs": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Work this item with the agent (starts a run; returns at once) */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    key: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": {
-                        /** @example Dana Reyes */
-                        asked_by?: string;
-                        /** @description Run live: work a recorded item live anyway (hybrid mode); 503 when no model is available */
-                        live?: boolean;
-                    };
-                };
-            };
-            responses: {
-                /** @description started */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["RunRef"];
-                    };
-                };
-                /** @description a run is already in progress for this item; body is that run's RunRef */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/ask": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Ask Lookout a question, optionally about the record on screen; answered as a Recommendation through the same run stream */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody: {
-                content: {
-                    "application/json": components["schemas"]["AskBody"];
-                };
-            };
-            responses: {
-                /** @description started */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["RunRef"];
-                    };
-                };
-                /** @description no model is available (no API key and not live) */
-                503: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/ask/examples": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Example questions with a recorded answer, which replay without an API key */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description ok */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            question?: string;
-                            context?: components["schemas"]["EntityRef"] | null;
-                            /** Format: date */
-                            recorded_at?: string;
-                        }[];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/agents": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Lookout and its specialists, the stage each serves, its tools and what the recorded runs show it did (read only) */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description ok */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            recorded_runs: number;
-                            recorded_cost_usd: number;
-                            /** @description recordings made on an earlier prompt (recordings/STALE.md) */
-                            earlier_prompt: number;
-                            agents: {
-                                name: string;
-                                label: string;
-                                /** @enum {string} */
-                                role: "orchestrator" | "specialist";
-                                stages: ("overview" | "analysis" | "decision" | "approval" | "data")[];
-                                works_on: string;
-                                tools: string[];
-                                runs: number;
-                                lookups: number;
-                                drafts?: number;
-                                questions?: number;
-                                latest_run_id?: string | null;
-                                /** @description Lookout only: its words and tools per stage */
-                                by_stage?: {
-                                    [key: string]: {
-                                        works_on?: string;
-                                        tools?: string[];
-                                    };
-                                };
-                            }[];
-                        };
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/evals/summary": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** The last measured eval round, dated, each kind of check as measured (never one pass rate); 404 when no report is committed */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description ok */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            date?: string;
-                            round?: number | null;
-                            model?: string;
-                            trials?: number;
-                            git?: string;
-                            code_controls?: string;
-                            rows?: {
-                                label?: string;
-                                sub?: string;
-                                value?: string;
-                            }[];
-                        };
-                    };
-                };
-                /** @description no eval report */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/parts/{part}/compare-runs": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Compare quotes for a part with the Sourcing analyst (starts a run) */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    part: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": {
-                        asked_by?: string;
-                    };
-                };
-            };
-            responses: {
-                /** @description started */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["RunRef"];
-                    };
-                };
-                /** @description no such part */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/imports/steward-runs": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Ask the Data steward to read an unfamiliar export and propose how to load it (a proposal; nothing is loaded) */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody: {
-                content: {
-                    "application/json": {
-                        filename: string;
-                        /** @description the CSV text */
-                        text: string;
-                        asked_by: string;
-                    };
-                };
-            };
-            responses: {
-                /** @description started */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["RunRef"];
-                    };
-                };
-                /** @description that file is already being read */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-                /** @description not a .csv file */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-                /** @description no model is available (the shipped example replays without one) */
-                503: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/messages/{message_id}/triage-runs": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Ask the Inbox analyst what a message is, what it changes and what to do */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    message_id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description started */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["RunRef"];
-                    };
-                };
-                /** @description a run is in progress for this message */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/messages/{message_id}/reply-runs": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Draft a reply to the contact on file (staged for approval; never to a sender not on file) */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    message_id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description started */
-                202: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["RunRef"];
-                    };
-                };
-                /** @description a run is in progress for this message */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/runs": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Agent activity (newest first) */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description ok */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["Run"][];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/runs/{run_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** One run with its stored events and, when finished, its Recommendation and verifier result */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    run_id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description ok */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["RunDetail"];
-                    };
-                };
-                /** @description no such run */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/runs/{run_id}/events": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Live run events (Server-Sent Events). Replays stored events, then streams; honours Last-Event-ID. */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    run_id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description text/event-stream; each event's data is a RunEvent; stored events carry their row id as the SSE id; step.delta events are streamed, not stored, and carry no id */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/event-stream": components["schemas"]["RunEvent"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/actions": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Drafts and app actions (Approvals tabs; state filters Awaiting approval / Sent (simulated) / Rejected) */
-        get: {
-            parameters: {
-                query?: {
-                    state?: "proposed" | "approved" | "rejected" | "executed";
-                    /** @description only the drafts of this Action list item (exact key) */
-                    item_key?: string;
-                    /** @description only the drafts one run wrote */
-                    run_id?: string;
-                };
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description ok */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["Action"][];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/actions/{action_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** One action with the exact render a person approves */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    action_id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description ok */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["Action"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        /** Edit a waiting draft's subject and body; the payload hash changes, so an approval of the old text is refused (409) and the new text needs its own approval */
-        patch: operations["editAction"];
-        trace?: never;
-    };
-    "/api/actions/{action_id}/approve": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Approve exactly what was shown, then execute (simulated send). Refuses on a hash mismatch or a non-proposed state. */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    action_id: string;
-                };
-                cookie?: never;
-            };
-            requestBody: {
-                content: {
-                    "application/json": {
-                        payload_hash: string;
-                        /** @description a buyer in the buyers table (id or full name); the ledger records the full name */
-                        approved_by: string;
-                        /** @description required when the run that wrote the draft did not pass its checks (the Action lists them in unverified_checks) */
-                        confirm_unverified?: boolean;
-                    };
-                };
-            };
-            responses: {
-                /** @description approved and executed */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["Action"];
-                    };
-                };
-                /** @description the draft belongs to another buyer (the owner of its item); LOOKOUT_ALLOW_DELEGATION=1 lets a team sign for each other */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-                /** @description refused (state is not proposed, the payload changed since it was shown, or the draft's run did not pass its checks and confirm_unverified is false) */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-                /** @description the approver is not one of Halden's buyers */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/actions/{action_id}/reject": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Reject with a reason */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    action_id: string;
-                };
-                cookie?: never;
-            };
-            requestBody: {
-                content: {
-                    "application/json": {
-                        reason: string;
-                        rejected_by: string;
-                    };
-                };
-            };
-            responses: {
-                /** @description rejected */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["Action"];
-                    };
-                };
-                /** @description the draft belongs to another buyer (see approve) */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-                /** @description refused (state is not proposed) */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-                /** @description the person rejecting is not one of Halden's buyers */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/outbox": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Simulated sends (the Sent tab of Approvals) */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description ok */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["OutboxMessage"][];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/orders": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** The open PO report (open and partial lines; filter by buyer) */
-        get: {
-            parameters: {
-                query?: {
-                    buyer?: string;
-                    /** @description a supplier identity id */
-                    supplier?: string;
-                    status?: "OPEN" | "PARTIAL";
-                    /** @description true: only lines behind their promise; false: the rest */
-                    past_due?: boolean;
-                    include_stale?: boolean;
-                };
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description ok */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["PoLine"][];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/suppliers": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Suppliers, one row per company, vendor records counted */
-        get: {
-            parameters: {
-                query?: {
-                    /** @description its country code */
-                    country?: string;
-                    /** @description true: only suppliers whose quotes or news carry a warning */
-                    risk?: boolean;
-                };
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description ok */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["Supplier"][];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/search": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Search across action items, messages, suppliers (names, former names, domains), parts (number, name), PO lines ('HPO-26-00450/10', 'PO 450/10') and people; deterministic, no model */
-        get: operations["search"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/annotate": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** The things a text mentions, matched against the records (parts, suppliers, people, PO lines, money, dates, quantities); deterministic, no model; offsets are UTF-16 indices */
-        post: operations["annotateText"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/consignments": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Material Halden owns at a contract manufacturer, the part it becomes there, its open orders' dates now and the products a slip reaches */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description ok */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["Consignment"][];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/people": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** The buyers - who they are, what they buy, what is open on their desk (the "who are you" list; owners on every screen are these ids) */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description ok */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["Person"][];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/parts": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** The item master as Halden uses it */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description ok */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["Part"][];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/messages": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** The shared inbox, one row per message, trust computed before any model reads it; searched with q and filtered */
-        get: {
-            parameters: {
-                query?: {
-                    /** @description every word must be found in the subject, the sender, the company (names, former names, domain, contact), the part and PO numbers it names (also 'PO 450/10' and '450/10'), the facts read out of it, or the body; best match first, then newest; each row says where in `matches` */
-                    q?: string;
-                    /** @description force majeure, slip, quote, correction, payment change, spot offer, price change, closure */
-                    kind?: string;
-                    /** @description a supplier identity id */
-                    supplier?: string;
-                    trust?: "on_file" | "new_sender" | "suspicious";
-                    date_from?: string;
-                    date_to?: string;
-                };
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description ok */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MessageSummary"][];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/messages/review": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** The messages the inbox ladder will not act on alone (blocked or for review), with the reason */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description ok */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["Classification"][];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/messages/{message_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** One message as quoted data, its trust flags, the lines it rests on and what it changes */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    message_id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description ok */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MessageDetail"];
-                    };
-                };
-                /** @description no such message */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/suppliers/{supplier_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** One supplier's profile, its vendor records and the contact on file */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    supplier_id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description ok */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["SupplierDetail"];
-                    };
-                };
-            };
-        };
+        /** Defects found in the company's files and how each was handled */
+        get: operations["data_issues_api_data_issues_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1589,27 +45,8 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** The recipe steps that built the database, each with the defects it handled */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description ok */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["BuildStep"][];
-                    };
-                };
-            };
-        };
+        /** The recipe's steps in the order they ran, with rows in and out */
+        get: operations["steps_api_data_steps_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1625,335 +62,8 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** The build stamp (built at, data hash, recipe version, checks passed) */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description ok */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["BuildStamp"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/orders/{po_line_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** One PO line, the clean values beside the source row exactly as it was */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    po_line_id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description ok */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["PoLineView"];
-                    };
-                };
-                /** @description no such PO line */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/parts/{part}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** One part, the item master row as exported beside the clean facts, where it is used, its tariff and origin status */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    part: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description ok */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["PartDetail"];
-                    };
-                };
-                /** @description no such part */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/parts/{part}/where-used": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** The robots a part goes into, with the quantity per robot and the path through the BOM */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    part: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description ok */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["WhereUsedRow"][];
-                    };
-                };
-                /** @description no such part */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/products": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** The robots Halden builds */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description ok */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["ProductOut"][];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/products/{product}/bom": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** A robot's indented BOM in drawing order, with defects marked */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    product: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description ok */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["BomTree"];
-                    };
-                };
-                /** @description no such product */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/parts/{part}/offers": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Every offer for a part (PO history and quotes in the inbox), each with its conditions */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    part: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description ok */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["OfferView"][];
-                    };
-                };
-                /** @description no such part */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/parts/{part}/compare": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Quote comparison for a part at a quantity, landed cost per offer */
-        get: {
-            parameters: {
-                query?: {
-                    qty?: number;
-                };
-                header?: never;
-                path: {
-                    part: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description ok */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["BidTab"];
-                    };
-                };
-                /** @description no such part */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
+        /** When the database was built, from which recipe, and the gate result */
+        get: operations["stamp_api_data_stamp_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1970,26 +80,7 @@ export interface paths {
             cookie?: never;
         };
         /** The current import's questions as a short deck (grouped entries, a proposed answer each) */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description ok */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["ImportDeck"];
-                    };
-                };
-            };
-        };
+        get: operations["questions_api_imports_questions_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -2008,30 +99,7 @@ export interface paths {
         get?: never;
         put?: never;
         /** Accept, change or skip questions (one or many) */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody: {
-                content: {
-                    "application/json": components["schemas"]["ImportAnswers"];
-                };
-            };
-            responses: {
-                /** @description the deck after the answers */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["ImportDeck"];
-                    };
-                };
-            };
-        };
+        post: operations["answers_api_imports_answers_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -2046,26 +114,7 @@ export interface paths {
             cookie?: never;
         };
         /** The recipe run on a copy with the current answers; before and after per file, the load checks */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description ok */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["ImportDryRun"];
-                    };
-                };
-            };
-        };
+        get: operations["dry_run_api_imports_dry_run_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -2084,78 +133,22 @@ export interface paths {
         get?: never;
         put?: never;
         /** Load what the dry run showed. Refused if the answers changed since that dry run. */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody: {
-                content: {
-                    "application/json": {
-                        hash: string;
-                        approved_by: string;
-                    };
-                };
-            };
-            responses: {
-                /** @description loaded */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            loaded?: boolean;
-                            /** Format: date-time */
-                            built_at?: string;
-                        };
-                    };
-                };
-                /** @description the answers changed since the dry run */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
+        post: operations["approve_api_imports_approve_post"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/forecast": {
+    "/api/people": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Robots to build per month, by product */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description ok */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["ForecastRow"][];
-                    };
-                };
-            };
-        };
+        /** The buyers: who they are, what they buy, what is open on their desk */
+        get: operations["people_api_people_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -2164,34 +157,1088 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/data-issues": {
+    "/api/counts": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Defects found in Halden's files and how each was handled */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description ok */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["DataIssue"][];
-                    };
-                };
-            };
+        /** Live counts for the sidebar */
+        get: operations["counts_api_counts_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/action-items": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
+        /**
+         * Today: one row per cause, ranked by code
+         * @description Filters: `owner` (a member's id or name: their share of each case they own), `tab`, `vertical`, `project` (id or any alias), `waiting_on`,
+         *     and an act-by window (ISO dates; a case with no date is outside a window).
+         */
+        get: operations["action_items_api_action_items_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/action-items/{key}/routes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** The case's routes, from the code table, with their figures */
+        get: operations["action_item_routes_api_action_items__key__routes_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/action-items/{key}/runs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** The runs on one case, newest first */
+        get: operations["action_item_runs_api_action_items__key__runs_get"];
+        put?: never;
+        /** Work a case: replayed from its recording where one exists, else drafted by code (no model is connected) */
+        post: operations["start_run_api_action_items__key__runs_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/action-items/{key}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** One case in full: its evidence, findings, panels and history */
+        get: operations["action_item_api_action_items__key__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/actions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Actions
+         * @description The drafts, newest first; `item_key` keeps the drafts of one Action list item and `run_id` those of one run (both exact); `chosen=true` only the
+         *     drafts whose route the buyer chose.
+         */
+        get: operations["listActions"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/actions/{action_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Action */
+        get: operations["getAction"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Edit Action
+         * @description Change the subject and text of a draft still waiting. The payload hash changes, so the buyer approves the edited text, not the old one. 409 once decided.
+         */
+        patch: operations["editAction"];
+        trace?: never;
+    };
+    "/api/actions/{action_id}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Approve
+         * @description Approve exactly what was shown, then execute (simulated send). 409 on a stale hash or a non-proposed state.
+         */
+        post: operations["approveAction"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/actions/{action_id}/reject": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reject */
+        post: operations["rejectAction"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/action-items/{key}/actions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Stage Case Action
+         * @description Stage a note, a decision or an ERP update on a case for its owner's signature (F101: Approvals hold everything that needs a signature).
+         *     Only an owner of the case may stage it, and only that person may approve it. Never on a trust item: nothing is acted on from a message that failed the checks.
+         */
+        post: operations["stageCaseAction"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/action-items/{key}/routes/{kind}/choose": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Choose Route
+         * @description The buyer chooses a route on a case (the main one, or each "Also start"): the choice is recorded with who and when, and its draft is returned:
+         *     the one the morning run prepared for that route, or one drafted now in code from the route's template, to its recipient on file. Owner only; no model;
+         *     nothing is sent until the owner approves the draft.
+         */
+        post: operations["chooseRoute"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/action-items/{key}/controls": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Record Held Control
+         * @description A held message's required action, done: recorded on the case at once with who and when (BUYER 02: ticks kept only in the browser were gone in a
+         *     new tab). Nothing is staged or sent; the record is append-only, so a done control stays done.
+         */
+        post: operations["recordHeldControl"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/outbox": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Outbox */
+        get: operations["listOutbox"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/messages": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** The shared inbox, newest first; trust computed before anyone reads; q searches sender, company, subject, facts, PR/PO numbers and body */
+        get: operations["messages_api_messages_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/messages/{message_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** One message as quoted data: trust, what it means, the dates it carries, the lines it moves, the case it feeds */
+        get: operations["message_api_messages__message_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/annotate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** What a text mentions, matched against the records (projects, plants, materials, vendors, people, PRs, POs, rupees, dates, quantities); offsets are UTF-16 indices */
+        post: operations["annotateText"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Search across action items, messages, suppliers (names, former names, domains), parts (number, name), PO lines (the full number and the short 'PO 450/10' form are both found) and people; deterministic, no model */
+        get: operations["search"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/vendors": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Vendors: one row per company (codes linked, never merged), library verticals, on-time share, open POs */
+        get: operations["vendors_api_vendors_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/vendors/{vendor_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** One vendor: its codes, library rows, delivery record, MSME dues, guarantees, POs, quotes and messages */
+        get: operations["vendor_api_vendors__vendor_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/vendors/{vendor_id}/quotes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Every quote on file from one vendor (tracker and mail), newest first, with its CS, material, project and the CS outcome */
+        get: operations["vendor_quotes_api_vendors__vendor_id__quotes_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/materials": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** The material master with what is open and the last rate paid */
+        get: operations["materials_api_materials_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/materials/{code}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** One material: rate history by site and vendor, where used, open PRs and POs, quotes against the last PO and the budget */
+        get: operations["material_api_materials__code__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/prs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** PR lines (ME5A) with status, age, turnaround and plain-word flags */
+        get: operations["prs_api_prs_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/prs/{pr_no}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** One PR: its lines and each line's PR-to-payment ladder */
+        get: operations["pr_api_prs__pr_no__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/pos": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** PO lines (ME2N, netted against MB51), with plain-word flags */
+        get: operations["pos_api_pos_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/pos/{po_no}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** One PO: its lines, the ladder of each, milestones, guarantees, invoices and payments */
+        get: operations["po_api_pos__po_no__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/orders/{po_line}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** One PO line */
+        get: operations["order_api_orders__po_line__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/cs/{cs_no}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** One comparative statement: quotes in, L1 against the last PO rate and the budget rate */
+        get: operations["cs_api_cs__cs_no__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/materials/{code}/quotes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Every quote on file for a material, newest first */
+        get: operations["material_quotes_api_materials__code__quotes_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/ladder": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** The PR-to-payment ladder of one PR line or PO line: each rung's date, source row and whose move it was */
+        get: operations["get_ladder_api_ladder_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/projects": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Every project by vertical: plants, aliases, people on file, what is open */
+        get: operations["projects_api_projects_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/requirements": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** The 3-month requirement sheets as long form, with the fund sheet's figure beside each head */
+        get: operations["requirements_api_requirements_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/supply": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Requirement against supply by month for a project and material(s) */
+        get: operations["supply_api_supply_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/workfronts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Work-front readiness per project and month, worst first ('up to': site stock is not in the data) */
+        get: operations["workfronts_api_workfronts_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/sources": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Outside sources on file (news items, regulatory notices), newest first
+         * @description Filter: `type` (news or notice).
+         */
+        get: operations["sources_api_sources_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/sources/{source_type}/{source_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** One outside source as received: a news item or a notice, with its full text */
+        get: operations["source_api_sources__source_type___source_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/org": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** The SCM organogram: every person and open post, whom they report to and their work, with the edits made here */
+        get: operations["org_api_org_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/org/people": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Add a person or an open post under someone on the chart */
+        post: operations["add_person_api_org_people_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/org/people/{person_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Take a box off the chart; anyone under it moves up to its lead */
+        delete: operations["remove_person_api_org_people__person_id__delete"];
+        options?: never;
+        head?: never;
+        /** Change a box: name, designation, whom they report to, desk, work, or fill / open the post */
+        patch: operations["change_person_api_org_people__person_id__patch"];
+        trace?: never;
+    };
+    "/api/org/undo": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Undo the latest edit */
+        post: operations["undo_api_org_undo_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/org/reset": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Undo every edit: the chart as the sheet draws it */
+        post: operations["reset_api_org_reset_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/insights/team": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** The SCM team, one row per member the viewer may see: as the organogram draws it, never ranked */
+        get: operations["team_api_insights_team_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/insights/team/{person}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** One member's page: open PRs and age, POs released, turnaround against their vertical, savings, effort on cancelled PRs, days waited on others, workload */
+        get: operations["team_member_api_insights_team__person__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/insights/projects": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Every project by vertical: open PRs, turnaround, cancelled lines, budget vs actual, requirement vs fund vs received, long-lead status, ₹ at risk, days held by Projects */
+        get: operations["projects_api_insights_projects_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/insights/projects/{pid}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** One project: where its lines stand on the ladder, whose move, work-front readiness, top materials, its Today cases */
+        get: operations["project_api_insights_projects__pid__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/insights/pricing": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Per material: rate by site and vendor, spread, 12-month trend, last price vs budget vs latest quote */
+        get: operations["pricing_api_insights_pricing_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/insights/pricing/{material}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** One material's prices in detail, PV lines against their index, and what a spread leaves unknown */
+        get: operations["pricing_material_api_insights_pricing__material__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/insights/estimates": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Per project and month: requirement vs fund vs received; bias, accuracy, repeat over-askers, sheet names that resolve to no project */
+        get: operations["estimates_api_insights_estimates_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/brief/{person}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** A member's Daily brief: the morning email they would get (never sent) */
+        get: operations["brief_api_brief__person__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/ask": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Ask Lookout: answered from the records by code (no model is connected), every figure cited */
+        post: operations["ask_api_ask_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/ask/examples": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Suggested questions for the page or case on screen, each with an answer by code
+         * @description `ctx_*`: the record on screen (a project, a vendor, a material, a member), so the suggestions name it.
+         */
+        get: operations["ask_examples_api_ask_examples_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/ask/everywhere": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Suggested questions about the whole company, each answered by code */
+        get: operations["ask_everywhere_api_ask_everywhere_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/messages/{message_id}/triage-runs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** The inbox analyst reads a message: what it is and what it changes (by code) */
+        post: operations["triage_api_messages__message_id__triage_runs_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/messages/{message_id}/reply-runs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Draft a reply through the case the message feeds (by code): the case's recommended route, for the owner's signature */
+        post: operations["reply_api_messages__message_id__reply_runs_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/materials/{code}/compare-runs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** The sourcing analyst compares the quotes for a material (by code) */
+        post: operations["compare_api_materials__code__compare_runs_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/imports/steward-example": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** The example export waiting in data/incoming (a site office's own ME2N download), for the Data steward */
+        get: operations["steward_example_api_imports_steward_example_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/imports/steward-runs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** The Data steward reads an unfamiliar CSV (by code): which export it is, the column map, what drifted, the questions; nothing loads */
+        post: operations["steward_run_api_imports_steward_runs_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/runs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** The runs, newest first */
+        get: operations["list_runs_api_runs_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/runs/{run_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** One run: its events, its Recommendation, its checks */
+        get: operations["get_run_api_runs__run_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/runs/{run_id}/events": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** The run's events as they happen (Server-Sent Events; resumes with Last-Event-ID) */
+        get: operations["stream_api_runs__run_id__events_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** The specialists, their tools and runs, and how runs are made here */
+        get: operations["agents_api_agents_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/evals/summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** What has been measured: the number check and the hindsight check (run by make numbers / make hindsight) */
+        get: operations["evals_summary_api_evals_summary_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -2204,1452 +1251,461 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        /**
-         * Grade
-         * @description The quiet strip under a Recommendation: the Reviewer's score and whether it was revised.
-         */
-        Grade: {
-            /** Reviewer Score */
-            reviewer_score?: number | null;
-            /** Checks Passed */
-            checks_passed?: number | null;
-            /** Checks Total */
-            checks_total?: number | null;
-            /**
-             * Summary
-             * @default
-             */
-            summary: string;
-            /**
-             * Revised
-             * @default false
-             */
-            revised: boolean;
-            /** @description the Reviewer checks that failed, in plain words, so the strip can name them */
-            failed_checks?: components["schemas"]["FailedCheck"][];
-        };
-        FailedCheck: {
-            name: string;
-            reason: string;
-        };
-        /** EditDraft */
-        EditDraft: {
-            /** Subject */
-            subject: string;
-            /** Body */
-            body: string;
-            /** Edited By */
-            edited_by: string;
-        };
-        /**
-         * Decision
-         * @description One decision a person took on an item, from the ledger.
-         */
-        Decision: {
+        /** Action */
+        Action: {
             /** Action Id */
             action_id: string;
-            /** Type */
-            type: string;
-            /** State */
-            state: string;
-            /** By */
-            by: string;
-            /** At */
-            at: string;
             /**
-             * Reason
-             * @default null
-             */
-            reason: string | null;
-            /** Text */
-            text: string;
-        };
-        /**
-         * BuildSummary
-         * @description GET /api/builds: one row per product, for its next build month: small enough to load on every screen.
-         */
-        BuildSummary: {
-            product: components["schemas"]["EntityRef"];
-            /** Month */
-            month: string;
-            /** Units */
-            units: number;
-            /** Counts */
-            counts: {
-                [key: string]: number;
-            };
-            /** Verdict */
-            verdict: string;
-        };
-        /**
-         * LinePromise
-         * @description The date an open line is now expected, and the ERP date when it differs (the supplier moved it).
-         */
-        LinePromise: {
-            /** Date */
-            date: string;
-            /** Erp Date */
-            erp_date?: string | null;
-        };
-        /** Ask */
-        Ask: {
-            /** Owner */
-            owner: string;
-            /** Question */
-            question: string;
-        };
-        /**
-         * Qty
-         * @description A plain quantity for a row whose provenance is said once for the whole build (`need_source`) or by its ladder.
-         */
-        Qty: {
-            /** Value */
-            value: string;
-            /** Uom */
-            uom: string;
-        };
-        /**
-         * Shortage
-         * @description The first month with a shortfall that the records assert (supply under a force-majeure notice): what is needed, what is covered, what is short.
-         */
-        Shortage: {
-            /** Month */
-            month: string;
-            requirement: components["schemas"]["Quantity"];
-            covered: components["schemas"]["Quantity"];
-            short: components["schemas"]["Quantity"];
-        };
-        /**
-         * SupplyState
-         * @description The worst state among the part's open orders, as the stage ladder reads it, with the record it comes from.
-         */
-        SupplyState: {
-            /** State */
-            state: string;
-            /**
-             * Date
-             * @default null
-             */
-            date: string | null;
-            /** Detail */
-            detail: string;
-            /** @default null */
-            source: components["schemas"]["EntityRef"] | null;
-        };
-        /**
-         * Ladder
-         * @description GET /api/phases: the rungs of one PO line, or of one part (with the ladders of its open lines inside).
-         */
-        Ladder: {
-            subject: components["schemas"]["EntityRef"];
-            /**
-             * Kind
+             * Type
              * @enum {string}
              */
-            kind: "po_line" | "part";
-            /** Rungs */
-            rungs: components["schemas"]["Rung"][];
-            /** Counts */
-            counts: {
-                [key: string]: number;
-            };
-            /** Verdict */
-            verdict: string;
-            qty?: components["schemas"]["Quantity"] | null;
-            promised?: components["schemas"]["LinePromise"] | null;
-            /**
-             * Lines
-             * @default []
-             */
-            lines: components["schemas"]["Ladder"][];
-        };
-        /**
-         * Rung
-         * @description One step in the life of an order or a part. `done` and `expected` carry the date and the record they come from; `unknown` carries who to ask.
-         */
-        Rung: {
-            /** Key */
-            key: string;
-            /** Label */
-            label: string;
+            type: "supplier_request" | "internal_note" | "supplier_alias" | "note";
             /**
              * State
              * @enum {string}
              */
-            state: "done" | "expected" | "late" | "disrupted" | "unknown" | "na";
-            /** Date */
-            date?: string | null;
-            /** Detail */
-            detail: string;
-            source?: components["schemas"]["EntityRef"] | null;
-            unknown?: components["schemas"]["Unknown"] | null;
-            /** Flag */
-            flag?: ("disrupted" | "past_due" | "slipped") | null;
+            state: "proposed" | "signed" | "approved" | "rejected" | "executed";
+            /** Payload Hash */
+            payload_hash: string;
+            /** Item Key */
+            item_key?: string | null;
+            /** Run Id */
+            run_id?: string | null;
+            target?: components["schemas"]["EntityRef"] | null;
+            /** Recipient */
+            recipient?: string | null;
+            /** Recipient Name */
+            recipient_name?: string | null;
+            /** Subject */
+            subject?: string | null;
+            /** Body */
+            body?: string | null;
+            /**
+             * Subject Entities
+             * @default []
+             */
+            subject_entities: components["schemas"]["Span"][];
+            /**
+             * Body Entities
+             * @default []
+             */
+            body_entities: components["schemas"]["Span"][];
+            /** Change */
+            change?: {
+                [key: string]: unknown;
+            } | null;
+            /** Proposed At */
+            proposed_at?: string | null;
+            /** Decided At */
+            decided_at?: string | null;
+            /** Decided By */
+            decided_by?: string | null;
+            /** Reason */
+            reason?: string | null;
+            /** Attempted At */
+            attempted_at?: string | null;
+            /** Confirmed At */
+            confirmed_at?: string | null;
+            /** Outbox Id */
+            outbox_id?: string | null;
+            /** Owner */
+            owner?: string | null;
+            /**
+             * Unverified Checks
+             * @default []
+             */
+            unverified_checks: string[];
+            /** Edited By */
+            edited_by?: string | null;
+            /** Signed By */
+            signed_by?: string | null;
+            /** Signed At */
+            signed_at?: string | null;
+            /** Countersign */
+            countersign?: string | null;
+            /** Doa Line */
+            doa_line?: string | null;
+            /**
+             * Chosen
+             * @default false
+             */
+            chosen: boolean;
+            /** Chosen Route */
+            chosen_route?: string | null;
+            /**
+             * Chosen Routes
+             * @default []
+             */
+            chosen_routes: string[];
+            /** Chosen By */
+            chosen_by?: string | null;
+            /** Chosen At */
+            chosen_at?: string | null;
         };
-        /**
-         * BuildReadiness
-         * @description GET /api/builds/{product}/{month}/readiness: every part of a build, its state, rolled up by sub-assembly, with a verdict in counts.
-         */
-        BuildReadiness: {
-            product: components["schemas"]["EntityRef"];
-            /** Month */
-            month: string;
-            /** Units */
-            units: number;
-            /** Verdict */
-            verdict: string;
-            need_source: components["schemas"]["Provenance"];
-            /** Counts */
-            counts: {
-                [key: string]: number;
-            };
-            /** Groups */
-            groups: components["schemas"]["ReadyGroup"][];
-            /** Stock Counted */
-            stock_counted: number;
-            /** Stock Note */
-            stock_note: string;
+        /** ActionItem */
+        ActionItem: {
+            /** Key */
+            key: string;
+            /** Kind */
+            kind: string;
+            /**
+             * Tab
+             * @enum {string}
+             */
+            tab: "requirement" | "after_po" | "price" | "payments" | "vendor_risk" | "trust" | "unknown";
+            /**
+             * Severity
+             * @enum {string}
+             */
+            severity: "high" | "medium" | "low";
+            /** Title */
+            title: string;
+            /** Summary */
+            summary: string;
+            /** At Stake */
+            at_stake?: components["schemas"]["Money"] | components["schemas"]["Quantity"] | components["schemas"]["Unknown"] | null;
+            /**
+             * At Stake Label
+             * @default at stake
+             */
+            at_stake_label: string;
+            /**
+             * At Stake Rule
+             * @default
+             */
+            at_stake_rule: string;
+            /** Act By */
+            act_by?: string | null;
+            /** Days Left */
+            days_left?: number | null;
+            /** Owner */
+            owner: string;
+            /**
+             * Owner Ids
+             * @default []
+             */
+            owner_ids: string[];
+            /**
+             * Waiting On
+             * @default SCM
+             * @enum {string}
+             */
+            waiting_on: "SCM" | "Projects" | "Finance" | "QA" | "Vendor" | "Management";
+            /**
+             * Verticals
+             * @default []
+             */
+            verticals: string[];
+            /**
+             * Projects
+             * @default []
+             */
+            projects: components["schemas"]["EntityRef"][];
+            /**
+             * Site Impact
+             * @default []
+             */
+            site_impact: components["schemas"]["SiteImpact"][];
+            /**
+             * Next Action
+             * @default
+             */
+            next_action: string;
+            /**
+             * Refs
+             * @default []
+             */
+            refs: components["schemas"]["EntityRef"][];
+            /**
+             * Dated
+             * @default []
+             */
+            dated: components["schemas"]["DatedRow"][];
+            team_total?: components["schemas"]["Money"] | null;
+            stage?: components["schemas"]["Stage"] | null;
         };
-        /** ReadyGroup */
-        ReadyGroup: {
-            assembly: components["schemas"]["EntityRef"];
-            /** Parts */
-            parts: components["schemas"]["ReadyPart"][];
-            /** Counts */
-            counts: {
-                [key: string]: number;
-            };
-        };
-        /** ReadyPart */
-        ReadyPart: {
-            part: components["schemas"]["EntityRef"];
-            /** State */
-            state: string;
-            /** Detail */
-            detail: string;
-            need: components["schemas"]["Qty"];
-            open_qty?: components["schemas"]["Qty"] | null;
+        /** ActionItemDetail */
+        ActionItemDetail: {
+            /** Key */
+            key: string;
+            /** Kind */
+            kind: string;
+            /**
+             * Tab
+             * @enum {string}
+             */
+            tab: "requirement" | "after_po" | "price" | "payments" | "vendor_risk" | "trust" | "unknown";
+            /**
+             * Severity
+             * @enum {string}
+             */
+            severity: "high" | "medium" | "low";
+            /** Title */
+            title: string;
+            /** Summary */
+            summary: string;
+            /** At Stake */
+            at_stake?: components["schemas"]["Money"] | components["schemas"]["Quantity"] | components["schemas"]["Unknown"] | null;
+            /**
+             * At Stake Label
+             * @default at stake
+             */
+            at_stake_label: string;
+            /**
+             * At Stake Rule
+             * @default
+             */
+            at_stake_rule: string;
+            /** Act By */
+            act_by?: string | null;
+            /** Days Left */
+            days_left?: number | null;
+            /** Owner */
+            owner: string;
+            /**
+             * Owner Ids
+             * @default []
+             */
+            owner_ids: string[];
+            /**
+             * Waiting On
+             * @default SCM
+             * @enum {string}
+             */
+            waiting_on: "SCM" | "Projects" | "Finance" | "QA" | "Vendor" | "Management";
+            /**
+             * Verticals
+             * @default []
+             */
+            verticals: string[];
+            /**
+             * Projects
+             * @default []
+             */
+            projects: components["schemas"]["EntityRef"][];
+            /**
+             * Site Impact
+             * @default []
+             */
+            site_impact: components["schemas"]["SiteImpact"][];
+            /**
+             * Next Action
+             * @default
+             */
+            next_action: string;
+            /**
+             * Refs
+             * @default []
+             */
+            refs: components["schemas"]["EntityRef"][];
+            /**
+             * Dated
+             * @default []
+             */
+            dated: components["schemas"]["DatedRow"][];
+            team_total?: components["schemas"]["Money"] | null;
+            stage?: components["schemas"]["Stage"] | null;
+            /**
+             * Finding
+             * @default
+             */
+            finding: string;
+            /**
+             * Findings
+             * @default []
+             */
+            findings: components["schemas"]["Finding"][];
+            /**
+             * Numbers
+             * @default []
+             */
+            numbers: components["schemas"]["Number"][];
+            /**
+             * Unknowns
+             * @default []
+             */
+            unknowns: components["schemas"]["Unknown"][];
+            /**
+             * Evidence
+             * @default []
+             */
+            evidence: components["schemas"]["EntityRef"][];
+            /**
+             * Deadlines
+             * @default []
+             */
+            deadlines: components["schemas"]["Deadline"][];
+            /**
+             * Pr Lines
+             * @default []
+             */
+            pr_lines: components["schemas"]["PrLineView"][];
             /**
              * Po Lines
              * @default []
              */
-            po_lines: string[];
-            /** Arrives */
-            arrives?: string | null;
-            supplier?: components["schemas"]["EntityRef"] | null;
-            cause?: components["schemas"]["EntityRef"] | null;
-            on_hand?: components["schemas"]["Qty"] | null;
-            ask?: components["schemas"]["Ask"] | null;
+            po_lines: components["schemas"]["PoLineView"][];
             /**
-             * Cases
-             * @description the keys of Today's rows that hold this part or one of its lines (duty rows left out)
+             * Messages
+             * @default []
              */
-            cases?: string[] | null;
-        };
-        Health: {
-            ok: boolean;
-            /** @description true when runs and Ask use the live agent (a key, or LOOKOUT_LIVE=1); false when only saved runs and the example questions answer */
-            agent_live: boolean;
-            /** @description this server process; a restart (a demo reset) changes it, so choices a browser kept are dropped */
-            boot?: string;
+            messages: components["schemas"]["EntityRef"][];
+            vendor?: components["schemas"]["VendorPanel"] | null;
+            project?: components["schemas"]["ProjectPanel"] | null;
+            supply?: components["schemas"]["SupplyByMonth"] | null;
+            ladder?: components["schemas"]["Ladder"] | null;
+            cs?: components["schemas"]["CsView"] | null;
+            doa?: components["schemas"]["DoaLine"] | null;
+            held?: components["schemas"]["HeldMessage"] | null;
             /**
-             * Format: date
-             * @example 2026-09-25
+             * Linked
+             * @default []
              */
-            as_of: string;
+            linked: components["schemas"]["LinkedCase"][];
             /**
-             * @description The customer's name as the build's recipe configures it; "the company" when none is configured
-             * @example Acme Robotics
+             * Decisions
+             * @default []
              */
-            company: string;
-            /**
-             * @description Its first word, for short copy
-             * @example Acme
-             */
-            company_short: string;
-            /** @description What each kind of id looks like in this customer's records, as regular expressions from the recipe (null when it names none); the screens match ids with these instead of writing a prefix */
-            id_patterns: {
-                part?: string | null;
-                po_number?: string | null;
-                po_line?: string | null;
-                supplier?: string | null;
-                legacy_supplier?: string | null;
-            };
-        };
-        Counts: {
-            /** @description The Orders header, equal to its rows: "182 open · 3 may not really be open" */
-            open_po_summary?: string;
-            action_items?: number;
-            inbox?: number;
-            suppliers?: number;
-            parts?: number;
-            open_po_lines?: number;
-            stale_po_lines?: number;
-            approvals_pending?: number;
-            /** @description every draft waiting for a signature, whoever owns it: show it only where it is labelled 'all' */
-            waiting_all?: number;
-            /** @description the waiting drafts the asked buyer owns and can sign (give `buyer`); the one number Today and Approvals' 'To sign' show */
-            to_sign_mine?: number | null;
-            runs_running?: number;
-            data_issues?: number;
-        };
-        EntityRef: {
-            type: string;
-            id: string;
-            label?: string | null;
-        };
-        Provenance: {
-            /** @enum {string} */
-            method: "stated" | "computed" | "inferred" | "flagged" | "unknown" | "extracted";
-            source: string;
-            row?: string | null;
-            raw?: string | null;
-            inputs?: components["schemas"]["EntityRef"][];
-            rule?: string | null;
-            by?: string;
-        };
-        Money: {
-            /** @description decimal as string */
-            amount: string;
-            currency: string;
-            usd?: string | null;
-            rate?: string | null;
-            rate_month?: string | null;
-            provenance: components["schemas"]["Provenance"];
-        };
-        Quantity: {
-            value: string;
-            uom: string;
-            ea?: string | null;
-            provenance: components["schemas"]["Provenance"];
-        };
-        Unknown: {
-            what: string;
-            why_it_blocks: string;
-            owner: string;
-            question: string;
-            refs?: components["schemas"]["EntityRef"][];
-        };
-        Span: {
-            /** @description JavaScript string index (UTF-16 code units) where the match starts */
-            start: number;
-            /** @description ... and where it ends (exclusive) */
-            end: number;
-            /** @enum {string} */
-            type: "part" | "supplier" | "supplier_claimed" | "supplier_lookalike" | "person" | "po_line" | "money" | "date" | "quantity" | "duration";
-            /** @description the record id (a part number, a supplier id, a buyer id, a PO line id), the normalised value (money, date, quantity), the address of a look-alike sender, or 'claimed:<text>' for a name in a held message; neither of the last two ever resolves to a real supplier */
-            ref: string;
-            /** @description what the chip shows, name first (a part carries its product) */
-            label: string;
-            /** @description the matched substring, so a renderer can check the span and drop it if the text has changed */
-            text: string;
-        };
-        ActionItem: {
-            /** @description What the at-stake figure means in builds, e.g. "182 Tern robots in October" */
-            at_stake_note?: string | null;
-            /** @example disruption:SUP-0001 */
-            key: string;
-            /** @enum {string} */
-            group: "disruption" | "trust" | "deadline" | "tariff" | "unknown";
-            /** @enum {string} */
-            severity: "high" | "medium" | "low";
-            /**
-             * Format: date
-             * @description a date before which nothing is chased (the supplier promised something by then): the item states this trigger and the agent drafts nothing earlier
-             */
-            waits_until?: string | null;
-            title: string;
-            at_stake?: components["schemas"]["Money"] | components["schemas"]["Quantity"] | components["schemas"]["Unknown"];
-            at_stake_gross?: components["schemas"]["Money"] | null;
-            /** Format: date */
-            act_by?: string | null;
-            days_left?: number | null;
-            owner: string;
-            next_action?: string;
-            /** @description what the title mentions, matched against the records; offsets are UTF-16 indices */
-            title_entities?: components["schemas"]["Span"][];
-            /** @description what the next step mentions */
-            next_action_entities?: components["schemas"]["Span"][];
-            /** @description each carries id and label (the name it shows) */
-            refs?: components["schemas"]["EntityRef"][];
-            /** @description fire rows: robots per product and month the short parts stop, as numbers */
-            robots_short?: components["schemas"]["RobotsShort"][];
-            /** @description every robot (product) whose BOM uses a part this item names, in product order; empty when it names no parts */
-            robots?: components["schemas"]["EntityRef"][];
-            /** @description product id -> the one fact tying this item to that robot, where there is one ("HR-40320 30 d late") */
-            robot_notes?: {
-                [key: string]: string;
-            };
-            /** @description the row's one line of facts under the title, in a buyer's words */
-            summary?: string | null;
-            /** @description fire rows: open lines under the notice */
-            lines_in_scope?: number | null;
-            /** @description fire rows: of those, lines promised before the data date */
-            lines_already_late?: number | null;
-            /** @description a disruption's own dated steps (the supplier's closure, the revised dates it promised, a quote that lapses), folded under it instead of listed as rows, soonest first; each still opens by its own key */
-            dated?: {
-                key: string;
-                title: string;
-                act_by?: string | null;
-                days_left?: number | null;
-                at_stake?: components["schemas"]["Money"] | components["schemas"]["Quantity"] | components["schemas"]["Unknown"] | null;
-            }[];
-            /**
-             * @description Which of the procurement stages the item belongs to, where it belongs to one (a quiet tag); null where none applies
-             * @enum {string|null}
-             */
-            category?: "Discovery" | "RFQ" | "Quote & risk" | "Purchasing" | null;
-            /** @description where the work stands, derived on every request from the runs and the ledger (list and item) */
-            stage?: components["schemas"]["Stage"] | null;
-        };
-        RobotsShort: {
-            product: components["schemas"]["EntityRef"];
-            /** @example 2026-10 */
-            month: string;
-            /** @description the forecast for that month */
-            robots: number;
-            short_parts: components["schemas"]["EntityRef"][];
-        };
-        Need: {
-            what: string;
-            owner: string;
-            ref?: components["schemas"]["EntityRef"] | null;
-        };
-        ProductExposure: {
-            product: components["schemas"]["EntityRef"];
-            robots: number;
-            short_parts: components["schemas"]["EntityRef"][];
-        };
-        FireOption: {
-            /** @enum {string} */
-            kind: "allocation" | "air_freight" | "resequence" | "second_source";
-            label: string;
-            needs?: components["schemas"]["Need"][];
-            /** @description the first date the data supports */
-            earliest?: {
-                /** Format: date */
-                date: string;
-                provenance: components["schemas"]["Provenance"];
+            decisions: components["schemas"]["Decision"][];
+            /** Latest Run */
+            latest_run?: {
+                [key: string]: unknown;
             } | null;
-            /** @description where that date comes from, or why there is none */
-            earliest_basis?: string | null;
-            /** @description a floor when the real date is unknown */
-            not_before?: {
-                /** Format: date */
-                date: string;
-                provenance: components["schemas"]["Provenance"];
+            /** Recommendation */
+            recommendation?: {
+                [key: string]: unknown;
             } | null;
-            /** @description versus what is paid today, where it can be computed */
-            cost_delta?: components["schemas"]["Money"] | null;
-            cost_basis?: string | null;
-            /** @description duty owed only if the goods ship late; shipping in time avoids it */
-            duty_effect?: components["schemas"]["Money"] | null;
-            cost_unknowns?: components["schemas"]["Unknown"][];
-            decided_by: components["schemas"]["Unknown"];
-            /** @description resequence: every product with its short parts and forecast, in part-number order (laid out, not ranked) */
-            products?: components["schemas"]["ProductExposure"][];
-            moq?: number | null;
-            refs?: components["schemas"]["EntityRef"][];
-        };
-        Stage: {
-            /** @enum {string} */
-            key: "found" | "worked" | "decision_ready" | "drafted" | "approved" | "sent" | "answered";
-            /** @description Found, Worked, Decision ready, Needs your OK, Approved, Sent, Answered; with ' (in <supplier>'s request)' when another item of the same supplier's request covers this one */
-            label: string;
-            step: number;
-            /** @example 7 */
-            of: number;
-            /** @description the one thing to do now */
-            next_act: string;
-            /** @description when it got here */
-            at?: string | null;
-            /** @description who has the move: you, the supplier, or null when nothing is owed */
-            waiting_on?: string | null;
-            /** @description the draft or request this stage is about; the one on another item of the same supplier when this item is covered by it */
-            action?: components["schemas"]["EntityRef"] | null;
-        };
-        ActionItemDetail: components["schemas"]["ActionItem"] & {
-            finding?: string;
-            /** @description what the finding mentions */
-            finding_entities?: components["schemas"]["Span"][];
-            numbers?: {
-                id?: string;
-                label?: string;
-                value?: components["schemas"]["Money"] | components["schemas"]["Quantity"] | components["schemas"]["Unknown"] | components["schemas"]["DateValue"];
-            }[];
-            unknowns?: components["schemas"]["Unknown"][];
-            evidence?: components["schemas"]["EntityRef"][];
-            /** @description the newest finished run on the item: run_id, status, verifier_passed, reviewer_score (null while pending), cost_usd, duration_ms, started_at, recorded, recorded_at */
-            latest_run?: Record<string, never> | null;
-            /** @description other cases on the list that share an order line, part, supplier or message (the agent packet's rule) */
-            linked?: {
-                key: string;
-                title: string;
-                why: string;
-                owner?: string | null;
-            }[];
-            recommendation?: components["schemas"]["Recommendation"] | null;
-            po_lines?: components["schemas"]["PoLine"][];
-            messages?: components["schemas"]["MessageSummary"][];
-            /** @description each supplier ref's id to the name a buyer says ('Acme' for 'Acme Industrial Co., Ltd.') */
-            short_names?: {
-                [key: string]: string;
-            };
-            time_phased?: components["schemas"]["TimePhased"] | null;
-            /** @description Decided actions on this item from the ledger, newest first; empty when nobody has decided anything */
-            decisions?: components["schemas"]["Decision"][];
-        };
-        RunRef: {
-            run_id: string;
-            /** @enum {string} */
-            status: "running" | "ok" | "failed" | "refused" | "did_not_pass";
-        };
-        Run: {
-            run_id?: string;
-            item_key?: string;
-            asked_by?: string;
-            /** @enum {string} */
-            status?: "running" | "ok" | "failed" | "refused" | "did_not_pass";
-            /** Format: date-time */
-            started_at?: string;
-            first_step_ms?: number | null;
-            duration_ms?: number | null;
-            tool_calls?: number;
-            denied_calls?: number;
-            /** @description USD as a 4-decimal string; 0 for a replay */
-            cost_usd?: string | null;
-            /** @description for a replay: what the recorded run cost, as a 4-decimal string */
-            original_cost_usd?: string | null;
-            /** @description for a replay: the tokens the recorded run read (its own tokens_in is 0) */
-            original_tokens_in?: number | null;
-            /** @description for a replay: the tokens the recorded run wrote */
-            original_tokens_out?: number | null;
-            /** @description an Ask run's question, so a list can name it in words */
-            title?: string | null;
-            model?: string;
-            prompt_hash?: string;
-            /** @description true when this run is a recording from the build, served because no API key is set */
-            recorded?: boolean;
             /**
-             * Format: date
-             * @description the date the recorded run was made
+             * Sheet Cells
+             * @default []
              */
-            recorded_at?: string | null;
-            /**
-             * Workflow
-             * @default
-             */
-            workflow: string;
-            /** Specialists */
-            specialists?: {
-                [key: string]: string;
-            }[];
-            /** First Token Ms */
-            first_token_ms?: number | null;
-            /** Tokens In */
-            tokens_in?: number | null;
-            /** Tokens Out */
-            tokens_out?: number | null;
-            /** Verifier Passed */
-            verifier_passed?: boolean | null;
-            /** Reviewer Score */
-            reviewer_score?: number | null;
-            /** Checks Passed */
-            checks_passed?: number | null;
-            /** Checks Total */
-            checks_total?: number | null;
-            /**
-             * Revised
-             * @default false
-             */
-            revised: boolean;
-        };
-        RunDetail: components["schemas"]["Run"] & {
-            events?: components["schemas"]["RunEvent"][];
-            recommendation?: components["schemas"]["Recommendation"] | null;
-            verifier?: components["schemas"]["VerifierResult"] | null;
-            /** @description an Ask answer's tables (F100), built by code when the run is read from its own tool results; empty on any other run */
-            tables?: components["schemas"]["AskTable"][];
-        };
-        AskTable: {
-            /** @enum {string} */
-            kind: "shortfall" | "po_lines" | "exposure" | "quotes";
-            /** @example Short by month */
-            title: string;
-            /**
-             * @description the specialist whose lookup returned the figures
-             * @example Supply planner
-             */
-            by: string;
-            /**
-             * @example [
-             *       "Oct",
-             *       "Nov"
-             *     ]
-             */
-            columns: string[];
-            rows: {
-                /** @example HR-40110 */
-                label: string;
-                /** @description {type, id}: a part, a PO line or a quote */
-                ref?: Record<string, never>;
-                /** @description the part a PO line or quote is for */
-                part?: string | null;
-                cells: ({
-                    /** @example 364 */
-                    say: string;
-                    /**
-                     * @description the evidence id of the figure a tool returned in this run
-                     * @example shortage:HR-40110:2026-10:short
-                     */
-                    id: string;
-                } | null)[];
-            }[];
-            /** @description rows left out after the first 6 */
-            more: number;
-        };
-        RunEvent: {
-            run_id: string;
-            parent_run_id?: string | null;
-            seq: number;
-            /** Format: date-time */
-            ts: string;
-            t_ms: number;
-            /** @enum {string} */
-            type: "run.started" | "step.text" | "step.delta" | "child.started" | "child.finished" | "tool.called" | "tool.result" | "action.staged" | "verifier.result" | "revision.started" | "run.finished" | "run.failed" | "run.status" | "review.result";
-            /** @description agent_type: lookout, supply_planner, buyers_clerk */
-            agent?: string | null;
-            /** @example Supply planner */
-            agent_label?: string | null;
-            tool_use_id?: string | null;
-            /** @description one line in the buyer's words */
-            summary: string;
-            refs?: components["schemas"]["EntityRef"][];
-            /** @description details shown only behind 'details': a tool.called step carries `why` (the reason, in words, written by code); a step.text from Lookout carries `superseded: true` in GET /api/runs/{id} when Lookout said it after being nudged and before its last read of the handoffs, so the final answer replaces it (the page folds it; nothing is removed); tool.called/tool.result carry tool and name (the short tool name), gate and gate_reason; child.started carries question and specialist (agent is the specialist); tool.result carries numbers and unknowns; run.finished carries status */
-            payload?: Record<string, never>;
-        };
-        Recommendation: {
-            /** @description one decision sentence of at most 20 words */
-            finding: string;
-            /** @description spans over `finding`, attached by the server (UTF-16 offsets) */
-            answer_entities?: components["schemas"]["Span"][];
-            /** @description spans over each assumption, then each would_change line, in that order */
-            recommendation_entities?: components["schemas"]["Span"][][];
-            /** @description the skimmable rows under the finding */
-            points?: {
-                label: string;
-                text: string;
-                entities?: Record<string, never>[];
-            }[];
-            numbers: {
-                /** @example shortage:HR-40110:2026-10:short */
-                id: string;
-                value: string;
-                unit: string;
-                /** @description the label in the buyer's words */
-                name?: string | null;
-                /** @description the value as a buyer says it, e.g. $188.99 or $1.54M */
-                say?: string | null;
-                /** @description shown in the Recommendation's key numbers */
-                headline?: boolean;
-                provenance?: components["schemas"]["Provenance"] | null;
-            }[];
-            assumptions: string[];
-            would_change: string[];
-            open_questions: components["schemas"]["Unknown"][];
-            action_ids: string[];
-            grade?: components["schemas"]["Grade"] | null;
-        };
-        VerifierResult: {
-            passed?: boolean;
-            numbers_checked?: number;
-            numbers_from_tools?: number;
-            open_questions_with_owner?: number;
-            /** @description every open question the Recommendation carries (the strip says N of M owned) */
-            open_questions?: number;
-            /** @description each failed check in words a buyer reads (never an id or a check's name); the screen shows these, not `failures` */
-            reasons?: string[];
-            failures?: string[];
-        };
-        Action: {
-            action_id: string;
-            /** @enum {string} */
-            type: "supplier_request" | "supplier_alias" | "note";
-            /** @enum {string} */
-            state: "proposed" | "approved" | "rejected" | "executed";
-            item_key?: string | null;
-            run_id?: string | null;
-            target?: components["schemas"]["EntityRef"];
-            /** @description the contact on file */
-            recipient?: string | null;
-            subject?: string | null;
-            body?: string | null;
-            /** @description what the draft's subject mentions, matched against the records; offsets are UTF-16 indices */
-            subject_entities?: components["schemas"]["Span"][];
-            /** @description what the draft's body mentions */
-            body_entities?: components["schemas"]["Span"][];
-            /** @description a note: {owner, ...}; a supplier link: {link: [a, b], merge: false} */
-            change?: Record<string, never> | null;
-            payload_hash: string;
-            /** Format: date-time */
-            proposed_at?: string;
-            /** Format: date-time */
-            decided_at?: string | null;
-            decided_by?: string | null;
-            reason?: string | null;
-            /** Format: date-time */
-            attempted_at?: string | null;
-            /** Format: date-time */
-            confirmed_at?: string | null;
-            outbox_id?: string | null;
-            /** @description the failed code checks of the run that wrote this waiting draft; empty when the run passed */
-            unverified_checks?: string[];
-            /** @description the buyer who last edited the text by hand; its figures were not re-checked by a run */
-            edited_by?: string | null;
-            /** @description one line in words, e.g. Request to Shenzhen Yunzhan Precision Motor: revised promise dates */
-            title?: string;
-        };
-        OutboxMessage: {
-            outbox_id?: string;
-            action_id?: string;
-            to?: string;
-            subject?: string;
-            body?: string;
-            /** Format: date-time */
-            sent_at?: string;
-            /** @enum {string} */
-            status?: "sent_simulated";
-        };
-        DataIssue: {
-            issue?: string;
-            file?: string;
-            count?: number;
-            /** @enum {string} */
-            handling?: "fix" | "infer" | "flag" | "link" | "leave" | "drop";
-            key?: string;
-            rule?: string;
-            consequence?: string;
-            example?: string;
-            owner?: string;
-            step?: string;
-        };
-        DateValue: {
-            /** Format: date */
-            date: string;
-            provenance: components["schemas"]["Provenance"];
-        };
-        PoLine: {
-            ref: components["schemas"]["EntityRef"];
-            part: components["schemas"]["EntityRef"];
-            supplier: components["schemas"]["EntityRef"];
-            qty: components["schemas"]["Quantity"];
-            unit_price?: components["schemas"]["Money"] | null;
-            /** Format: date */
-            promise_date?: string | null;
-            /** Format: date */
-            revised_date?: string | null;
-            days_past_due?: number;
-            status: string;
-            disrupted_by?: components["schemas"]["EntityRef"] | null;
-            buyer: string;
-            /** @description open in the export but probably not really open; excluded from open and past-due counts */
-            stale?: boolean;
-            unknown?: components["schemas"]["Unknown"] | null;
-        };
-        MessageSummary: {
-            /** @description The sender's company as the supplier master knows it, or "not on file" */
-            company?: string;
-            ref: components["schemas"]["EntityRef"];
-            /** Format: date */
-            date: string;
-            from: string;
-            /** @description the address it came from, exactly as the message carries it (a look-alike sender shows as the look-alike) */
-            from_email?: string | null;
-            supplier?: components["schemas"]["EntityRef"] | null;
-            /** @enum {string} */
-            trust: "on_file" | "new_sender" | "suspicious";
-            trust_flags?: string[];
-            /** @description force majeure, slip, price change, quote, correction, payment change, spot offer */
-            kind?: string | null;
-            /** @description what it changes */
-            summary: string;
-            /** @description a request to this sender's company was sent (state executed) on or after the day the message arrived; read from the ledger on every call */
-            replied?: boolean;
-            /** @description the buyer who owns what the message is about */
-            owner?: string | null;
-            /** @description the sender's company as a buyer says it */
-            supplier_short?: string | null;
-            /** @description robots whose BOM uses a part the message changes or names; none for a held message */
-            robots?: components["schemas"]["EntityRef"][];
-            /** @description the case the message moves */
-            related_item?: string | null;
-            /**
-             * @description how the case was found
-             * @enum {string|null}
-             */
-            link?: "message" | "supplier" | "part" | null;
-            related_stage?: null | {
-                key: string;
-                label: string;
-                waiting_on?: string | null;
-                /** @description the owner of the waiting draft */
-                draft_owner?: string | null;
-            };
-            /** @description what it changes (as on the detail), for the row's one-line fact */
-            changes?: components["schemas"]["MessageChange"][];
-            /** @description only when q was given: where the words were found, best field first */
-            matches?: {
-                /** @enum {string} */
-                field: "subject" | "from" | "supplier" | "refs" | "facts" | "tags" | "body";
-                /** @description the text around the match */
-                snippet: string;
-                /** @description UTF-16 index of the match in the snippet */
-                start: number;
-                end: number;
+            sheet_cells: {
+                [key: string]: unknown;
             }[];
         };
-        MonthBucket: {
-            /** @example 2026-10 */
-            month?: string;
-            requirements?: components["schemas"]["Quantity"];
-            scheduled_receipts?: components["schemas"]["Quantity"];
-            under_disruption?: components["schemas"]["Quantity"];
-            short?: components["schemas"]["Quantity"] | null;
-        };
-        TimePhased: {
-            part?: components["schemas"]["EntityRef"];
-            /** @example 2 per Tern T2 */
-            per_unit?: string;
-            past_due_receipts?: components["schemas"]["Quantity"];
-            buckets?: components["schemas"]["MonthBucket"][];
-            on_hand?: components["schemas"]["Unknown"];
-            /** @description true when a supplier of this part has declared force majeure (the row "under force majeure" applies); false for an allocation or slip notice */
-            disrupted?: boolean;
-        };
-        Consignment: {
-            id: number;
-            material: components["schemas"]["EntityRef"];
-            /** @description the contract manufacturer that holds the material and builds it in */
-            holder: components["schemas"]["EntityRef"];
-            /** @description the part built from it */
-            into: components["schemas"]["EntityRef"];
-            /** @description the message that says so */
-            evidence: string;
-            /** @description stated: a person's answer, bootstrapped from that evidence */
-            method: string;
-            material_lines: {
-                po_line: components["schemas"]["EntityRef"];
-                /** @description the date in the ERP */
-                promised?: string | null;
-                /** @description the date now expected (the supplier's revision when there is one) */
-                now?: string | null;
-                days_later?: number | null;
-            }[];
-            /** @description the longest slip among the open orders; null when none has slipped */
-            slip_days?: number | null;
-            reaches: {
-                product: components["schemas"]["EntityRef"];
-                /** @description of the part the material is built into */
-                qty_per_robot: string;
-            }[];
-        };
-        Person: {
-            /** @description the buyer's id as the buyers table has it; Unknown.owner and ActionItem.owner name people by name, ledger rows by this id */
-            id: string;
-            name: string;
-            /** @description how the legacy ERP signs their orders */
-            initials: string;
-            /** @description the categories they buy */
-            categories: string[];
-            parts: number;
-            /** @description open order lines on their desk; old lines flagged probably-not-open are not counted */
-            open_lines: number;
-            open_value: components["schemas"]["Money"];
-            past_due_lines: number;
-        };
-        Supplier: {
-            ref?: components["schemas"]["EntityRef"];
-            /** @description the name a buyer says (the brand word, not the legal form), as Today, the Inbox and the cases use it; ref.label is the legal name */
-            short?: string;
-            country?: string;
-            terms?: string;
-            incoterms?: string;
-            /** @enum {string} */
-            status?: "active" | "hold" | "inactive";
-            open_value?: components["schemas"]["Money"];
-            past_due_lines?: number;
-            /** @description vendor records for this company (aliases kept) */
-            records?: number;
-            /** @description warnings its own quotes and the news carry (insolvency, prepayment demanded, payment terms cut, a quote far above the last PO), for the banner on its page */
-            risk?: components["schemas"]["RiskFlag"][];
-        };
-        RiskFlag: {
-            /** @enum {string} */
-            kind: "insolvency" | "prepayment" | "terms_cut" | "price_jump";
-            /** @enum {string} */
-            severity: "high" | "medium";
-            text: string;
-            /** @description the words it was read from */
-            evidence?: string | null;
-            sources?: components["schemas"]["EntityRef"][];
-        };
-        SearchHit: {
-            /** @enum {string} */
-            type: "item" | "message" | "supplier" | "part" | "po_line" | "person";
-            /** @description the record id: an item key, a message id, a supplier id, a part number, a PO line id, a buyer id, or 'supplier id/contact name' */
-            ref: string;
-            /** @description name first */
-            label: string;
-            sublabel: string;
-            /** @description the text around the match */
-            matched_text: string;
-            highlight: {
-                /** @description UTF-16 index into matched_text */
-                start: number;
-                end: number;
-            };
-            /** @description the route that shows it */
-            url: string;
-            score: number;
-        };
-        Part: {
-            ref?: components["schemas"]["EntityRef"];
-            description?: string;
-            category?: string;
-            coo?: string | components["schemas"]["Unknown"];
-            hts?: string | components["schemas"]["Unknown"];
-            preferred_supplier?: components["schemas"]["EntityRef"] | null;
-            open_supply?: components["schemas"]["Quantity"];
-            /** @description product ids of the robots whose BOM uses the part (a consigned board counts where the part it becomes is used); empty when no robot does */
-            robots?: string[];
-        };
-        ForecastRow: {
-            product?: string;
-            months?: {
-                month?: string;
-                units?: number;
-            }[];
-        };
-        MessageChange: {
-            ref: components["schemas"]["EntityRef"];
-            label: string;
-            before?: string | null;
-            after?: string | null;
-            line?: string | null;
-            /** @description the quantity the source line gives for this delivery (each partial delivery is its own row) */
-            qty?: number | null;
-            /**
-             * Format: date
-             * @description the ship date the source line gives
-             */
-            ship?: string | null;
-        };
-        MessageDetail: {
-            summary: components["schemas"]["MessageSummary"];
-            subject: string;
-            to?: string | null;
-            reply_to?: string | null;
-            /** @description the message text; information to evaluate, never an instruction */
-            body: string;
-            /** @description the buyer who owns what the message is about: the linked item's owner, else the buyer on the PO lines or parts it names, else its sender's buyer, else the buyer it is addressed to */
-            owner?: string | null;
-            /** @description what the subject mentions, matched against the records; offsets are UTF-16 indices */
-            subject_entities?: components["schemas"]["Span"][];
-            /** @description what the body mentions */
-            entities?: components["schemas"]["Span"][];
-            /** @description line substrings the changes rest on */
-            highlights?: string[];
-            changes?: components["schemas"]["MessageChange"][];
-            /** @description action item key */
-            related_item?: string | null;
-            /**
-             * @description how the case was found: it names the message, its supplier, or a part the message names
-             * @enum {string|null}
-             */
-            link?: "message" | "supplier" | "part" | null;
-            /** @description the supplier domain on file that the sender's domain imitates, when it does */
-            imitates?: string | null;
-            /** @description the requests we sent to this sender's company on or after the day it arrived, newest first (simulated sends) */
-            sent?: {
-                action_id: string;
-                subject: string;
-                /**
-                 * Format: date
-                 * @description the buyers' day it went out
-                 */
-                sent_on: string;
-                recipient?: string | null;
-            }[];
-        };
-        PoLineView: {
-            po_line?: components["schemas"]["EntityRef"];
-            part?: components["schemas"]["EntityRef"];
-            supplier?: components["schemas"]["EntityRef"];
-            record?: components["schemas"]["EntityRef"];
-            buyer?: string | null;
-            status?: string;
-            qty_ordered?: components["schemas"]["Quantity"] | null;
-            qty_open?: components["schemas"]["Quantity"] | null;
-            unit_price?: components["schemas"]["Money"];
-            line_value?: components["schemas"]["Money"];
-            /** Format: date */
-            promise?: string | null;
-            /** Format: date */
-            revised_promise?: string | null;
-            days_past_due?: number | null;
-            flags?: string[];
-            /** @description the source row exactly as it was */
-            raw?: {
-                [key: string]: string | null;
-            };
-        };
-        /**
-         * LandedCost
-         * @description Unit cost incl. surcharge and duty, with what is not known kept apart. Code does the sum.
-         */
-        LandedCost: {
-            /** @description the tariff rule the part falls under (null when not on the list), with the in-transit window the notice gives */
-            duty_rule?: {
-                tranche?: number;
-                rate?: number;
-                /** Format: date */
-                effective_date?: string;
-                exported_before?: string | null;
-                entered_before?: string | null;
-            } | null;
-            offer: components["schemas"]["OfferView"];
-            unit_price_usd: components["schemas"]["Money"];
-            surcharge_usd: components["schemas"]["Money"] | null;
-            /**
-             * Duty Status
-             * @enum {string}
-             */
-            duty_status: "owed" | "at_cost_on_top" | "none" | "unknown_origin" | "no_rule";
-            duty_usd: components["schemas"]["Money"] | null;
-            duty_if_china_usd: components["schemas"]["Money"] | null;
-            tooling_per_unit_usd: components["schemas"]["Money"] | null;
-            total_known_usd: components["schemas"]["Money"];
-            total_if_china_usd: components["schemas"]["Money"] | null;
-            /** Unknowns */
-            unknowns: components["schemas"]["Unknown"][];
-            /** Notes */
-            notes: string[];
-        };
-        /**
-         * OfferView
-         * @description One supplier price for one part at one quantity break, with everything that comes with it.
-         */
-        OfferView: {
-            /** @description the Incoterm alone, e.g. EXW */
-            incoterm_term?: string | null;
-            /** @description its named place, e.g. Hannover */
-            incoterm_place?: string | null;
-            lead_time_days?: number | null;
-            surcharge_pct?: number | null;
-            /** @description true: the quoted price already contains the surcharge */
-            surcharge_included?: boolean | null;
-            /** @description what must be paid before the goods ship, as the document states it */
-            prepayment?: string | null;
-            /** @description ISO date this offer (an alternative origin, a new site) can start, when the document gives one */
-            available_from?: string | null;
-            /** @description the plant the goods come from as the quote names it in the origin claim (not the port in the Incoterm) */
-            site?: string | null;
-            /** @description the line of the quote the price was read from */
-            line_ref?: string | null;
-            /** Offer Id */
-            offer_id: number;
-            supplier: components["schemas"]["EntityRef"] | null;
-            /** Supplier Name */
-            supplier_name: string;
-            message: components["schemas"]["EntityRef"];
-            /** Quote No */
-            quote_no: string | null;
-            part: components["schemas"]["EntityRef"];
-            /** Qty Break */
-            qty_break: number | null;
-            price: components["schemas"]["Money"];
-            /**
-             * Price Basis
-             * @enum {string}
-             */
-            price_basis: "each" | "per_1000";
-            unit_price_usd: components["schemas"]["Money"];
-            /** Incoterm */
-            incoterm: string | null;
-            /** Origin Claim */
-            origin_claim: string | null;
-            /** Origin */
-            origin: string | null;
-            lead_time: components["schemas"]["Conditional"] | null;
-            /** Valid Until */
-            valid_until: string | null;
-            /** Days Left */
-            days_left: number | null;
-            /** Expired */
-            expired: boolean;
-            /** Moq */
-            moq: number | null;
-            /** Tooling Usd */
-            tooling_usd: number | null;
-            /** Payment Terms */
-            payment_terms: string | null;
-            /** Conditions */
-            conditions: string | null;
-            /** Trust */
-            trust: string;
-            /** @description where the origin comes from, e.g. stated in the part master */
-            origin_source?: string | null;
-        };
-        /**
-         * Conditional
-         * @description A value that only holds under a condition, kept together: "6 weeks after sample approval".
-         */
-        Conditional: {
-            /** Value */
-            value: components["schemas"]["Money"] | components["schemas"]["Quantity"] | string;
-            /** Condition */
-            condition: string;
-            provenance: components["schemas"]["Provenance"];
-        };
-        /** BidTab */
-        BidTab: {
-            part: components["schemas"]["EntityRef"];
-            /** Qty */
-            qty: number | null;
-            /** Columns */
-            columns: components["schemas"]["BidColumn"][];
-            /** Note */
-            note: string;
-        };
-        /** BidColumn */
-        BidColumn: {
+        /** AgeBucket */
+        AgeBucket: {
             /** Label */
             label: string;
-            landed: components["schemas"]["LandedCost"];
+            lines: components["schemas"]["Figure"];
+        };
+        /** Annotate */
+        Annotate: {
+            /** Text */
+            text: string;
             /**
-             * Is Current
+             * Held
              * @default false
              */
-            is_current: boolean;
+            held: boolean;
         };
-        ImportQuestion: {
-            id: string;
-            /** @enum {string} */
-            kind: "alias" | "currency" | "origin" | "duplicate_row" | "possible_duplicate" | "stock_count" | "other";
-            question: string;
-            /** @description how many entries this one answer settles */
-            covers: number;
-            file?: string;
-            examples?: {
-                from?: string;
-                to?: string;
-                note?: string | null;
-            }[];
-            entries?: string[];
-            proposed: {
-                answer?: string;
-                effect?: string;
-            };
-            /** @enum {string} */
-            state: "open" | "accepted" | "changed" | "skipped";
-            answer?: string | null;
+        /** Approve */
+        Approve: {
+            /** Payload Hash */
+            payload_hash: string;
+            /** Approved By */
+            approved_by: string;
+            /**
+             * Confirm Unverified
+             * @default false
+             */
+            confirm_unverified: boolean;
         };
-        ImportDeck: {
-            import_id?: string;
-            questions?: components["schemas"]["ImportQuestion"][];
-        };
-        ImportAnswers: {
-            answered_by: string;
-            answers: {
-                question_id: string;
-                /** @enum {string} */
-                action: "accept" | "change" | "skip";
-                value?: string | null;
-            }[];
-        };
-        ImportDryRun: {
-            hash?: string;
-            files?: {
-                file?: string;
-                rows_in?: number;
-                rows_out?: number;
-                changes?: string[];
-            }[];
-            checks?: {
-                name?: string;
-                passed?: boolean;
-            }[];
-            answers?: {
-                total?: number;
-                changed?: number;
-                skipped?: number;
-            };
-            recipe_steps?: number;
-        };
-        LeadTimeActual: {
-            planned_days: number | null;
-            median_days: number;
-            /** @description closed lines with an order and a receipt date */
-            receipts: number;
-            /** @description of those, how many took longer than the planned lead time */
-            later: number;
-            lines: components["schemas"]["EntityRef"][];
-            rule?: string;
-        };
-        /**
-         * PartDetail
-         * @description Everything the part page needs, each fact with its source: the item master row beside what the other records say about the part.
-         */
-        PartDetail: {
-            shortage?: components["schemas"]["Shortage"] | null;
-            /** @description how long the part's closed lines really took, order to receipt, beside the planned lead time; null when no closed line has both dates */
-            lead_time_actual?: components["schemas"]["LeadTimeActual"] | null;
-            supply_state?: components["schemas"]["SupplyState"] | null;
-            part: components["schemas"]["Part"];
-            /** Kind */
-            kind: string;
-            /** Mpn */
-            mpn: string | null;
-            /** Manufacturer */
-            manufacturer: string | null;
+        /** Arrival */
+        Arrival: {
+            /** Receipt */
+            receipt: string;
+            /** Po Line */
+            po_line: string;
+            /** Posted */
+            posted: string;
+            /** Due */
+            due: string | null;
+            /** Days Late */
+            days_late: number | null;
+            /** Qty */
+            qty: number;
             /** Uom */
             uom: string;
-            /** Status */
-            status: string;
-            /** Buyer */
-            buyer: string | null;
-            /** Buyer Method */
-            buyer_method: string | null;
-            /** Planned Lead Time */
-            planned_lead_time: components["schemas"]["Quantity"] | components["schemas"]["Unknown"];
-            /** Raw */
-            raw: {
-                [key: string]: string | null;
-            };
-            /** Where Used */
-            where_used: components["schemas"]["WhereUsedRow"][];
-            tariff: components["schemas"]["TariffStatus"];
-            origin: components["schemas"]["CooStatus"];
-            reference_price: components["schemas"]["Money"] | null;
-            /** Open Lines */
-            open_lines: number;
-            /** Linked Parts */
-            linked_parts: components["schemas"]["EntityRef"][];
-            exposure: components["schemas"]["PartExposure"] | null;
         };
-        /**
-         * PartExposure
-         * @description New duty on one part: net first (the figure to act on), gross beside it, both with their rule.
-         */
-        PartExposure: {
-            /** @description Open value of the lines that have an exchange rate; a line without one is in no total */
-            open_value_total?: components["schemas"]["Money"];
-            open_duty_total?: components["schemas"]["Money"];
-            /** @description Duty certain to be paid (confirmed China origin, entering on or after the duty date). The headline; `net` carries the same figure. Its provenance rule is the one-sentence rule. */
-            owed?: components["schemas"]["Money"];
-            /** @description Duty on open orders that owe nothing if the supplier ships them before the exported-before date and they enter before the entered-before date. Shown beside the headline, never summed into it. */
-            conditional?: components["schemas"]["Money"];
-            /** @description For a part of unknown origin only - what it would owe if made in China. Never in the headline. */
-            if_china?: components["schemas"]["Money"];
-            /** @description bucket (owed, conditional, if_china) -> the one-sentence rule shown beside the figure */
-            rule_sentences?: {
-                [key: string]: string;
-            };
-            lines_without_rate?: components["schemas"]["EntityRef"][];
-            part: components["schemas"]["EntityRef"];
-            tariff: components["schemas"]["TariffStatus"];
-            coo: components["schemas"]["CooStatus"];
+        /** AskBody */
+        AskBody: {
+            /** Question */
+            question: string;
+            context?: components["schemas"]["EntityRef"] | null;
+            page?: components["schemas"]["AskPage"] | null;
+            /** Thread Id */
+            thread_id?: string | null;
+            /** Asked By */
+            asked_by?: string | null;
+        };
+        /** AskPage */
+        AskPage: {
             /**
-             * Status
-             * @enum {string}
+             * Kind
+             * @default
              */
-            status: "china_listed" | "unknown_origin" | "unknown_hts" | "not_applicable";
-            /** Rate */
-            rate: number | null;
-            net: components["schemas"]["Money"] | null;
-            gross: components["schemas"]["Money"] | null;
-            /** Open Lines */
-            open_lines: components["schemas"]["ExposureLine"][];
-            /** Uncovered Qty */
-            uncovered_qty: number;
-            reference_price: components["schemas"]["Money"] | null;
-            /** Unpriced */
-            unpriced: boolean;
-            /** Effective Date */
-            effective_date: string | null;
-            pass_through?: components["schemas"]["Money"] | null;
-            unknown?: components["schemas"]["Unknown"] | null;
-        };
-        /** ExposureLine */
-        ExposureLine: {
-            po_line: components["schemas"]["EntityRef"];
-            open_value: components["schemas"]["Money"];
+            kind: string;
             /**
-             * Exposed
-             * @description In the exposure at all (owed or conditional)
+             * Label
+             * @default
              */
-            exposed: boolean;
-            /**
-             * @description owed: certain; conditional: owed unless it ships in time; not_owed: enters before the duty date; pass_through: DDP, the supplier pays; out: probably not open or no rate
-             * @enum {string}
-             */
-            bucket?: "owed" | "conditional" | "not_owed" | "pass_through" | "out";
-            /**
-             * Importer
-             * @enum {string}
-             */
-            importer: "company" | "supplier";
-            /** Why */
-            why: string;
+            label: string;
         };
-        /** CooStatus */
-        CooStatus: {
-            part: components["schemas"]["EntityRef"];
-            /**
-             * Status
-             * @enum {string}
-             */
-            status: "china" | "other" | "unknown";
-            /** Coo */
-            coo: string | null;
-            unknown?: components["schemas"]["Unknown"] | null;
-        };
-        /**
-         * TariffStatus
-         * @description Does the new duty apply to this part? By code (HTS prefix) and origin, never by supplier country.
-         */
-        TariffStatus: {
-            part: components["schemas"]["EntityRef"];
-            /**
-             * Status
-             * @enum {string}
-             */
-            status: "listed" | "excluded" | "not_listed" | "unknown_hts";
-            rule?: components["schemas"]["TariffRuleView"] | null;
-            /** Excluded By */
-            excluded_by?: string | null;
-            unknown?: components["schemas"]["Unknown"] | null;
-        };
-        /** TariffRuleView */
-        TariffRuleView: {
-            /** Id */
-            id: number;
-            /** Tranche */
-            tranche: number;
-            /** Hts Prefix */
-            hts_prefix: string;
-            /** Description */
-            description: string;
-            /** Rate */
-            rate: number;
-            /** Effective Date */
-            effective_date: string;
-            /** Origin */
-            origin: string;
-            /** In Transit */
-            in_transit: string | null;
-            /** @description Goods exported before this date and entered before entered_before owe nothing (tranches with in-transit relief) */
-            exported_before?: string | null;
-            entered_before?: string | null;
-            /** @description the row of the advisory this rule was read from, as written */
-            source_line?: string | null;
-            advisory_no?: string | null;
-            /** Format: date */
-            issued?: string | null;
-        };
-        /** WhereUsedRow */
-        WhereUsedRow: {
-            product: components["schemas"]["EntityRef"];
-            part: components["schemas"]["EntityRef"];
-            /** Qty Per Robot */
-            qty_per_robot: string;
-            /** Paths */
-            paths: string[][];
-        };
-        /**
-         * Classification
-         * @description How a message was understood, and how sure the code is. The ladder stops at the first level that decides; the model (L3) is only for the rest.
-         */
-        Classification: {
-            message: components["schemas"]["EntityRef"];
-            /**
-             * Level
-             * @enum {integer}
-             */
-            level: 0 | 1 | 2 | 3;
-            /** Kind */
-            kind: string | null;
-            /** Confidence */
-            confidence: number;
-            /** Evidence */
-            evidence: string[];
-            /** Agrees */
-            agrees: boolean;
-            /**
-             * Decision
-             * @enum {string}
-             */
-            decision: "auto" | "review" | "blocked";
-            /** Reason */
-            reason: string;
-        };
-        /** BomTree */
-        BomTree: {
-            product: components["schemas"]["EntityRef"];
-            /** Rows */
-            rows: components["schemas"]["BomTreeRow"][];
-            /** Defects */
-            defects: {
-                [key: string]: number;
-            };
-        };
-        /**
-         * BomTreeRow
-         * @description One line of the indented BOM, in drawing order: the part, how many sit in its parent and in the whole robot, and anything wrong with the line.
-         */
-        BomTreeRow: {
-            part: components["schemas"]["EntityRef"];
-            parent: components["schemas"]["EntityRef"];
-            /** Level */
-            level: number;
-            /** Find No */
-            find_no: string | null;
-            qty_per: components["schemas"]["Quantity"];
-            qty_per_robot: components["schemas"]["Quantity"];
-            /** Is Assembly */
-            is_assembly: boolean;
-            /** In Master */
-            in_master: boolean;
-            /** Obsolete */
-            obsolete: boolean;
-            /** Defects */
-            defects: string[];
-        };
-        /** ProductOut */
-        ProductOut: {
-            /** Part Number */
-            part_number: string;
+        /** Brief */
+        Brief: {
+            /** Person */
+            person: string;
             /** Name */
             name: string;
-            /** Family */
-            family: string;
+            /** Role */
+            role: string;
+            /** Sender */
+            sender: string;
+            /** To */
+            to: string;
+            /** Date */
+            date: string;
+            /** Subject */
+            subject: string;
+            /** Greeting */
+            greeting: string;
+            /** Intro */
+            intro: string;
+            /** Sections */
+            sections: components["schemas"]["BriefSection"][];
+            /** Sign Off */
+            sign_off: string;
+            /**
+             * Sent
+             * @default false
+             */
+            sent: boolean;
         };
-        /** BuildStep */
-        BuildStep: {
-            /** Seq */
-            seq: number;
-            /** Step */
-            step: string;
+        /** BriefLine */
+        BriefLine: {
+            /** Text */
+            text: string;
+            /** Ref */
+            ref?: string | null;
+            /** Figure */
+            figure?: string | null;
+        };
+        /** BriefSection */
+        BriefSection: {
+            /** Key */
+            key: string;
             /** Title */
             title: string;
-            /** Rows In */
-            rows_in: number;
-            /** Rows Out */
-            rows_out: number;
-            /** Issues */
-            issues: number;
-            /** Seconds */
-            seconds: number;
+            /** Lines */
+            lines: components["schemas"]["BriefLine"][];
+            /**
+             * More
+             * @default 0
+             */
+            more: number;
+            /** Empty */
+            empty: string;
         };
         /** BuildStamp */
         BuildStamp: {
@@ -3670,46 +1726,67 @@ export interface components {
             /** Gate Failed */
             gate_failed: number;
         };
+        /** BuildStep */
+        BuildStep: {
+            /** Seq */
+            seq: number;
+            /** Step */
+            step: string;
+            /** Title */
+            title: string;
+            /** Rows In */
+            rows_in: number;
+            /** Rows Out */
+            rows_out: number;
+            /** Issues */
+            issues: number;
+            /** Seconds */
+            seconds: number;
+        };
         /**
-         * SupplierDetail
-         * @description One company: its records, the contact on file, its open lines (stale ones counted apart) and the messages and news about it.
+         * CancelledEffort
+         * @description Work spent on PR lines that were later deleted or short-closed: the RFQs sent and the quotes received on them.
          */
-        SupplierDetail: {
-            /** @description The header over the supplier's order rows: "10 open · 2 may not really be open" */
-            open_summary?: string;
-            ref: components["schemas"]["EntityRef"];
-            /** Country */
-            country: string;
-            /** Terms */
-            terms: string;
-            /** Incoterms */
-            incoterms: string;
+        CancelledEffort: {
+            lines: components["schemas"]["Figure"];
+            /** Prs */
+            prs: number;
+            rfq_lines: components["schemas"]["Figure"];
+            enquiries: components["schemas"]["Figure"];
+            vendors_asked: components["schemas"]["Figure"];
+            quotes: components["schemas"]["Figure"];
+        };
+        /** CaseRow */
+        CaseRow: {
+            /** Key */
+            key: string;
+            /** Title */
+            title: string;
+            /** Tab */
+            tab: string;
+            /** Waiting On */
+            waiting_on: string;
+            /** Owner */
+            owner: string;
+            /** Act By */
+            act_by: string | null;
+            at_stake: components["schemas"]["Figure"] | null;
+            /** Label */
+            label: string;
+            /** At Risk */
+            at_risk: boolean;
+            /** Shared */
+            shared: boolean;
+        };
+        /** ChooseRoute */
+        ChooseRoute: {
+            /** By */
+            by: string;
             /**
-             * Status
-             * @enum {string}
+             * Reason
+             * @default
              */
-            status: "active" | "hold" | "inactive";
-            open_value: components["schemas"]["Money"];
-            /** Past Due Lines */
-            past_due_lines: number;
-            /** Records */
-            records: number;
-            contact: components["schemas"]["Contact"];
-            /** Tier */
-            tier: number | null;
-            /** Record Ids */
-            record_ids: string[];
-            /** Open Lines */
-            open_lines: number;
-            /**
-             * Stale Lines
-             * @default 0
-             */
-            stale_lines: number;
-            /** Messages */
-            messages: components["schemas"]["EntityRef"][];
-            /** News */
-            news: components["schemas"]["EntityRef"][];
+            reason: string;
         };
         /** Contact */
         Contact: {
@@ -3718,13 +1795,2583 @@ export interface components {
             /** Email */
             email: string | null;
         };
-        AskBody: {
+        /** Counts */
+        Counts: {
+            /**
+             * Action Items
+             * @default 0
+             */
+            action_items: number;
+            /**
+             * Inbox
+             * @default 0
+             */
+            inbox: number;
+            /**
+             * Held
+             * @default 0
+             */
+            held: number;
+            /**
+             * Open Prs
+             * @default 0
+             */
+            open_prs: number;
+            /**
+             * Open Po Lines
+             * @default 0
+             */
+            open_po_lines: number;
+            /**
+             * Approvals Pending
+             * @default 0
+             */
+            approvals_pending: number;
+            /**
+             * Waiting All
+             * @default 0
+             */
+            waiting_all: number;
+            /** To Sign Mine */
+            to_sign_mine?: number | null;
+            /** Countersign Mine */
+            countersign_mine?: number | null;
+            /**
+             * Runs Running
+             * @default 0
+             */
+            runs_running: number;
+            /**
+             * Data Issues
+             * @default 0
+             */
+            data_issues: number;
+        };
+        /**
+         * CsView
+         * @description One comparative statement: the vendors asked, the quotes in, L1 against the last PO rate at that site and the budget rate.
+         */
+        CsView: {
+            /** Cs */
+            cs: string;
+            /** Kind */
+            kind: string;
+            project: components["schemas"]["EntityRef"] | null;
+            material: components["schemas"]["EntityRef"] | null;
+            /** Pr Lines */
+            pr_lines: components["schemas"]["EntityRef"][];
+            /** Rfq Sent */
+            rfq_sent: string | null;
+            /** First Quote */
+            first_quote: string | null;
+            /** Vendors Asked */
+            vendors_asked: number;
+            /** Quotes In */
+            quotes_in: number;
+            /** Status */
+            status: string | null;
+            /** Approved On */
+            approved_on: string | null;
+            /** Approved By */
+            approved_by: string | null;
+            /** Quotes */
+            quotes: components["schemas"]["QuoteView"][];
+            l1: components["schemas"]["QuoteView"] | null;
+            last_po_rate: components["schemas"]["Money"] | null;
+            last_po_line: components["schemas"]["EntityRef"] | null;
+            budget_rate: components["schemas"]["Money"] | null;
+            /** L1 Vs Last Pct */
+            l1_vs_last_pct: number | null;
+            /** L1 Vs Budget Pct */
+            l1_vs_budget_pct: number | null;
+            value_at_l1: components["schemas"]["Money"] | null;
+        };
+        /**
+         * DataIssue
+         * @description A defect found in the company's files, named, counted, handled, with its consequence and an owner (the Data issues table).
+         */
+        DataIssue: {
+            /** Key */
+            key: string;
+            /** Issue */
+            issue: string;
+            /** File */
+            file: string;
+            /** Count */
+            count: number;
+            /** Handling */
+            handling: string;
+            /** Rule */
+            rule: string;
+            /** Consequence */
+            consequence: string;
+            /** Example */
+            example: string;
+            /** Owner */
+            owner: string;
+            /** Step */
+            step: string;
+        };
+        /** DateValue */
+        DateValue: {
+            /** Date */
+            date: string;
+            provenance: components["schemas"]["Provenance"];
+        };
+        /** DatedFact */
+        DatedFact: {
+            /** What */
+            what: string;
+            /** Date */
+            date: string;
+            /** Line */
+            line: string | null;
+        };
+        /**
+         * DatedRow
+         * @description A dated fact folded under its cause (a vendor's revised schedule under its late streak, a quote's lapse under the long-lead decision).
+         */
+        DatedRow: {
+            /** Key */
+            key: string;
+            /** Title */
+            title: string;
+            /** Act By */
+            act_by?: string | null;
+            /** Days Left */
+            days_left?: number | null;
+            /** At Stake */
+            at_stake?: components["schemas"]["Money"] | components["schemas"]["Unknown"] | null;
+        };
+        /** Deadline */
+        Deadline: {
+            /** What */
+            what: string;
+            /** Date */
+            date: string;
+            /** Source */
+            source: string;
+            /** Days Left */
+            days_left: number;
+        };
+        /** Decision */
+        Decision: {
+            /** Action Id */
+            action_id: string;
+            /** Type */
+            type: string;
+            /** State */
+            state: string;
+            /** By */
+            by: string;
+            /** At */
+            at: string;
+            /** Reason */
+            reason?: string | null;
+            /** Text */
+            text: string;
+        };
+        /**
+         * Delivery
+         * @description A vendor's record on the lines it delivered: every 101 receipt against a line with a delivery date, newest first.
+         */
+        Delivery: {
+            /** N */
+            n: number;
+            /** On Time */
+            on_time: number;
+            /** On Time Pct */
+            on_time_pct: number | null;
+            /** Late */
+            late: number;
+            /** Avg Days Late */
+            avg_days_late: number | null;
+            /** Streak */
+            streak: number;
+            /** Streak Days */
+            streak_days: [
+                number,
+                number
+            ] | null;
+            /** Streak From */
+            streak_from: string | null;
+            /** Streak To */
+            streak_to: string | null;
+            /** Before Pct */
+            before_pct: number | null;
+            /** Turned */
+            turned: boolean;
+            /** Last */
+            last: components["schemas"]["Arrival"][];
+            /** Line */
+            line: string;
+        };
+        /** DoaLine */
+        DoaLine: {
+            /** Document */
+            document: string;
+            /** Value */
+            value: number;
+            /** Approver */
+            approver: string;
+            /** Countersign */
+            countersign: string | null;
+            /** Countersigner */
+            countersigner: string | null;
+            /** Threshold */
+            threshold: number | null;
+            /** Rule Row */
+            rule_row: number;
+            /** Line */
+            line: string;
+        };
+        /** EditDraft */
+        EditDraft: {
+            /** Subject */
+            subject: string;
+            /** Body */
+            body: string;
+            /** Edited By */
+            edited_by: string;
+            /** Reason */
+            reason?: string | null;
+            /** Recheck On */
+            recheck_on?: string | null;
+        };
+        /**
+         * EntityRef
+         * @description A typed pointer to a record. The UI renders it as that entity's chip; agents cite it.
+         */
+        EntityRef: {
+            /**
+             * Type
+             * @enum {string}
+             */
+            type: "supplier" | "supplier_record" | "vendor_library" | "project" | "plant" | "workfront" | "material" | "pr" | "pr_line" | "po" | "po_line" | "receipt" | "cs" | "quote" | "milestone" | "lc" | "abg" | "fund_line" | "fund_check" | "requirement" | "budget_rate" | "lookahead" | "index" | "invoice" | "person" | "contact" | "message" | "item" | "action" | "data_issue" | "doa_rule";
+            /** Id */
+            id: string;
+            /** Label */
+            label?: string | null;
+        };
+        /** EstimateMonth */
+        EstimateMonth: {
+            /** Month */
+            month: string;
+            /** Past */
+            past: boolean;
+            /** Partial */
+            partial: boolean;
+            requirement: components["schemas"]["Figure"] | null;
+            fund: components["schemas"]["Figure"] | null;
+            /**
+             * Fund Shared With
+             * @default []
+             */
+            fund_shared_with: string[];
+            received: components["schemas"]["Figure"] | null;
+            /** Over */
+            over: boolean | null;
+        };
+        /** EstimateRow */
+        EstimateRow: {
+            /** Project */
+            project: string;
+            /** Project Name */
+            project_name: string;
+            /** Vertical */
+            vertical: string;
+            /** On Sheet */
+            on_sheet: boolean;
+            /** Months */
+            months: components["schemas"]["EstimateMonth"][];
+            usual: components["schemas"]["Figure"] | null;
+            peak: components["schemas"]["Figure"] | null;
+            bias: components["schemas"]["Figure"] | null;
+            accuracy: components["schemas"]["Figure"] | null;
+            /** Over Months */
+            over_months: number;
+            /** Repeat */
+            repeat: boolean;
+            /** Fund Disagrees */
+            fund_disagrees: string[];
+            /** Ask */
+            ask: string | null;
+        };
+        /** EstimatesResponse */
+        EstimatesResponse: {
+            /** As Of */
+            as_of: string;
+            /** Sheet Months */
+            sheet_months: string[];
+            /** Year Months */
+            year_months: string[];
+            /** Threshold */
+            threshold: string;
+            /** Rows */
+            rows: components["schemas"]["EstimateRow"][];
+            /** Over Askers */
+            over_askers: string[];
+            /** Unresolved */
+            unresolved: components["schemas"]["Unresolved"][];
+            /** Notes */
+            notes: string[];
+        };
+        /** Figure */
+        Figure: {
+            /** Value */
+            value: number | null;
+            /** Text */
+            text: string;
+            /**
+             * Unit
+             * @default count
+             * @enum {string}
+             */
+            unit: "inr" | "days" | "count" | "pct" | "ratio" | "rate" | "text";
+            /** Rule */
+            rule: string;
+            /**
+             * Refs
+             * @default []
+             */
+            refs: string[];
+            /** Note */
+            note?: string | null;
+        };
+        /** Finding */
+        Finding: {
+            /** Key */
+            key: string;
+            /** Fact */
+            fact: string;
+            /** Meaning */
+            meaning: string;
+            /**
+             * Refs
+             * @default []
+             */
+            refs: components["schemas"]["EntityRef"][];
+        };
+        /** FrontStatus */
+        FrontStatus: {
+            /** Front */
+            front: string;
+            /** Month */
+            month: string;
+            /** Lines */
+            lines: number;
+            /** In Time */
+            in_time: number;
+            /** Late */
+            late: number;
+            /** Disrupted */
+            disrupted: number;
+            /** No Po */
+            no_po: number;
+            /** Stops On */
+            stops_on: string | null;
+            /** Materials */
+            materials: string[];
+        };
+        /**
+         * FunctionWait
+         * @description Days the member's items were held by one function over their ladders (PLAN 6.2), and the lines waiting on it now.
+         */
+        FunctionWait: {
+            /** Function */
+            function: string;
+            days: components["schemas"]["Figure"];
+            per_line: components["schemas"]["Figure"];
+            /** Lines */
+            lines: number;
+            now: components["schemas"]["Figure"];
+        };
+        /** HTTPValidationError */
+        HTTPValidationError: {
+            /** Detail */
+            detail?: components["schemas"]["ValidationError"][];
+        };
+        /** HeldControl */
+        HeldControl: {
+            /** Control */
+            control: string;
+            /** By */
+            by: string;
+        };
+        /**
+         * HeldMessage
+         * @description What the trust check found on a held message, and the controls a person must record before anything else happens.
+         */
+        HeldMessage: {
+            message: components["schemas"]["EntityRef"];
+            /** Sender */
+            sender: string;
+            /** Imitates */
+            imitates: string | null;
+            /** Flags */
+            flags: string[];
+            claimed: components["schemas"]["Money"] | null;
+            /** Controls */
+            controls: string[];
+            /**
+             * Done
+             * @default []
+             */
+            done: {
+                [key: string]: unknown;
+            }[];
+        };
+        /** Highlight */
+        Highlight: {
+            /** Start */
+            start: number;
+            /** End */
+            end: number;
+        };
+        /**
+         * SearchHit
+         * @description One thing a search found: what it is, which record, what to show, where the words matched, and the route that shows it.
+         */
+        Hit: {
+            /**
+             * Type
+             * @enum {string}
+             */
+            type: "item" | "message" | "supplier" | "project" | "material" | "pr" | "po" | "person";
+            /** Ref */
+            ref: string;
+            /** Label */
+            label: string;
+            /** Sublabel */
+            sublabel: string;
+            /** Matched Text */
+            matched_text: string;
+            highlight: components["schemas"]["Highlight"];
+            /** Url */
+            url: string;
+            /** Score */
+            score: number;
+        };
+        /** ImportAnswer */
+        ImportAnswer: {
+            /** Question Id */
+            question_id: string;
+            /** Action */
+            action: string;
+            /** Value */
+            value?: string | null;
+        };
+        /** ImportAnswerCounts */
+        ImportAnswerCounts: {
+            /** Total */
+            total: number;
+            /** Changed */
+            changed: number;
+            /** Skipped */
+            skipped: number;
+        };
+        /** ImportAnswers */
+        ImportAnswers: {
+            /** Answered By */
+            answered_by: string;
+            /** Answers */
+            answers: components["schemas"]["ImportAnswer"][];
+        };
+        /** ImportApproval */
+        ImportApproval: {
+            /** Hash */
+            hash: string;
+            /** Approved By */
+            approved_by: string;
+        };
+        /** ImportCheck */
+        ImportCheck: {
+            /** Name */
+            name: string;
+            /** Passed */
+            passed: boolean;
+        };
+        /** ImportDeck */
+        ImportDeck: {
+            /** Import Id */
+            import_id: string;
+            /** Questions */
+            questions: components["schemas"]["ImportQuestion"][];
+        };
+        /** ImportDryRun */
+        ImportDryRun: {
+            /** Hash */
+            hash: string;
+            /** Files */
+            files: components["schemas"]["ImportFileChange"][];
+            /** Checks */
+            checks: components["schemas"]["ImportCheck"][];
+            answers: components["schemas"]["ImportAnswerCounts"];
+            /** Recipe Steps */
+            recipe_steps: number;
+        };
+        /** ImportExample */
+        ImportExample: {
+            /** From */
+            from?: string | null;
+            /** To */
+            to?: string | null;
+            /** Note */
+            note?: string | null;
+        };
+        /** ImportFile */
+        ImportFile: {
+            /** Filename */
+            filename: string;
+            /** Text */
+            text: string;
+            /** Asked By */
+            asked_by?: string | null;
+        };
+        /** ImportFileChange */
+        ImportFileChange: {
+            /** File */
+            file: string;
+            /** Rows In */
+            rows_in: number;
+            /** Rows Out */
+            rows_out: number;
+            /** Changes */
+            changes: string[];
+        };
+        /** ImportLoaded */
+        ImportLoaded: {
+            /** Loaded */
+            loaded: boolean;
+            /** Built At */
+            built_at: string;
+        };
+        /** ImportProposed */
+        ImportProposed: {
+            /** Answer */
+            answer: string;
+            /** Effect */
+            effect: string;
+        };
+        /**
+         * ImportQuestion
+         * @description One flashcard: a question that has the same answer for every entry it covers, with a proposed answer.
+         */
+        ImportQuestion: {
+            /** Id */
+            id: string;
+            /** Kind */
+            kind: string;
+            /** Question */
             question: string;
-            /** @description the record on screen */
-            context?: components["schemas"]["EntityRef"] | null;
-            /** @description the run id of the answer this question follows (a follow-up): its question, its answer and what it was about are given to the agent, so 'those' and 'it' mean something */
-            thread_id?: string | null;
-            asked_by: string;
+            /** Covers */
+            covers: number;
+            /** File */
+            file?: string | null;
+            /**
+             * Examples
+             * @default []
+             */
+            examples: components["schemas"]["ImportExample"][];
+            /**
+             * Entries
+             * @default []
+             */
+            entries: string[];
+            proposed: components["schemas"]["ImportProposed"];
+            /**
+             * State
+             * @default open
+             */
+            state: string;
+            /** Answer */
+            answer?: string | null;
+            /** Answered By */
+            answered_by?: string | null;
+            /** Answered At */
+            answered_at?: string | null;
+        };
+        /** IndexPoint */
+        IndexPoint: {
+            /** Month */
+            month: string;
+            /** Value */
+            value: number;
+        };
+        /** Ladder */
+        Ladder: {
+            subject: components["schemas"]["EntityRef"];
+            pr_line: components["schemas"]["EntityRef"] | null;
+            po_line: components["schemas"]["EntityRef"] | null;
+            /** Rungs */
+            rungs: components["schemas"]["Rung"][];
+            /** Waiting On */
+            waiting_on: ("SCM" | "Projects" | "Vendor" | "QA" | "Finance" | "Management") | null;
+            /** Waiting Since */
+            waiting_since: string | null;
+            /** Days Waiting */
+            days_waiting: number | null;
+            /** Held */
+            held: {
+                [key: string]: number;
+            };
+        };
+        /**
+         * LedgerItem
+         * @description One FBL1N line on the PO: an invoice (RE), a payment (KZ) or an advance (KA), oldest first.
+         */
+        LedgerItem: {
+            /** Doc No */
+            doc_no: string;
+            /** Doc Type */
+            doc_type: string;
+            /** Kind */
+            kind: string;
+            /** Reference */
+            reference: string | null;
+            /** Date */
+            date: string;
+            /** Net Due */
+            net_due: string | null;
+            /** Amount */
+            amount: number;
+            /** Cleared By */
+            cleared_by: string | null;
+            /** Cleared On */
+            cleared_on: string | null;
+            /** Text */
+            text: string | null;
+            /** Row */
+            row: number;
+        };
+        /** LibraryEntry */
+        LibraryEntry: {
+            /** Vertical */
+            vertical: string;
+            /** Sub Vertical */
+            sub_vertical: string | null;
+            /** Category */
+            category: string | null;
+            /** Approved On */
+            approved_on: string | null;
+            /** Status */
+            status: string;
+            /** Link */
+            link: string;
+        };
+        /** LineChange */
+        LineChange: {
+            /** Po Line */
+            po_line: string;
+            /** Was */
+            was?: string | null;
+            /** Now */
+            now: string;
+        };
+        /** LineMove */
+        LineMove: {
+            ref: components["schemas"]["EntityRef"];
+            /** Label */
+            label: string;
+            /** Was */
+            was: string | null;
+            /** Now */
+            now: string | null;
+            /** Qty */
+            qty?: number | null;
+            /** Line */
+            line?: string | null;
+        };
+        /** LinkedCase */
+        LinkedCase: {
+            /** Key */
+            key: string;
+            /** Title */
+            title: string;
+            /** Why */
+            why: string;
+            /** Owner */
+            owner?: string | null;
+        };
+        /** Match */
+        Match: {
+            /**
+             * Field
+             * @enum {string}
+             */
+            field: "subject" | "from" | "company" | "refs" | "facts" | "body";
+            /** Snippet */
+            snippet: string;
+            /** Start */
+            start: number;
+            /** End */
+            end: number;
+        };
+        /** MaterialDetail */
+        MaterialDetail: {
+            ref: components["schemas"]["EntityRef"];
+            /** Code */
+            code: string;
+            /** Description */
+            description: string;
+            /** Group */
+            group: string;
+            /** Category */
+            category: string;
+            /** Base Uom */
+            base_uom: string;
+            /** Alt Uom */
+            alt_uom: string | null;
+            /** Alt Per Base */
+            alt_per_base: number | null;
+            /** Lead Days */
+            lead_days: number | null;
+            /** Pv Index */
+            pv_index: string | null;
+            /** Open Prs */
+            open_prs: number;
+            /** Open Po Lines */
+            open_po_lines: number;
+            /** Open Value */
+            open_value: number;
+            /** Last Rate */
+            last_rate: number | null;
+            /** Projects */
+            projects: number;
+            /** Spread */
+            spread: number | null;
+            /** History */
+            history: components["schemas"]["RatePoint"][];
+            /** By Site */
+            by_site: components["schemas"]["SiteRate"][];
+            /** By Vendor */
+            by_vendor: {
+                [key: string]: unknown;
+            }[];
+            /** Where Used */
+            where_used: {
+                [key: string]: unknown;
+            }[];
+            /** Open Pr Refs */
+            open_pr_refs: components["schemas"]["EntityRef"][];
+            /** Open Po Refs */
+            open_po_refs: components["schemas"]["EntityRef"][];
+            /** Quotes */
+            quotes: components["schemas"]["QuoteView"][];
+            /** Median */
+            median: number | null;
+            /**
+             * Beside
+             * @default []
+             */
+            beside: components["schemas"]["QuoteBeside"][];
+        };
+        /** MaterialRow */
+        MaterialRow: {
+            ref: components["schemas"]["EntityRef"];
+            /** Code */
+            code: string;
+            /** Description */
+            description: string;
+            /** Group */
+            group: string;
+            /** Category */
+            category: string;
+            /** Base Uom */
+            base_uom: string;
+            /** Alt Uom */
+            alt_uom: string | null;
+            /** Alt Per Base */
+            alt_per_base: number | null;
+            /** Lead Days */
+            lead_days: number | null;
+            /** Pv Index */
+            pv_index: string | null;
+            /** Open Prs */
+            open_prs: number;
+            /** Open Po Lines */
+            open_po_lines: number;
+            /** Open Value */
+            open_value: number;
+            /** Last Rate */
+            last_rate: number | null;
+            /** Projects */
+            projects: number;
+            /** Spread */
+            spread: number | null;
+        };
+        /** MemberPage */
+        MemberPage: {
+            /** Id */
+            id: string;
+            /** Name */
+            name: string;
+            /** Initials */
+            initials: string;
+            /** Role */
+            role: string;
+            /** Groups */
+            groups: string[];
+            /** Verticals */
+            verticals: string[];
+            /** Group */
+            group: string;
+            /** Group Name */
+            group_name: string;
+            /** Group Note */
+            group_note?: string | null;
+            /** Designation */
+            designation?: string | null;
+            /** Designation Full */
+            designation_full?: string | null;
+            /** Reports To */
+            reports_to?: string | null;
+            /** Reports To Name */
+            reports_to_name?: string | null;
+            /** Category */
+            category?: string | null;
+            /** Responsibilities */
+            responsibilities?: string | null;
+            /** Portfolio */
+            portfolio?: string | null;
+            open_prs: components["schemas"]["Figure"];
+            oldest_open: components["schemas"]["Figure"];
+            pos_30: components["schemas"]["Figure"];
+            pos_30_value: components["schemas"]["Figure"];
+            pos_90: components["schemas"]["Figure"];
+            pos_90_value: components["schemas"]["Figure"];
+            /** Turnaround */
+            turnaround: components["schemas"]["VerticalTurnaround"][];
+            saving_last: components["schemas"]["Figure"];
+            saving_budget: components["schemas"]["Figure"];
+            cancelled: components["schemas"]["Figure"];
+            cancelled_quotes: components["schemas"]["Figure"];
+            waited_scm: components["schemas"]["Figure"];
+            waited_others: components["schemas"]["Figure"];
+            waited_scm_line: components["schemas"]["Figure"];
+            waited_others_line: components["schemas"]["Figure"];
+            workload: components["schemas"]["Workload"];
+            /** Email */
+            email: string | null;
+            /** Ageing */
+            ageing: components["schemas"]["AgeBucket"][];
+            /** Oldest */
+            oldest: components["schemas"]["OpenPr"][];
+            saving_last_detail: components["schemas"]["Saving"];
+            saving_budget_detail: components["schemas"]["Saving"];
+            cancelled_detail: components["schemas"]["CancelledEffort"];
+            /** Waits */
+            waits: components["schemas"]["FunctionWait"][];
+            /** Period */
+            period: string;
+            /** As Of */
+            as_of: string;
+            /** Viewer Note */
+            viewer_note?: string | null;
+        };
+        /** MemberSummary */
+        MemberSummary: {
+            /** Id */
+            id: string;
+            /** Name */
+            name: string;
+            /** Initials */
+            initials: string;
+            /** Role */
+            role: string;
+            /** Groups */
+            groups: string[];
+            /** Verticals */
+            verticals: string[];
+            /** Group */
+            group: string;
+            /** Group Name */
+            group_name: string;
+            /** Group Note */
+            group_note?: string | null;
+            /** Designation */
+            designation?: string | null;
+            /** Designation Full */
+            designation_full?: string | null;
+            /** Reports To */
+            reports_to?: string | null;
+            /** Reports To Name */
+            reports_to_name?: string | null;
+            /** Category */
+            category?: string | null;
+            /** Responsibilities */
+            responsibilities?: string | null;
+            /** Portfolio */
+            portfolio?: string | null;
+            open_prs: components["schemas"]["Figure"];
+            oldest_open: components["schemas"]["Figure"];
+            pos_30: components["schemas"]["Figure"];
+            pos_30_value: components["schemas"]["Figure"];
+            pos_90: components["schemas"]["Figure"];
+            pos_90_value: components["schemas"]["Figure"];
+            /** Turnaround */
+            turnaround: components["schemas"]["VerticalTurnaround"][];
+            saving_last: components["schemas"]["Figure"];
+            saving_budget: components["schemas"]["Figure"];
+            cancelled: components["schemas"]["Figure"];
+            cancelled_quotes: components["schemas"]["Figure"];
+            waited_scm: components["schemas"]["Figure"];
+            waited_others: components["schemas"]["Figure"];
+            waited_scm_line: components["schemas"]["Figure"];
+            waited_others_line: components["schemas"]["Figure"];
+            workload: components["schemas"]["Workload"];
+        };
+        /** MessageDetail */
+        MessageDetail: {
+            summary: components["schemas"]["MessageSummary"];
+            /** Subject */
+            subject: string;
+            /** To */
+            to: string | null;
+            /** Reply To */
+            reply_to: string | null;
+            /** Body */
+            body: string;
+            /**
+             * Entities
+             * @default []
+             */
+            entities: components["schemas"]["Span"][];
+            /**
+             * Subject Entities
+             * @default []
+             */
+            subject_entities: components["schemas"]["Span"][];
+            /** Imitates */
+            imitates?: string | null;
+            /**
+             * Dates
+             * @default []
+             */
+            dates: components["schemas"]["DatedFact"][];
+            /**
+             * Moves
+             * @default []
+             */
+            moves: components["schemas"]["LineMove"][];
+            claimed?: components["schemas"]["Money"] | null;
+            quote?: components["schemas"]["QuoteFacts"] | null;
+            /**
+             * Sent
+             * @default []
+             */
+            sent: components["schemas"]["SentLetter"][];
+        };
+        /** MessageSummary */
+        MessageSummary: {
+            ref: components["schemas"]["EntityRef"];
+            /** Date */
+            date: string;
+            /** From */
+            from: string;
+            /** From Email */
+            from_email?: string | null;
+            /** Sender Class */
+            sender_class: string;
+            vendor?: components["schemas"]["EntityRef"] | null;
+            /** Company */
+            company: string;
+            /** Contact */
+            contact?: string | null;
+            /**
+             * Trust
+             * @enum {string}
+             */
+            trust: "ok" | "review" | "blocked";
+            /**
+             * Trust Flags
+             * @default []
+             */
+            trust_flags: string[];
+            /** Kind */
+            kind: string;
+            /** Summary */
+            summary: string;
+            /** Owner */
+            owner?: string | null;
+            /** Related Item */
+            related_item?: string | null;
+            /** Related Title */
+            related_title?: string | null;
+            related_stage?: components["schemas"]["RelatedStage"] | null;
+            /**
+             * Simulated
+             * @default false
+             */
+            simulated: boolean;
+            /**
+             * Replied
+             * @default false
+             */
+            replied: boolean;
+            /**
+             * Matches
+             * @default []
+             */
+            matches: components["schemas"]["Match"][];
+        };
+        /** Money */
+        Money: {
+            /** Amount */
+            amount: string;
+            /** Currency */
+            currency: string;
+            /** Base */
+            base?: string | null;
+            provenance: components["schemas"]["Provenance"];
+        };
+        /** MonthRate */
+        MonthRate: {
+            /** Month */
+            month: string;
+            rate: components["schemas"]["Figure"] | null;
+        };
+        /** MonthRow */
+        MonthRow: {
+            /** Month */
+            month: string;
+            /** Required */
+            required: number | null;
+            /** Required Value */
+            required_value: number | null;
+            /** On Order */
+            on_order: number;
+            /** Received */
+            received: number;
+            /** Late Into */
+            late_into: number;
+            /** Gap */
+            gap: number | null;
+        };
+        /**
+         * MoveRow
+         * @description The lines waiting now on one function, and the days they have waited between them.
+         */
+        MoveRow: {
+            /** Function */
+            function: string;
+            lines: components["schemas"]["Figure"];
+            days: components["schemas"]["Figure"];
+        };
+        /** MsmeDue */
+        MsmeDue: {
+            /** Invoice */
+            invoice: string;
+            /** Po */
+            po: string | null;
+            /** Invoice Date */
+            invoice_date: string;
+            /** Due By */
+            due_by: string;
+            amount: components["schemas"]["Money"];
+            /** Days Left */
+            days_left: number;
+        };
+        /** Number */
+        Number: {
+            /** Id */
+            id: string;
+            /** Label */
+            label: string;
+            /** Value */
+            value: components["schemas"]["Money"] | components["schemas"]["Quantity"] | components["schemas"]["Unknown"] | components["schemas"]["DateValue"];
+        };
+        /** OldWait */
+        OldWait: {
+            /** Ref */
+            ref: string;
+            /** Text */
+            text: string;
+            /** Rung */
+            rung: string;
+            /** Waiting On */
+            waiting_on: string;
+            /** Since */
+            since: string | null;
+            /** Days */
+            days: number;
+        };
+        /** OpenPr */
+        OpenPr: {
+            /** Ref */
+            ref: string;
+            /** Pr */
+            pr: string;
+            /** Item */
+            item: number;
+            /** Text */
+            text: string;
+            /** Project */
+            project: string | null;
+            /** Project Name */
+            project_name: string | null;
+            /** Age Days */
+            age_days: number;
+            /** Since */
+            since: string;
+            /** Needed By */
+            needed_by: string | null;
+            /** Rfq Sent */
+            rfq_sent: string | null;
+            /** Quotes In */
+            quotes_in: number;
+            /** Waiting On */
+            waiting_on: string | null;
+            /** Rung */
+            rung: string | null;
+        };
+        /** OrgBy */
+        OrgBy: {
+            /** By */
+            by: string;
+        };
+        /** OrgChart */
+        OrgChart: {
+            /** Title */
+            title: string;
+            /** Source File */
+            source_file: string;
+            /** Head */
+            head: string | null;
+            /** People */
+            people: components["schemas"]["OrgNode"][];
+            /** Named */
+            named: number;
+            /** Open Posts */
+            open_posts: number;
+            /** Total On Sheet */
+            total_on_sheet: number | null;
+            /** Edits */
+            edits: components["schemas"]["OrgEdit"][];
+            /** Note */
+            note: string;
+        };
+        /**
+         * OrgEdit
+         * @description A change a person made on the Organisation page, kept in order; the chart is the sheet with these laid over it.
+         */
+        OrgEdit: {
+            /** Id */
+            id: string;
+            /** At */
+            at: string;
+            /** By */
+            by: string;
+            /**
+             * Op
+             * @enum {string}
+             */
+            op: "add" | "update" | "remove";
+            /** Person Id */
+            person_id: string;
+            /** Person */
+            person: string;
+            /** Fields */
+            fields: {
+                [key: string]: string | number | boolean | null;
+            };
+            /** Undone */
+            undone: boolean;
+            /** Applied */
+            applied: boolean;
+            /** Summary */
+            summary: string;
+        };
+        /**
+         * OrgFields
+         * @description The fields a person may set on a box. Absent fields are left as they are; for a new box, name or vacancy and a designation are needed.
+         */
+        OrgFields: {
+            /** By */
+            by: string;
+            /** Name */
+            name?: string | null;
+            /** Designation */
+            designation?: string | null;
+            /** Reports To */
+            reports_to?: string | null;
+            /** Category */
+            category?: string | null;
+            /** Portfolio */
+            portfolio?: string | null;
+            /** Responsibilities */
+            responsibilities?: string | null;
+            /** Vacancy */
+            vacancy?: boolean | null;
+        };
+        /**
+         * OrgNode
+         * @description One box on the organisation chart: a person or a post to be filled, as the organogram draws it, with any edits laid over it.
+         */
+        OrgNode: {
+            /** Id */
+            id: string;
+            /** Name */
+            name: string | null;
+            /** Designation */
+            designation: string;
+            /** Designation Full */
+            designation_full: string | null;
+            /** Reports To */
+            reports_to: string | null;
+            /** Category */
+            category: string | null;
+            /** Portfolio */
+            portfolio: string | null;
+            /** Responsibilities */
+            responsibilities: string | null;
+            /** Position */
+            position: number;
+            /** Vacancy */
+            vacancy: boolean;
+            /** Member Id */
+            member_id: string | null;
+            /** Role */
+            role: string | null;
+            /** Purchasing Groups */
+            purchasing_groups: string[];
+            /** Email */
+            email: string | null;
+            /**
+             * Source
+             * @enum {string}
+             */
+            source: "sheet" | "added";
+            /** Edited */
+            edited: string[];
+            /** Src */
+            src: string | null;
+        };
+        /** OutboxMessage */
+        OutboxMessage: {
+            /** Outbox Id */
+            outbox_id: string;
+            /** Action Id */
+            action_id: string;
+            /** To */
+            to: string;
+            /** Subject */
+            subject: string;
+            /** Body */
+            body: string;
+            /** Sent At */
+            sent_at: string;
+            /**
+             * Status
+             * @default sent_simulated
+             * @constant
+             */
+            status: "sent_simulated";
+        };
+        /**
+         * Person
+         * @description A member of the SCM team, as the people who work here know them: who they are, which desk is theirs, and what is open on it.
+         */
+        Person: {
+            /** Id */
+            id: string;
+            /** Name */
+            name: string;
+            /** Initials */
+            initials: string;
+            /** Role */
+            role: string;
+            /** Purchasing Groups */
+            purchasing_groups: string[];
+            /** Verticals */
+            verticals: string[];
+            /** Categories */
+            categories: string[];
+            /** Open Lines */
+            open_lines: number;
+            /** Open Prs */
+            open_prs: number;
+            open_value: components["schemas"]["Money"];
+            /** Past Due Lines */
+            past_due_lines: number;
+        };
+        /** PoDetail */
+        PoDetail: {
+            /** Po */
+            po: string;
+            /** Lines */
+            lines: components["schemas"]["PoLineView"][];
+            /** Ladders */
+            ladders: components["schemas"]["Ladder"][];
+            /** Milestones */
+            milestones: {
+                [key: string]: unknown;
+            }[];
+            /** Guarantees */
+            guarantees: {
+                [key: string]: unknown;
+            }[];
+            /** Ledger */
+            ledger: {
+                [key: string]: unknown;
+            };
+            /**
+             * Ledger Items
+             * @default []
+             */
+            ledger_items: components["schemas"]["LedgerItem"][];
+        };
+        /** PoLineView */
+        PoLineView: {
+            ref: components["schemas"]["EntityRef"];
+            /** Po */
+            po: string;
+            /** Item */
+            item: number;
+            /** Doc Type */
+            doc_type: string;
+            vendor: components["schemas"]["EntityRef"];
+            /** Vendor Code */
+            vendor_code: string;
+            material: components["schemas"]["EntityRef"] | null;
+            /** Text */
+            text: string;
+            /** Qty */
+            qty: number;
+            /** Uom */
+            uom: string;
+            rate: components["schemas"]["Money"];
+            value: components["schemas"]["Money"];
+            /** Received */
+            received: number;
+            /** Open Qty */
+            open_qty: number;
+            open_value: components["schemas"]["Money"];
+            /** Doc Date */
+            doc_date: string;
+            /** Delivery Date */
+            delivery_date: string | null;
+            /** Days Past Due */
+            days_past_due: number | null;
+            /**
+             * Revised
+             * @default []
+             */
+            revised: components["schemas"]["RevisedSplit"][];
+            /** Validity End */
+            validity_end: string | null;
+            project: components["schemas"]["EntityRef"] | null;
+            /** Plant */
+            plant: string;
+            /** Purch Group */
+            purch_group: string;
+            /** Buyer */
+            buyer: string | null;
+            pr_line: components["schemas"]["EntityRef"] | null;
+            pv: components["schemas"]["PvClause"] | null;
+            /** Payment Terms */
+            payment_terms: string | null;
+            /** Status */
+            status: string;
+            /** Flags */
+            flags: string[];
+        };
+        /** PrDetail */
+        PrDetail: {
+            /** Pr */
+            pr: string;
+            /** Lines */
+            lines: components["schemas"]["PrLineView"][];
+            /** Ladders */
+            ladders: components["schemas"]["Ladder"][];
+        };
+        /** PrLineView */
+        PrLineView: {
+            ref: components["schemas"]["EntityRef"];
+            /** Pr */
+            pr: string;
+            /** Item */
+            item: number;
+            material: components["schemas"]["EntityRef"] | null;
+            /** Text */
+            text: string;
+            /** Qty */
+            qty: number;
+            /** Uom */
+            uom: string;
+            value: components["schemas"]["Money"] | null;
+            /** Plant */
+            plant: string;
+            project: components["schemas"]["EntityRef"] | null;
+            /** Purch Group */
+            purch_group: string;
+            /** Buyer */
+            buyer: string | null;
+            /** Requisitioner */
+            requisitioner: string | null;
+            /** Created */
+            created: string;
+            /** Released */
+            released: string | null;
+            /** Needed By */
+            needed_by: string | null;
+            /** Status */
+            status: string;
+            po_line: components["schemas"]["EntityRef"] | null;
+            /** Po Date */
+            po_date: string | null;
+            /** Turnaround Days */
+            turnaround_days: number | null;
+            /** Age Days */
+            age_days: number | null;
+            /** Cs */
+            cs: string | null;
+            /** Rfq Sent */
+            rfq_sent: string | null;
+            /** Quotes In */
+            quotes_in: number;
+            /** Changed On */
+            changed_on: string | null;
+            /** Flags */
+            flags: string[];
+        };
+        /** PricingDetail */
+        PricingDetail: {
+            /** Code */
+            code: string;
+            /** Description */
+            description: string;
+            /** Group */
+            group: string;
+            /** Category */
+            category: string;
+            /** Uom */
+            uom: string;
+            /** Index */
+            index: string | null;
+            /** Sites */
+            sites: number;
+            spread: components["schemas"]["Figure"] | null;
+            low: components["schemas"]["SitePrice"] | null;
+            high: components["schemas"]["SitePrice"] | null;
+            /** Median */
+            median: number | null;
+            last: components["schemas"]["Figure"] | null;
+            /** Last Project */
+            last_project: string | null;
+            last_budget: components["schemas"]["Figure"] | null;
+            latest_quote: components["schemas"]["Figure"] | null;
+            /** Latest Quote Project */
+            latest_quote_project: string | null;
+            /** Trend */
+            trend: components["schemas"]["MonthRate"][];
+            trend_change: components["schemas"]["Figure"] | null;
+            /** Pv Lines */
+            pv_lines: number;
+            /** Flagged */
+            flagged: string | null;
+            /** Unexplained */
+            unexplained: boolean;
+            /** By Site */
+            by_site: components["schemas"]["SitePrice"][];
+            /** By Vendor */
+            by_vendor: components["schemas"]["VendorRate"][];
+            /** Pv */
+            pv: components["schemas"]["PvItem"][];
+            /** Index Series */
+            index_series: components["schemas"]["IndexPoint"][];
+            /** Unknowns */
+            unknowns: components["schemas"]["SpreadUnknown"][];
+            /** Quotes */
+            quotes: components["schemas"]["QuoteRow"][];
+        };
+        /** PricingResponse */
+        PricingResponse: {
+            /** As Of */
+            as_of: string;
+            /** Months */
+            months: string[];
+            /** Rows */
+            rows: components["schemas"]["PricingRow"][];
+            /** Notes */
+            notes: string[];
+        };
+        /** PricingRow */
+        PricingRow: {
+            /** Code */
+            code: string;
+            /** Description */
+            description: string;
+            /** Group */
+            group: string;
+            /** Category */
+            category: string;
+            /** Uom */
+            uom: string;
+            /** Index */
+            index: string | null;
+            /** Sites */
+            sites: number;
+            spread: components["schemas"]["Figure"] | null;
+            low: components["schemas"]["SitePrice"] | null;
+            high: components["schemas"]["SitePrice"] | null;
+            /** Median */
+            median: number | null;
+            last: components["schemas"]["Figure"] | null;
+            /** Last Project */
+            last_project: string | null;
+            last_budget: components["schemas"]["Figure"] | null;
+            latest_quote: components["schemas"]["Figure"] | null;
+            /** Latest Quote Project */
+            latest_quote_project: string | null;
+            /** Trend */
+            trend: components["schemas"]["MonthRate"][];
+            trend_change: components["schemas"]["Figure"] | null;
+            /** Pv Lines */
+            pv_lines: number;
+            /** Flagged */
+            flagged: string | null;
+            /** Unexplained */
+            unexplained: boolean;
+        };
+        /** ProjectFigures */
+        ProjectFigures: {
+            /** Id */
+            id: string;
+            /** Name */
+            name: string;
+            /** Vertical */
+            vertical: string;
+            /** Vertical Name */
+            vertical_name: string;
+            /** Stage */
+            stage: string;
+            /** Plants */
+            plants: string[];
+            /** Head */
+            head: string | null;
+            /** Planner */
+            planner: string | null;
+            open_prs: components["schemas"]["Figure"];
+            turnaround: components["schemas"]["Figure"];
+            /** Target Days */
+            target_days: number | null;
+            cancelled: components["schemas"]["Figure"];
+            budget: components["schemas"]["Figure"];
+            actual: components["schemas"]["Figure"];
+            budget_cover: components["schemas"]["Figure"];
+            requirement: components["schemas"]["Figure"];
+            fund: components["schemas"]["Figure"];
+            received: components["schemas"]["Figure"];
+            longlead: components["schemas"]["Figure"];
+            longlead_open: components["schemas"]["Figure"];
+            at_risk: components["schemas"]["Figure"];
+            at_risk_shared: components["schemas"]["Figure"];
+            held_by_projects: components["schemas"]["Figure"];
+            waiting_on_projects: components["schemas"]["Figure"];
+        };
+        /** ProjectPage */
+        ProjectPage: {
+            row: components["schemas"]["ProjectFigures"];
+            /** State */
+            state: string | null;
+            /** Aliases */
+            aliases: string[];
+            /** Work Fronts */
+            work_fronts: string[];
+            /** Ladder */
+            ladder: components["schemas"]["RungCount"][];
+            /** Whose Move */
+            whose_move: components["schemas"]["MoveRow"][];
+            /** Oldest Waits */
+            oldest_waits: components["schemas"]["OldWait"][];
+            /** Fronts */
+            fronts: components["schemas"]["FrontStatus"][];
+            /** Top Materials */
+            top_materials: components["schemas"]["TopMaterial"][];
+            /** Cases */
+            cases: components["schemas"]["CaseRow"][];
+            /** Months */
+            months: components["schemas"]["EstimateMonth"][];
+        };
+        /** ProjectPanel */
+        ProjectPanel: {
+            ref: components["schemas"]["EntityRef"];
+            /** Vertical */
+            vertical: string;
+            /** Stage */
+            stage: string;
+            /** Plants */
+            plants: string[];
+            /** Head */
+            head: string | null;
+            /** Planner */
+            planner: string | null;
+            /** Median Pr Po Days */
+            median_pr_po_days: number | null;
+        };
+        /** ProjectRow */
+        ProjectRow: {
+            ref: components["schemas"]["EntityRef"];
+            /** Name */
+            name: string;
+            /** Vertical */
+            vertical: string;
+            /** Stage */
+            stage: string;
+            /** State */
+            state: string | null;
+            /** Plants */
+            plants: string[];
+            /** Aliases */
+            aliases: string[];
+            /** Head */
+            head: string | null;
+            /** Planner */
+            planner: string | null;
+            /** Open Prs */
+            open_prs: number;
+            /** Open Po Lines */
+            open_po_lines: number;
+            /** Open Value */
+            open_value: number;
+            /** Work Fronts */
+            work_fronts: string[];
+        };
+        /** ProjectsResponse */
+        ProjectsResponse: {
+            /** As Of */
+            as_of: string;
+            /** Period */
+            period: string;
+            /** Sheet Months */
+            sheet_months: string[];
+            /** Received Months */
+            received_months: string[];
+            /** Verticals */
+            verticals: components["schemas"]["VerticalCount"][];
+            /** Rows */
+            rows: components["schemas"]["ProjectFigures"][];
+            /** Notes */
+            notes: string[];
+        };
+        /**
+         * Provenance
+         * @description Where a value came from.
+         *
+         *     stated: copied from a source field. computed: derived by code from `inputs` with `rule`. inferred: filled
+         *     by a rule from other evidence (labelled on screen). flagged: kept as found but marked suspect. unknown:
+         *     not knowable from the data. extracted: read from free text (an email or a PDF) at `row`.
+         */
+        Provenance: {
+            /**
+             * Method
+             * @enum {string}
+             */
+            method: "stated" | "computed" | "inferred" | "flagged" | "unknown" | "extracted";
+            /** Source */
+            source: string;
+            /** Row */
+            row?: string | null;
+            /** Raw */
+            raw?: string | null;
+            /** Inputs */
+            inputs?: components["schemas"]["EntityRef"][];
+            /** Rule */
+            rule?: string | null;
+            /**
+             * By
+             * @default recipe
+             */
+            by: string;
+        };
+        /** PvClause */
+        PvClause: {
+            /** Index */
+            index: string | null;
+            /** Base Month */
+            base_month: string | null;
+            /** Variable Share */
+            variable_share: number | null;
+            /** Raw */
+            raw: string | null;
+        };
+        /** PvItem */
+        PvItem: {
+            /** Ref */
+            ref: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "po" | "lookahead";
+            /** Project */
+            project: string | null;
+            /** Project Name */
+            project_name: string | null;
+            /** Vendor Name */
+            vendor_name: string | null;
+            /** Index */
+            index: string;
+            /** Base Month */
+            base_month: string | null;
+            /** Base Index */
+            base_index: number | null;
+            /** Latest Month */
+            latest_month: string | null;
+            /** Latest Index */
+            latest_index: number | null;
+            /** Change Pct */
+            change_pct: number | null;
+            /** Share */
+            share: number | null;
+            pv: components["schemas"]["Figure"] | null;
+        };
+        /** Quantity */
+        Quantity: {
+            /** Value */
+            value: string;
+            /** Uom */
+            uom: string;
+            provenance: components["schemas"]["Provenance"];
+        };
+        /**
+         * QuoteBeside
+         * @description One quote beside what the material last cost on a PO at the quote's project (else at any site) and the project's budget rate.
+         */
+        QuoteBeside: {
+            /** Quote */
+            quote: string;
+            /** Cs */
+            cs: string | null;
+            project: components["schemas"]["EntityRef"] | null;
+            /** Last Po Rate */
+            last_po_rate: number | null;
+            /** Last Po Date */
+            last_po_date: string | null;
+            /** Last Po Line */
+            last_po_line: string | null;
+            /** Last Scope */
+            last_scope: string | null;
+            /** Budget */
+            budget: number | null;
+            /** Vs Last Pct */
+            vs_last_pct: number | null;
+            /** Vs Budget Pct */
+            vs_budget_pct: number | null;
+        };
+        /**
+         * QuoteFacts
+         * @description The quote facts block: when, minimum, payment, price basis, vendor; and its price table against the last PO and the budget.
+         */
+        QuoteFacts: {
+            /** Validity */
+            validity: string | null;
+            /** Delivery */
+            delivery: string | null;
+            /** Minimum */
+            minimum: string | null;
+            /** Payment */
+            payment: string | null;
+            /** Price Basis */
+            price_basis: string | null;
+            /** Vendor */
+            vendor: string;
+            /** In Library */
+            in_library: boolean | null;
+            /** Msme */
+            msme: boolean | null;
+            /** Rows */
+            rows: {
+                [key: string]: unknown;
+            }[];
+        };
+        /** QuoteRow */
+        QuoteRow: {
+            /** Ref */
+            ref: string;
+            /** Vendor Name */
+            vendor_name: string;
+            /** Project */
+            project: string | null;
+            /** Project Name */
+            project_name: string | null;
+            /** Date */
+            date: string | null;
+            /** Rate */
+            rate: number | null;
+            /** Uom */
+            uom: string | null;
+            /** Rate Base */
+            rate_base: number | null;
+            /** Source */
+            source: string;
+            /** Cs */
+            cs: string | null;
+            /** Basis */
+            basis: string | null;
+        };
+        /** QuoteView */
+        QuoteView: {
+            ref: components["schemas"]["EntityRef"];
+            /** Source */
+            source: string;
+            vendor: components["schemas"]["EntityRef"] | null;
+            /** Vendor Name */
+            vendor_name: string;
+            /** In Library */
+            in_library: boolean;
+            /** Msme */
+            msme: boolean | null;
+            /** Quote Date */
+            quote_date: string | null;
+            /** Qty */
+            qty: number | null;
+            /** Uom */
+            uom: string | null;
+            rate: components["schemas"]["Money"] | null;
+            /** Validity */
+            validity: string | null;
+            /** Price Basis */
+            price_basis: string | null;
+            /** Pv Formula */
+            pv_formula: string | null;
+            /** L1 */
+            l1: boolean;
+            message: components["schemas"]["EntityRef"] | null;
+            /** Line */
+            line: string | null;
+            /** Remarks */
+            remarks: string | null;
+        };
+        /** RatePoint */
+        RatePoint: {
+            /** Date */
+            date: string;
+            /** Rate */
+            rate: number;
+            /** Project */
+            project: string | null;
+            /** Vendor */
+            vendor: string;
+            /** Po Line */
+            po_line: string;
+        };
+        /** Recipient */
+        Recipient: {
+            /** Name */
+            name: string | null;
+            /** Email */
+            email: string | null;
+            /** Role */
+            role: string;
+            vendor?: components["schemas"]["EntityRef"] | null;
+            /** Function */
+            function?: string | null;
+        };
+        /** Reject */
+        Reject: {
+            /** Reason */
+            reason: string;
+            /** Rejected By */
+            rejected_by: string;
+        };
+        /** RelatedStage */
+        RelatedStage: {
+            /** Key */
+            key: string;
+            /** Label */
+            label: string;
+            /** Waiting On */
+            waiting_on?: string | null;
+        };
+        /** RequirementRow */
+        RequirementRow: {
+            /** Id */
+            id: string;
+            /** Project */
+            project: string | null;
+            /** Project Name */
+            project_name: string;
+            /** Sheet */
+            sheet: string;
+            /** Row */
+            row: string;
+            /** Materials */
+            materials: string[];
+            /** Unit */
+            unit: string | null;
+            /** Month */
+            month: string;
+            /** Qty */
+            qty: number;
+            /** Rate */
+            rate: number | null;
+            /** Amount */
+            amount: number | null;
+            /** Fund */
+            fund: number | null;
+            /** Fund Head */
+            fund_head: string | null;
+            /** Src */
+            src: string;
+        };
+        /** RevisedSplit */
+        RevisedSplit: {
+            /** Date */
+            date: string;
+            /** Qty */
+            qty?: number | null;
+            /** Message */
+            message: string;
+            /** Line */
+            line?: string | null;
+        };
+        /** Route */
+        Route: {
+            /** Kind */
+            kind: string;
+            /** Label */
+            label: string;
+            /**
+             * Leads To
+             * @enum {string}
+             */
+            leads_to: "request" | "internal_note" | "note" | "record";
+            /**
+             * To
+             * @default []
+             */
+            to: components["schemas"]["Recipient"][];
+            /**
+             * Changes
+             * @default
+             */
+            changes: string;
+            /** Earliest */
+            earliest?: string | null;
+            /**
+             * Earliest Basis
+             * @default
+             */
+            earliest_basis: string;
+            cost?: components["schemas"]["Money"] | null;
+            /**
+             * Cost Basis
+             * @default
+             */
+            cost_basis: string;
+            commits?: components["schemas"]["Money"] | null;
+            /**
+             * Document
+             * @default Request or query letter (no commitment)
+             */
+            document: string;
+            /** Countersign */
+            countersign?: string | null;
+            /** Doa Line */
+            doa_line?: string | null;
+            /**
+             * Also Start
+             * @default false
+             */
+            also_start: boolean;
+            /**
+             * Also Why
+             * @default
+             */
+            also_why: string;
+            /** By */
+            by?: string | null;
+        };
+        /** Rung */
+        Rung: {
+            /** Key */
+            key: string;
+            /** Label */
+            label: string;
+            /**
+             * State
+             * @enum {string}
+             */
+            state: "done" | "now" | "todo" | "na" | "unknown";
+            /** Date */
+            date?: string | null;
+            /** Source */
+            source?: string | null;
+            ref?: components["schemas"]["EntityRef"] | null;
+            /** Held By */
+            held_by?: ("SCM" | "Projects" | "Vendor" | "QA" | "Finance" | "Management") | null;
+            /** Days */
+            days?: number | null;
+            /** Why */
+            why?: string | null;
+            /** Unknown */
+            unknown?: string | null;
+        };
+        /** RungCount */
+        RungCount: {
+            /** Key */
+            key: string;
+            /** Label */
+            label: string;
+            waiting: components["schemas"]["Figure"] | null;
+            standing: components["schemas"]["Figure"] | null;
+            /** Who */
+            who: {
+                [key: string]: number;
+            };
+        };
+        /**
+         * Saving
+         * @description PO rate against a reference rate x the PO quantity, on the lines where the reference exists. Positive: bought below it.
+         */
+        Saving: {
+            net: components["schemas"]["Figure"];
+            below: components["schemas"]["Figure"];
+            above: components["schemas"]["Figure"];
+            /** Lines */
+            lines: number;
+            /** Of Lines */
+            of_lines: number;
+        };
+        /** SentLetter */
+        SentLetter: {
+            /** Action Id */
+            action_id: string;
+            /** Subject */
+            subject: string;
+            /** Sent On */
+            sent_on: string;
+            /** Recipient */
+            recipient?: string | null;
+        };
+        /**
+         * SiteImpact
+         * @description A work front that stops if nothing is done: from the date its material is needed, when the supply covering it lands later, sits under a
+         *     disruption, or does not exist. "Up to": site stock is not in the data.
+         */
+        SiteImpact: {
+            project: components["schemas"]["EntityRef"];
+            /** Front */
+            front: string;
+            /** Month */
+            month: string;
+            /** Stops On */
+            stops_on?: string | null;
+            /** Why */
+            why: string;
+        };
+        /** SitePrice */
+        SitePrice: {
+            /** Project */
+            project: string;
+            /** Project Name */
+            project_name: string;
+            /** Vertical */
+            vertical: string | null;
+            rate: components["schemas"]["Figure"];
+            /** Date */
+            date: string;
+            /** Vendor */
+            vendor: string;
+            /** Vendor Name */
+            vendor_name: string;
+            /** Buyer */
+            buyer: string | null;
+            /** Buyer Name */
+            buyer_name: string | null;
+            budget: components["schemas"]["Figure"] | null;
+            quote: components["schemas"]["Figure"] | null;
+            /** Vs Median Pct */
+            vs_median_pct: number | null;
+            /** Lines */
+            lines: number;
+        };
+        /** SiteRate */
+        SiteRate: {
+            project: components["schemas"]["EntityRef"];
+            /** Last Rate */
+            last_rate: number;
+            /** Last Date */
+            last_date: string;
+            /** Vendor */
+            vendor: string;
+            /** Budget */
+            budget: number | null;
+            /** Po Lines */
+            po_lines: number;
+            /** Vs Median Pct */
+            vs_median_pct: number | null;
+        };
+        /** Source */
+        Source: {
+            /** Type */
+            type: string;
+            /** Id */
+            id: string;
+            /** Kind */
+            kind: string;
+            /** Date */
+            date: string;
+            /** Title */
+            title: string;
+            /** Summary */
+            summary?: string | null;
+            /** Publisher */
+            publisher?: string | null;
+            /** Url */
+            url?: string | null;
+            /** Text */
+            text?: string | null;
+        };
+        /**
+         * Span
+         * @description One thing a text mentions, matched against the records. `start` and `end` are JavaScript string indices (UTF-16 code units) into the text;
+         *     `text` is the matched substring, so a renderer can check the span and drop it if the text has changed.
+         */
+        Span: {
+            /** Start */
+            start: number;
+            /** End */
+            end: number;
+            /**
+             * Type
+             * @enum {string}
+             */
+            type: "project" | "plant" | "material" | "supplier" | "supplier_lookalike" | "person" | "pr" | "pr_line" | "po" | "po_line" | "money" | "date" | "quantity";
+            /** Ref */
+            ref: string;
+            /** Label */
+            label: string;
+            /** Text */
+            text: string;
+        };
+        /** SpreadUnknown */
+        SpreadUnknown: {
+            /** Project */
+            project: string;
+            /** Project Name */
+            project_name: string;
+            /** Rate */
+            rate: number;
+            /** What */
+            what: string;
+            /** Ask */
+            ask: string | null;
+            /** Ask Name */
+            ask_name: string | null;
+            /** Question */
+            question: string;
+            /** Refs */
+            refs: string[];
+        };
+        /**
+         * Stage
+         * @description Where the work on an item stands, read from the runs and the ledger on every request (never stored), with the one next act and whose move it is.
+         */
+        Stage: {
+            /**
+             * Key
+             * @enum {string}
+             */
+            key: "found" | "worked" | "decision_ready" | "drafted" | "signed" | "approved" | "sent" | "answered";
+            /** Label */
+            label: string;
+            /** Step */
+            step: number;
+            /**
+             * Of
+             * @default 7
+             */
+            of: number;
+            /** Next Act */
+            next_act: string;
+            /** At */
+            at?: string | null;
+            /** Waiting On */
+            waiting_on?: string | null;
+            action?: components["schemas"]["EntityRef"] | null;
+        };
+        /**
+         * StageAction
+         * @description What the owner chose on a case that is not an email: a note to someone inside the company, a decision on record, or PO lines to update in the ERP.
+         *     Staged for the owner's signature like a draft; approving it records it and sends nothing (no outbox row).
+         */
+        StageAction: {
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "note" | "record" | "erp_update";
+            /** Staged By */
+            staged_by: string;
+            /** Text */
+            text: string;
+            /**
+             * To
+             * @default
+             */
+            to: string;
+            /**
+             * Reason
+             * @default
+             */
+            reason: string;
+            /**
+             * Lines
+             * @default []
+             */
+            lines: components["schemas"]["LineChange"][];
+            /** Recheck On */
+            recheck_on?: string | null;
+            /** Option Kind */
+            option_kind?: string | null;
+        };
+        /** StartRun */
+        StartRun: {
+            /** Asked By */
+            asked_by?: string | null;
+            /**
+             * Live
+             * @default false
+             */
+            live: boolean;
+        };
+        /** SupplyByMonth */
+        SupplyByMonth: {
+            /** Project */
+            project: string;
+            /** Project Name */
+            project_name: string;
+            /** Materials */
+            materials: string[];
+            /** Uom */
+            uom: string | null;
+            /** Months */
+            months: components["schemas"]["MonthRow"][];
+            /** Note */
+            note: string;
+        };
+        /** TeamResponse */
+        TeamResponse: {
+            /** Viewer */
+            viewer: string | null;
+            /** Viewer Name */
+            viewer_name: string | null;
+            /**
+             * Scope
+             * @enum {string}
+             */
+            scope: "all" | "team" | "self" | "none";
+            /** Note */
+            note: string;
+            /** Order */
+            order: string;
+            /** Period */
+            period: string;
+            /** As Of */
+            as_of: string;
+            /** Members */
+            members: components["schemas"]["MemberSummary"][];
+        };
+        /** TopMaterial */
+        TopMaterial: {
+            /** Code */
+            code: string;
+            /** Description */
+            description: string;
+            value: components["schemas"]["Figure"];
+            /** Qty */
+            qty: number;
+            /** Uom */
+            uom: string;
+            /** Lines */
+            lines: number;
+        };
+        /**
+         * Unknown
+         * @description A fact the data does not hold. Shown as "unknown · ask <owner>", never as a number.
+         */
+        Unknown: {
+            /** What */
+            what: string;
+            /** Why It Blocks */
+            why_it_blocks: string;
+            /** Owner */
+            owner: string;
+            /** Question */
+            question: string;
+            /** Refs */
+            refs?: components["schemas"]["EntityRef"][];
+        };
+        /** Unresolved */
+        Unresolved: {
+            /** Name */
+            name: string;
+            /** Source */
+            source: string;
+            amount: components["schemas"]["Figure"] | null;
+            /** Ask */
+            ask: string | null;
+            /** Ask Name */
+            ask_name: string | null;
+        };
+        /** ValidationError */
+        ValidationError: {
+            /** Location */
+            loc: (string | number)[];
+            /** Message */
+            msg: string;
+            /** Error Type */
+            type: string;
+            /** Input */
+            input?: unknown;
+            /** Context */
+            ctx?: Record<string, never>;
+        };
+        /**
+         * VendorCode
+         * @description One SAP vendor code of the company: a renamed company keeps both codes, linked, never merged.
+         */
+        VendorCode: {
+            /** Code */
+            code: string;
+            /** Name */
+            name: string;
+            /** Gstin */
+            gstin: string | null;
+            /** Msme */
+            msme: boolean;
+            /** Udyam */
+            udyam: string | null;
+            /** City */
+            city: string | null;
+            /** Region */
+            region: string | null;
+            /** Bank Masked */
+            bank_masked: string | null;
+            /** Blocked */
+            blocked: boolean;
+            /** Created On */
+            created_on: string | null;
+            /** Link */
+            link: string;
+            /** Evidence */
+            evidence?: string | null;
+        };
+        /** VendorDetail */
+        VendorDetail: {
+            ref: components["schemas"]["EntityRef"];
+            /** Name */
+            name: string;
+            /** Codes */
+            codes: string[];
+            /** Gstin */
+            gstin: string | null;
+            /** Msme */
+            msme: boolean;
+            /** City */
+            city: string | null;
+            /** Region */
+            region: string | null;
+            /** Verticals */
+            verticals: string[];
+            /** In Library */
+            in_library: boolean;
+            /** Open Lines */
+            open_lines: number;
+            open_value: components["schemas"]["Money"];
+            po_value: components["schemas"]["Money"];
+            /** On Time Pct */
+            on_time_pct: number | null;
+            /** Receipts */
+            receipts: number;
+            /** Streak */
+            streak: number;
+            /** Renamed */
+            renamed: boolean;
+            /**
+             * Cases
+             * @default []
+             */
+            cases: components["schemas"]["EntityRef"][];
+            contact: components["schemas"]["Contact"];
+            /** Records */
+            records: components["schemas"]["VendorCode"][];
+            /** Library */
+            library: components["schemas"]["LibraryEntry"][];
+            delivery: components["schemas"]["Delivery"];
+            /** Payment Terms */
+            payment_terms: string[];
+            /** Msme Due */
+            msme_due: components["schemas"]["MsmeDue"][];
+            /** Guarantees */
+            guarantees: {
+                [key: string]: unknown;
+            }[];
+            /** Po Lines */
+            po_lines: components["schemas"]["EntityRef"][];
+            /** Quotes */
+            quotes: components["schemas"]["EntityRef"][];
+            /** Messages */
+            messages: components["schemas"]["EntityRef"][];
+        };
+        /** VendorPanel */
+        VendorPanel: {
+            ref: components["schemas"]["EntityRef"];
+            /** Name */
+            name: string;
+            /** Codes */
+            codes: string[];
+            /** Gstin */
+            gstin: string | null;
+            /** Msme */
+            msme: boolean;
+            /** Msme Due 45 */
+            msme_due_45: number;
+            /** On Time */
+            on_time: string;
+            /** Avg Days Late */
+            avg_days_late: number | null;
+            /** Streak Line */
+            streak_line: string;
+            /** Terms */
+            terms: string[];
+            /** Library */
+            library: string[];
+            /** Contact */
+            contact: string | null;
+            /** Contact Email */
+            contact_email: string | null;
+        };
+        /**
+         * VendorQuote
+         * @description A vendor's quote as its page lists it: what it was for (CS, material, project) and how the CS came out.
+         */
+        VendorQuote: {
+            ref: components["schemas"]["EntityRef"];
+            /** Source */
+            source: string;
+            vendor: components["schemas"]["EntityRef"] | null;
+            /** Vendor Name */
+            vendor_name: string;
+            /** In Library */
+            in_library: boolean;
+            /** Msme */
+            msme: boolean | null;
+            /** Quote Date */
+            quote_date: string | null;
+            /** Qty */
+            qty: number | null;
+            /** Uom */
+            uom: string | null;
+            rate: components["schemas"]["Money"] | null;
+            /** Validity */
+            validity: string | null;
+            /** Price Basis */
+            price_basis: string | null;
+            /** Pv Formula */
+            pv_formula: string | null;
+            /** L1 */
+            l1: boolean;
+            message: components["schemas"]["EntityRef"] | null;
+            /** Line */
+            line: string | null;
+            /** Remarks */
+            remarks: string | null;
+            /** Cs */
+            cs: string | null;
+            /** Cs Status */
+            cs_status: string | null;
+            /** Cs Approved On */
+            cs_approved_on: string | null;
+            material: components["schemas"]["EntityRef"] | null;
+            project: components["schemas"]["EntityRef"] | null;
+        };
+        /** VendorRate */
+        VendorRate: {
+            /** Vendor */
+            vendor: string;
+            /** Vendor Name */
+            vendor_name: string;
+            /** Lines */
+            lines: number;
+            last: components["schemas"]["Figure"];
+            /** Low */
+            low: number;
+            /** High */
+            high: number;
+            /** Last Date */
+            last_date: string;
+            /** Projects */
+            projects: string[];
+        };
+        /** VendorRow */
+        VendorRow: {
+            ref: components["schemas"]["EntityRef"];
+            /** Name */
+            name: string;
+            /** Codes */
+            codes: string[];
+            /** Gstin */
+            gstin: string | null;
+            /** Msme */
+            msme: boolean;
+            /** City */
+            city: string | null;
+            /** Region */
+            region: string | null;
+            /** Verticals */
+            verticals: string[];
+            /** In Library */
+            in_library: boolean;
+            /** Open Lines */
+            open_lines: number;
+            open_value: components["schemas"]["Money"];
+            po_value: components["schemas"]["Money"];
+            /** On Time Pct */
+            on_time_pct: number | null;
+            /** Receipts */
+            receipts: number;
+            /** Streak */
+            streak: number;
+            /** Renamed */
+            renamed: boolean;
+            /**
+             * Cases
+             * @default []
+             */
+            cases: components["schemas"]["EntityRef"][];
+        };
+        /** VerticalCount */
+        VerticalCount: {
+            /** Id */
+            id: string;
+            /** Name */
+            name: string;
+            /** Projects */
+            projects: number;
+        };
+        /**
+         * VerticalTurnaround
+         * @description PR -> PO days on one vertical: the member's median against the vertical's own median (every buyer's lines on it). No other comparison.
+         */
+        VerticalTurnaround: {
+            /** Vertical */
+            vertical: string;
+            /** Name */
+            name: string;
+            mine: components["schemas"]["Figure"];
+            vertical_median: components["schemas"]["Figure"];
+        };
+        /** Workload */
+        Workload: {
+            open_pr_lines: components["schemas"]["Figure"];
+            open_po_lines: components["schemas"]["Figure"];
+            open_po_value: components["schemas"]["Figure"];
+            cases: components["schemas"]["Figure"];
+            cases_on_you: components["schemas"]["Figure"];
         };
     };
     responses: never;
@@ -3735,6 +4382,479 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    health_api_health_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    data_issues_api_data_issues_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DataIssue"][];
+                };
+            };
+        };
+    };
+    steps_api_data_steps_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BuildStep"][];
+                };
+            };
+        };
+    };
+    stamp_api_data_stamp_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BuildStamp"];
+                };
+            };
+        };
+    };
+    questions_api_imports_questions_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImportDeck"];
+                };
+            };
+        };
+    };
+    answers_api_imports_answers_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ImportAnswers"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImportDeck"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    dry_run_api_imports_dry_run_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImportDryRun"];
+                };
+            };
+        };
+    };
+    approve_api_imports_approve_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ImportApproval"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImportLoaded"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    people_api_people_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Person"][];
+                };
+            };
+        };
+    };
+    counts_api_counts_get: {
+        parameters: {
+            query?: {
+                buyer?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Counts"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    action_items_api_action_items_get: {
+        parameters: {
+            query?: {
+                owner?: string | null;
+                tab?: string | null;
+                vertical?: string | null;
+                project?: string | null;
+                waiting_on?: string | null;
+                act_by_from?: string | null;
+                act_by_to?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ActionItem"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    action_item_routes_api_action_items__key__routes_get: {
+        parameters: {
+            query?: {
+                owner?: string | null;
+            };
+            header?: never;
+            path: {
+                key: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Route"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    action_item_runs_api_action_items__key__runs_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                key: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    start_run_api_action_items__key__runs_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                key: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["StartRun"] | null;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    action_item_api_action_items__key__get: {
+        parameters: {
+            query?: {
+                owner?: string | null;
+            };
+            header?: never;
+            path: {
+                key: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ActionItemDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    listActions: {
+        parameters: {
+            query?: {
+                state?: ("proposed" | "signed" | "approved" | "rejected" | "executed") | null;
+                item_key?: string | null;
+                run_id?: string | null;
+                chosen?: boolean | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Action"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    getAction: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                action_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Action"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     editAction: {
         parameters: {
             query?: never;
@@ -3750,7 +4870,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description the edited draft */
+            /** @description Successful Response */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -3759,38 +4879,220 @@ export interface operations {
                     "application/json": components["schemas"]["Action"];
                 };
             };
-            /** @description no such action */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description the action is not a waiting draft */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description the person editing is not one of Halden's buyers */
+            /** @description Validation Error */
             422: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
             };
         };
     };
-    search: {
+    approveAction: {
         parameters: {
-            query: {
-                /** @description every word must be found; the query is also read for the records it names, so 'Yunzhan', 'HR-40110', 'PO 450/10' and 'Li Wei' resolve first */
-                q: string;
-                /** @description comma-separated: item, message, supplier, part, po_line, person */
-                types?: string;
-                /** @description across types no one kind fills the list; with one type, all of the limit */
-                limit?: number;
+            query?: never;
+            header?: never;
+            path: {
+                action_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Approve"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Action"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    rejectAction: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                action_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Reject"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Action"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    stageCaseAction: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                key: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StageAction"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Action"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    chooseRoute: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                key: string;
+                kind: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ChooseRoute"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Action"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    recordHeldControl: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                key: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HeldControl"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Action"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    listOutbox: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OutboxMessage"][];
+                };
+            };
+        };
+    };
+    messages_api_messages_get: {
+        parameters: {
+            query?: {
+                q?: string | null;
+                owner?: string | null;
+                kind?: string | null;
+                trust?: string | null;
             };
             header?: never;
             path?: never;
@@ -3798,13 +5100,53 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description ok */
+            /** @description Successful Response */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["SearchHit"][];
+                    "application/json": components["schemas"]["MessageSummary"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    message_api_messages__message_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                message_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MessageDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
@@ -3818,24 +5160,1415 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": {
-                    text: string;
-                    /**
-                     * @description the text is from a message the code holds (look-alike sender, bank-detail change): names in it are claims, never records
-                     * @default false
-                     */
-                    held?: boolean;
-                };
+                "application/json": components["schemas"]["Annotate"];
             };
         };
         responses: {
-            /** @description ok */
+            /** @description Successful Response */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
                     "application/json": components["schemas"]["Span"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    search: {
+        parameters: {
+            query: {
+                q: string;
+                /** @description comma-separated: item, message, supplier, part, po_line, person */
+                types?: string | null;
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Hit"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    vendors_api_vendors_get: {
+        parameters: {
+            query?: {
+                in_library?: boolean | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VendorRow"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    vendor_api_vendors__vendor_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                vendor_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VendorDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    vendor_quotes_api_vendors__vendor_id__quotes_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                vendor_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VendorQuote"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    materials_api_materials_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MaterialRow"][];
+                };
+            };
+        };
+    };
+    material_api_materials__code__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                code: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MaterialDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    prs_api_prs_get: {
+        parameters: {
+            query?: {
+                status?: string | null;
+                buyer?: string | null;
+                project?: string | null;
+                flag?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PrLineView"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    pr_api_prs__pr_no__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                pr_no: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PrDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    pos_api_pos_get: {
+        parameters: {
+            query?: {
+                status?: string | null;
+                buyer?: string | null;
+                project?: string | null;
+                vendor?: string | null;
+                material?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PoLineView"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    po_api_pos__po_no__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                po_no: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PoDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    order_api_orders__po_line__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                po_line: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PoLineView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    cs_api_cs__cs_no__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                cs_no: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CsView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    material_quotes_api_materials__code__quotes_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                code: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["QuoteView"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_ladder_api_ladder_get: {
+        parameters: {
+            query?: {
+                pr_line?: string | null;
+                po_line?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Ladder"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    projects_api_projects_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProjectRow"][];
+                };
+            };
+        };
+    };
+    requirements_api_requirements_get: {
+        parameters: {
+            query?: {
+                project?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RequirementRow"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    supply_api_supply_get: {
+        parameters: {
+            query: {
+                project: string;
+                material: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SupplyByMonth"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    workfronts_api_workfronts_get: {
+        parameters: {
+            query: {
+                project: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FrontStatus"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    sources_api_sources_get: {
+        parameters: {
+            query?: {
+                type?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Source"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    source_api_sources__source_type___source_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                source_type: string;
+                source_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Source"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    org_api_org_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrgChart"];
+                };
+            };
+        };
+    };
+    add_person_api_org_people_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OrgFields"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrgChart"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    remove_person_api_org_people__person_id__delete: {
+        parameters: {
+            query: {
+                by: string;
+            };
+            header?: never;
+            path: {
+                person_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrgChart"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    change_person_api_org_people__person_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                person_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OrgFields"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrgChart"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    undo_api_org_undo_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OrgBy"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrgChart"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reset_api_org_reset_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OrgBy"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrgChart"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    team_api_insights_team_get: {
+        parameters: {
+            query?: {
+                viewer?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeamResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    team_member_api_insights_team__person__get: {
+        parameters: {
+            query?: {
+                viewer?: string | null;
+            };
+            header?: never;
+            path: {
+                person: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MemberPage"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    projects_api_insights_projects_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProjectsResponse"];
+                };
+            };
+        };
+    };
+    project_api_insights_projects__pid__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                pid: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProjectPage"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    pricing_api_insights_pricing_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PricingResponse"];
+                };
+            };
+        };
+    };
+    pricing_material_api_insights_pricing__material__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                material: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PricingDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    estimates_api_insights_estimates_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EstimatesResponse"];
+                };
+            };
+        };
+    };
+    brief_api_brief__person__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                person: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Brief"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    ask_api_ask_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AskBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    ask_examples_api_ask_examples_get: {
+        parameters: {
+            query?: {
+                page?: string | null;
+                key?: string | null;
+                ctx_type?: string | null;
+                ctx_id?: string | null;
+                ctx_label?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    ask_everywhere_api_ask_everywhere_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    triage_api_messages__message_id__triage_runs_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                message_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["StartRun"] | null;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reply_api_messages__message_id__reply_runs_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                message_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["StartRun"] | null;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    compare_api_materials__code__compare_runs_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                code: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["StartRun"] | null;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    steward_example_api_imports_steward_example_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    steward_run_api_imports_steward_runs_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ImportFile"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_runs_api_runs_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    get_run_api_runs__run_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                run_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    stream_api_runs__run_id__events_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                "last-event-id"?: string | null;
+            };
+            path: {
+                run_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    agents_api_agents_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    evals_summary_api_evals_summary_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
                 };
             };
         };

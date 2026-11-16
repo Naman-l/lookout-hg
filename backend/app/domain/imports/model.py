@@ -65,3 +65,22 @@ class BuildMeta(Base):
 
     key: Mapped[str] = mapped_column(String, primary_key=True)
     value: Mapped[str] = mapped_column(Text)
+
+
+class Source(Base):
+    """One source file the build read: when it was exported or built (its own stamp, never the file's mtime), how many rows, and whether it is
+    older than the recipe allows (stale)."""
+
+    __tablename__ = "sources"
+
+    file: Mapped[str] = mapped_column(String, primary_key=True)
+    key: Mapped[str] = mapped_column(String)
+    kind: Mapped[str] = mapped_column(String)  # sap | sheet | tracker | external | inbox | reference
+    title: Mapped[str] = mapped_column(String)
+    stamped_at: Mapped[str | None] = mapped_column(String)  # ISO date or datetime
+    stamp_raw: Mapped[str | None] = mapped_column(String)
+    stamped_by: Mapped[str | None] = mapped_column(String)
+    rows: Mapped[int] = mapped_column(Integer)
+    age_days: Mapped[int | None] = mapped_column(Integer)
+    judged: Mapped[int] = mapped_column(Integer)  # 0 for reference tables that are not expected to change week to week
+    stale: Mapped[int] = mapped_column(Integer)

@@ -12,9 +12,9 @@ import "../today.css";
 import "./data.css";
 
 const NEEDS = new Set(["flag", "leave"]);
-/** "Oct 13, 15:40" */
-export const builtAt = (iso: string) => new Date(iso).toLocaleString("en-US", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit", hour12: false });
-const n = (x: number) => x.toLocaleString("en-US");
+/** "13 Oct, 15:40" */
+export const builtAt = (iso: string) => new Date(iso).toLocaleString("en-GB", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit", hour12: false });
+const n = (x: number) => x.toLocaleString("en-IN");
 
 /** The case an issue is about: every PO line and part id its example names is among one case's refs or the lines its amount was computed from. */
 export function caseFor(issue: DataIssue, items: ActionItem[], patterns: string[]): ActionItem | null {
@@ -47,10 +47,10 @@ export function DataPage() {
   const matched = inTab(tab).filter((x) => !q.trim() || `${x.issue} ${x.file} ${x.owner} ${x.consequence}`.toLowerCase().includes(q.trim().toLowerCase()));
   const files = Array.from(new Set(inTab(tab).map((x) => x.file ?? ""))).sort();
   const rows = matched.filter((x) => !file || x.file === file).sort((a, b) => (b.count ?? 0) - (a.count ?? 0));
-  const patterns = useMemo(() => { const p = (health.data as { id_patterns?: Record<string, string> } | undefined)?.id_patterns ?? {}; return [p.po_line, p.part].filter(Boolean) as string[]; }, [health.data]);
+  const patterns = useMemo(() => { const p = (health.data as { id_patterns?: Record<string, string> } | undefined)?.id_patterns ?? {}; return [p.po_line, p.pr_line].filter(Boolean) as string[]; }, [health.data]);
   const needsCount = (w: "mine" | "all") => all.filter((x) => NEEDS.has(x.handling ?? "") && (w === "all" || x.owner === me)).length;
   const st = stamp.data;
-  const asOf = health.data ? new Date(`${health.data.as_of}T00:00:00Z`).toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric", timeZone: "UTC" }).replace(",", "") : "";      // "Fri Sep 25"
+  const asOf = health.data ? new Date(`${health.data.as_of}T00:00:00Z`).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" }) : "";      // "20 Oct 2026"
   // Rows a step wrote: its rows out beyond the most any earlier step had written.
   const stepRows = (steps.data ?? []).map((s, i, a) => Math.max(0, s.rows_out - Math.max(0, ...a.slice(0, i).map((p) => p.rows_out))));
 
@@ -71,8 +71,8 @@ export function DataPage() {
       </div>
       {st && (
         <div className="dp-cap">
-          <p>{st.gate_failed > 0 ? <span className="dp-bad">{st.gate_failed} of {st.gate_checks} load checks failed</span> : `${st.gate_checks - st.gate_failed} of ${st.gate_checks} load checks passed`} · loaded {n(st.counts.po_lines ?? 0)} PO lines, {n(st.counts.parts ?? 0)} parts, {n(st.counts.supplier_identities ?? 0)} suppliers, {n(st.counts.messages ?? 0)} messages · rebuilt {builtAt(st.built_at)} from the raw files</p>
-          <p>Not in the data: {st.counts.stock_counts === 0 ? "stock on hand (no count given yet) and " : ""}anything after {asOf}. That is why shortfalls read "up to".</p>
+          <p>{st.gate_failed > 0 ? <span className="dp-bad">{st.gate_failed} of {st.gate_checks} load checks failed</span> : `${st.gate_checks - st.gate_failed} of ${st.gate_checks} load checks passed`} · loaded {n(st.counts.pr_lines ?? 0)} PR lines, {n(st.counts.po_lines ?? 0)} PO lines, {n(st.counts.receipts ?? 0)} receipts, {n(st.counts.projects ?? 0)} projects, {n(st.counts.supplier_identities ?? 0)} vendors, {n(st.counts.messages ?? 0)} messages · rebuilt {builtAt(st.built_at)} from the raw files</p>
+          <p>Not in the data: site stock and anything after {asOf}. That is why a work front's stop date reads "up to".</p>
         </div>
       )}
       {(steps.data ?? []).length > 0 && (

@@ -1,0 +1,173 @@
+Commodity indices used for price variation | compiled 15.10.2026
+Month,Index,Value,Unit,Source
+2025-04,IEEMA_TFR,161.2,index points,IEEMA PV circular
+2025-05,IEEMA_TFR,162,index points,IEEMA PV circular
+2025-06,IEEMA_TFR,162.7,index points,IEEMA PV circular
+2025-07,IEEMA_TFR,163.6,index points,IEEMA PV circular
+2025-08,IEEMA_TFR,164.1,index points,IEEMA PV circular
+2025-09,IEEMA_TFR,164.5,index points,IEEMA PV circular
+2025-10,IEEMA_TFR,165.3,index points,IEEMA PV circular
+2025-11,IEEMA_TFR,166,index points,IEEMA PV circular
+2025-12,IEEMA_TFR,166.5,index points,IEEMA PV circular
+2026-01,IEEMA_TFR,167.9,index points,IEEMA PV circular
+2026-02,IEEMA_TFR,169.3,index points,IEEMA PV circular
+2026-03,IEEMA_TFR,170.7,index points,IEEMA PV circular
+2026-04,IEEMA_TFR,172,index points,IEEMA PV circular
+2026-05,IEEMA_TFR,173.4,index points,IEEMA PV circular
+2026-06,IEEMA_TFR,175,index points,IEEMA PV circular
+2026-07,IEEMA_TFR,176.5,index points,IEEMA PV circular
+2026-08,IEEMA_TFR,177.8,index points,IEEMA PV circular
+2026-09,IEEMA_TFR,179.2,index points,IEEMA PV circular
+2026-10,IEEMA_TFR,181.1,index points,IEEMA PV circular
+2025-04,IEEMA_SWG,148.4,index points,IEEMA PV circular
+2025-05,IEEMA_SWG,149,index points,IEEMA PV circular
+2025-06,IEEMA_SWG,149.3,index points,IEEMA PV circular
+2025-07,IEEMA_SWG,149.7,index points,IEEMA PV circular
+2025-08,IEEMA_SWG,150.4,index points,IEEMA PV circular
+2025-09,IEEMA_SWG,151,index points,IEEMA PV circular
+2025-10,IEEMA_SWG,151.4,index points,IEEMA PV circular
+2025-11,IEEMA_SWG,151.9,index points,IEEMA PV circular
+2025-12,IEEMA_SWG,152.5,index points,IEEMA PV circular
+2026-01,IEEMA_SWG,153.1,index points,IEEMA PV circular
+2026-02,IEEMA_SWG,154.3,index points,IEEMA PV circular
+2026-03,IEEMA_SWG,155.5,index points,IEEMA PV circular
+2026-04,IEEMA_SWG,156.6,index points,IEEMA PV circular
+2026-05,IEEMA_SWG,157.4,index points,IEEMA PV circular
+2026-06,IEEMA_SWG,158.5,index points,IEEMA PV circular
+2026-07,IEEMA_SWG,159.3,index points,IEEMA PV circular
+2026-08,IEEMA_SWG,160.6,index points,IEEMA PV circular
+2026-09,IEEMA_SWG,161.9,index points,IEEMA PV circular
+2026-10,IEEMA_SWG,162.8,index points,IEEMA PV circular
+2025-04,IEEMA_ACSR,238000,INR per MT (EC-grade aluminium),IEEMA PV circular (conductor)
+2025-05,IEEMA_ACSR,238801,INR per MT (EC-grade aluminium),IEEMA PV circular (conductor)
+2025-06,IEEMA_ACSR,239042,INR per MT (EC-grade aluminium),IEEMA PV circular (conductor)
+2025-07,IEEMA_ACSR,239569,INR per MT (EC-grade aluminium),IEEMA PV circular (conductor)
+2025-08,IEEMA_ACSR,240370,INR per MT (EC-grade aluminium),IEEMA PV circular (conductor)
+2025-09,IEEMA_ACSR,240557,INR per MT (EC-grade aluminium),IEEMA PV circular (conductor)
+2025-10,IEEMA_ACSR,240711,INR per MT (EC-grade aluminium),IEEMA PV circular (conductor)
+2025-11,IEEMA_ACSR,240900,INR per MT (EC-grade aluminium),IEEMA PV circular (conductor)
+2025-12,IEEMA_ACSR,241000,INR per MT (EC-grade aluminium),IEEMA PV circular (conductor)
+2026-01,IEEMA_ACSR,245500,INR per MT (EC-grade aluminium),IEEMA PV circular (conductor)
+2026-02,IEEMA_ACSR,250006,INR per MT (EC-grade aluminium),IEEMA PV circular (conductor)
+2026-03,IEEMA_ACSR,252399,INR per MT (EC-grade aluminium),IEEMA PV circular (conductor)
+2026-04,IEEMA_ACSR,255088,INR per MT (EC-grade aluminium),IEEMA PV circular (conductor)
+2026-05,IEEMA_ACSR,257692,INR per MT (EC-grade aluminium),IEEMA PV circular (conductor)
+2026-06,IEEMA_ACSR,260428,INR per MT (EC-grade aluminium),IEEMA PV circular (conductor)
+2026-07,IEEMA_ACSR,263166,INR per MT (EC-grade aluminium),IEEMA PV circular (conductor)
+2026-08,IEEMA_ACSR,268800,INR per MT (EC-grade aluminium),IEEMA PV circular (conductor)
+2026-09,IEEMA_ACSR,268950,INR per MT (EC-grade aluminium),IEEMA PV circular (conductor)
+2026-10,IEEMA_ACSR,271693,INR per MT (EC-grade aluminium),IEEMA PV circular (conductor)
+2025-04,LME_AL,2380,USD per tonne,"LME cash settlement, monthly average"
+2025-05,LME_AL,2387,USD per tonne,"LME cash settlement, monthly average"
+2025-06,LME_AL,2398,USD per tonne,"LME cash settlement, monthly average"
+2025-07,LME_AL,2406,USD per tonne,"LME cash settlement, monthly average"
+2025-08,LME_AL,2416,USD per tonne,"LME cash settlement, monthly average"
+2025-09,LME_AL,2425,USD per tonne,"LME cash settlement, monthly average"
+2025-10,LME_AL,2434,USD per tonne,"LME cash settlement, monthly average"
+2025-11,LME_AL,2444,USD per tonne,"LME cash settlement, monthly average"
+2025-12,LME_AL,2451,USD per tonne,"LME cash settlement, monthly average"
+2026-01,LME_AL,2486,USD per tonne,"LME cash settlement, monthly average"
+2026-02,LME_AL,2518,USD per tonne,"LME cash settlement, monthly average"
+2026-03,LME_AL,2548,USD per tonne,"LME cash settlement, monthly average"
+2026-04,LME_AL,2583,USD per tonne,"LME cash settlement, monthly average"
+2026-05,LME_AL,2618,USD per tonne,"LME cash settlement, monthly average"
+2026-06,LME_AL,2652,USD per tonne,"LME cash settlement, monthly average"
+2026-07,LME_AL,2690,USD per tonne,"LME cash settlement, monthly average"
+2026-08,LME_AL,2722,USD per tonne,"LME cash settlement, monthly average"
+2026-09,LME_AL,2754,USD per tonne,"LME cash settlement, monthly average"
+2026-10,LME_AL,2794,USD per tonne,"LME cash settlement, monthly average"
+2025-04,LME_CU,9150,USD per tonne,"LME cash settlement, monthly average"
+2025-05,LME_CU,9187,USD per tonne,"LME cash settlement, monthly average"
+2025-06,LME_CU,9218,USD per tonne,"LME cash settlement, monthly average"
+2025-07,LME_CU,9245,USD per tonne,"LME cash settlement, monthly average"
+2025-08,LME_CU,9280,USD per tonne,"LME cash settlement, monthly average"
+2025-09,LME_CU,9308,USD per tonne,"LME cash settlement, monthly average"
+2025-10,LME_CU,9326,USD per tonne,"LME cash settlement, monthly average"
+2025-11,LME_CU,9341,USD per tonne,"LME cash settlement, monthly average"
+2025-12,LME_CU,9378,USD per tonne,"LME cash settlement, monthly average"
+2026-01,LME_CU,9411,USD per tonne,"LME cash settlement, monthly average"
+2026-02,LME_CU,9503,USD per tonne,"LME cash settlement, monthly average"
+2026-03,LME_CU,9608,USD per tonne,"LME cash settlement, monthly average"
+2026-04,LME_CU,9714,USD per tonne,"LME cash settlement, monthly average"
+2026-05,LME_CU,9817,USD per tonne,"LME cash settlement, monthly average"
+2026-06,LME_CU,9912,USD per tonne,"LME cash settlement, monthly average"
+2026-07,LME_CU,10015,USD per tonne,"LME cash settlement, monthly average"
+2026-08,LME_CU,10112,USD per tonne,"LME cash settlement, monthly average"
+2026-09,LME_CU,10222,USD per tonne,"LME cash settlement, monthly average"
+2026-10,LME_CU,10322,USD per tonne,"LME cash settlement, monthly average"
+2025-04,STEEL_TMT,51800,"INR per MT (TMT Fe500D, Raipur)",Steel market bulletin
+2025-05,STEEL_TMT,51788,"INR per MT (TMT Fe500D, Raipur)",Steel market bulletin
+2025-06,STEEL_TMT,51732,"INR per MT (TMT Fe500D, Raipur)",Steel market bulletin
+2025-07,STEEL_TMT,51620,"INR per MT (TMT Fe500D, Raipur)",Steel market bulletin
+2025-08,STEEL_TMT,51504,"INR per MT (TMT Fe500D, Raipur)",Steel market bulletin
+2025-09,STEEL_TMT,51462,"INR per MT (TMT Fe500D, Raipur)",Steel market bulletin
+2025-10,STEEL_TMT,51392,"INR per MT (TMT Fe500D, Raipur)",Steel market bulletin
+2025-11,STEEL_TMT,51354,"INR per MT (TMT Fe500D, Raipur)",Steel market bulletin
+2025-12,STEEL_TMT,51229,"INR per MT (TMT Fe500D, Raipur)",Steel market bulletin
+2026-01,STEEL_TMT,51236,"INR per MT (TMT Fe500D, Raipur)",Steel market bulletin
+2026-02,STEEL_TMT,51247,"INR per MT (TMT Fe500D, Raipur)",Steel market bulletin
+2026-03,STEEL_TMT,51214,"INR per MT (TMT Fe500D, Raipur)",Steel market bulletin
+2026-04,STEEL_TMT,51152,"INR per MT (TMT Fe500D, Raipur)",Steel market bulletin
+2026-05,STEEL_TMT,51101,"INR per MT (TMT Fe500D, Raipur)",Steel market bulletin
+2026-06,STEEL_TMT,51712,"INR per MT (TMT Fe500D, Raipur)",Steel market bulletin
+2026-07,STEEL_TMT,52289,"INR per MT (TMT Fe500D, Raipur)",Steel market bulletin
+2026-08,STEEL_TMT,52937,"INR per MT (TMT Fe500D, Raipur)",Steel market bulletin
+2026-09,STEEL_TMT,53532,"INR per MT (TMT Fe500D, Raipur)",Steel market bulletin
+2026-10,STEEL_TMT,54076,"INR per MT (TMT Fe500D, Raipur)",Steel market bulletin
+2025-04,STEEL_STRUCT,58500,INR per MT (structural),Steel market bulletin
+2025-05,STEEL_STRUCT,58503,INR per MT (structural),Steel market bulletin
+2025-06,STEEL_STRUCT,58465,INR per MT (structural),Steel market bulletin
+2025-07,STEEL_STRUCT,58467,INR per MT (structural),Steel market bulletin
+2025-08,STEEL_STRUCT,58531,INR per MT (structural),Steel market bulletin
+2025-09,STEEL_STRUCT,58584,INR per MT (structural),Steel market bulletin
+2025-10,STEEL_STRUCT,58603,INR per MT (structural),Steel market bulletin
+2025-11,STEEL_STRUCT,58526,INR per MT (structural),Steel market bulletin
+2025-12,STEEL_STRUCT,58549,INR per MT (structural),Steel market bulletin
+2026-01,STEEL_STRUCT,58472,INR per MT (structural),Steel market bulletin
+2026-02,STEEL_STRUCT,58422,INR per MT (structural),Steel market bulletin
+2026-03,STEEL_STRUCT,58478,INR per MT (structural),Steel market bulletin
+2026-04,STEEL_STRUCT,58979,INR per MT (structural),Steel market bulletin
+2026-05,STEEL_STRUCT,59518,INR per MT (structural),Steel market bulletin
+2026-06,STEEL_STRUCT,59974,INR per MT (structural),Steel market bulletin
+2026-07,STEEL_STRUCT,60551,INR per MT (structural),Steel market bulletin
+2026-08,STEEL_STRUCT,61122,INR per MT (structural),Steel market bulletin
+2026-09,STEEL_STRUCT,61711,INR per MT (structural),Steel market bulletin
+2026-10,STEEL_STRUCT,62193,INR per MT (structural),Steel market bulletin
+2025-04,CEMENT_WPI,127.8,WPI index points,"Office of the Economic Adviser, WPI"
+2025-05,CEMENT_WPI,128,WPI index points,"Office of the Economic Adviser, WPI"
+2025-06,CEMENT_WPI,128.3,WPI index points,"Office of the Economic Adviser, WPI"
+2025-07,CEMENT_WPI,128.3,WPI index points,"Office of the Economic Adviser, WPI"
+2025-08,CEMENT_WPI,128.6,WPI index points,"Office of the Economic Adviser, WPI"
+2025-09,CEMENT_WPI,128.7,WPI index points,"Office of the Economic Adviser, WPI"
+2025-10,CEMENT_WPI,128.8,WPI index points,"Office of the Economic Adviser, WPI"
+2025-11,CEMENT_WPI,129,WPI index points,"Office of the Economic Adviser, WPI"
+2025-12,CEMENT_WPI,129.3,WPI index points,"Office of the Economic Adviser, WPI"
+2026-01,CEMENT_WPI,129.6,WPI index points,"Office of the Economic Adviser, WPI"
+2026-02,CEMENT_WPI,129.6,WPI index points,"Office of the Economic Adviser, WPI"
+2026-03,CEMENT_WPI,129.7,WPI index points,"Office of the Economic Adviser, WPI"
+2026-04,CEMENT_WPI,129.9,WPI index points,"Office of the Economic Adviser, WPI"
+2026-05,CEMENT_WPI,130,WPI index points,"Office of the Economic Adviser, WPI"
+2026-06,CEMENT_WPI,130.1,WPI index points,"Office of the Economic Adviser, WPI"
+2026-07,CEMENT_WPI,130.2,WPI index points,"Office of the Economic Adviser, WPI"
+2026-08,CEMENT_WPI,130.5,WPI index points,"Office of the Economic Adviser, WPI"
+2026-09,CEMENT_WPI,130.6,WPI index points,"Office of the Economic Adviser, WPI"
+2026-10,CEMENT_WPI,130.7,WPI index points,"Office of the Economic Adviser, WPI"
+2025-04,HSD,89.6,INR per litre (Delhi retail),"Oil marketing company retail price, Delhi"
+2025-05,HSD,89.66,INR per litre (Delhi retail),"Oil marketing company retail price, Delhi"
+2025-06,HSD,89.86,INR per litre (Delhi retail),"Oil marketing company retail price, Delhi"
+2025-07,HSD,90.02,INR per litre (Delhi retail),"Oil marketing company retail price, Delhi"
+2025-08,HSD,90.18,INR per litre (Delhi retail),"Oil marketing company retail price, Delhi"
+2025-09,HSD,90.39,INR per litre (Delhi retail),"Oil marketing company retail price, Delhi"
+2025-10,HSD,90.45,INR per litre (Delhi retail),"Oil marketing company retail price, Delhi"
+2025-11,HSD,90.43,INR per litre (Delhi retail),"Oil marketing company retail price, Delhi"
+2025-12,HSD,90.41,INR per litre (Delhi retail),"Oil marketing company retail price, Delhi"
+2026-01,HSD,90.5,INR per litre (Delhi retail),"Oil marketing company retail price, Delhi"
+2026-02,HSD,90.6,INR per litre (Delhi retail),"Oil marketing company retail price, Delhi"
+2026-03,HSD,90.55,INR per litre (Delhi retail),"Oil marketing company retail price, Delhi"
+2026-04,HSD,90.71,INR per litre (Delhi retail),"Oil marketing company retail price, Delhi"
+2026-05,HSD,90.72,INR per litre (Delhi retail),"Oil marketing company retail price, Delhi"
+2026-06,HSD,90.7,INR per litre (Delhi retail),"Oil marketing company retail price, Delhi"
+2026-07,HSD,90.81,INR per litre (Delhi retail),"Oil marketing company retail price, Delhi"
+2026-08,HSD,90.93,INR per litre (Delhi retail),"Oil marketing company retail price, Delhi"
+2026-09,HSD,91.09,INR per litre (Delhi retail),"Oil marketing company retail price, Delhi"
+2026-10,HSD,91.07,INR per litre (Delhi retail),"Oil marketing company retail price, Delhi"

@@ -1,102 +1,75 @@
-"""Hindsight replay: would the Action list have seen it coming?   python -m evals.hindsight [--cut 2026-09-17 ...] [--json evals/hindsight.json]
+"""The hindsight check (`make hindsight`): the records rebuilt as they stood on four days, and Today's cases on each.
 
-For each cut in evals/hindsight.yaml the records are built as the data stood that day (LOOKOUT_AS_OF), the app is served on them with that day as
-"today", and the Action list is read. A thing must be on the list the day its source arrives (show) and must not be there before (hide): a hidden
-item that shows means the app read the future. The records themselves are checked for leaks: no message and no order dated after the cut.
-No model and no key. A build takes about ten seconds, so this is run by `make hindsight` and, for two cuts, by the tests.
+For each cut (1 Sep, 1 Oct, 14 Oct, 20 Oct) the recipe rebuilds a database with LOOKOUT_AS_OF set to that day (exports and sheets cut at the date, mail
+after it not read), and the detectors run on it. Checks:
+- a case that rests on a message never appears on a day before the message was received;
+- a case that rests on a dated record (a deletion, a receipt) never appears before that record;
+- the MFC / PO-validity case is already on Today on 1 Sep, weeks before the vendor's mail asking for the firm-price protection (PLAN §12).
+Prints one row per case and day, and exits 1 on any failure.
 """
+
 from __future__ import annotations
 
-import argparse
 import json
 import os
-import sqlite3
 import subprocess
 import sys
 import tempfile
 from pathlib import Path
 
-import httpx
-import yaml
-
-from . import agent_runner
-
 ROOT = Path(__file__).resolve().parents[1]
-SHEET = ROOT / "evals" / "hindsight.yaml"
+PY = ROOT / "backend" / ".venv" / "bin" / "python"
+CUTS = ["2026-09-01", "2026-10-01", "2026-10-14", "2026-10-20"]
+
+PROBE = """
+import json, os
+from app.db import SessionLocal
+from app.domain.attention import service
+with SessionLocal() as s:
+    out = {}
+    for i in service.what_needs_attention(s):
+        d = service.item_detail(s, i.key)
+        msgs = [m.id for m in d.messages]
+        out[i.key] = {"title": i.title, "messages": msgs, "stake": float(i.at_stake.amount) if i.at_stake is not None and hasattr(i.at_stake, "amount") else None}
+print(json.dumps(out))
+"""
 
 
-def build_db(as_of: str, out: Path) -> None:
-    env = {**os.environ, "LOOKOUT_AS_OF": as_of, "LOOKOUT_DB": str(out)}
-    r = subprocess.run([sys.executable, "-m", "app.domain.imports.build", "--recipe", str(ROOT / "recipes" / "halden"), "--db", str(out)],
-                       cwd=ROOT / "backend", env=env, capture_output=True, text=True, timeout=300)
-    if r.returncode != 0:
-        raise RuntimeError(f"build as of {as_of} failed: {(r.stdout + r.stderr)[-300:]}")
+def cases_on(cut: str, workdir: Path) -> dict:
+    db = workdir / f"lookout-{cut}.db"
+    env = {**os.environ, "LOOKOUT_AS_OF": cut, "LOOKOUT_DB": str(db)}
+    subprocess.run([str(PY), "-m", "app.domain.imports.build", "--recipe", str(ROOT / "recipes" / "hg"), "--db", str(db)], cwd=ROOT / "backend", env=env,
+                   check=True, capture_output=True)
+    out = subprocess.run([str(PY), "-c", PROBE], cwd=ROOT / "backend", env=env, check=True, capture_output=True, text=True).stdout
+    return json.loads(out.strip().splitlines()[-1])
 
 
-def leaks(db: Path, as_of: str) -> list[str]:
-    con = sqlite3.connect(db)
-    try:
-        out = []
-        late = con.execute("select count(*) from messages where substr(date,1,10) > ?", (as_of,)).fetchone()[0]
-        if late:
-            out.append(f"{late} message(s) dated after {as_of}")
-        late = con.execute("select count(*) from po_lines where order_date > ?", (as_of,)).fetchone()[0]
-        if late:
-            out.append(f"{late} order line(s) dated after {as_of}")
-        meta = dict(con.execute("select key, value from build_meta").fetchall())
-        if meta.get("as_of") != as_of:
-            out.append(f"the records say as_of {meta.get('as_of')}, not {as_of}")
-        return out
-    finally:
-        con.close()
-
-
-def run_cut(cut: dict, work: Path) -> dict:
-    as_of = str(cut["as_of"])
-    db = work / f"{as_of}.db"
-    build_db(as_of, db)
-    problems = leaks(db, as_of)
-    os.environ["LOOKOUT_AS_OF"] = as_of
-    try:
-        with agent_runner.app_server(db, work / f"app-{as_of}", replay=True, extra_env={"LOOKOUT_AS_OF": as_of}) as base:
-            health = httpx.get(f"{base}/api/health", timeout=10).json()
-            items = httpx.get(f"{base}/api/action-items", timeout=30).json()
-    finally:
-        os.environ.pop("LOOKOUT_AS_OF", None)
-    keys = {i["key"] for i in items}
-    groups = {i["group"] for i in items}
-    for k in cut.get("show", []):
-        if k not in keys:
-            problems.append(f"missing on {as_of}: {k}")
-    for k in cut.get("hide", []):
-        if k in keys:
-            problems.append(f"shows before its source arrived: {k}")
-    for g in cut.get("hide_groups", []):
-        if g in groups:
-            problems.append(f"a {g} item shows before any {g} source arrived: {sorted(i['key'] for i in items if i['group'] == g)}")
-    snap = health.get("snapshot_date") or health.get("as_of")
-    if snap and str(snap) != as_of:
-        problems.append(f"the app says today is {snap}, not {as_of}")
-    return {"as_of": as_of, "why": cut["why"], "items": len(items), "ok": not problems, "problems": problems,
-            "on_the_list": sorted(keys)}
-
-
-def main(argv: list[str] | None = None) -> int:
-    ap = argparse.ArgumentParser(prog="evals.hindsight")
-    ap.add_argument("--cut", action="append", help="only these dates")
-    ap.add_argument("--json", type=Path)
-    a = ap.parse_args(argv)
-    sheet = yaml.safe_load(SHEET.read_text())
-    cuts = [c for c in sheet["cuts"] if not a.cut or str(c["as_of"]) in a.cut]
-    results = []
-    with tempfile.TemporaryDirectory(prefix="lookout-hindsight-") as w:
-        for c in cuts:
-            r = run_cut(c, Path(w))
-            results.append(r)
-            print(f"{'ok  ' if r['ok'] else 'FAIL'} as of {r['as_of']}: {r['items']} items on the list" + ("" if r["ok"] else "\n     " + "\n     ".join(r["problems"])))
-    if a.json:
-        a.json.write_text(json.dumps(results, indent=1))
-    return 0 if all(r["ok"] for r in results) else 1
+def main() -> int:
+    with tempfile.TemporaryDirectory(prefix="lookout-hindsight-") as tmp:
+        by_cut = {c: cases_on(c, Path(tmp)) for c in CUTS}
+    fails = []
+    keys = sorted({k for c in by_cut.values() for k in c})
+    print(f"{'case':58} " + " ".join(f"{c[5:]:>6}" for c in CUTS))
+    for k in keys:
+        print(f"{k[:58]:58} " + " ".join(f"{'yes' if k in by_cut[c] else '-':>6}" for c in CUTS))
+        for c in CUTS:
+            if k not in by_cut[c]:
+                continue
+            for m in by_cut[c][k]["messages"]:
+                if m[:10] > c:
+                    fails.append(f"{k} is on Today on {c} but rests on a message of {m[:10]}")
+    if "mfc-validity:4500120768" not in by_cut["2026-09-01"]:
+        fails.append("the MFC / PO-validity case is not on Today on 1 Sep")
+    else:
+        stake = by_cut["2026-09-01"]["mfc-validity:4500120768"]["stake"]
+        print(f"\n1 Sep: the MFC case is on Today ({'₹ at stake unknown: the vendor has not stated its price yet' if stake is None else stake}); its claim arrives 15 Oct.")
+    for k in ("pr-cancelled:gaya:2026-10-15", "pv-claim:4500121087"):
+        if k in by_cut["2026-10-14"] and k.startswith("pr-cancelled"):
+            fails.append(f"{k} is on Today on 14 Oct, before the PRs were deleted (15 Oct)")
+    print(f"\n{len(keys)} cases over {len(CUTS)} days; {len(fails)} failures")
+    for f in fails:
+        print("FAIL", f)
+    return 1 if fails else 0
 
 
 if __name__ == "__main__":

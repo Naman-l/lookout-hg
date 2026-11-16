@@ -150,17 +150,6 @@ button.chip:hover{background:var(--hover)}
 .scope-menu button svg{position:absolute;left:var(--s3);top:calc(var(--s2) + 2px)} .scope-menu button:hover{background:var(--raised)} .scope-menu button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
 .scope-menu b{display:block;font-weight:500} .scope-menu small{display:block;color:var(--ink-3);font-size:var(--t-small);max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
-/* Ask: a quiet search-like field in the top bar; no dock, nothing reserved at the foot */
-.top{gap:var(--s4)}
-.askbar{position:relative;flex:1 1 auto;max-width:520px;min-width:220px;margin:0 auto;display:flex;align-items:center;gap:var(--s2);height:var(--control);padding:0 var(--s2) 0 var(--s3);border-radius:var(--r-sm);background:var(--raised);color:var(--ink-3)}
-.askbar:focus-within{background:var(--surface);box-shadow:0 0 0 1px var(--line)}
-.askbar input{flex:1;min-width:0;height:100%;border:0;background:none;color:var(--ink);font:var(--t-body) var(--font);outline:0} .askbar input:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:var(--r-sm)}
-.askbar input::placeholder{color:var(--ink-3)}
-.askbar-key{font:var(--t-caption) var(--mono);color:var(--ink-3);border:1px solid var(--line);border-radius:var(--r-xs);padding:0 var(--s1);background:var(--surface)}
-.askbar .scope{max-width:42%} .askbar .scope-btn{height:var(--chip);border:0;background:var(--surface);padding:0 var(--s2)}
-.askbar .scope-menu{bottom:auto;top:calc(100% + var(--s2))}
-.askbar-note{position:absolute;left:0;right:0;top:calc(100% + var(--s2));z-index:30;background:var(--surface);border-radius:var(--r-md);box-shadow:var(--e-1),0 8px 24px var(--scrim);padding:var(--s3);color:var(--ink-2);font-size:var(--t-small)} .askbar-note p{margin:0 0 var(--s2)} .askbar-note p:last-child{margin:0}
-.askbar-ex{display:flex;flex-wrap:wrap;gap:var(--s2)}
 .chip{display:inline-flex;align-items:center;min-height:var(--chip);padding:0 var(--s3);border-radius:var(--r-sm);background:var(--raised);color:var(--ink-2);font:var(--t-small) var(--font);border:0;cursor:pointer}
 .chip:hover{background:var(--hover)}
 .ai-h .x{padding:0;width:var(--chip);justify-content:center}
@@ -237,12 +226,6 @@ h2,.ds-st,.ds-group,.oqh,.sec .oqh,.ds-page h2{font-size:var(--t-body);font-weig
 .ds-demo-row{display:flex;flex-wrap:wrap;gap:var(--s4);margin-bottom:var(--s4)}
 .ds-legend{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:var(--s3) var(--s5)} .ds-legend>div{display:grid;grid-template-columns:auto 1fr;gap:0 var(--s2);align-items:center} .ds-legend small{grid-column:2;color:var(--ink-3)}
 
-/* nothing wraps in the top bar: the Ask field shrinks, the date shortens, "You are" goes before anything overlaps */
-.top{flex-wrap:nowrap;gap:var(--s3)} /* a menu opened from the bar must be able to leave it: nothing in the bar clips */
-.top .me{flex:0 1 auto;min-width:0;overflow:hidden} .top .me b{overflow:hidden;text-overflow:ellipsis}
-.askbar{flex:1 1 200px;min-width:160px}
-.top .asof{flex:none;white-space:nowrap} .asof-s{display:none}
-@media (max-width:1279px){.asof-l{display:none}.asof-s{display:inline}.me-you,.me-dot{display:none}}
 /* a figure is a figure: no dotted rule under money; the source opens from it */
 .ds-tile b .value-btn{border-bottom-color:transparent}
 /* the numbers under a title sit close to it */
@@ -273,7 +256,7 @@ h2,.ds-st,.ds-group,.oqh,.sec .oqh,.ds-page h2{font-size:var(--t-body);font-weig
   .rail-scroll{flex:none}
 }
 
-/* Ask: one rounded composer floating at the bottom of the main area; main's last row scrolls clear of it because it sits in the flow at the end of main */
+/* Ask's follow-up composer: it lives at the foot of the answer panel (new questions start in the command bar at the top) */
 .composer-wrap{position:sticky;bottom:0;z-index:12;display:flex;flex-direction:column;align-items:center;gap:var(--s2);padding:var(--s3) var(--s6) var(--s4);margin-top:auto;background:var(--surface)}
 .composer-wrap{box-shadow:0 -1px 0 var(--line)}
 .composer{display:flex;align-items:center;gap:var(--s3);width:min(720px,100%);height:48px;padding:0 var(--s2) 0 var(--s2);border-radius:var(--r-pill);background:var(--surface);box-shadow:0 0 0 1px var(--line),0 8px 24px var(--scrim)}
@@ -284,14 +267,6 @@ h2,.ds-st,.ds-group,.oqh,.sec .oqh,.ds-page h2{font-size:var(--t-body);font-weig
 .composer .scope-menu{bottom:calc(100% + var(--s3))}
 .composer .go{all:unset;cursor:pointer;width:var(--control);height:var(--control);border-radius:50%;background:var(--fill);color:var(--on-fill);display:grid;place-items:center;flex:none} .composer .go:disabled{opacity:.3;cursor:default} .composer .go:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .composer-note{display:flex;flex-wrap:wrap;gap:var(--s2);align-items:center;justify-content:center;margin:0;font-size:var(--t-small);color:var(--ink-2);background:var(--surface);border-radius:var(--r-md);padding:var(--s2) var(--s3);box-shadow:0 0 0 1px var(--line)}
-@media (min-width:761px){.app.ai-over .composer-wrap:not(.in-panel){padding-right:calc(var(--s6) + var(--rail))}}      /* the dock clears the panel; the composer inside the panel does not */
-/* the top bar's search: its results, grouped, one row each */
-.askbar-results{position:absolute;left:0;right:0;top:calc(100% + var(--s2));z-index:30;max-height:70dvh;overflow:auto;background:var(--surface);border-radius:var(--r-md);box-shadow:var(--e-1),0 12px 32px var(--scrim);padding:var(--s2)}
-.ar-h{margin:var(--s2) var(--s3) var(--s1);font-size:var(--t-caption);font-weight:500;color:var(--ink-3)} .ar-none{margin:var(--s3);color:var(--ink-3)}
-.ar-row{all:unset;cursor:pointer;box-sizing:border-box;display:flex;align-items:center;gap:var(--s3);width:100%;min-height:var(--control);padding:var(--s1) var(--s3);border-radius:var(--r-sm);color:var(--ink-2)}
-.ar-row.on,.ar-row:hover{background:var(--raised);color:var(--ink)} .ar-row:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
-.ar-t{display:flex;flex-direction:column;min-width:0} .ar-t b{font-weight:500;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap} .ar-t small{color:var(--ink-3);font-size:var(--t-small);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.ar-t mark{background:var(--caution-bg);color:inherit;border-radius:var(--r-xs)}
 
 /* the composer is the one place to type: while the panel is open it sits at the panel's foot (the bottom bar is gone); the panel's own plain follow-up line is only for the phone sheet */
 @media (min-width:761px){.aipanel .foot-in{display:none} .app.ai-open{--composer:0px}}
@@ -299,7 +274,7 @@ h2,.ds-st,.ds-group,.oqh,.sec .oqh,.ds-page h2{font-size:var(--t-body);font-weig
 .in-panel .composer{flex-wrap:wrap;height:auto;border-radius:var(--r-lg);padding:var(--s2);gap:var(--s2)} .in-panel .composer .scope{flex-basis:100%;max-width:100%} .in-panel .composer input{height:var(--control);flex:1 1 0;padding:0 var(--s2)}
 .ds-hd .hd-row .ds-btn{white-space:nowrap;flex:none}
 
-/* Minimal: at most one boxed thing on a screen (the composer). Everything else is type, space and hairlines. */
+/* Minimal: at most one boxed thing on a screen (the command bar). Everything else is type, space and hairlines. */
 /* the stage is a small coloured dot and one word */
 .stc{width:auto} .app .stc .stc-pill{width:auto;height:auto;padding:0;background:none;box-shadow:none;border-radius:0;color:var(--ink);font-weight:500;gap:var(--s2);--tone:var(--ink-4)}
 .app .stc .stc-pill svg{display:none}
@@ -335,8 +310,6 @@ h2,.ds-st,.ds-group,.oqh,.sec .oqh,.ds-page h2{font-size:var(--t-body);font-weig
 /* initials of two letters stay inside their dot and clear of the name */
 .dm-dot{min-width:1.2em;width:auto;padding:0 var(--s1);border-radius:var(--r-pill);margin-right:var(--s1)}
 .ds-hd.flow{position:static}
-.ar-t small.ar-closed{color:var(--ink-4)}
-.askbar-results.stale .ar-row{opacity:.45}
 /* Ask examples on focus (FINAL 08 D): the questions about what is on screen first; a recorded answer says so in the foot. */
 .ask-ex{background:var(--surface);border-radius:var(--r-md);box-shadow:var(--e-menu);padding:8px 14px 10px;margin:0 0 8px;display:flex;flex-direction:column;max-width:620px;width:100%;align-self:center}
 .ask-ex-h{margin:2px 0 4px;font-size:var(--t-caption);color:var(--ink-3)}
@@ -356,3 +329,99 @@ h2,.ds-st,.ds-group,.oqh,.sec .oqh,.ds-page h2{font-size:var(--t-body);font-weig
   .aipanel .ai-h{padding:var(--s3) 0;border-bottom:1px solid var(--line)}
 }
 .asof-link{color:inherit;text-decoration:none} .asof-link:hover{text-decoration:underline;text-underline-offset:2px} .asof-link:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:var(--r-xs)}
+.asof-stale{color:var(--caution);font-weight:500}
+
+/* ---------------------------------------------------------------------------------------------------------------------------------------
+   The header: where the data stands (left), the command bar (centre, the one place to ask or find), who you are (right). One row at every
+   desktop width: the date shortens, the role goes, the bar shrinks; nothing wraps and a menu opened from the bar can leave it. */
+.top{display:grid;grid-template-columns:minmax(max-content,1fr) minmax(220px,640px) minmax(max-content,1fr);align-items:center;gap:var(--s4);height:var(--top);min-height:var(--top);padding:0 var(--pad-x);box-shadow:inset 0 -1px 0 var(--line);flex-wrap:nowrap;container-type:inline-size;container-name:top}
+.top>.offline{grid-column:1/-1}
+.top-l{justify-self:start;min-width:0;display:flex;align-items:center}
+.top-r{justify-self:stretch;min-width:0;display:flex;align-items:center;justify-content:flex-end;gap:var(--s2)}
+.top .asof{font-size:var(--t-small);color:var(--ink-3);white-space:nowrap}
+.fresh{display:inline-flex;align-items:center;gap:var(--s2);height:var(--chip);padding:0 var(--s3) 0 var(--s2);border-radius:var(--r-pill);color:var(--ink-2)}
+.fresh:hover{background:var(--raised);text-decoration:none;color:var(--ink)}
+.fresh-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px var(--positive-bg);flex:none}
+.fresh.is-stale .fresh-dot{background:var(--amber);box-shadow:0 0 0 3px var(--caution-bg)}
+.fresh .asof-stale{color:var(--caution);font-weight:500;font-size:var(--t-caption)}
+.asof-s{display:none}
+/* the sides give way by the bar's own width (a narrow window, or a page beside a panel): the long date and the role first, then the name */
+@container top (max-width:1100px){.asof-l{display:none}.asof-s{display:inline}.me-t small{display:none}}
+@container top (max-width:860px){.me-t,.me-btn>svg,.fresh .asof-stale,.cmd-key{display:none}}
+
+/* who you are: initials, name and role; the menu switches person */
+.me{position:relative;display:flex;align-items:center;font-size:var(--t-small);color:var(--ink-2);white-space:nowrap;min-width:0;max-width:100%}
+.me-btn{all:unset;cursor:pointer;box-sizing:border-box;display:flex;align-items:center;gap:var(--s2);min-width:0;max-width:100%;height:40px;padding:0 var(--s2) 0 var(--s1);border-radius:var(--r-pill);color:var(--ink-3)}
+.me-btn:hover,.me-btn[aria-expanded=true]{background:var(--raised);color:var(--ink)} .me-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.me-btn .av{width:30px;height:30px;font-size:var(--t-caption)}
+.me-t{display:flex;flex-direction:column;min-width:0;max-width:220px;line-height:var(--lh-tight)}
+.me-t b{color:var(--ink);font-weight:500;overflow:hidden;text-overflow:ellipsis} .me-t small{color:var(--ink-3);font-size:var(--t-caption);overflow:hidden;text-overflow:ellipsis}
+.me-menu{position:absolute;right:0;top:calc(100% + var(--s2));z-index:40;min-width:260px;background:var(--surface);border-radius:var(--r-md);box-shadow:var(--e-menu);padding:var(--s1);display:flex;flex-direction:column;white-space:normal}
+.me-menu-h{margin:0;padding:var(--s2) var(--s3);font-size:var(--t-small);color:var(--ink-2);border-bottom:1px solid var(--line);margin-bottom:var(--s1)} .me-menu-h small{display:block;color:var(--ink-3);font-size:var(--t-caption)}
+.me-menu button{all:unset;cursor:pointer;box-sizing:border-box;display:flex;align-items:center;gap:var(--s2);min-height:var(--control);padding:0 var(--s3);border-radius:var(--r-sm);font-size:var(--t-small);color:var(--ink)}
+.me-menu button:hover{background:var(--raised)} .me-menu button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+
+/* the command bar: ask Lookout or open a record */
+.cmd{position:relative;width:100%;min-width:0;justify-self:center}
+.cmd-bar{display:flex;align-items:center;gap:var(--s2);height:40px;padding:0 var(--s1) 0 var(--s2);border-radius:var(--r-md);background:var(--raised);box-shadow:inset 0 0 0 1px transparent;transition:background var(--dur) var(--ease),box-shadow var(--dur) var(--ease)}
+.cmd-bar:hover{box-shadow:inset 0 0 0 1px var(--line)}
+.cmd.on .cmd-bar{background:var(--surface);box-shadow:0 0 0 1px var(--ink-5),0 8px 24px var(--scrim-soft)}
+.cmd-mark{display:grid;place-items:center;width:26px;height:26px;border-radius:var(--r-sm);background:var(--ai-bg);color:var(--ai);flex:none}
+.cmd-mark.busy svg{animation:cmd-spin 1.2s linear infinite}
+@keyframes cmd-spin{to{transform:rotate(360deg)}}
+.cmd-bar input{flex:1;min-width:0;height:100%;border:0;background:none;color:var(--ink);font:var(--t-body) var(--font);outline:0} html .cmd-bar input:focus-visible{outline:none!important}
+.cmd-bar input::placeholder{color:var(--ink-3)}
+.cmd.on .cmd-bar:has(input:focus-visible){box-shadow:0 0 0 1px var(--accent),0 0 0 4px var(--accent-bg),0 8px 24px var(--scrim-soft)}      /* the keyboard's focus is the bar's ring, not a second box inside it */
+.cmd-x{all:unset;cursor:pointer;display:grid;place-items:center;width:var(--chip);height:var(--chip);border-radius:var(--r-sm);color:var(--ink-3);flex:none} .cmd-x:hover{background:var(--hover);color:var(--ink)} .cmd-x:focus-visible{outline:2px solid var(--accent)}
+.cmd-scope{position:relative;flex:none}
+.cmd-scope-btn{all:unset;cursor:pointer;box-sizing:border-box;display:inline-flex;align-items:center;gap:var(--s1);height:28px;max-width:180px;padding:0 var(--s2) 0 var(--s3);border-radius:var(--r-sm);background:var(--surface);box-shadow:inset 0 0 0 1px var(--line);color:var(--ink-2);font-size:var(--t-caption);font-weight:500;white-space:nowrap}
+.cmd-scope-btn span{overflow:hidden;text-overflow:ellipsis} .cmd-scope-btn:hover{color:var(--ink);background:var(--hover)} .cmd-scope-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.cmd.on .cmd-scope-btn{background:var(--raised);box-shadow:none}
+.scope-menu.cmd-scope-menu{left:auto;right:0;bottom:auto;top:calc(100% + var(--s2));z-index:45}
+.cmd-key{font:var(--t-caption) var(--mono);color:var(--ink-3);border:1px solid var(--line);border-radius:var(--r-xs);padding:0 var(--s1);background:var(--surface);margin-right:var(--s2);flex:none}
+.cmd-list{position:absolute;left:0;right:0;top:calc(100% + var(--s2));z-index:40;max-height:min(70dvh,560px);overflow-y:auto;overscroll-behavior:contain;background:var(--surface);border-radius:var(--r-md);box-shadow:var(--e-menu);padding:var(--s2)}
+.cmd-list.stale .cmd-row:not(.lead){opacity:.55}
+.cmd-h{margin:var(--s3) var(--s3) var(--s1);font-size:var(--t-caption);font-weight:500;color:var(--ink-3)} .cmd-list>div:first-of-type .cmd-h{margin-top:var(--s1)}
+.cmd-row{all:unset;cursor:pointer;box-sizing:border-box;display:flex;align-items:center;gap:var(--s3);width:100%;min-height:var(--control);padding:var(--s1) var(--s3);border-radius:var(--r-sm);color:var(--ink-2)}
+.cmd-row.on{background:var(--raised);color:var(--ink)} .cmd-row:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.cmd-row.lead{min-height:48px;margin-bottom:var(--s1)} .cmd-row.lead.on{background:var(--ai-bg)}
+.cmd-ic{flex:none;color:var(--ink-3)}
+.cmd-ai{display:grid;place-items:center;width:28px;height:28px;border-radius:var(--r-sm);background:var(--ai);color:var(--on-fill);flex:none}
+.cmd-t{display:flex;flex-direction:column;min-width:0;flex:1}
+.cmd-t b{font-weight:500;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap} .cmd-t small{color:var(--ink-3);font-size:var(--t-small);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cmd-t mark{background:var(--caution-bg);color:inherit;border-radius:var(--r-xs)}
+.cmd-go{flex:none;color:var(--ink-4);opacity:0} .cmd-row.on .cmd-go{opacity:1}
+.cmd-enter{font:var(--t-caption) var(--mono);color:var(--ink-3);border:1px solid var(--line);border-radius:var(--r-xs);padding:0 var(--s1);background:var(--surface);flex:none}
+.cmd-note{margin:var(--s1) var(--s3) var(--s2);font-size:var(--t-small);color:var(--ink-2)} .cmd-note.bad{color:var(--critical)}
+.cmd-foot{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s1) var(--s3);margin:var(--s2) 0 0;padding:var(--s2) var(--s3) var(--s1);border-top:1px solid var(--line);font-size:var(--t-caption);color:var(--ink-3)}
+.cmd-foot span{display:inline-flex;align-items:center;gap:var(--s1)} .cmd-foot em{font-style:normal;margin-left:auto}
+@media (max-width:1279px){.cmd-foot em{display:none}}
+
+/* the phone: the bar is a full-screen sheet over the page */
+.cmd-scrim{position:fixed;inset:0;z-index:60;background:var(--surface);display:flex;flex-direction:column;padding:max(12px,env(safe-area-inset-top,0px)) var(--s4) 0}
+.cmd-sheet{display:flex;flex-direction:column;flex:1;min-height:0}
+.cmd-sheet .cmd-bar{height:44px;background:var(--surface);box-shadow:0 0 0 1px var(--line)}
+.cmd-sheet .cmd-list{position:static;flex:1;max-height:none;box-shadow:none;padding:var(--s2) 0;margin-top:var(--s2)}
+.cmd-sheet .cmd-scope-btn{max-width:110px}
+.cmd-cancel{all:unset;cursor:pointer;padding:0 var(--s2);font-size:var(--t-small);font-weight:500;color:var(--ink-2);flex:none;min-height:44px;display:inline-flex;align-items:center} .cmd-cancel:focus-visible{outline:2px solid var(--accent)}
+
+/* an answer: rows open their record, the steps the specialists took fold open, and what to ask next */
+.ask-steps.live li{justify-content:flex-start;align-items:center}
+.ask-steps .mark,.ask-plan .mark,.ask-how-marks .mark{width:20px;height:20px}
+.ask-wait{display:flex;gap:4px;padding:var(--s1) 0} .ask-wait i{width:6px;height:6px;border-radius:50%;background:var(--ink-4);animation:ask-dot 1s infinite ease-in-out} .ask-wait i:nth-child(2){animation-delay:.15s} .ask-wait i:nth-child(3){animation-delay:.3s}
+@keyframes ask-dot{0%,80%,100%{opacity:.25}40%{opacity:1}}
+@media (prefers-reduced-motion:reduce){.ask-wait i,.cmd-mark.busy svg{animation:none}}
+.ask-rl{color:var(--ink);text-decoration:none;font-weight:500} .ask-rl:hover{text-decoration:underline;text-underline-offset:2px} .ask-rl:focus-visible{outline:2px solid var(--accent);border-radius:var(--r-xs)}
+.ask-rs{display:block;color:var(--ink-3);font-size:var(--t-caption)}
+.ask-t td.n,.ask-t th.n{white-space:nowrap}
+.ask-more{display:flex;align-items:center;gap:var(--s3);margin:var(--s1) 0 0;font-size:var(--t-caption);color:var(--ink-3)}
+.ask-more a{display:inline-flex;align-items:center;gap:2px;color:var(--ink-2);font-weight:500;text-decoration:none} .ask-more a:hover{color:var(--ink);text-decoration:underline}
+.ask-how{margin-top:var(--s2)}
+.ask-how-btn{all:unset;cursor:pointer;box-sizing:border-box;display:flex;align-items:center;gap:var(--s2);width:100%;min-height:var(--control);padding:0 var(--s2);border-radius:var(--r-sm);font-size:var(--t-small);color:var(--ink-2)}
+.ask-how-btn:hover{background:var(--raised)} .ask-how-btn:focus-visible{outline:2px solid var(--accent)} .ask-how-btn small{margin-left:auto;color:var(--ink-3);font-size:var(--t-caption)}
+.ask-how-marks{display:inline-flex} .ask-how-marks .mark+.mark{margin-left:calc(-1 * var(--s1));box-shadow:0 0 0 2px var(--surface)}
+.ask-plan{list-style:none;margin:var(--s1) 0 0;padding:0 0 0 var(--s2);display:flex;flex-direction:column;gap:var(--s2);border-left:2px solid var(--line)}
+.ask-plan li{display:flex;gap:var(--s2);align-items:flex-start;font-size:var(--t-small)} .ask-plan b{display:block;font-weight:400;color:var(--ink-2)} .ask-plan small{display:block;color:var(--ink-3);font-size:var(--t-caption)}
+.ask-next{display:flex;flex-direction:column;gap:var(--s1);margin-top:var(--s2)}
+.ask-next button{all:unset;cursor:pointer;box-sizing:border-box;display:flex;align-items:center;gap:var(--s2);min-height:var(--control);padding:var(--s1) var(--s3);border-radius:var(--r-sm);box-shadow:inset 0 0 0 1px var(--line);font-size:var(--t-small);color:var(--ink)}
+.ask-next button:hover{background:var(--raised)} .ask-next button:focus-visible{outline:2px solid var(--accent)} .ask-next svg{color:var(--ink-3);flex:none}

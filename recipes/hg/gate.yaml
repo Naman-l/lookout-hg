@@ -1,0 +1,77 @@
+# What the load gate checks before a database is written (backend/app/domain/imports/gate.py runs it). A failed check writes no database.
+# clean table -> the raw table its rows come from (every raw row kept once, or dropped once with a reason)
+reconciled:
+  pr_lines: raw_me5a
+  po_lines: raw_me2n
+  receipts: raw_mb51
+  vendor_ledger: raw_fbl1n
+  supplier_records: raw_vendor_master
+  materials: raw_material_master
+  purchasing_groups: raw_purchasing_groups
+  projects: raw_project_directory
+  quotes: {raw: raw_cs_tracker, where: "source == 'tracker'"}
+  milestones: raw_expediting
+  lc_bg: raw_lc_bg
+  tat_report: raw_tat_report
+  payment_projection: raw_payment_projection
+  lookahead_items: raw_lookahead
+  budget_rates: raw_budget_rates
+  doa_rules: raw_doa
+  commodity_index: raw_commodity_index
+  vendor_library: raw_vendor_library
+# clean column -> raw column: the clean row keeps the source value exactly as it was
+raw_kept:
+  pr_lines: {qty_raw: "Quantity Requested", created_raw: "Requisition Date", released_raw: "Release Date", needed_by_raw: "Delivery Date", changed_on_raw: "Changed On"}
+  po_lines: {qty_raw: "Order Quantity", uom_raw: "Order Unit", net_price_raw: "Net Price", price_unit_raw: "Price Unit", doc_date_raw: "Document Date",
+             delivery_date_raw: "Delivery Date", validity_end_raw: "Validity Per. End"}
+  receipts: {qty_raw: Quantity, amount_raw: "Amount in LC", posting_date_raw: "Posting Date"}
+  vendor_ledger: {amount_raw: "Amount in Local Currency"}
+  supplier_records: {msme_raw: MSME, created_on_raw: "Created On"}
+  projects: {vertical_raw: Vertical, stage_raw: Stage}
+  tat_report: {avg_tat_raw: "Avg TAT (Days)"}
+  lc_bg: {amount_raw: "Amount (INR)"}
+  budget_rates: {rate_raw: "Budget Rate (INR)"}
+  lookahead_items: {rate_raw: "Tentative Rate (INR)", lead_raw: "Lead Time"}
+  quotes: {rate_raw: "Quoted Rate (INR)"}
+  payment_projection: {rtgs_raw: RTGS, lc_raw: LC}
+# aliases linked, not merged
+linked_not_merged:
+  - {records: supplier_records, identities: supplier_identities, raw: raw_vendor_master, identity_col: identity_id}
+# join name -> [child table, child column, parent table, parent column, the issue key that counts the gap]
+joins:
+  pr.material: [pr_lines, material, materials, code, prs.material_unresolved]
+  pr.project: [pr_lines, project_id, projects, id, prs.project_unresolved]
+  pr.po_line: [pr_lines, po_line_id, po_lines, id, prs.po_not_in_export]
+  po.material: [po_lines, material, materials, code, po.material_unresolved]
+  po.vendor: [po_lines, record_id, supplier_records, record_id, po.vendor_unresolved]
+  po.pr_line: [po_lines, pr_line_id, pr_lines, id, po.pr_unresolved]
+  receipts.po_line: [receipts, po_line_id, po_lines, id, mb51.po_unresolved]
+  quotes.vendor: [quotes, record_id, supplier_records, record_id, quotes.vendor_unresolved]
+  quotes.pr_line: [quotes, pr_line_id, pr_lines, id, quotes.pr_unresolved]
+  milestones.po_line: [milestones, po_line_id, po_lines, id, expediting.po_unresolved]
+  library.vendor: [vendor_library, record_id, supplier_records, record_id, library.vendor_unresolved]
+  ledger.vendor: [vendor_ledger, record_id, supplier_records, record_id, ledger.vendor_unresolved]
+  messages.vendor: [messages, identity_id, supplier_identities, id, inbox.vendor_unresolved]
+  budget.material: [budget_rates, material, materials, code, budget.material_unresolved]
+unique:
+  - [pr_lines, id]
+  - [po_lines, id]
+  - [receipts, id]
+  - [supplier_records, record_id]
+  - [materials, code]
+  - [projects, id]
+  - [quotes, id]
+  - [milestones, id]
+  - [commodity_index, id]
+  - [requirement_lines, id]
+# every sheet cell read once, and kept exactly as written
+cells:
+  - {clean: requirement_lines, raw: raw_roads_req, raw_col: qty_raw, where: "sheet == 'roads'"}
+  - {clean: requirement_lines, raw: raw_railway_req, raw_col: qty_raw, where: "sheet == 'railway'"}
+  - {clean: fund_lines, raw: raw_fund_2026_10, raw_col: amount_raw, where: "month == '2026-10'"}
+  - {clean: fund_lines, raw: raw_fund_2026_11, raw_col: amount_raw, where: "month == '2026-11'"}
+  - {clean: fund_lines, raw: raw_fund_2026_12, raw_col: amount_raw, where: "month == '2026-12'"}
+# every total a sheet prints, recomputed from the cells read (requirement rows, fund subtotals, look-ahead amounts)
+sheet_totals: true
+nonnegative:
+  - {table: receipts, column: qty_base, group_by: po_line_id}

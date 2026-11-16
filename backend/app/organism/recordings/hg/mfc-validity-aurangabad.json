@@ -1,0 +1,29 @@
+{
+  "key": "mfc-validity:4500120768",
+  "mocked": true,
+  "note": "written by hand to show how a model's run on this case reads; no model ran on this machine",
+  "model": "mocked recording",
+  "recorded_at": "2026-10-20T08:40:00+05:30",
+  "events": [
+    {"t_ms": 400, "type": "step.text", "agent": "lookout", "summary": "The PO for the two Aurangabad traction transformers is firm only to 31 Oct, and the MFC has not been issued. I'll check where the PO stands and what the vendor's letter changes."},
+    {"t_ms": 900, "type": "child.started", "agent": "site_planner", "summary": "Site requirement planner: where the PO stands, and when the site needs the transformers."},
+    {"t_ms": 1500, "type": "tool.called", "agent": "site_planner", "summary": "po_ladder", "payload": {"tool": "po_ladder", "args": {"po_line": "4500120768/10"}, "gate": "allowed"}},
+    {"t_ms": 2300, "type": "tool.result", "agent": "site_planner", "summary": "PO released 20 Jan; MFC asked 20 Aug, not issued; on hold with Projects", "payload": {"tool": "po_ladder"}},
+    {"t_ms": 2900, "type": "step.text", "agent": "site_planner", "summary": "The MFC has waited 61 days, on Projects: the expediting tracker holds it for the TSS plinth. Manufacturing takes 120 days from the MFC, so a clearance on 25 Oct still lands the transformers before the 31 Mar need date."},
+    {"t_ms": 3300, "type": "child.finished", "agent": "site_planner", "summary": "Site requirement planner handed off."},
+    {"t_ms": 3600, "type": "child.started", "agent": "price_analyst", "summary": "Price and PV analyst: what the price does after the validity."},
+    {"t_ms": 4200, "type": "tool.called", "agent": "price_analyst", "summary": "get_item", "payload": {"tool": "get_item", "args": {"key": "mfc-validity:4500120768"}, "gate": "allowed"}},
+    {"t_ms": 4900, "type": "step.text", "agent": "price_analyst", "summary": "The PO is firm, with no PV clause, so the price after 31 Oct is whatever the vendor states. Its letter of 15 Oct states +8.64%, ₹1.4 Cr, on account of CRGO and copper."},
+    {"t_ms": 5300, "type": "child.finished", "agent": "price_analyst", "summary": "Price and PV analyst handed off."},
+    {"t_ms": 5600, "type": "step.text", "agent": "lookout", "summary": "Issuing the MFC by 25 Oct keeps the firm price and the November slot; it commits the ₹16.2 Cr PO to manufacture, so it needs Satish's countersign under the DoA. The plinth date is still Projects' to give."},
+    {"t_ms": 6000, "type": "child.started", "agent": "buyers_clerk", "summary": "Buyer's clerk: the MFC letter to the vendor's contact on file."}
+  ],
+  "recommendation": {
+    "finding": "Issue the MFC by 25 Oct: it keeps the firm price (₹1.4 Cr more after 31 Oct) and the November slot; the Head of SCM countersigns.",
+    "points": [{"label": "Waiting on", "text": "Projects (plinth) for 61 days"}, {"label": "DoA", "text": "₹16.2 Cr MFC: Satish countersigns"}],
+    "next_step": {"who": "Sambhav Kumar", "what": "Sign the MFC letter; Satish countersigns", "by": "2026-10-25"},
+    "recommended": {"kind": "issue_mfc", "reason": "avoids ₹1.4 Cr after the validity", "number_ids": ["item:mfc-validity:4500120768:at_stake"]},
+    "case_findings": [{"key": "validity", "meaning": "The MFC must be inside the validity"}, {"key": "mfc_by", "meaning": "After 25 Oct the slot is at risk"}],
+    "open_questions": [{"what": "the TSS plinth-ready date", "why_it_blocks": "dispatch waits on it", "owner": "planner:aurangabad", "question": "When will the Aurangabad TSS plinth be ready?", "refs": []}]
+  }
+}

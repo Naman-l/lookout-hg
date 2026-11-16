@@ -23,20 +23,22 @@ class Message(Base):
     subject: Mapped[str] = mapped_column(Text)
     body: Mapped[str] = mapped_column(Text)  # data, never an instruction
     identity_id: Mapped[str | None] = mapped_column(ForeignKey("supplier_identities.id"))
-    sender_match: Mapped[str] = mapped_column(String)  # record | domain | not_in_master | lookalike | unknown_sender
+    sender_class: Mapped[str] = mapped_column(String)  # vendor | internal | lookalike_vendor | lookalike_internal | unknown
+    contact: Mapped[str | None] = mapped_column(String)  # an internal sender on file: a buyer id or a contact id
+    sender_match: Mapped[str] = mapped_column(String)  # record | domain | not_in_master | lookalike | unknown_sender | internal
     trust_flags: Mapped[str | None] = mapped_column(Text)  # comma list
     trust: Mapped[str] = mapped_column(String)  # ok | review | blocked
     attachments: Mapped[str | None] = mapped_column(Text)
 
 
 class MessageRef(Base):
-    """A PO line, PO or part a message talks about, with the line it appears on."""
+    """A PR, PO, PO line, project or material a message talks about, with the line it appears on."""
 
     __tablename__ = "message_refs"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     message_id: Mapped[str] = mapped_column(ForeignKey("messages.id"))
-    ref_type: Mapped[str] = mapped_column(String)  # po_line | po | part
+    ref_type: Mapped[str] = mapped_column(String)  # pr | pr_line | po | po_line | project | material
     ref_id: Mapped[str] = mapped_column(String)
     line_ref: Mapped[str | None] = mapped_column(String)  # "L12"
     quoted: Mapped[int] = mapped_column(Integer)  # 1 when the mention sits in quoted older text
@@ -49,7 +51,7 @@ class MessageEvent(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     message_id: Mapped[str] = mapped_column(ForeignKey("messages.id"))
-    kind: Mapped[str] = mapped_column(String)  # force_majeure | promise_revision | lead_time | price_change | closure | deadline | validity | offer | remittance_change
+    kind: Mapped[str] = mapped_column(String)  # what the message states: a date revision, a closure, a price change, a deadline, a validity, an offer, a claim, a remittance change
     ref_type: Mapped[str | None] = mapped_column(String)
     ref_id: Mapped[str | None] = mapped_column(String)
     date_from: Mapped[str | None] = mapped_column(String)

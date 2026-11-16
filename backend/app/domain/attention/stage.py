@@ -1,34 +1,40 @@
-"""Where the work on an item stands: found, worked, decision ready, drafted, approved, sent, answered.
+"""Where the work on a case stands: found, worked, decision ready, drafted, signed (waits for the countersign), approved, sent, answered.
 
-Derived on every request from two records people and runs leave behind, never stored: the runs of the organism on the item and the
-ledger of drafts and decisions. Each stage comes with the one next act, in plain words. The same ladder is what the agent is told, so it
-and the screen say the same thing about the same item.
+Derived on every request from what runs and people leave behind, never stored: the runs on the case and the ledger of drafts and decisions. Each
+stage comes with the one next act in plain words and whose move it is. Once a note to someone inside the company is out, the case reads "With
+Projects", "With Finance" or "With QA" until they answer; a letter out to a vendor waits on the vendor.
 """
 
 from __future__ import annotations
 
 import sqlite3
+from datetime import datetime
 
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from app.domain import lookups
 from app.domain.actions import ledger
-from app.domain.attention.schema import ActionItem, Stage
+from app.domain.attention.schema import Stage
 from app.domain.common import AS_OF
 from app.domain.fmt import local_date, md
-from app.domain.suppliers import service as suppliers
-from app.domain.suppliers.model import SupplierIdentity
-from app.domain.values import ref
 from app.domain.inbox.model import Message
+from app.domain.values import ref
 
-ORDER = ("found", "worked", "decision_ready", "drafted", "approved", "sent", "answered")
-LABELS = {"found": "Found", "worked": "Worked", "decision_ready": "Decision ready", "drafted": "Needs your OK", "approved": "Approved", "sent": "Sent",
-          "answered": "Answered"}
-OUTWARD = ("supplier_request", "supplier_alias")      # the actions that change something outside the item; a note does not move the stage
+LABELS = {"found": "Found", "worked": "Worked", "decision_ready": "Decide", "drafted": "Needs your OK", "signed": "Countersign", "approved": "Approved",
+          "sent": "Sent", "answered": "Replied"}
+OUTWARD = ("supplier_request", "internal_note", "supplier_alias")
+FUNCTION_SIDE = {"project_head": "Projects", "planner": "Projects", "finance_treasury": "Finance", "finance_funds": "Finance", "vendor_master": "Finance",
+                 "qa": "QA", "qa_inspection": "QA", "md_office": "Management", "ho_stores": "Projects"}
+
+
+def side_of(action) -> str | None:
+    """Whose move a sent internal note leaves the case with (Projects, Finance, QA, Management), from the function of its recipient on file."""
+    fn = (action.change or {}).get("function") or ""
+    return FUNCTION_SIDE.get(fn.split(":")[0])
 
 
 def _runs(db_path) -> dict[str, list[tuple[str, str]]]:
-    """{item key: [(status, started_at), ...]} newest first; empty if the organism has never run."""
     try:
         con = sqlite3.connect(str(db_path))
         try:
@@ -43,111 +49,107 @@ def _runs(db_path) -> dict[str, list[tuple[str, str]]]:
     return out
 
 
-def _supplier(item: ActionItem) -> str:
-    r = next((r for r in item.refs if r.type == "supplier"), None)
-    return (r.label or r.id) if r else "the supplier"
+def _replies(session: Session) -> dict[str, datetime]:
+    """{sender address: the newest message's time}: a vendor's or a colleague's answer, simulated replies included."""
+    from app.domain.inbox.service import _dt  # noqa: PLC0415
+
+    out: dict[str, datetime] = {}
+    for addr, d in session.execute(select(Message.from_email, Message.date)):
+        t = _dt(d)
+        if addr and t and (addr.lower() not in out or t > out[addr.lower()]):
+            out[addr.lower()] = t
+    return out
 
 
-def _requests_line(sent: list, waiting: list, approved: list, name) -> str:
-    """One sentence for an item with several requests in different states, each supplier named: '1 of 3 sent (Alpha); 2 wait for your OK'."""
-    total = len(sent) + len(waiting) + len(approved)
-    parts = [f"{len(sent)} of {total} sent ({', '.join(name(a) for a in sent)})"]
-    if approved:
-        parts.append(f"{len(approved)} approved, not yet sent ({', '.join(name(a) for a in approved)})")
-    if waiting:
-        parts.append(f"{len(waiting)} wait{'s' if len(waiting) == 1 else ''} for your OK ({', '.join(name(a) for a in waiting)})")
-    return "; ".join(parts) + "."
-
-
-def derive(item: ActionItem, runs: list[tuple[str, str]], actions: list, answered_since: dict[str, str], names: dict[str, str] | None = None, contact: str | None = None) -> Stage:
-    """The stage of one item from its runs (newest first), its ledger actions and the latest message from its supplier. `names` maps a supplier id to its name,
-    so a line names the supplier of the request it is about, which on an item with several quotes is not the item's first supplier."""
-    who = _supplier(item)
-    names = names or {}
-
-    def supplier_id(a) -> str | None:
-        t = getattr(a, "target", None)
-        return t.id if t and t.type == "supplier" else None
-
-    def name(a) -> str:      # the supplier the request went to
-        return names.get(supplier_id(a)) or who
+def derive(item, runs: list[tuple[str, str]], actions: list, replies: dict[str, str]) -> Stage:
+    chosen = {(a.change or {}).get("action_id") for a in actions if a.type == "note" and (a.change or {}).get("kind") == "choice"}
+    # a draft a run prepared waits for the owner's choice of its route; until then the case is theirs to decide, not to sign
+    prepared = [a for a in actions if a.state == "proposed" and a.run_id and a.action_id not in chosen]
+    actions = [a for a in actions if a not in prepared]
     live = [a for a in actions if a.type in OUTWARD and a.state != "rejected"]
-    choices = sorted((a for a in actions if a.type == "note" and (getattr(a, "change", None) or {}).get("kind") == "choice"), key=lambda a: a.decided_at or a.proposed_at or "")
-    chosen_ids = [(a.change or {}).get("action_id") for a in reversed(choices)]      # the buyer's choices, newest first: the draft she chose is the one waiting on her
-    rejected = [a for a in actions if a.type in OUTWARD and a.state == "rejected"]
-    requests = [a for a in live if a.type == "supplier_request"]
-    all_sent = [a for a in requests if a.state == "executed"]
-    sent = all_sent[0] if all_sent else None
+    staged = [a for a in actions if a.type == "note" and (a.change or {}).get("kind") in ("note", "record", "erp_update")]
+    sent = sorted([a for a in live if a.type in ("supplier_request", "internal_note") and a.state == "executed"], key=lambda a: a.confirmed_at or "", reverse=True)
     if sent:
-        sent_on = local_date(sent.confirmed_at or sent.decided_at)      # the buyers' day, not UTC's
-        asked = supplier_id(sent) or next((r.id for r in item.refs if r.type == "supplier"), None)      # the supplier whose answer ends the wait
-        by = name(sent)
-        if asked and answered_since.get(asked, "") > sent_on:
-            return Stage(key="answered", label=LABELS["answered"], step=7, at=answered_since[asked], waiting_on="you",
-                         next_act=f"{by} has answered: read the new message and decide what is left.")
+        a = sent[0]
+        from app.domain.inbox.service import _dt  # noqa: PLC0415
+
+        out_at = _dt(a.confirmed_at or a.decided_at)
+        who = a.recipient_name or a.recipient
+        got = replies.get((a.recipient or "").lower())
+        if got and out_at and got > out_at:
+            return Stage(key="answered", label=LABELS["answered"], step=7, at=got.isoformat(), waiting_on="you", action=ref("action", a.action_id),
+                         next_act=f"{who} has answered: read the reply and decide what is left.")
+        side = side_of(a) if a.type == "internal_note" else None
         chase = f" Chase if nothing comes by {md(item.act_by)}." if item.act_by and item.act_by >= AS_OF.isoformat() else ""
-        if len(requests) > 1 and len({a.state for a in requests}) > 1 or len(all_sent) > 1:
-            then = _requests_line(all_sent, [a for a in requests if a.state == "proposed"], [a for a in requests if a.state == "approved"], name)
-            return Stage(key="sent", label=LABELS["sent"], step=6, at=sent.confirmed_at or sent.decided_at, waiting_on="the supplier", action=ref("action", sent.action_id),
-                         next_act=f"{then}{chase}")
-        return Stage(key="sent", label=LABELS["sent"], step=6, at=sent.confirmed_at or sent.decided_at, waiting_on="the supplier", action=ref("action", sent.action_id),
-                     next_act=f"Sent to {contact or by} on {md(AS_OF.isoformat())} (simulated). Waiting for {contact or by} to answer.{chase}")      # a name and the data date, never an address or the wall clock
+        return Stage(key="sent", label=f"With {side}" if side else LABELS["sent"], step=6, at=a.confirmed_at, waiting_on=side or "the vendor", action=ref("action", a.action_id),
+                     next_act=f"Sent to {who} (simulated). Waiting for {who} to answer.{chase}")
+    signed = next((a for a in live + staged if a.state == "signed"), None)
+    if signed:
+        return Stage(key="signed", label=LABELS["signed"], step=5, at=signed.signed_at, waiting_on=signed.countersign, action=ref("action", signed.action_id),
+                     next_act=f"Signed by {(signed.signed_by or '').split()[0]}; waits for {signed.countersign}'s countersign before it is sent.")
     done = next((a for a in live if a.state in ("approved", "executed")), None)
     if done:
-        what = "The supplier link is recorded." if done.type == "supplier_alias" else "Approved."
-        return Stage(key="approved", label=LABELS["approved"], step=5, at=done.decided_at, waiting_on=None, action=ref("action", done.action_id), next_act=f"{what} Nothing is waiting on you for this one.")
-    # A note, a decision or an ERP update staged on the case (P7) moves it too: signed, it is Recorded (nothing is sent); waiting, it needs the owner's OK.
-    staged = [a for a in actions if a.type == "note" and (getattr(a, "change", None) or {}).get("kind") in ("note", "record", "erp_update")]
+        return Stage(key="approved", label=LABELS["approved"], step=5, at=done.decided_at, waiting_on=None, action=ref("action", done.action_id),
+                     next_act="Approved. Nothing is waiting on you for this one.")
     recorded = next((a for a in staged if a.state in ("approved", "executed")), None)
-    email_waiting = next((a for a in live if a.state == "proposed"), None)
-    if recorded and not email_waiting:      # an email still waiting keeps the case open: "Recorded" never hides it (LOOKOUT P2)
+    waiting = next((a for a in live if a.state == "proposed"), None) or next((a for a in staged if a.state == "proposed"), None)
+    if recorded and not waiting:
         return Stage(key="approved", label="Recorded", step=5, at=recorded.decided_at, waiting_on=None, action=ref("action", recorded.action_id),
-                     next_act=f"Recorded {md(AS_OF.isoformat())}: {recorded.subject or 'the decision'}. Nothing is sent and nothing is waiting on you.")
-    waiting = (next((a for cid in chosen_ids for a in live + staged if a.action_id == cid and a.state == "proposed"), None)
-               or next((a for a in live if a.state == "proposed"), None) or next((a for a in staged if a.state == "proposed"), None))
+                     next_act=f"Recorded: {recorded.subject or 'the decision'}. Nothing is sent and nothing is waiting on you.")
     if waiting:
-        to = f" to {waiting.recipient}" if waiting.recipient else f" for {who}"
-        act = "Sign or reject the note: it records your decision and sends nothing." if waiting.type == "note" else f"Approve or reject the draft{to}."      # a note goes to no supplier
+        to = waiting.recipient_name or waiting.recipient
+        act = "Sign or reject: it records your decision and sends nothing." if waiting.type == "note" else f"Approve or reject the draft to {to}."
         return Stage(key="drafted", label=LABELS["drafted"], step=4, at=waiting.proposed_at, waiting_on="you", action=ref("action", waiting.action_id), next_act=act)
-    note = ""
-    if rejected:
-        r = rejected[0]
-        note = f" You rejected the draft on {md(local_date(r.decided_at))}" + (f": {r.reason.strip().rstrip('. ')}." if r.reason and r.reason.strip().rstrip(". ") else ".") + " Revise it with the agent."
-    ok = next((r for r in runs if r[0] == "ok"), None)
+    rejected = next((a for a in actions if a.type in OUTWARD and a.state == "rejected"), None)
+    note = f" You rejected the draft on {md(local_date(rejected.decided_at))}: {rejected.reason}." if rejected and rejected.reason else ""
+    ok = next((r for r in runs if r[0] in ("ok", "did_not_pass")), None)
     if ok:
+        ready = f" Lookout prepared the draft for its recommended route ({(prepared[0].change or {}).get('option_kind', '').replace('_', ' ')})." if prepared else ""
         return Stage(key="decision_ready", label=LABELS["decision_ready"], step=3, at=ok[1], waiting_on="you",
-                     next_act=("Read the Recommendation, then draft the request or record your decision." + note).strip())
+                     next_act=("Read the analysis, then choose a route." + ready + note).strip())
     if runs:
         status, at = runs[0]
-        act = "Lookout is working on it." if status == "running" else "The last run did not finish. Run it again."
-        return Stage(key="worked", label=LABELS["worked"], step=2, at=at, waiting_on=None if status == "running" else "you", next_act=(act + note).strip())
-    return Stage(key="found", label=LABELS["found"], step=1, waiting_on="you", next_act="Work this item: Lookout reads the records and prepares what to decide.")
+        return Stage(key="worked", label=LABELS["worked"], step=2, at=at, waiting_on=None if status == "running" else "you",
+                     next_act="Lookout is working on it." if status == "running" else "The last run did not finish. Run it again.")
+    return Stage(key="found", label=LABELS["found"], step=1, waiting_on="you", next_act=("Open the case: the routes are ready to choose from." + note).strip())
+
+
+def _with_names(session: Session, actions: list) -> list:
+    """Each draft with its recipient's name on file (a vendor's contact or a person inside the company)."""
+    by_mail = {(c.email or "").lower(): c.name for c in lookups.contacts(session).values() if c.email}
+    by_mail.update({(r.contact_email or "").lower(): r.contact_name for r in lookups.records(session).values() if r.contact_email})
+    return [a.model_copy(update={"recipient_name": by_mail.get((a.recipient or "").lower())}) if a.recipient else a for a in actions]
+
+
+def actions_by_item(session: Session, db_path) -> dict[str, list]:
+    by_item: dict[str, list] = {}
+    all_ = _with_names(session, ledger.list_actions(db_path))
+    by_id = {a.action_id: a for a in all_}
+    for a in all_:
+        for k in ledger.asks_of(a) or ([a.item_key] if a.item_key else []):
+            by_item.setdefault(k, []).append(a)
+    for k, acts in by_item.items():      # a draft the owner chose for this case moves it, even when another case wrote it (one letter per contact)
+        picked = {(a.change or {}).get("action_id") for a in acts if a.type == "note" and (a.change or {}).get("kind") == "choice"}
+        acts += [by_id[p] for p in picked if p in by_id and by_id[p] not in acts]
+    return by_item
 
 
 def attach(session: Session, db_path, items: list) -> list:
-    """The same items with their stage set (works for ActionItem and ActionItemDetail)."""
+    """The same items with their stage set; a sent internal note moves the case's 'waiting on' to that function until it answers."""
     runs = _runs(db_path)
-    by_item: dict[str, list] = {}
-    by_id: dict[str, object] = {}
-    for a in ledger.list_actions(db_path):
-        by_id[a.action_id] = a
-        if a.item_key:
-            by_item.setdefault(a.item_key, []).append(a)
-    latest: dict[str, str] = {}
-    for ident, date in session.execute(select(Message.identity_id, Message.date).where(Message.identity_id.is_not(None))):
-        latest[ident] = max(latest.get(ident, ""), date)
-    names = {i.id: i.name for i in session.execute(select(SupplierIdentity)).scalars()}
+    by_item = actions_by_item(session, db_path)
+    replies = _replies(session)
     out = []
     for it in items:
-        # Only a draft made for this item moves its stage (B4): a request on another item to the same supplier is that item's, and may not cover these lines.
-        own = by_item.get(it.key, [])
-        picked = {(a.change or {}).get("action_id") for a in own if a.type == "note" and (getattr(a, "change", None) or {}).get("kind") == "choice"}
-        own = own + [a for a in by_id.values() if a.action_id in picked and a not in own]      # a draft the buyer chose for this case moves it, even when another case wrote it (one email per contact)
-        sup = next((r for r in it.refs if r.type == "supplier"), None)
-        contact = suppliers.contact_on_file(session, sup.id).name if sup and any(a.state == "executed" for a in own) else None
-        st = derive(it, runs.get(it.key, []), own, latest, names, contact)
-        update = {}
-        if st.key == "sent":      # once a request is out, what is next comes from the ledger, not from the detector
-            update["next_action"] = f"Waiting on {contact or _supplier(it)}" + (f"; chase {md(it.act_by)} if no dates." if it.act_by and it.act_by >= AS_OF.isoformat() else ".")
-        out.append(it.model_copy(update={"stage": st, **update}))
+        st = derive(it, runs.get(it.key, []), by_item.get(it.key, []), replies)
+        upd = {"stage": st}
+        if st.key == "sent":
+            side = st.label.removeprefix("With ") if st.label.startswith("With ") else "Vendor"
+            upd["waiting_on"] = side if side in ("Projects", "Finance", "QA", "Management", "Vendor") else it.waiting_on
+            upd["next_action"] = st.next_act
+        elif st.key == "signed":
+            upd["waiting_on"] = "Management"
+        elif st.key in ("answered", "drafted"):
+            upd["waiting_on"] = "SCM"
+        out.append(it.model_copy(update=upd))
     return out

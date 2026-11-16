@@ -26,9 +26,18 @@ def _configured(session: Session) -> str:
     return (row[0] if row and row[0] else os.environ.get("LOOKOUT_COMPANY", "")).strip()
 
 
+@memo
+def _configured_short(session: Session) -> str:
+    try:
+        row = session.execute(text("select value from build_meta where key = 'company_short'")).first()
+    except OperationalError:
+        row = None
+    return (row[0] if row and row[0] else "").strip()
+
+
 def company_name(session: Session | None = None, *, full: bool = False) -> str:
-    """The configured name ('the company' short, 'the company' full), else LOOKOUT_COMPANY, else 'the company'."""
+    """The configured name (the recipe's `company`, or `company_short` for the short form), else LOOKOUT_COMPANY, else 'the company'."""
     name = _configured(session) if session is not None else os.environ.get("LOOKOUT_COMPANY", "").strip()
     if not name:
         return GENERIC
-    return name if full else name.split()[0]
+    return name if full else (_configured_short(session) if session is not None else "") or name.split()[0]

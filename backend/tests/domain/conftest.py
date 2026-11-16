@@ -1,30 +1,22 @@
-"""Build the database once per test session from the committed recipe, exactly as `make build-data` does."""
+"""Build the database once per test session from the committed HG recipe, exactly as `make build-data` does."""
 
 import sqlite3
 from pathlib import Path
 
 import pytest
-from sqlalchemy import create_engine
-from sqlalchemy.orm import Session
 
 from app.domain.imports import build
 
 ROOT = Path(__file__).resolve().parents[3]
+RECIPE = ROOT / "recipes" / "hg"
+DATA = ROOT / "data"
 
 
 @pytest.fixture(scope="session")
 def db_path(tmp_path_factory):
     out = tmp_path_factory.mktemp("lookout") / "lookout.db"
-    assert build.main(["--recipe", str(ROOT / "recipes" / "halden"), "--data", str(ROOT / "data"), "--db", str(out)]) == 0
+    assert build.main(["--recipe", str(RECIPE), "--data", str(DATA), "--db", str(out)]) == 0
     return out
-
-
-@pytest.fixture()
-def session(db_path):
-    eng = create_engine(f"sqlite:///{db_path}", future=True)
-    with Session(eng) as s:
-        yield s
-    eng.dispose()
 
 
 @pytest.fixture(scope="session")
@@ -33,3 +25,14 @@ def con(db_path):
     c.row_factory = sqlite3.Row
     yield c
     c.close()
+
+
+@pytest.fixture(scope="session")
+def one(con):
+    """The first value of a query: one("select count(*) from po_lines")."""
+    return lambda sql, *args: con.execute(sql, args).fetchone()[0]
+
+
+@pytest.fixture(scope="session")
+def issues(con):
+    return {r["key"]: dict(r) for r in con.execute("select * from data_issues")}

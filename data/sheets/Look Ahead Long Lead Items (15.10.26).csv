@@ -1,0 +1,22 @@
+3-Month Procurement Look-Ahead (Long Lead Items) | Rev. 15.10.2026
+Sr. No.,Block,Project,Item,UOM,Qty,Tentative Rate (INR),Amount (INR),Price Basis,Lead Time,Need By (MM/YYYY),Status
+1,Need Immediate Attention,BESS Chorniya,180 MVA PTR,No.,2,"120,000,000","240,000,000",PV,10-12 Months,09/2027,RFQ stage: budgetary quotes
+2,Need Immediate Attention,BESS Chorniya,220 KV GIS,Lot,2,"100,000,000","200,000,000",PV,12 Months,10/2027,"RFQ stage: 2 quotes, CS pending"
+3,Need Immediate Attention,UPPTCL - Mizapur/ Chunar - SS,160 MVA Auto TFR,No.,4,"125,000,000","500,000,000",PV,10-12 Months,10/2027,Awaiting management approval for advance funding
+4,Need Immediate Attention,UPPTCL - Mizapur/ Chunar - SS,40 MVA PTR,No.,4,"45,000,000","180,000,000",PV,7-8 Months,05/2027,Awaiting management approval for advance funding
+5,Need Immediate Attention,UPPTCL - Mizapur/ Chunar - SS,220 KV & 145 KV Circuit Breakers,Lot,1,"60,000,000","60,000,000",Firm,15 Months,12/2027,Technical spec under approval
+6,Need Immediate Attention,UPPTCL - Mizapur/ Chunar - SS,220 KV & 145 KV CT & CVT,Lot,1,"55,000,000","55,000,000",Firm,12 Months,10/2027,Technical spec under approval
+7,Need Immediate Attention,UPPTCL - Mizapur/ Chunar - SS,BPI,Lot,1,"42,500,000","42,500,000",Firm,12 Months,10/2027,Technical spec under approval
+8,Need Immediate Attention,UPPTCL - Mizapur/ Chunar - TL,Towers,MT,1800,"92,000","165,600,000",PV,6-9 Months,06/2027,Awaiting management approval for advance funding
+9,Need Immediate Attention,UPPTCL - Mizapur/ Chunar - TL,Conductor - ACSR Zebra,Km,440,"525,030","231,013,200",PV,6-9 Months,06/2027,Awaiting management approval for advance funding
+10,Need Immediate Attention,UPPTCL - Mizapur/ Chunar - TL,Insulators,Lot,1,"17,000,000","17,000,000",Firm,12 Months,09/2027,Technical spec under approval
+11,Need Immediate Attention,765 KV Angul Odisha - TL,Towers,MT,6500,"92,000","598,000,000",PV,6-9 Months,08/2027,Section A ordered Jan 2026; balance awaiting design approval
+12,Need Immediate Attention,765 KV Angul Odisha - TL,Conductor - ACSR Zebra,Km,1400,"500,000","700,000,000",PV,6-9 Months,08/2027,Section A ordered Feb 2026; balance awaiting design approval
+13,Need Immediate Attention,765 KV Angul Odisha - TL,Insulators,Lot,1,"62,500,000","62,500,000",Firm,12 Months,10/2027,Section A ordered Mar 2026; balance with design
+14,Need Immediate Attention,400 KV Jamshedpur - SS,Extension Bay Work,Lot,1,"330,000,000","330,000,000",Firm,12 Months,11/2027,Client approval of bay layout awaited
+1,To be started from Q4,400 KV Jamshedpur - SS,400 KV CB,Lot,1,"30,000,000","30,000,000",Firm,12 Months,01/2028,To be started from Q4
+2,To be started from Q4,400 KV Jamshedpur - SS,80 MVA Reactor,No.,2,"110,000,000","220,000,000",PV,12 Months,01/2028,To be started from Q4
+3,To be started from Q4,400 KV Jamshedpur - SS,400 KV CT CVT,Lot,1,"20,000,000","20,000,000",Firm,9 Months,11/2027,To be started from Q4
+4,To be started from Q4,400 KV Jamshedpur - TL,Towers,MT,11595,"92,000","1,066,740,000",PV,6-9 Months,12/2027,To be started from Q4
+5,To be started from Q4,400 KV Jamshedpur - TL,Conductor - AL59 - Moose Quad,Km,4236,"662,609","2,806,811,724",PV,6-9 Months,12/2027,To be started from Q4
+6,To be started from Q4,400 KV Jamshedpur - TL,Insulators,Lot,1,"72,500,000","72,500,000",Firm,12 Months,01/2028,To be started from Q4

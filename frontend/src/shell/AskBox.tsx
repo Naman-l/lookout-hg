@@ -5,33 +5,24 @@ import { useAskState } from "./AskContext";
 import { isNoAgent } from "../ui/copy";
 import { rankExamples, shortAbout } from "../sections/agents/ask";
 
-export const NOT_CONNECTED = "The agent is not connected: start the app with a key or LOOKOUT_LIVE=1. The example questions show saved answers.";
+export const NOT_CONNECTED = "No model is connected here: Lookout answers from the records by rule.";
 
-/** Ask: one rounded composer floating at the bottom of the main area; while the answer panel is open the same composer sits at the foot of the panel (`inPanel`) and the bottom one is gone. A chip names what the question is about, "/" focuses the input, Enter sends; the answer opens in the rail and this stays for follow-ups. Main reserves its height. */
+/** The follow-up composer at the foot of the answer panel (`inPanel`): a chip names what the question is about, Enter sends, the answer joins the
+ * thread above. New questions start in the command bar at the top of every page (CommandBar), which owns "/" and Command-K. */
 export function AskComposer({ inPanel = false }: { inPanel?: boolean }) {
   const phone = useMedia("(max-width: 760px)");
-  const { about, context, err, connected, examples, send, scope, setScope, open, thread, prefill, takePrefill } = useAskState();
+  const { about, context, err, examples, send, scope, setScope, open, thread, prefill, takePrefill } = useAskState();
   const [menu, setMenu] = useState(false);
   const [q, setQ] = useState("");
   const [near, setNear] = useState(false); // the composer has focus: the no-agent note and its examples show only then, never on every page
   const input = useRef<HTMLInputElement>(null);
   useEffect(() => { if (inPanel && !phone) input.current?.focus(); }, [inPanel, phone]);
   useEffect(() => { if (prefill && (inPanel || !open)) { setQ(prefill); takePrefill(); setTimeout(() => { const el = input.current; if (el) { el.focus(); el.setSelectionRange(el.value.length, el.value.length); } }, 0); } }, [prefill, inPanel, open, takePrefill]); // the bottom bar gives way to this one when an answer opens: typing carries on here
-  useEffect(() => {
-    const h = (e: KeyboardEvent) => {
-      const t = e.target as HTMLElement;
-      if (e.key !== "/" || e.metaKey || e.ctrlKey || t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable) return;
-      e.preventDefault(); input.current?.focus();
-    };
-    window.addEventListener("keydown", h);
-    return () => window.removeEventListener("keydown", h);
-  }, []);
   if (phone) return null;
   const go = (text: string) => send(text).then((ok) => { if (ok) setQ(""); });
   const submit = (e: FormEvent) => { e.preventDefault(); go(q); };
   const short = shortAbout(about);
   const chip = short.length > 26 ? short.slice(0, 25) + "…" : short;
-  const down = connected === false || isNoAgent(err);
   const shown = rankExamples(examples, scope === "all" ? null : context, about).slice(0, 5);
   return (
     <div className={`composer-wrap${inPanel ? " in-panel" : ""}`} onFocus={() => setNear(true)} onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setNear(false); }}>
@@ -40,7 +31,7 @@ export function AskComposer({ inPanel = false }: { inPanel?: boolean }) {
         <div className="ask-ex" role="listbox" aria-label={`Questions about ${scope === "all" ? "everything" : short}`}>
           <p className="ask-ex-h">About {scope === "all" ? "everything" : short}</p>
           {shown.map((x) => <button key={x.question} type="button" role="option" aria-selected={false} onClick={() => send(x.question, x.context ?? null)}>{x.question}</button>)}
-          {down && <p className="ask-ex-f">Recorded answers. A new question needs the live agent.</p>}
+          <p className="ask-ex-f">Answered from the records by code; no model is connected here.</p>
         </div>
       )}
       <form className="composer" onSubmit={submit} role="search">
@@ -56,7 +47,6 @@ export function AskComposer({ inPanel = false }: { inPanel?: boolean }) {
           )}
         </div>
         <input ref={input} aria-label={`Ask Lookout about ${scope === "all" ? "everything" : about}`} placeholder={open && thread.length ? "Ask a follow-up…" : scope === "all" ? "Ask about anything…" : "Ask Lookout…"} value={q} onChange={(e) => setQ(e.target.value)} />
-        <kbd className="askbar-key" aria-hidden>/</kbd>
         <button type="submit" className="go" aria-label="Send" disabled={!q.trim()}><ArrowUp size={16} strokeWidth={2} /></button>
       </form>
     </div>

@@ -1,54 +1,50 @@
-from decimal import Decimal
+from datetime import date
 
 import pytest
 
 from app.domain.imports import helpers as h
 
 
-@pytest.mark.parametrize("raw,want", [("HR51110", "HR-51110"), (" hr-51110 ", "HR-51110"), ("HR-5O110", "HR-50110"), ("HR 51110", "HR-51110"), ("XYZ", "XYZ")])
-def test_part_number(raw, want, monkeypatch):
-    monkeypatch.setitem(h.PART_FORMAT, "prefix", "HR-")      # the format is the recipe's, not the code's
-    monkeypatch.setitem(h.PART_FORMAT, "digits", 5)
-    assert h.norm_part_number(raw) == want
-
-
-def test_country_spellings_and_stop_on_unknown():
-    assert {h.iso_country(x) for x in ["CN", "China", "PRC", "P.R. China", "China (PRC)"]} == {"CN"}
-    assert h.iso_country("") is None
+def test_sap_dates_and_a_stop_on_anything_else():
+    assert h.parse_dmy("20.10.2026") == h.parse_dmy("20/10/2026") == h.parse_dmy("2026-10-20") == date(2026, 10, 20)
+    assert h.parse_dmy("  ") is None
     with pytest.raises(ValueError):
-        h.iso_country("Atlantis")
+        h.parse_dmy("Oct 20")
 
 
-def test_hts_formats_and_letter_o():
-    assert h.hts_digits("8504.40.9580") == ("8504409580", False)
-    assert h.hts_digits("85O4.40.9580") == ("8504409580", True)
-    assert h.hts_digits("731815") == ("731815", False)
-    assert h.hts_digits("") == (None, False)
+def test_sheet_numbers_accounting_zero_and_excel_errors():
+    assert h.parse_number("  51,485 ") == 51485 and h.parse_number("1,00,00,000") == 1e7 and h.parse_number("(2,500)") == -2500
+    assert h.parse_number("  -   ") is None and h.parse_number("") is None
+    with pytest.raises(ValueError):
+        h.parse_number("#DIV/0!")
 
 
-def test_payment_terms():
-    assert h.parse_payment_terms("NET60")["label"] == "Net 60"
-    assert h.parse_payment_terms("Net 45 days")["net_days"] == 45
-    assert h.parse_payment_terms("Cash in advance")["prepay_pct"] == 100
-    assert h.parse_payment_terms("30% deposit, balance before shipment")["prepay_pct"] == 30
+@pytest.mark.parametrize("raw,unit,want", [
+    ("2.64 Cr", "rupee", (26_400_000, "cr")), ("45 L", "cr", (4_500_000, "lakh")), ("1.5 Lakh", "rupee", (150_000, "lakh")),
+    ("23,50,000", "cr", (2_350_000, "rupee")), ("12.5", "cr", (125_000_000, "cr")), ("8,500", "rupee", (8_500, "rupee")), ("", "cr", (None, "")),
+])
+def test_amounts_in_rupees_lakh_and_crore(raw, unit, want):
+    got = h.parse_inr(raw, unit)
+    assert (round(got[0]) if got[0] is not None else None, got[1]) == want
 
 
-def test_incoterm_split():
-    assert h.split_incoterm("FOB SZ") == ("FOB", "Shenzhen")
-    assert h.split_incoterm("EXW") == ("EXW", None)
-    assert h.split_incoterm("") == (None, None)
+def test_an_unreadable_amount_stops_the_build():
+    with pytest.raises(ValueError):
+        h.parse_inr("about 3 crore")
 
 
-def test_units():
-    assert h.norm_uom("Each") == "EA" and h.norm_uom("pcs") == "EA"
-    assert h.to_part_unit(9, "KPCS") == (9000.0, "EA")
-    assert h.to_part_unit(1000, "FT")[1] == "M"
-    assert h.to_part_unit(10, "BOX") is None
+def test_indian_digit_grouping():
+    assert h.in_group(12345678) == "1,23,45,678" and h.in_group(999) == "999" and h.in_group(-150000) == "-1,50,000"
 
 
-def test_dates_and_numbers():
-    assert h.parse_date_any("12/04/2024").isoformat() == "2024-12-04"
-    assert h.parse_date_any("2026-09-25").isoformat() == "2026-09-25"
-    assert h.parse_date_any("") is None
-    assert h.parse_number("389,50", ",") == Decimal("389.50")
-    assert h.parse_number("1.234,50", ",") == Decimal("1234.50")
+def test_the_export_stamp_and_the_date_in_a_sheet_name():
+    s = h.parse_export_stamp("ME2N - Purchasing Documents per Document Number | Exported 20.10.2026 08:15:09 | User JDOE | Variant /SCM")
+    assert s == {"title": "ME2N - Purchasing Documents per Document Number", "exported_at": "2026-10-20T08:15:09", "user": "JDOE"}
+    assert h.parse_export_stamp("no stamp here")["exported_at"] is None
+    assert h.stamp_in_name("SCM Fund Requirement November-26 (16.10.26).csv") == date(2026, 10, 16) and h.stamp_in_name("Project Directory.csv") is None
+
+
+def test_names_compared_loosely_and_months_as_sheets_write_them():
+    assert h.norm_name("M/s. Acme Rail Fittings Pvt. Ltd.") == h.norm_name("ACME RAIL FITTINGS PRIVATE LIMITED") == "acme rail fittings"
+    assert h.month_label("Oct'26") == h.month_label("October-26") == "2026-10" and h.month_label("Nov''26") == "2026-11" and h.month_label("Total") is None
+    assert h.slug("UPPTCL Mirzapur-Chunar") == "upptcl-mirzapur-chunar"

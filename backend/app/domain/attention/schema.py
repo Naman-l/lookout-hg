@@ -1,4 +1,6 @@
-"""The Action list: what will cost money if nobody acts, ranked by the four truths. Shapes follow api/openapi.yaml."""
+"""Today's items: one per cause that will cost money or a date if nobody acts, raised by a detector in code. Each carries its tab, the ₹ at stake
+with the rule that computed it, the date to act by, the SCM owners, whose move it is (SCM, Projects, Finance, QA, Vendor, Management), the verticals
+and projects it touches, and the work fronts that stop if nothing is done ("up to": site stock is not in the data)."""
 
 from __future__ import annotations
 
@@ -7,12 +9,17 @@ from typing import Literal
 from pydantic import BaseModel
 
 from app.domain.common import EntityRef, Money, Provenance, Quantity, Unknown
-from app.domain.annotate.schema import Span
-from app.domain.demand.schema import TimePhased
-from app.domain.inbox.schema import MessageSummary
-from app.domain.orders.schema import PoLine
+from app.domain.doa.service import DoaLine
+from app.domain.orders.schema import PoLineView
+from app.domain.phases.schema import Ladder
+from app.domain.prs.service import PrLineView
+from app.domain.quotes.schema import CsView
+from app.domain.requirements.service import SupplyByMonth
 
-Group = Literal["disruption", "deadline", "tariff", "unknown", "trust"]
+Tab = Literal["requirement", "after_po", "price", "payments", "vendor_risk", "trust", "unknown"]
+WaitingOn = Literal["SCM", "Projects", "Finance", "QA", "Vendor", "Management"]
+TAB_NAMES = {"requirement": "Requirement", "after_po": "After PO", "price": "Price", "payments": "Payments", "vendor_risk": "Vendor risk", "trust": "Trust",
+             "unknown": "Unknowns"}
 
 
 class DateValue(BaseModel):
@@ -20,103 +27,66 @@ class DateValue(BaseModel):
     provenance: Provenance
 
 
-class Need(BaseModel):
-    """Something an option cannot go ahead without, and who can supply it."""
+class SiteImpact(BaseModel):
+    """A work front that stops if nothing is done: from the date its material is needed, when the supply covering it lands later, sits under a
+    disruption, or does not exist. "Up to": site stock is not in the data."""
 
-    what: str
-    owner: str
-    ref: EntityRef | None = None
-
-
-class ProductExposure(BaseModel):
-    product: EntityRef
-    robots: int  # forecast in the first short month
-    short_parts: list[EntityRef]  # parts of this product that are short
+    project: EntityRef
+    front: str
+    month: str  # YYYY-MM
+    stops_on: str | None = None
+    why: str  # "masts land 20 Nov; needed from 12 Nov"
 
 
-class FireOption(BaseModel):
-    """One way through a supplier's disruption, as fields: what it needs, the earliest date the data supports, what it costs where that can be
-    computed, and the one unknown that decides it. No prose: the screen and the agent word it."""
-
-    kind: str  # a disruption's computed ways (allocation, air_freight, resequence, second_source, order_before) or any route of the case's code table
-    label: str
-    covers: str | None = None  # what the route covers ("10 PO lines", "3 products", "<part> only"), from the records
-    cost: Money | None = None  # the route's own figure where it is not a change against today (the duty budgeted, the open value waiting)
-    needs: list[Need] = []
-    earliest: DateValue | None = None  # the first date the data supports for this option
-    earliest_basis: str | None = None  # where that date comes from, or why there is none
-    not_before: DateValue | None = None  # a floor when the real date is unknown
-    cost_delta: Money | None = None  # versus what is paid today, where it can be computed
-    cost_basis: str | None = None
-    duty_effect: Money | None = None  # duty owed only if the goods ship late, avoided by shipping in time
-    cost_unknowns: list[Unknown] = []
-    decided_by: Unknown | None = None  # the unknown that settles whether this option is open (a disruption's ways; other kinds' routes name none)
-    products: list[ProductExposure] = []  # resequence: every product with its short parts and forecast, in part-number order (laid out, not ranked)
-    moq: int | None = None
-    refs: list[EntityRef] = []
-
-
-StageKey = Literal["found", "worked", "decision_ready", "drafted", "approved", "sent", "answered"]
-Category = Literal["Discovery", "RFQ", "Quote & risk", "Purchasing"]   # the standard procurement stage words, where an item belongs to one
+StageKey = Literal["found", "worked", "decision_ready", "drafted", "signed", "approved", "sent", "answered"]
 
 
 class Stage(BaseModel):
-    """Where the work on an item stands, read from the runs and the ledger (derived on every request, never stored), and the one next act."""
+    """Where the work on an item stands, read from the runs and the ledger on every request (never stored), with the one next act and whose move it is."""
 
     key: StageKey
     label: str
-    step: int  # 1..7 along found, worked, decision ready, drafted, approved, sent, answered
+    step: int  # 1..7
     of: int = 7
-    next_act: str  # the one thing to do now, in plain words
-    at: str | None = None  # when it got here, if a record says
-    waiting_on: str | None = None  # who has the move: "you", "the supplier", or None when nothing is owed
-    action: EntityRef | None = None  # the draft or request this stage is about (always one made for this item)
+    next_act: str
+    at: str | None = None
+    waiting_on: str | None = None  # "you", "the vendor", "Projects", "Finance", "QA", "the Head of SCM", or None when nothing is owed
+    action: EntityRef | None = None
 
 
 class DatedRow(BaseModel):
-    """One dated step inside a problem, shown under it instead of as a row of its own."""
+    """A dated fact folded under its cause (a vendor's revised schedule under its late streak, a quote's lapse under the long-lead decision)."""
 
     key: str  # still resolvable at /api/action-items/<key>
     title: str
     act_by: str | None = None
     days_left: int | None = None
-    at_stake: Money | Quantity | Unknown | None = None
-
-
-class RobotsShort(BaseModel):
-    """Robots of one product in one month that a short part stops, as numbers a tile can show (no text to parse)."""
-
-    product: EntityRef
-    month: str  # YYYY-MM
-    robots: int  # the forecast for that month
-    short_parts: list[EntityRef]  # the parts of that product that are short in the month
+    at_stake: Money | Unknown | None = None
 
 
 class ActionItem(BaseModel):
     key: str
-    group: Group
+    kind: str  # the detector: pr-late, pr-stuck, mfc-validity, ...
+    tab: Tab
     severity: Literal["high", "medium", "low"]
     title: str
+    summary: str  # the row's line of facts under the title
     at_stake: Money | Quantity | Unknown | None = None
-    at_stake_gross: Money | None = None
-    at_stake_note: str | None = None  # what the figure means in builds: "182 Alpha + 40 Beta robots in October"
+    at_stake_label: str = "at stake"  # at stake | covers | claimed | if those sites paid the median
+    at_stake_rule: str = ""  # the rule, for the tooltip
     act_by: str | None = None
     days_left: int | None = None
-    owner: str
+    owner: str  # full names, " · " between them
+    owner_ids: list[str] = []
+    waiting_on: WaitingOn = "SCM"
+    verticals: list[str] = []
+    projects: list[EntityRef] = []
+    site_impact: list[SiteImpact] = []
     next_action: str = ""
-    title_entities: list[Span] = []  # what the title mentions, matched against the records (offsets in UTF-16 units)
-    next_action_entities: list[Span] = []
     refs: list[EntityRef] = []
-    dated: list[DatedRow] = []  # a disruption's own dates: the supplier's other deadlines (a closure, the promised revised dates, a quote that lapses), folded under it, soonest first
-    robots_short: list[RobotsShort] = []  # fire rows: robots per product and month the short parts stop
-    robots: list[EntityRef] = []  # every robot (product) whose BOM uses a part this item names, in product order; none when the item names no parts
-    robot_notes: dict[str, str] = {}  # product id -> the one fact that ties this item to that robot, where there is one ("<part> 30 d late")
-    summary: str | None = None  # the row's one line of facts under the title, in a buyer's words ("182 T2 + 40 P5 short in Oct · 10 lines")
-    lines_in_scope: int | None = None  # fire rows: open lines under the notice
-    lines_already_late: int | None = None  # fire rows: of those, lines already past their promise date at the data date (not "before the notice")
-    waits_until: str | None = None  # a date before which nothing is chased: the supplier promised something by then; the item states this trigger, the agent drafts nothing earlier
-    category: Category | None = None  # which of the procurement stages the item belongs to (a quiet tag); None where none applies
-    stage: Stage | None = None  # where the work stands; set by the API from the runs and the ledger
+    dated: list[DatedRow] = []
+    team_total: Money | None = None  # on a viewer's share of a team case: the whole case's figure
+    stage: Stage | None = None
 
 
 class Number(BaseModel):
@@ -126,36 +96,93 @@ class Number(BaseModel):
 
 
 class Decision(BaseModel):
-    """One decision a person took on an item, from the ledger."""
-
     action_id: str
-    type: str  # supplier_request | supplier_alias | note
-    state: str  # approved | rejected | recorded
+    type: str
+    state: str
     by: str
     at: str
     reason: str | None = None
-    text: str  # "Ana rejected the request to li.wei@... on Oct 10: wrong contact"
+    text: str
 
 
 class LinkedCase(BaseModel):
-    """Another case on the list that shares an order line, a part, a supplier or a message with this one (the same rule the agent's packet uses)."""
     key: str
     title: str
-    why: str  # e.g. "the same supplier: <supplier>"
+    why: str  # "the same vendor: <name>", "the same PO", "the same project"
     owner: str | None = None
+
+
+class Finding(BaseModel):
+    key: str
+    fact: str  # code's sentence, every figure from the records
+    meaning: str  # what it means, when no run has given a reading of its own
+    refs: list[EntityRef] = []
+
+
+class Deadline(BaseModel):
+    what: str
+    date: str
+    source: str  # "message <id> L5", "po_lines row 362"
+    days_left: int
+
+
+class VendorPanel(BaseModel):
+    ref: EntityRef
+    name: str
+    codes: list[str]
+    gstin: str | None
+    msme: bool
+    msme_due_45: int  # invoices of an MSME vendor that fall due within 45 days
+    on_time: str  # "on time 60% (6/10)"
+    avg_days_late: float | None
+    streak_line: str
+    terms: list[str]
+    library: list[str]  # approved verticals; empty: not in the library
+    contact: str | None
+    contact_email: str | None
+
+
+class ProjectPanel(BaseModel):
+    ref: EntityRef
+    vertical: str
+    stage: str
+    plants: list[str]
+    head: str | None
+    planner: str | None
+    median_pr_po_days: float | None  # this project's PR -> PO turnaround, same-day PRs left out
+
+
+class HeldMessage(BaseModel):
+    """What the trust check found on a held message, and the controls a person must record before anything else happens."""
+
+    message: EntityRef
+    sender: str
+    imitates: str | None
+    flags: list[str]  # plain words
+    claimed: Money | None
+    controls: list[str]
+    done: list[dict] = []  # each control done: who, when
 
 
 class ActionItemDetail(ActionItem):
     finding: str = ""
-    finding_entities: list[Span] = []
+    findings: list[Finding] = []
     numbers: list[Number] = []
     unknowns: list[Unknown] = []
     evidence: list[EntityRef] = []
+    deadlines: list[Deadline] = []
+    pr_lines: list[PrLineView] = []
+    po_lines: list[PoLineView] = []
+    messages: list[EntityRef] = []
+    vendor: VendorPanel | None = None
+    project: ProjectPanel | None = None
+    supply: SupplyByMonth | None = None
+    ladder: Ladder | None = None
+    cs: CsView | None = None
+    doa: DoaLine | None = None
+    held: HeldMessage | None = None
+    linked: list[LinkedCase] = []
+    decisions: list[Decision] = []
     latest_run: dict | None = None
-    linked: list[LinkedCase] = []  # FINAL 07 §12b: Linked cases in the rail
-    short_names: dict[str, str] = {}  # each supplier ref's id -> the name a buyer says (UX SL-7)
     recommendation: dict | None = None
-    po_lines: list[PoLine] = []
-    messages: list[MessageSummary] = []
-    time_phased: TimePhased | None = None
-    decisions: list[Decision] = []  # newest first; empty when nobody has decided anything yet
+    sheet_cells: list[dict] = []  # requirement / fund sheet cells the case rests on, with their cell reference

@@ -1,0 +1,24 @@
+Purchasing Groups (T024) | Exported 02.04.2026 11:05:12 | User SSINGH
+Purch. Group,Description,Telephone,E-Mail Address
+H00,HO-SCM Head,+91 141 4120 200,satish.sharma@hginfra.example
+P00,HO-Mech. Spares & Equipment,+91 141 4121 201,shree.anand@hginfra.example
+P01,HO-Petroleum (Bitumen),+91 141 4122 202,mohan.bahadur@hginfra.example
+P02,HO-Petroleum (HSD & Retail),+91 141 4123 203,harish.kumar@hginfra.example
+M01,HO-SCM MIS,+91 141 4124 204,sudeep.singh@hginfra.example
+A00,HO-Aggregate (Other Sites),+91 141 4125 205,varun.joshi@hginfra.example
+A01,HO-Aggregate Desk 1,+91 141 4126 206,jitender.swami@hginfra.example
+A02,HO-Aggregate Desk 2 & Scrap,+91 141 4127 207,neeraj@hginfra.example
+C01,"HO-Cement, Fly Ash & Admixture",+91 141 4128 208,govind.gupta@hginfra.example
+E01,"HO-Bearing, Pre-stress & Slope",+91 141 4129 209,ishan.derashri@hginfra.example
+E02,HO-Shuttering & Hume Pipe,+91 141 4130 210,ankesh.jha@hginfra.example
+G01,HO-IT & Electrical,+91 141 4131 211,jitendra.shekhawat@hginfra.example
+G02,"HO-Lab, Safety & Gen. Consumables",+91 141 4132 212,kanhaiya.khoda@hginfra.example
+X01,HO-Logistics,+91 141 4133 213,jagdish.vyas@hginfra.example
+L01,HO-Railway S&T,+91 141 4134 214,rohit.jain@hginfra.example
+L02,"HO-P-Way, Cables & Transformers",+91 141 4135 215,deepanshu.jain@hginfra.example
+L03,"HO-OHE, BESS & Lines",+91 141 4136 216,vishnu.mudgal@hginfra.example
+N01,HO-Solar,+91 141 4137 217,harigraraj.d@hginfra.example
+T01,HO-Switchgear & T&D,+91 141 4138 218,sambhav.kumar@hginfra.example
+U01,HO-Solar Structure & Containers,+91 141 4139 219,urvik.patel@hginfra.example
+S01,HO-TMT & Structural Steel,+91 141 4140 220,shubham.sharma@hginfra.example
+W01,HO-Site Services NOA,+91 141 4141 221,gautam.jha@hginfra.example

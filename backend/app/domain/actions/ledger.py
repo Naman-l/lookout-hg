@@ -1,4 +1,7 @@
-"""The ledger: proposed -> approved | rejected -> executed. Approval is enforced here, in code.
+"""The ledger: proposed -> [signed ->] approved | rejected -> executed. Approval is enforced here, in code.
+
+- Delegation of authority: a draft whose `change.countersign` names a person (set when the draft was made, from the DoA rule for the money it
+  commits) is signed by its owner first and waits as `signed`; only that person's approval of the same hash sends it. Both signatures are kept.
 
 - A draft's `payload_hash` is the sha256 of its canonical payload (type, target, recipient, subject, body,
   change). The person approves a hash; approve() refuses if the payload no longer hashes to it.
@@ -44,6 +47,9 @@ CREATE TABLE IF NOT EXISTS outbox (
 """
 
 
+SENT = ("supplier_request", "internal_note")      # the drafts that go out (simulated): a letter to a vendor's contact, a note to a function owner on file
+
+
 class LedgerError(Exception):
     """A refusal. `code` is one of: no_such_action, state, hash, tampered, no_recipient."""
 
@@ -61,8 +67,10 @@ def connect(db_path) -> sqlite3.Connection:
     con.row_factory = sqlite3.Row
     con.execute("PRAGMA journal_mode=WAL")
     con.executescript(_DDL)
-    if "edited_by" not in {c[1] for c in con.execute("PRAGMA table_info(actions)")}:      # a db made before hand edits were recorded
-        con.execute("ALTER TABLE actions ADD COLUMN edited_by TEXT")
+    cols = {c[1] for c in con.execute("PRAGMA table_info(actions)")}
+    for col in ("edited_by", "signed_by", "signed_at"):      # a db made before hand edits or countersigns were recorded
+        if col not in cols:
+            con.execute(f"ALTER TABLE actions ADD COLUMN {col} TEXT")
     return con
 
 
@@ -86,14 +94,16 @@ def _action(r: sqlite3.Row) -> Action:
         decided_by=r["decided_by"], reason=r["reason"], attempted_at=r["attempted_at"], confirmed_at=r["confirmed_at"], outbox_id=r["outbox_id"],
         owner=(json.loads(r["change_json"]) if r["change_json"] else {}).get("owner"),
         edited_by=r["edited_by"] if "edited_by" in r.keys() else None,
+        signed_by=r["signed_by"] if "signed_by" in r.keys() else None, signed_at=r["signed_at"] if "signed_at" in r.keys() else None,
+        countersign=(json.loads(r["change_json"]) if r["change_json"] else {}).get("countersign"),
     )
 
 
 def propose(db_path, *, type: str, item_key: str | None, run_id: str | None, target: EntityRef | None, recipient: str | None,
             subject: str | None, body: str | None, change: dict | None = None, action_id: str | None = None) -> Action:
     """Stage a draft. Idempotent: the same payload for the same item returns the draft already waiting."""
-    if type in ("supplier_request",) and not recipient:
-        raise LedgerError("no_recipient", "no contact on file for this supplier, so nothing can be drafted")
+    if type in SENT and not recipient:
+        raise LedgerError("no_recipient", "no contact on file for this recipient, so nothing can be drafted")
     h = payload_hash(type, target, recipient, subject, body, change)
     con = connect(db_path)
     try:
@@ -135,7 +145,7 @@ def open_thread(db_path, recipient: str | None) -> Action | None:
         return None
     con = connect(db_path)
     try:
-        r = con.execute("SELECT * FROM actions WHERE type = 'supplier_request' AND recipient = ? AND state IN ('proposed', 'approved', 'executed') ORDER BY proposed_at DESC LIMIT 1", (recipient,)).fetchone()
+        r = con.execute("SELECT * FROM actions WHERE type IN ('supplier_request', 'internal_note') AND recipient = ? AND state IN ('proposed', 'signed', 'approved', 'executed') ORDER BY proposed_at DESC LIMIT 1", (recipient,)).fetchone()
         return _action(r) if r else None
     finally:
         con.close()
@@ -228,15 +238,17 @@ def update_draft(db_path, action_id: str, *, subject: str, body: str, edited_by:
 
 
 def approve(db_path, action_id: str, payload_hash_shown: str, approved_by: str) -> Action:
-    """Approve exactly what was shown, then execute. Refuses on a wrong state, a stale hash or a changed payload."""
+    """Approve exactly what was shown, then execute. Refuses on a wrong state, a stale hash or a changed payload. A draft that names a countersigner
+    (DoA) is only signed by its owner's approval and waits as `signed`; the countersigner's approval of the same hash sends it."""
     con = connect(db_path)
+    signed_only = False
     try:
         con.execute("BEGIN IMMEDIATE")
         r = con.execute("SELECT * FROM actions WHERE action_id = ?", (action_id,)).fetchone()
         if r is None:
             raise LedgerError("no_such_action", "no such action")
         retry = r["state"] == "approved" and r["confirmed_at"] is None  # approved, but the send did not finish: approving again finishes it
-        if r["state"] != "proposed" and not retry:
+        if r["state"] not in ("proposed", "signed") and not retry:
             raise LedgerError("state", f"this action is already {r['state']}")
         if _row_hash(r) != r["payload_hash"]:
             raise LedgerError("tampered", "the draft no longer matches its recorded hash; it was changed outside the ledger")
@@ -246,7 +258,17 @@ def approve(db_path, action_id: str, payload_hash_shown: str, approved_by: str) 
             con.execute("COMMIT")
             con.close()
             return execute(db_path, action_id)
-        con.execute("UPDATE actions SET state = 'approved', decided_at = ?, decided_by = ? WHERE action_id = ?", (_now(), approved_by, action_id))
+        counter = (json.loads(r["change_json"]) if r["change_json"] else {}).get("countersign")
+        if r["state"] == "proposed" and counter and approved_by != counter:
+            con.execute("UPDATE actions SET state = 'signed', signed_by = ?, signed_at = ? WHERE action_id = ?", (approved_by, _now(), action_id))
+            signed_only = True
+        elif r["state"] == "signed":
+            if approved_by != counter:
+                raise LedgerError("countersign", f"signed by {r['signed_by']}; it waits for {counter}'s countersign, and only {counter} can give it")
+            con.execute("UPDATE actions SET state = 'approved', decided_at = ?, decided_by = ? WHERE action_id = ?", (_now(), approved_by, action_id))
+        else:
+            con.execute("UPDATE actions SET state = 'approved', decided_at = ?, decided_by = ?, signed_by = COALESCE(signed_by, ?), signed_at = COALESCE(signed_at, ?) WHERE action_id = ?",
+                        (_now(), approved_by, approved_by, _now(), action_id))
         con.execute("COMMIT")
     except Exception:
         if con.in_transaction:
@@ -254,6 +276,9 @@ def approve(db_path, action_id: str, payload_hash_shown: str, approved_by: str) 
         raise
     finally:
         con.close()
+    if signed_only:
+        watcher.emit("actions", "action.signed", f"signed by {approved_by}; waits for {counter}'s countersign", action_id=action_id, payload_hash=payload_hash_shown)
+        return get(db_path, action_id)
     watcher.emit("actions", "action.approved", f"approved by {approved_by}", action_id=action_id, payload_hash=payload_hash_shown)
     try:
         return execute(db_path, action_id)
@@ -289,7 +314,7 @@ def execute(db_path, action_id: str) -> Action:
     try:
         con.execute("BEGIN IMMEDIATE")
         outbox_id = None
-        if r["type"] == "supplier_request":
+        if r["type"] in SENT:
             sent = con.execute("SELECT outbox_id FROM outbox WHERE action_id = ?", (action_id,)).fetchone()  # a retry finds the send that already happened
             outbox_id = sent["outbox_id"] if sent else f"OUT-{uuid.uuid4().hex[:8]}"
             if not sent:
@@ -320,7 +345,7 @@ def reject(db_path, action_id: str, reason: str, rejected_by: str) -> Action:
         r = con.execute("SELECT state FROM actions WHERE action_id = ?", (action_id,)).fetchone()
         if r is None:
             raise LedgerError("no_such_action", "no such action")
-        if r["state"] != "proposed":
+        if r["state"] not in ("proposed", "signed"):
             raise LedgerError("state", f"this action is already {r['state']}")
         con.execute("UPDATE actions SET state = 'rejected', decided_at = ?, decided_by = ?, reason = ? WHERE action_id = ?", (_now(), rejected_by, reason, action_id))
         con.execute("COMMIT")

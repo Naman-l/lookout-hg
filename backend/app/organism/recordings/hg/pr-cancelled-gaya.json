@@ -1,0 +1,27 @@
+{
+  "key": "pr-cancelled:gaya:2026-10-15",
+  "mocked": true,
+  "note": "written by hand to show how a model's run on this case reads; no model ran on this machine",
+  "model": "mocked recording",
+  "recorded_at": "2026-10-20T08:42:00+05:30",
+  "events": [
+    {"t_ms": 300, "type": "step.text", "agent": "lookout", "summary": "Gaya deleted 32 PR lines on 15 Oct, after the RFQ had gone out on all of them. I'll see what the enquiry cost and what can still be saved."},
+    {"t_ms": 800, "type": "child.started", "agent": "site_planner", "summary": "Site requirement planner: the PR lines and why they were closed."},
+    {"t_ms": 1400, "type": "tool.called", "agent": "site_planner", "summary": "open_prs", "payload": {"tool": "open_prs", "args": {"project": "gaya"}, "gate": "allowed"}},
+    {"t_ms": 2100, "type": "step.text", "agent": "site_planner", "summary": "All 32 lines of PRs 1000203559, 1000203669 and 1000203718 were deleted the day after the project head's mail; his reasons are the client's design approval, the SIP, the look-ahead under approval and cash flow. None of them is SCM's."},
+    {"t_ms": 2500, "type": "child.finished", "agent": "site_planner", "summary": "Site requirement planner handed off."},
+    {"t_ms": 2800, "type": "child.started", "agent": "sourcing_analyst", "summary": "Sourcing analyst: the quotes in hand."},
+    {"t_ms": 3500, "type": "tool.called", "agent": "sourcing_analyst", "summary": "compare_quotes", "payload": {"tool": "compare_quotes", "args": {"key": "pr-cancelled:gaya:2026-10-15"}, "gate": "allowed"}},
+    {"t_ms": 4300, "type": "step.text", "agent": "sourcing_analyst", "summary": "Vendors quoted on every line before the deletion; at the lowest quotes the enquiry was worth ₹3.43 Cr. The earliest quote lapses 8 Nov, so the prices can be held if the requirement comes back."},
+    {"t_ms": 4700, "type": "child.finished", "agent": "sourcing_analyst", "summary": "Sourcing analyst handed off."},
+    {"t_ms": 5000, "type": "step.text", "agent": "lookout", "summary": "The cancellation should be on record with Projects' approval and reason, so the spent enquiry is theirs; asking the vendors to hold their quotes costs nothing and is worth starting beside it."},
+    {"t_ms": 5400, "type": "child.started", "agent": "buyers_clerk", "summary": "Buyer's clerk: the note to the Gaya project head."}
+  ],
+  "recommendation": {
+    "finding": "Get the Gaya project head's written approval for the 32 short-closed lines, with the reason; ask the vendors to hold their quotes beside it.",
+    "points": [{"label": "Enquiry", "text": "₹3.43 Cr at the lowest quotes"}, {"label": "Quotes lapse", "text": "from 8 Nov"}],
+    "next_step": {"who": "Sambhav Kumar", "what": "Sign the note to the project head", "by": "2026-11-08"},
+    "recommended": {"kind": "cancel_approval", "reason": "₹3.43 Cr enquiry spent: put the reason on record", "number_ids": ["item:pr-cancelled:gaya:2026-10-15:at_stake"]},
+    "case_findings": [{"key": "effort", "meaning": "SCM's work is spent unless lines return"}, {"key": "reasons", "meaning": "None of the reasons is SCM's"}]
+  }
+}

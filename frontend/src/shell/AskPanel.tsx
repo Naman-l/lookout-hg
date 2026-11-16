@@ -1,27 +1,19 @@
-import { StatusLine } from "../ds/StatusLine";
 import { useEffect, useRef, useState } from "react";
-import { ArrowUp, X } from "lucide-react";
+import { ArrowUp, ArrowUpRight, CornerDownRight, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import { api } from "../api/client";
 import { useResource } from "../api/useResource";
-import { useRun } from "../organism/useRun";
-import { buildRun } from "../organism/runModel";
 import { humanize } from "../ui/format";
 import { useAskState } from "./AskContext";
-import { AskTurn } from "../sections/CaseAsk";
-import { Disclose } from "../ds";
-import { EntityChip } from "../domain-ui/EntityChip";
 import { AskComposer } from "./AskBox";
 import { rankExamples, shortAbout } from "../sections/agents/ask";
-import { buildTrace } from "../sections/agents/trace";
-import { useAgentLabels } from "../sections/agents/labels";
 import { useMedia } from "../ui/useMedia";
-import { ResultCard, type ResultData } from "../domain-ui/ResultCard";
-import type { EntityRef } from "../api/types";
+import { AgentMark } from "../ui/AgentMark";
+import type { RunDetail } from "../api/types";
 
-/** The conversation, beside the page (a bottom sheet below 1024 px): a header with the scope and a close, a body that scrolls, one follow-up line at the foot. Each turn: the question, one quiet line of steps while it works, then the answer line first, the reasons as rows, the rest behind "Read in full". */
+/** The conversation, beside the page (a bottom sheet below 1024 px): the scope and a close, a body that scrolls, the composer at the foot. */
 export function AskPanel() {
-  const { open, setOpen, thread, about, context, scope, send, err, connected, examples } = useAskState();
+  const { open, setOpen, thread, about, context, scope, send, err, examples } = useAskState();
   const body = useRef<HTMLDivElement>(null);
   const [follow, setFollow] = useState("");
   const phone = useMedia("(max-width: 760px)");
@@ -34,8 +26,6 @@ export function AskPanel() {
   });
   useEffect(() => { body.current?.scrollTo({ top: body.current.scrollHeight }); }, [thread.length]);
   if (!open) return null;
-  const down = connected === false;
-  if (context?.type === "item") return null;      // on a case the Ask panel sits in the rail's slot: CaseAskSlot, mounted by the case page
   return (
     <aside className="aipanel" role="dialog" aria-label="Lookout's answer">
       <i className="grab" aria-hidden />
@@ -45,10 +35,11 @@ export function AskPanel() {
         {thread.length === 0 && (
           <div className="turn">
             <p className="q">What would you like to know about {scope === "all" ? "everything" : shortAbout(about)}?</p>
-            {examples.length > 0 && <div className="ask-ex in">{rankExamples(examples, scope === "all" ? null : context, about).slice(0, 5).map((x) => <button key={x.question} type="button" onClick={() => send(x.question, x.context ?? null)}>{x.question}</button>)}{down && <p className="ask-ex-f">Recorded answers. A new question needs the live agent.</p>}</div>}
+            {examples.length > 0 && <div className="ask-ex in">{rankExamples(examples, scope === "all" ? null : context, about).slice(0, 5).map((x) => <button key={x.question} type="button" onClick={() => send(x.question, x.context ?? null)}>{x.question}</button>)}</div>}
+            <p className="ask-ex-f">No model is connected here: Lookout answers from the records by rule, and says when they do not hold the answer.</p>
           </div>
         )}
-        {thread.map((t) => <div key={t.runId} className="cask-g"><AskTurn runId={t.runId} question={t.question} onRetry={() => send(t.question)} /></div>)}
+        {thread.map((t, n) => <Turn key={t.runId} runId={t.runId} question={t.question} last={n === thread.length - 1} onClose={close} onRetry={() => send(t.question)} onFollow={(q) => send(q)} />)}
         {err && <p className="turn-err" role="status">{err}</p>}
       </div>
       {!phone && <AskComposer inPanel />}
@@ -60,68 +51,75 @@ export function AskPanel() {
   );
 }
 
-const sentences = (t: string) => t.split(/(?<=[.!?])\s+(?=[A-Z$0-9])/).map((x) => x.trim()).filter(Boolean);
+/** A run, read again every second while it works. */
+export function useRunPoll(runId: string | null) {
+  const [tick, setTick] = useState(0);
+  const r = useResource(() => (runId ? api.run(runId).catch(() => null) : Promise.resolve(null)), [runId, tick], true);
+  useEffect(() => {
+    if (!runId || (r.data && r.data.status !== "running")) return;
+    const t = setTimeout(() => setTick((n) => n + 1), 700);
+    return () => clearTimeout(t);
+  }, [runId, r.data, tick]);
+  return r.data as RunDetail | null | undefined;
+}
 
-/** One question and its answer. An earlier turn folds to its answer line. */
-export function Turn({ runId, question, last = true, onClose, onRetry }: { runId: string; question: string; last?: boolean; onClose: () => void; onRetry?: () => void }) {
-  const { run, events, error } = useRun(runId);
-  const actions = useResource(() => api.actions().then((a) => a.filter((x) => x.run_id === runId)).catch(() => []), [runId, run?.status]);
-  const [more, setMore] = useState(false);
+type Table = { title: string; by: string; columns: string[]; rows: { label: string; sub?: string | null; url?: string | null; cells: ({ say: string; id: string } | null)[] }[]; more?: number; all_url?: string | null };
+type Step = { agent: string; tool: string; why: string; found: string };
+
+/** One question and its answer: the steps while it works, then the answer line, its rows and tables, what is not known and who could say, and any draft it
+ * prepared (nothing is sent until its owner signs). */
+export function Turn({ runId, question, last = true, onClose, onRetry, onFollow }: { runId: string; question: string; last?: boolean; onClose: () => void; onRetry?: () => void; onFollow?: (q: string) => void }) {
+  const run = useRunPoll(runId);
   const [folded, setFolded] = useState(!last);
+  const [how, setHow] = useState(false);
   useEffect(() => { if (last) setFolded(false); }, [last]);
-  const v = run ? buildRun(events, run.run_id ?? runId) : null;
-  const lines = v ? v.rows.flatMap((r) => (r.kind === "line" ? [r.line] : r.d.lines)).filter((l) => l.status !== "denied") : [];
-  const live = lines[lines.length - 1];
-  const rec = run?.recommendation;
-  const result = (run as unknown as { result?: ResultData } | null)?.result;
-  const waiting = (actions.data ?? []).find((a) => a.state === "proposed");
-  const figures = (rec?.numbers ?? []).filter((n) => n.say || n.value).slice(0, 2);
-  const seen = new Map<string, EntityRef>();
-  for (const n of rec?.numbers ?? []) for (const r of n.provenance?.inputs ?? []) if (!seen.has(`${r.type}:${r.id}`)) seen.set(`${r.type}:${r.id}`, r);
-  const sources = [...seen.values()].slice(0, 5);
-  const failed = run?.status === "failed" || run?.status === "did_not_pass";
-  const parts = rec ? sentences(humanize(rec.finding)) : [];
-  const lead = parts[0] ?? "", rows = parts.slice(1, 5), rest = parts.slice(5);
-  const label = useAgentLabels();
-  const tr = buildTrace(events, Object.fromEntries(events.map((e) => e.agent ?? "").filter(Boolean).map((a) => [a, label(a)])));
-  // The checks line: what code checked, in one line; the Reviewer's grade stays inside How we got here.
-  const ver = run?.verifier as { numbers_checked?: number; numbers_from_tools?: number; open_questions_with_owner?: number } | null | undefined;
-  const checks = ver?.numbers_checked != null ? `✓ ${ver.numbers_from_tools ?? 0} of ${ver.numbers_checked} figures checked against a lookup${ver.open_questions_with_owner ? ` · ${ver.open_questions_with_owner} open questions have an owner` : ""}` : "";
-  const who = run ? [label("lookout"), ...(run.specialists ?? []).map((x) => label(x.agent, x.label))] : [];
-  const steps = tr.groups.flatMap((g) => g.blocks.flatMap((b) => b.rows.map((r) => ({ ...r, who: b.label, stage: g.name })))).filter((r) => r.mark !== "redo");
-  const inParallel = events.filter((e) => e.type === "child.started").length - events.filter((e) => e.type === "child.finished").length;
-  const secs = Math.round(events.reduce((a, e) => Math.max(a, e.t_ms ?? 0), 0) / 1000);
+  const rec = run?.recommendation as (RunDetail["recommendation"] & { points?: { label: string; text: string }[]; tables?: Table[]; open_questions?: { question: string; owner: string }[]; action_ids?: string[];
+    follow_ups?: string[]; plan?: Step[] }) | null | undefined;
+  const steps = (run?.events ?? []).filter((e) => ["step.text", "tool.called", "child.started"].includes(e.type));
+  const plan = rec?.plan ?? [];
+  const agents = [...new Set(plan.map((p) => p.agent).filter((a) => a !== "lookout"))];
   return (
     <div className="turn">
       <p className="q">{question}</p>
-      {run && who.length > 0 && <p className="ask-who">{who.map((w, k) => <span key={w}><i className={k === 0 ? "lead" : "spec"} aria-hidden />{w}</span>)}{run.tool_calls ? <span>· {run.tool_calls} lookups</span> : null}</p>}
-      {/* A run that ends is never left spinning or retried on its own: the answer is shown with the one plain reason, and asking again is the reader's choice. */}
-      {(error || failed) && (
-        <p className="error">
-          {rec && !error ? `Not fully checked${run?.verifier?.reasons?.[0] ? `: ${humanize(run.verifier.reasons[0])}` : ""}.` : `That answer could not be ${error ? "loaded" : "finished"}${run?.verifier?.reasons?.[0] ? `: ${humanize(run.verifier.reasons[0])}` : ""}.`}{" "}
-          {onRetry && <button type="button" className="linkbtn" onClick={onRetry}>Ask again</button>}
-        </p>
-      )}
-      {!rec && !result && !error && !failed && (
+      {run?.status === "failed" && <p className="error">That answer could not be finished. {onRetry && <button type="button" className="linkbtn" onClick={onRetry}>Ask again</button>}</p>}
+      {(!run || run.status === "running") && <ol className="ask-steps live" aria-live="polite">{steps.slice(-3).map((e) => <li key={e.seq + e.run_id}><AgentMark agent={e.agent} /><span>{e.agent_label} · {humanize(String((e.type === "tool.called" && e.payload?.why) || e.summary))}</span></li>)}<li className="ask-wait"><i /><i /><i /></li></ol>}
+      {rec && folded && <button type="button" className="turn-fold" onClick={() => setFolded(false)}><b>{humanize(rec.finding)}</b></button>}
+      {rec && !folded && (
         <>
-          <StatusLine className="working" text={[tr.groups[tr.groups.length - 1]?.name ?? "Overview", `${secs} s`, inParallel > 1 ? `${inParallel} specialists in parallel` : ""].filter(Boolean).join(" · ")} note={v?.phase ?? (live ? humanize(live.text) : undefined)} />
-          {steps.length > 0 && <ol className="ask-steps">{steps.slice(-4).map((r) => <li key={r.id}><span title={r.full ?? r.text}>{r.who} · {r.tool} · {r.text}</span><em>{r.right}</em></li>)}</ol>}
-        </>
-      )}
-      {result && !folded && <ResultCard data={result} runId={runId} onNavigate={onClose} />}
-      {result && folded && <button type="button" className="turn-fold" onClick={() => setFolded(false)}><b>{result.finding}</b></button>}
-      {!result && rec && folded && <button type="button" className="turn-fold" onClick={() => setFolded(false)}><b>{lead}</b></button>}
-      {!result && rec && !folded && (
-        <>
-          <p className="decision"><b>{lead}</b></p>
-          {rows.length > 0 && <ul className="reasons">{rows.map((r) => <li key={r}>{r}</li>)}</ul>}
-          {figures.length > 0 && <div className="mini-tiles">{figures.map((n) => <div key={n.id} className="mt"><b>{n.say ?? `${n.value} ${n.unit}`}</b><span>{humanize(n.name ?? n.id)}</span></div>)}</div>}
-          {sources.length > 0 && <p className="srcs">{sources.map((r) => <EntityChip key={`${r.type}:${r.id}`} r={r} />)}</p>}
-          {rest.length > 0 && <><Disclose open={more} onClick={() => setMore(!more)}>{more ? "Show less" : "Read in full"}</Disclose>{more && <p className="rest">{rest.join(" ")}</p>}</>}
-          <p className="src">{checks}{run ? <>{checks ? " · " : ""}<Link to={`/activity/${encodeURIComponent(runId)}`} onClick={onClose}>How we got here →</Link></> : null}</p>
-          {waiting && <Link className="ask-prep" to={waiting.item_key ? `/items/${encodeURIComponent(waiting.item_key)}?draft=${waiting.action_id}` : `/approvals/${waiting.action_id}`}><span>Prepared: email to <b>{waiting.target?.label ?? waiting.recipient}</b> · nothing is sent until you approve it</span><b>Review →</b></Link>}
+          <p className="decision"><b>{humanize(rec.finding)}</b></p>
+          {(rec.points ?? []).length > 0 && <ul className="reasons">{(rec.points ?? []).map((p) => <li key={p.label + p.text}><b>{p.label}</b> · {humanize(p.text)}</li>)}</ul>}
+          {((rec.tables ?? []) as Table[]).map((t) => (
+            <div key={t.title} className="ask-t"><p className="ask-th">{t.title} <small>· {t.by}</small></p>
+              <table className="cp-t"><thead><tr><th />{t.columns.map((c) => <th key={c} className="n">{c}</th>)}</tr></thead>
+                <tbody>{t.rows.map((r, i) => (
+                  <tr key={r.label + i}>
+                    <td>{r.url ? <Link className="ask-rl" to={r.url} onClick={onClose}>{r.label}</Link> : r.label}{r.sub && <small className="ask-rs">{r.sub}</small>}</td>
+                    {r.cells.map((c, k) => <td key={k} className="n" title={c?.id || undefined}>{c?.say ?? ""}</td>)}
+                  </tr>))}</tbody></table>
+              {(t.more || t.all_url) ? <p className="ask-more">{t.more ? <span>+{t.more} more</span> : null}{t.all_url && <Link to={t.all_url} onClick={onClose}>See them all<ArrowUpRight size={12} strokeWidth={1.75} aria-hidden /></Link>}</p> : null}</div>
+          ))}
+          {(rec.open_questions ?? []).length > 0 && <ul className="reasons">{(rec.open_questions ?? []).slice(0, 4).map((u) => <li key={u.question}>Unknown · {u.question} <small>(ask {u.owner})</small></li>)}</ul>}
+          {(rec.action_ids ?? []).map((a) => <Link key={a} className="ask-prep" to={`/approvals/${a}`} onClick={onClose}><span>Prepared for your signature · nothing is sent until you sign</span><b>Review →</b></Link>)}
+          {plan.length > 0 && (
+            <div className="ask-how">
+              <button type="button" className="ask-how-btn" aria-expanded={how} onClick={() => setHow(!how)}>
+                <span className="ask-how-marks" aria-hidden>{(agents.length ? agents : ["lookout"]).map((a) => <AgentMark key={a} agent={a} />)}</span>
+                {plan.length} lookup{plan.length === 1 ? "" : "s"}{agents.length ? ` by the ${agents.map(agentName).join(", ")}` : ""}<small>{how ? "Hide" : "Show the steps"}</small>
+              </button>
+              {how && <ol className="ask-plan">{plan.map((p, i) => <li key={i}><AgentMark agent={p.agent} /><span><b>{p.why}</b><small>{p.found}</small></span></li>)}</ol>}
+            </div>
+          )}
+          {last && onFollow && (rec.follow_ups ?? []).length > 0 && (
+            <div className="ask-next" role="group" aria-label="Ask next">
+              {(rec.follow_ups ?? []).slice(0, 3).map((f) => <button key={f} type="button" onClick={() => onFollow(f)}><CornerDownRight size={14} strokeWidth={1.5} aria-hidden />{f}</button>)}
+            </div>
+          )}
+          <p className="src">Answered by code from the records, no model · <Link to={`/activity/${encodeURIComponent(runId)}`} onClick={onClose}>How we got here →</Link></p>
         </>
       )}
     </div>
   );
 }
+
+const AGENT_NAMES: Record<string, string> = { site_planner: "site planner", sourcing_analyst: "sourcing analyst", price_analyst: "price analyst", inbox_analyst: "inbox analyst", buyers_clerk: "buyer's clerk" };
+const agentName = (a: string) => AGENT_NAMES[a] ?? a.replace(/_/g, " ");

@@ -1,0 +1,42 @@
+/* The HG case page and drafts (shared with Approvals). Builds on the cp- classes of case-page.css. */
+.df{display:flex;flex-direction:column;gap:var(--s2)}
+.df-to{margin:0;font-size:var(--t-small);color:var(--ink-3)} .df-to b{color:var(--ink);font-weight:600} .df-kind{color:var(--ink-2);font-weight:500}
+.df-doa{margin:0;font-size:var(--t-small);color:var(--ink-2)} .df-doa b{color:var(--caution);font-weight:600}
+.df-mail{border:1px solid var(--line);border-radius:var(--r-sm);padding:var(--s3) var(--s4);background:var(--surface)}
+.df-sub{margin:0 0 var(--s2);font-weight:600}
+.df-body{margin:0;white-space:pre-wrap;font:inherit;font-size:var(--t-body);line-height:1.5;overflow-wrap:anywhere}
+.df-why{margin:var(--s2) 0 0;font-size:var(--t-small)}
+.df-state{margin:0;font-size:var(--t-caption);color:var(--ink-3)} .df-state.s-signed{color:var(--caution);font-weight:500} .df-state.s-executed{color:var(--go)}
+.df-warn{margin:0;font-size:var(--t-small);color:var(--critical)} .df-err{margin:0;font-size:var(--t-small);color:var(--critical)}
+.df-act{display:flex;gap:var(--s2);flex-wrap:wrap;align-items:center}
+.df-reason{height:var(--control);min-width:260px;flex:1;border:1px solid var(--line);border-radius:var(--r-sm);padding:0 var(--s3);font:inherit}
+.df-edit{display:flex;flex-direction:column;gap:var(--s2)} .df-edit input,.df-edit textarea{font:inherit;border:1px solid var(--line);border-radius:var(--r-sm);padding:var(--s2) var(--s3)}
+.df.compact .df-body{max-height:220px;overflow:auto}
+.mail{border:1px solid var(--line);border-radius:var(--r-sm);padding:var(--s3) var(--s4);background:var(--surface)}
+.mail.held{border-color:var(--critical);background:var(--surface)}
+.mail-h{margin:0;font-size:var(--t-small);color:var(--ink-3)} .mail-h b{color:var(--ink)}
+.mail-s{margin:var(--s1) 0 var(--s2);font-weight:600}
+.mail-note{margin:0 0 var(--s2);font-size:var(--t-small);color:var(--critical)}
+.mail-b{margin:0;white-space:pre-wrap;font:inherit;font-size:var(--t-body);line-height:1.5;overflow-wrap:anywhere}
+.mail.held .mail-b{border-left:3px solid var(--line);padding-left:var(--s3);color:var(--ink-2)}
+.mail-f{margin:var(--s2) 0 0;font-size:var(--t-caption)}
+.mk{border-bottom:1px dotted var(--ink-4);color:inherit;text-decoration:none} a.mk:hover{border-bottom-style:solid}
+.mk-money,.mk-date,.mk-quantity{background:var(--raised);border-bottom:0;border-radius:var(--r-xs);padding:0 2px}
+.ld-r{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:var(--s1) 0}
+.ld-r li{display:flex;flex-direction:column;min-width:92px;padding:var(--s1) var(--s2) var(--s1) 0;position:relative;font-size:var(--t-caption)}
+.ld-r li i{width:8px;height:8px;border-radius:50%;border:2px solid var(--ink-4);background:var(--surface);margin-bottom:4px}
+.ld-r li.ld-done i{background:var(--ink-2);border-color:var(--ink-2)} .ld-r li.ld-now i{border-color:var(--accent);background:var(--accent)} .ld-r li.ld-unknown i{border-style:dashed}
+.ld-r b{font-weight:500;color:var(--ink-2)} .ld-r li.ld-now b{color:var(--ink);font-weight:600} .ld-r small{color:var(--ink-3)} .ld-r em{font-style:normal;color:var(--ink-3)}
+.ld-now,.ld-held{margin:var(--s2) 0 0;font-size:var(--t-small);color:var(--ink-2)}
+.cs-imp{display:flex;flex-wrap:wrap;gap:var(--s1) var(--s4);align-items:center;font-size:var(--t-small);color:var(--ink-2);margin:var(--s1) 0 var(--s2)}
+.cs-imp b{color:var(--ink);font-size:var(--t-lead);font-weight:600} .cs-imp .vt{display:inline-flex;gap:2px}
+.cs-imp .uo{color:var(--ink-3)}
+.cs-rt td{vertical-align:top} .cs-rt .rk{font-weight:600} .cs-rt .ss{color:var(--caution);font-weight:600;margin-left:4px}
+.cs-rt tr.on td{background:var(--raised)} .cs-rt .rec{font-size:var(--t-caption);font-weight:600;color:var(--accent);margin-left:6px}
+.cs-rt label{display:flex;gap:var(--s2);align-items:flex-start;cursor:pointer}
+.cs-why{margin:var(--s2) 0 0;font-size:var(--t-small);color:var(--ink-2)}
+.cs-run{display:flex;flex-direction:column;gap:2px;font-size:var(--t-small);color:var(--ink-2)} .cs-run li{list-style:none} .cs-run ol{margin:0;padding:0}
+.cs-run .ag{color:var(--ink-3);font-size:var(--t-caption);margin-right:var(--s2)}
+.cs-ctl{display:flex;flex-direction:column;gap:var(--s1)} .cs-ctl label{display:flex;gap:var(--s2);align-items:flex-start;font-size:var(--t-body)} .cs-ctl small{color:var(--ink-3);margin-left:var(--s1)}
+.cs-mo td.gap{color:var(--critical);font-weight:500}
+@media (max-width:760px){.cp-head h1{white-space:normal;font-size:var(--t-h2)}}

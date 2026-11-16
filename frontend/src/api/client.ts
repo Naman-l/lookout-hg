@@ -1,7 +1,9 @@
 // The typed client. Every read goes through `get`, every start of a run through `startOn`: one place each.
 import { noteRead } from "./freshness";
 import { invalidate } from "./useResource";
-import type { FireOption, BuildReadiness, BuildSummary, Ladder, PartDetail, EntityRef, BomTree, ProductOut, WhereUsedRow, BuildStamp, BuildStep, SupplierDetail, BidTab, DataIssue, ImportAnswer, ImportDeck, ImportDryRun, MessageDetail, MessageSummary, Action, ActionItem, Counts, ForecastRow, Health, ItemDetail, Part, PoLine, Run, RunDetail, RunEvent, Supplier, OfferView, Agents, EvalsSummary } from "./types";
+import type { Action, ActionItem, Counts, DataIssue, Health, ItemDetail, MessageDetail, MessageSummary, Route, Run, RunDetail, RunEvent, BuildStamp, BuildStep, EntityRef,
+  VendorRow, VendorDetail, VendorQuote, MaterialRow, MaterialDetail, PrLine, PoLine, PrDetail, PoDetail, Ladder, ProjectRow, RequirementRow, FrontStatus, SupplyByMonth, CsView, Person,
+  SearchHit, Agents, EvalsSummary, ImportDeck, ImportAnswer, ImportDryRun } from "./types";
 
 async function get<T>(path: string): Promise<T> {
   const res = await fetch(`/api${path}`);
@@ -38,12 +40,6 @@ async function patch<T>(path: string, method: "PATCH", body: unknown): Promise<T
   return out;
 }
 
-/** One PO line as the record holds it (GET /orders/{po_line}). */
-export type OrderLine = {
-  po_line: EntityRef; part: EntityRef; supplier: EntityRef; buyer: string | null; status: string;
-  qty_open: { value: string; uom: string }; line_value?: { usd?: string | null } | null; unit_price?: { usd?: string | null } | null; promise: string | null; revised_promise: string | null; days_past_due: number | null;
-};
-
 /** Start a run on an item. A run already in progress answers 409 with its own RunRef; either way the caller gets a run id. */
 async function startRun(key: string, askedBy: string, live = false): Promise<{ run_id: string; status: string; existing?: boolean }> {
   const res = await fetch(`/api/action-items/${encodeURIComponent(key)}/runs`, {
@@ -53,14 +49,14 @@ async function startRun(key: string, askedBy: string, live = false): Promise<{ r
   throw new Error(`${res.status} start run`);
 }
 
-const PAGE_KINDS: Record<string, string> = { "": "today", items: "case", approvals: "approvals", inbox: "inbox", builds: "build", suppliers: "supplier", parts: "part", orders: "orders",
-  forecast: "forecast", data: "data", hood: "hood", activity: "activity", shelf: "shelf", more: "more" };
+const PAGE_KINDS: Record<string, string> = { "": "today", items: "case", approvals: "approvals", inbox: "inbox", vendors: "vendor", materials: "material", prs: "prs", pos: "pos",
+  requirements: "requirements", workfronts: "workfronts", insights: "insights", brief: "brief", data: "data", hood: "hood", activity: "activity", lookup: "lookup", more: "more" };
 
 /** The page the buyer asks from (h10): its kind from the route, and a label read from what is on screen (the title, then the pressed tab and filters). */
 export function pageNow(): { kind: string; label: string } | null {
   try {
     const seg = location.pathname.split("/")[1] ?? "";
-    const kind = location.pathname.startsWith("/parts/bom") ? "bom" : location.pathname.startsWith("/data/import") ? "import" : PAGE_KINDS[seg] ?? seg;
+    const kind = location.pathname.startsWith("/data/import") ? "import" : PAGE_KINDS[seg] ?? seg;
     const main = document.querySelector("main .content");
     const title = main?.querySelector("h1")?.textContent?.trim() ?? "";
     const on = [...(main?.querySelectorAll('[aria-current="step"], [aria-pressed="true"], [aria-selected="true"], [aria-current="page"]') ?? [])]      // a case's open step first (Ask on Analysis knows it is on Analysis)
@@ -80,9 +76,9 @@ async function ask(question: string, context: EntityRef | null, askedBy: string,
   return out;
 }
 
-/** Compare quotes for a part with the Sourcing analyst (starts a run). */
-async function compareRun(part: string, askedBy: string): Promise<{ run_id: string; status: string }> {
-  const res = await fetch(`/api/parts/${encodeURIComponent(part)}/compare-runs`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ asked_by: askedBy }) });
+/** Compare the quotes for a material with the Sourcing analyst (starts a run). */
+async function compareRun(material: string, askedBy: string): Promise<{ run_id: string; status: string }> {
+  const res = await fetch(`/api/materials/${encodeURIComponent(material)}/compare-runs`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ asked_by: askedBy }) });
   if (res.ok || res.status === 409) return (await res.json()) as { run_id: string; status: string };
   throw new Error(`${res.status} compare`);
 }
@@ -99,6 +95,12 @@ const replyRun = (message: string, askedBy: string) => startOn(`/api/messages/${
 /** The Data steward: read an unfamiliar CSV and propose how to load it. Nothing is loaded. */
 const stewardRun = (filename: string, text: string, askedBy: string) => startOn("/api/imports/steward-runs", { filename, text, asked_by: askedBy }, "steward");
 
+const qs = (f: Record<string, string | number | boolean | null | undefined>) => {
+  const p = new URLSearchParams(Object.entries(f).filter(([, v]) => v != null && v !== "").map(([k, v]) => [k, String(v)])).toString();
+  return p ? `?${p}` : "";
+};
+const enc = encodeURIComponent;
+
 export const api = {
   startRun,
   triageRun,
@@ -107,46 +109,51 @@ export const api = {
   ask,
   compareRun,
   health: () => get<Health>("/health"),
-  askExamples: () => get<{ question: string; context?: EntityRef | null }[]>("/ask/examples"),
+  askExamples: (kind?: string, key?: string, on?: EntityRef | null) =>
+    get<{ question: string; context?: EntityRef | null }[]>(`/ask/examples${qs({ page: kind, key, ctx_type: on?.type, ctx_id: on?.id, ctx_label: on?.label ?? undefined })}`),
+  askEverywhere: () => get<{ question: string; context?: EntityRef | null }[]>("/ask/everywhere"),
   agents: () => get<Agents>("/agents"),
   evalsSummary: () => get<EvalsSummary>("/evals/summary"),
-  counts: (buyer?: string | null) => get<Counts>(buyer ? `/counts?buyer=${encodeURIComponent(buyer)}` : "/counts"),
-  actionItems: (owner?: string) => get<ActionItem[]>(owner ? `/action-items?owner=${encodeURIComponent(owner)}` : "/action-items"),
-  options: (key: string) => get<FireOption[]>(`/action-items/${encodeURIComponent(key)}/options`),
-  item: (key: string, owner?: string | null) => get<ItemDetail>(`/action-items/${encodeURIComponent(key)}${owner ? `?owner=${encodeURIComponent(owner)}` : ""}`),
+  counts: (buyer?: string | null) => get<Counts>(`/counts${qs({ buyer })}`),
+  actionItems: (owner?: string | null) => get<ActionItem[]>(`/action-items${qs({ owner })}`),
+  item: (key: string, owner?: string | null) => get<ItemDetail>(`/action-items/${enc(key)}${qs({ owner })}`),
+  routes: (key: string, owner?: string | null) => get<Route[]>(`/action-items/${enc(key)}/routes${qs({ owner })}`),
+  itemRuns: (key: string) => get<Run[]>(`/action-items/${enc(key)}/runs`),
+  choose: (key: string, kind: string, by: string, reason = "") => post<Action>(`/action-items/${enc(key)}/routes/${enc(kind)}/choose`, { by, reason }),
+  stage: (key: string, body: { kind: "note" | "record" | "erp_update"; staged_by: string; text: string; to?: string; reason?: string; recheck_on?: string | null; option_kind?: string | null }) =>
+    post<Action>(`/action-items/${enc(key)}/actions`, body),
+  recordControl: (itemKey: string, control: string, by: string) => post<Action>(`/action-items/${enc(itemKey)}/controls`, { control, by }),
   run: (id: string) => get<RunDetail>(`/runs/${id}`),
-  actions: (state?: Action["state"]) => get<Action[]>(state ? `/actions?state=${state}` : "/actions"),
+  runs: () => get<Run[]>("/runs"),
+  actions: (state?: Action["state"]) => get<Action[]>(`/actions${qs({ state })}`),
+  actionsFor: (itemKey: string) => get<Action[]>(`/actions${qs({ item_key: itemKey })}`),
   action: (id: string) => get<Action>(`/actions/${id}`),
   editAction: (id: string, subject: string, body: string, edited_by: string, decision?: { reason?: string; recheck_on?: string }) => patch<Action>(`/actions/${id}`, "PATCH", { subject, body, edited_by, ...(decision ?? {}) }),
-  order: (poLine: string) => get<OrderLine>(`/orders/${encodeURIComponent(poLine)}`),
   approve: (id: string, payload_hash: string, approved_by: string, confirm_unverified = false) => post<Action>(`/actions/${id}/approve`, { payload_hash, approved_by, ...(confirm_unverified ? { confirm_unverified } : {}) }),
   reject: (id: string, reason: string, rejected_by: string) => post<Action>(`/actions/${id}/reject`, { reason, rejected_by }),
-  messages: (f: { q?: string; kind?: string; supplier?: string; trust?: string } = {}) => {
-    const p = new URLSearchParams(Object.entries(f).filter(([, v]) => v) as [string, string][]).toString();
-    return get<MessageSummary[]>(p ? `/messages?${p}` : "/messages");
-  },
-  thread: (id: string) => get<MessageDetail>(`/messages/${encodeURIComponent(id)}`),
+  messages: (f: { q?: string; owner?: string | null; kind?: string; trust?: string } = {}) => get<MessageSummary[]>(`/messages${qs(f)}`),
+  thread: (id: string) => get<MessageDetail>(`/messages/${enc(id)}`),
   dataIssues: () => get<DataIssue[]>("/data-issues"),
-  partOffers: (part: string) => get<OfferView[]>(`/parts/${encodeURIComponent(part)}/offers`),
-  compare: (part: string, qty?: number) => get<BidTab>(`/parts/${encodeURIComponent(part)}/compare${qty ? `?qty=${qty}` : ""}`),
-  supplier: (id: string) => get<SupplierDetail>(`/suppliers/${encodeURIComponent(id)}`),
   stamp: () => get<BuildStamp>("/data/stamp"),
   steps: () => get<BuildStep[]>("/data/steps"),
-  products: () => get<ProductOut[]>("/products"),
-  bom: (product: string) => get<BomTree>(`/products/${encodeURIComponent(product)}/bom`),
-  partDetail: (part: string) => get<PartDetail>(`/parts/${encodeURIComponent(part)}`),
-  phasesLine: (line: string) => get<Ladder>(`/phases?po_line=${encodeURIComponent(line)}`),
-  phases: (part: string) => get<Ladder>(`/phases?part=${encodeURIComponent(part)}`),
-  builds: () => get<BuildSummary[]>("/builds"),
-  readiness: (product: string, month: string) => get<BuildReadiness>(`/builds/${encodeURIComponent(product)}/${encodeURIComponent(month)}/readiness`),
-  whereUsed: (part: string) => get<WhereUsedRow[]>(`/parts/${encodeURIComponent(part)}/where-used`),
-  runs: () => get<Run[]>("/runs"),
-  actionsFor: (itemKey: string) => get<Action[]>(`/actions?item_key=${encodeURIComponent(itemKey)}`),
-  recordControl: (itemKey: string, control: string, by: string) => post<Action>(`/action-items/${encodeURIComponent(itemKey)}/controls`, { control, by }),
-  orders: () => get<PoLine[]>("/orders"),
-  suppliers: () => get<Supplier[]>("/suppliers"),
-  parts: () => get<Part[]>("/parts"),
-  forecast: () => get<ForecastRow[]>("/forecast"),
+  people: () => get<Person[]>("/people"),
+  search: (q: string) => get<SearchHit[]>(`/search${qs({ q })}`),
+  vendors: () => get<VendorRow[]>("/vendors"),
+  vendor: (id: string) => get<VendorDetail>(`/vendors/${enc(id)}`),
+  vendorQuotes: (id: string) => get<VendorQuote[]>(`/vendors/${enc(id)}/quotes`),
+  materials: () => get<MaterialRow[]>("/materials"),
+  material: (code: string) => get<MaterialDetail>(`/materials/${enc(code)}`),
+  prs: (f: { status?: string; buyer?: string | null; project?: string } = {}) => get<PrLine[]>(`/prs${qs(f)}`),
+  pr: (no: string) => get<PrDetail>(`/prs/${enc(no)}`),
+  pos: (f: { status?: string; buyer?: string | null; project?: string; vendor?: string; material?: string } = {}) => get<PoLine[]>(`/pos${qs(f)}`),
+  po: (no: string) => get<PoDetail>(`/pos/${enc(no)}`),
+  order: (line: string) => get<PoLine>(`/orders/${line}`),
+  ladder: (f: { pr_line?: string; po_line?: string }) => get<Ladder>(`/ladder${qs(f)}`),
+  projects: () => get<ProjectRow[]>("/projects"),
+  requirements: (project?: string) => get<RequirementRow[]>(`/requirements${qs({ project })}`),
+  supply: (project: string, material: string) => get<SupplyByMonth>(`/supply${qs({ project, material })}`),
+  workfronts: (project: string) => get<FrontStatus[]>(`/workfronts${qs({ project })}`),
+  cs: (no: string) => get<CsView>(`/cs/${no}`),
 };
 
 /** Live run events: Server-Sent Events (reconnects with Last-Event-ID by itself). Returns an unsubscribe. */

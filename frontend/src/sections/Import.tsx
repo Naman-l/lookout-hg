@@ -14,11 +14,11 @@ import { Button, EmptyState, Field, Notice, PageHeader, Row, RowGroup, Skeleton,
 import { ReadAFile } from "./Steward";
 import { useMe } from "../api/useMe";
 
-const fmt = (n: number) => n.toLocaleString("en-US");
+const fmt = (n: number) => n.toLocaleString("en-IN");
 
 type Stage = "questions" | "dryrun" | "done";
 
-const KIND: Record<string, string> = { alias: "Same company", currency: "Currency", origin: "Country of origin", duplicate_row: "Repeated row", possible_duplicate: "Possible repeat", stock_count: "Stock on hand", other: "Question" };
+const KIND: Record<string, string> = { alias: "Same company or project", currency: "Money unit", origin: "Origin", duplicate_row: "Repeated row", possible_duplicate: "Possible repeat", stock_count: "Stock on site", other: "Question" };
 
 /** Import files: a short deck of questions (one card covers many entries), a dry run, then approve and load. */
 export function Import() {
@@ -119,7 +119,7 @@ export function Import() {
 function sameCase(q: ImportQuestion, items: ActionItem[]): ActionItem | null {
   const want = new Set(Array.isArray(q.entries) ? q.entries : []);
   if (!want.size) return null;
-  return items.find((i) => { const parts = (i.refs ?? []).filter((r) => r.type === "part").map((r) => r.id); return parts.length === want.size && parts.every((p) => want.has(p)); }) ?? null;
+  return items.find((i) => { const recs = (i.refs ?? []).filter((r) => r.type === "material" || r.type === "pr_line" || r.type === "po_line").map((r) => r.id); return recs.length === want.size && recs.every((p) => want.has(p)); }) ?? null;
 }
 
 function Card({ q, index, total, meta, onToday, me, onAnswer }: {
@@ -146,12 +146,12 @@ function Card({ q, index, total, meta, onToday, me, onAnswer }: {
           {stock ? <b className="unk">not in the data</b> : <b>{q.proposed.answer}</b>}
           {q.proposed.effect && <p>{q.proposed.effect[0].toUpperCase() + q.proposed.effect.slice(1).replace(/[.\s]+$/, "")}.</p>}
         </div>
-        {onToday && <p className="im-today">The same {fmt(q.covers)} {q.kind === "origin" ? (q.covers === 1 ? "part is" : "parts are") : q.covers === 1 ? "entry is" : "entries are"} on Today: <Link to={`/items/${encodeURIComponent(onToday.key)}`}>{onToday.title}</Link> · {statusOf(onToday, me, new Map()).word}</p>}
+        {onToday && <p className="im-today">The same {fmt(q.covers)} {q.kind === "origin" ? (q.covers === 1 ? "part is" : "parts are") : q.covers === 1 ? "entry is" : "entries are"} on Today: <Link to={`/items/${encodeURIComponent(onToday.key)}`}>{onToday.title}</Link> · {statusOf(onToday, me).word}</p>}
         {(q.examples ?? []).length > 0 && (
           <table className="dm-table im-ex">
             <caption className="dm-sr">Examples</caption>
             <thead><tr><th scope="col">Written as</th><th scope="col">Becomes</th></tr></thead>
-            <tbody>{(q.examples ?? []).slice(0, 3).map((e) => <tr key={`${e.from}${e.to}`}><td>{e.from}</td><td>{/^unknown$/i.test(e.to) ? "Left blank" : e.to}{e.note && <span className="dm-hint"> ({e.note})</span>}</td></tr>)}</tbody>
+            <tbody>{(q.examples ?? []).slice(0, 3).map((e) => <tr key={`${e.from}${e.to}`}><td>{e.from}</td><td>{/^unknown$/i.test(e.to ?? "") ? "Left blank" : e.to}{e.note && <span className="dm-hint"> ({e.note})</span>}</td></tr>)}</tbody>
           </table>
         )}
         {!changing && (

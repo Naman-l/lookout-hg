@@ -1,0 +1,15 @@
+Procurement Turn Around Time (PR to PO) 01/08/2026 ~ 30/09/2026
+Sr. No.,Vertical,Group,Project,PR Raised,PR Closed,Avg TAT (Days)
+a,Railway,Aurangabad,P-Way,3,3,22
+b,Railway,Aurangabad,S&T,1,0,0
+c,Railway,Aurangabad,OHE,1,0,0
+2,Railway,,Dhule - P-Way,9,7,20
+3,Railway,,Gaya - OHE,10,2,20
+4,Railway,,Kanpur,3,3,29
+5,BESS,,Banaskantha,4,4,9.5
+6,BESS,,Dholera,6,5,7.6
+7,Solar,,Bikaner,2,0,0
+8,Solar,,Jodhpur,0,0,0
+9,Solar,,Bikaner O&M,6,0,0
+10,Solar,,Jodhpur O&M,1,0,0
+11,TL,,TBCB - Angul,6,4,11

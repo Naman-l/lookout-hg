@@ -8,12 +8,12 @@
   --c-ink: #000; --c-cinder: #57534e; --c-gravel: #777169; --c-slate: #a59f97; --c-fog: #b1b0b0; --c-chalk: #e5e5e5; --c-powder: #f5f3f1; --c-stone: #ece9e5; --c-white: #fff; --c-coal: #222;
   --c-signal: #0447ff; --c-ember: #ff4704;
   --c-risk: #e11d48; --c-amber: #f59e0b; --c-green: #059669;
-  --robot-1: #4a6fb0; --robot-2: #c08a2e; --robot-3: #8a6bbf; /* the robots' identity colours by slot (slate blue, ochre, lavender) */
-  --robot-off: #d6d1cb; --go: #047857; --go-hover: #065f46; --no-line: #be123c66; --ink-btn: #111; --t-micro: 11px; --e-menu: 0 0 0 1px #0000000f, 0 8px 24px #00000014; --stage-past: #8a847d; --stage-todo: #d9d4ce; --stage-line: #e4e0db; --row-hover: #faf9f7; --skel: #efece8; /* Today: a robot not affected, the stage line's passed and future stops, a row under the pointer, a loading bar */
-  --robot-1-bg: #f3f5fa; --robot-2-bg: #fbf7f0; --robot-3-bg: #f6f3fa; --short-hatch: #a8a29e; --t-answer: 24px; --t-answer-2: 18px; --t-note: 12.5px; --r-card: 10px; --r-bar: 6px; /* Robots (FINAL 05): each robot's banner tint (its colour at ~6%), the shortfall hatch, the banner's answer, a case card's sub-line, card and bar radii */
+  --vert-roads: #8a6a3e; --vert-railway: #4a6fb0; --vert-bess: #2f8f6f; --vert-solar: #c08a2e; --vert-td: #8a6bbf; /* the five verticals' identity colours (road earth, rail slate, battery green, sun ochre, line lavender) */
+  --vert-off: #d6d1cb; --go: #047857; --go-hover: #065f46; --no-line: #be123c66; --ink-btn: #111; --t-micro: 11px; --e-menu: 0 0 0 1px #0000000f, 0 8px 24px #00000014; --stage-past: #8a847d; --stage-todo: #d9d4ce; --stage-line: #e4e0db; --row-hover: #faf9f7; --skel: #efece8; /* Today: a robot not affected, the stage line's passed and future stops, a row under the pointer, a loading bar */
+  --vert-bg: #f6f4f1; --short-hatch: #a8a29e; --t-answer: 24px; --t-answer-2: 18px; --t-note: 12.5px; --r-card: 10px; --r-bar: 6px; /* Robots (FINAL 05): each robot's banner tint (its colour at ~6%), the shortfall hatch, the banner's answer, a case card's sub-line, card and bar radii */
 
   /* roles: surface, text, action */
-  --surface: var(--c-white); --raised: var(--c-powder); --hover: var(--c-stone); --line: var(--c-chalk); --scrim: #00000066;
+  --surface: var(--c-white); --raised: var(--c-powder); --hover: var(--c-stone); --line: var(--c-chalk); --scrim: #00000066; --scrim-soft: #00000014;
   --ink: var(--c-ink); --ink-2: var(--c-cinder); --ink-3: #6b655d; --ink-4: #8a8379; --ink-5: var(--c-fog); /* ink-3 reads at 4.5:1 or better on every surface; ink-4 (hints, inactive) at 3:1 */
   --accent: var(--c-signal); --accent-bg: #eaf0ff; --fill: var(--c-ink); --fill-hover: var(--c-coal); --on-fill: var(--c-white); --badge: var(--c-ember);
 
@@ -35,6 +35,7 @@
   --ai-bg: #f1f7f7; --ai: var(--agent-lookout);
   --agent-lookout: #0b7a85; --agent-supply_planner: #4f6fa6; --agent-buyers_clerk: #4f8a5b;
   --agent-tariff_analyst: #a8813f; --agent-sourcing_analyst: #7a6a9e; --agent-verifier: #5f6b73;
+  --agent-site_planner: #4f6fa6; --agent-price_analyst: #a8813f; --agent-inbox_analyst: #9a5b6f; --agent-data_steward: #5f6b73; /* the specialists by their HG names */
 
   /* type: five steps, one family, one mono */
   --font: "Inter Variable", Inter, -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
@@ -46,8 +47,8 @@
   --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px; --s7: 48px;
   --r-xs: 2px; --r-sm: 8px; --r-md: 12px; --r-lg: 16px; --r-sheet: 24px; --r-pill: 9999px;
   --row: 56px; --row-2: 64px; --control: 36px; --chip: 24px; --tile: 88px; --gutter: 16px;
-  --composer: 72px; --side: 232px; --rail: 360px; /* the rail grows with the window: 400 from 1440, 440 from 1920 (shell.css) */
-  --list: 360px; --dock: 64px; --top: 48px; --pad-x: 32px; --measure: 72ch;
+  --composer: 0px; --side: 232px; --rail: 360px; /* the rail grows with the window: 400 from 1440, 440 from 1920 (shell.css) */
+  --list: 360px; --dock: 64px; --top: 64px; --pad-x: 32px; --measure: 72ch;
   --e-1: 0 0 0 1px #0000000f, 0 1px 2px #0000000a; --e-2: 0 -12px 32px #00000026; --e-side: -1px 0 0 var(--line), -12px 0 32px #0000000d;
   --dur: .15s; --ease: cubic-bezier(.25, .46, .45, .94);
 }

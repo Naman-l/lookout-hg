@@ -1,0 +1,36 @@
+Type,Number,PO No.,Vendor Code,Vendor,Amount (INR),To Open By,Issued On,Expiry,Bank,Status,Remarks
+LC,,4500123578,100731,"Huaxin Energy Storage Co., Ltd.","3,200,000,016",30.10.2026,,,,Pending,Bank limit enhancement with Finance; draft LC with the bank
+ABG,ABG/UTPL/2025/118,4500120419,100706,Ujjwal Transformers Pvt Ltd,"26,400,000",,02.01.2026,31.10.2026,Canara Bank (vendor's banker),Live,Against 10% advance; IDT not yet delivered
+ABG,ABG/KPT/2026/031,4500120768,100701,Kalinga Power Transformers Pvt Ltd,"16,200,000",,05.02.2026,31.03.2027,Union Bank (vendor's banker),Live,Against 10% advance
+ABG,ABG/KPT/2026/044,4500121346,100701,Kalinga Power Transformers Pvt Ltd,"8,300,000",,20.03.2026,30.04.2027,Union Bank (vendor's banker),Live,Against 10% advance
+ABG,ABG/UCPL/2026/007,4500121087,100712,Utkal Conductors Pvt Ltd,"17,850,000",,03.03.2026,28.02.2027,Indian Bank (vendor's banker),Live,Against 10% advance
+ABG,ABG/KAL/2026/783,4500120430,100701,Kalinga Power Transformers Pvt Ltd,"16,200,000",,02.01.2026,26.02.2027,Vendor's banker,Live,Against 10% advance
+LC,LC/HG/2512/64,4500120461,100732,Tejas PCS Systems,"340,800,000",27.12.2025,29.12.2025,27.06.2026,State Bank of India,Opened,
+LC,LC/HG/2601/96,4500120511,100731,"Huaxin Energy Storage Co., Ltd.","1,600,000,008",06.01.2026,08.01.2026,07.07.2026,State Bank of India,Opened,
+ABG,ABG/MAH/2026/475,4500120556,100711,Mahakal Tower Structures,"4,600,000",,20.01.2026,30.01.2027,Vendor's banker,Live,Against 10% advance
+LC,LC/HG/2601/51,4500120738,100732,Tejas PCS Systems,"170,400,000",14.01.2026,16.01.2026,15.07.2026,State Bank of India,Opened,
+ABG,ABG/ARY/2026/802,4500120796,100702,Arya Switchgear and GIS Ltd,"19,300,000",,17.02.2026,02.03.2027,Vendor's banker,Live,Against 10% advance
+ABG,ABG/RAI/2026/374,4500120940,100305,Raigarh Rolling Mills Ltd,"3,474,727",,26.02.2026,18.02.2027,Vendor's banker,Live,Against 10% advance
+ABG,ABG/MAH/2026/532,4500121010,100711,Mahakal Tower Structures,"5,952,000",,12.03.2026,22.04.2027,Vendor's banker,Live,Against 10% advance
+ABG,ABG/MAH/2026/844,4500121032,100711,Mahakal Tower Structures,"21,120,000",,11.03.2026,08.02.2027,Vendor's banker,Live,Against 10% advance
+ABG,ABG/RAI/2026/795,4500121229,100305,Raigarh Rolling Mills Ltd,"3,210,816",,10.03.2026,08.02.2027,Vendor's banker,Live,Against 10% advance
+LC,LC/HG/2603/48,4500121332,100721,Anant Power Cables Pvt Ltd,"132,300,000",07.03.2026,09.03.2026,05.09.2026,State Bank of India,Opened,
+LC,LC/HG/2603/72,4500121341,100721,Anant Power Cables Pvt Ltd,"94,500,000",20.03.2026,22.03.2026,18.09.2026,State Bank of India,Opened,
+LC,LC/HG/2603/35,4500121361,100721,Anant Power Cables Pvt Ltd,"14,350,000",16.03.2026,18.03.2026,14.09.2026,State Bank of India,Opened,
+ABG,ABG/UJJ/2026/703,4500121591,100706,Ujjwal Transformers Pvt Ltd,"10,560,000",,19.04.2026,09.06.2027,Vendor's banker,Live,Against 10% advance
+ABG,ABG/TRI/2026/894,4500121743,100612,Trishul Catenary Wires,"2,108,000",,19.04.2026,20.05.2027,Vendor's banker,Live,Against 10% advance
+ABG,ABG/TRI/2026/479,4500121755,100612,Trishul Catenary Wires,"3,740,000",,07.05.2026,15.06.2027,Vendor's banker,Live,Against 10% advance
+ABG,ABG/TRI/2026/249,4500121758,100612,Trishul Catenary Wires,"2,176,000",,07.05.2026,17.05.2027,Vendor's banker,Live,Against 10% advance
+ABG,ABG/RAI/2026/433,4500121959,100305,Raigarh Rolling Mills Ltd,"2,877,777",,21.05.2026,02.04.2027,Vendor's banker,Live,Against 10% advance
+ABG,ABG/RAI/2026/336,4500122078,100305,Raigarh Rolling Mills Ltd,"3,196,974",,27.05.2026,20.06.2027,Vendor's banker,Live,Against 10% advance
+ABG,ABG/RAI/2026/963,4500122097,100305,Raigarh Rolling Mills Ltd,"2,992,106",,16.05.2026,09.06.2027,Vendor's banker,Live,Against 10% advance
+ABG,ABG/RAI/2026/194,4500122216,100305,Raigarh Rolling Mills Ltd,"3,303,676",,03.06.2026,22.04.2027,Vendor's banker,Live,Against 10% advance
+ABG,ABG/RAI/2026/222,4500122315,100305,Raigarh Rolling Mills Ltd,"3,097,914",,11.06.2026,27.04.2027,Vendor's banker,Live,Against 10% advance
+ABG,ABG/RAI/2026/798,4500122363,100305,Raigarh Rolling Mills Ltd,"3,420,164",,12.06.2026,02.06.2027,Vendor's banker,Live,Against 10% advance
+ABG,ABG/RAI/2026/843,4500122628,100305,Raigarh Rolling Mills Ltd,"4,488,325",,20.07.2026,26.07.2027,Vendor's banker,Live,Against 10% advance
+ABG,ABG/RAI/2026/267,4500122718,100305,Raigarh Rolling Mills Ltd,"2,000,779",,27.07.2026,05.09.2027,Vendor's banker,Live,Against 10% advance
+ABG,ABG/RAI/2026/196,4500123162,100305,Raigarh Rolling Mills Ltd,"2,659,587",,29.08.2026,13.07.2027,Vendor's banker,Live,Against 10% advance
+ABG,ABG/RAI/2026/582,4500123358,100305,Raigarh Rolling Mills Ltd,"3,569,184",,17.09.2026,10.08.2027,Vendor's banker,Live,Against 10% advance
+ABG,ABG/RAI/2026/625,4500123512,100305,Raigarh Rolling Mills Ltd,"3,513,441",,13.10.2026,24.11.2027,Vendor's banker,Live,Against 10% advance
+ABG,ABG/RAI/2026/515,4500123746,100305,Raigarh Rolling Mills Ltd,"3,032,090",,20.10.2026,27.09.2027,Vendor's banker,Live,Against 10% advance
+ABG,ABG/RAI/2026/557,4500123757,100305,Raigarh Rolling Mills Ltd,"3,829,253",,13.10.2026,20.10.2027,Vendor's banker,Live,Against 10% advance

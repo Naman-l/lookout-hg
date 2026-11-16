@@ -29,14 +29,16 @@
 .td-menu button:hover,.td-menu button:focus-visible{background:var(--raised)} .td-menu button.on{background:var(--raised);font-weight:500} .td-menu .any{color:var(--ink-3)}
 .td-rf{display:inline-flex;gap:4px;margin-left:6px}
 .td-rf button{font:inherit;font-size:var(--t-caption);font-weight:600;cursor:pointer;color:var(--ink-3);user-select:none;min-width:28px;min-height:24px;padding:4px 6px;background:none;border:0;border-radius:var(--r-xs)}
-.td-rf button:hover{color:var(--ink)} .td-rf .on.r-1{color:var(--robot-1)} .td-rf .on.r-2{color:var(--robot-2)} .td-rf .on.r-3{color:var(--robot-3)}
+.td-rf button:hover{color:var(--ink)} .td-rf .on.v-roads{color:var(--vert-roads)} .td-rf .on.v-railway{color:var(--vert-railway)} .td-rf .on.v-bess{color:var(--vert-bess)} .td-rf .on.v-solar{color:var(--vert-solar)} .td-rf .on.v-td{color:var(--vert-td)}
+.td-line{margin:6px 0 0;font-size:var(--t-small);color:var(--ink-2);font-variant-numeric:tabular-nums}
+.td-fold{display:flex;flex-wrap:wrap;gap:var(--s2);width:100%}
 .td-showing{font-size:var(--t-caption);color:var(--ink-3);margin-left:auto}
 .td-showing button{font:inherit;color:var(--ink-2);text-decoration:underline;text-underline-offset:2px;cursor:pointer;background:none;border:0;padding:0}
-.td-hdr,.td-row{display:grid;grid-template-columns:minmax(0,1fr) 80px 110px 84px 112px;column-gap:16px}
-.td.td-ev .td-hdr,.td.td-ev .td-row{grid-template-columns:minmax(0,1fr) 120px 80px 110px 84px 112px}
+.td-hdr,.td-row{display:grid;grid-template-columns:minmax(0,1fr) 116px 96px 72px 112px;column-gap:16px}
+.td.td-ev .td-hdr,.td.td-ev .td-row{grid-template-columns:minmax(0,1fr) 128px 116px 96px 72px 112px}
 .td-hdr{font-size:var(--t-caption);color:var(--ink-3);padding:8px 0;border-bottom:1px solid var(--line)}
 .td-band{font-size:var(--t-caption);color:var(--ink-3);padding:var(--s4) 0 var(--s2);border-bottom:1px solid var(--line)}
-.td-rl{display:flex;gap:4px} .td-rl span{width:22px;text-align:center;font-size:var(--t-micro);font-weight:600;color:var(--ink-3)}
+.td-vl{display:flex;gap:1px} .td-vl span{width:22px;display:grid;place-items:center}
 .td-n{text-align:right}
 .td-row{min-height:58px;border-bottom:1px solid var(--line);align-items:start;padding-top:10px;color:var(--ink);text-decoration:none}
 .td-row:hover{background:var(--row-hover);text-decoration:none}
@@ -45,12 +47,10 @@
 .td-it b{font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .td-it small{font-size:var(--t-caption);color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:2px 0 8px}
 .td-own{font-size:var(--t-small);color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.td-rb{display:flex;gap:4px;align-items:center;height:22px;margin-top:-1px}
-.td-rb i{width:22px;height:22px;display:grid;place-items:center;color:var(--robot-off)}
-.td-rb i.on.r-1{color:var(--robot-1)} .td-rb i.on.r-2{color:var(--robot-2)} .td-rb i.on.r-3{color:var(--robot-3)}
-.td-rb .robot-ic{color:inherit}
+.td-vt{display:flex;gap:1px;align-items:center;height:22px;margin-top:-1px}
+.td-vt i{width:22px;height:22px;display:grid;place-items:center;color:var(--vert-off)}
 .td-amt{font-weight:500;font-variant-numeric:tabular-nums;white-space:nowrap} .td-amt small{font-size:var(--t-caption);font-weight:400;color:var(--ink-3)}
-.td-by{font-variant-numeric:tabular-nums;white-space:nowrap}
+.td-by{font-variant-numeric:tabular-nums;white-space:nowrap} .td-by.late{color:var(--critical)}
 .td-amt.none,.td-by.none{color:var(--ink-4);font-weight:400}
 .td-st{display:flex;flex-direction:column;gap:4px;padding-top:6px}
 .td-st line.todo{stroke:var(--stage-line)} .td-st line.past{stroke:var(--stage-past)}
@@ -61,9 +61,11 @@
 .td-empty{padding:24px 0;color:var(--ink-3);margin:0}
 .td-sk{height:58px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:16px}
 .td-sk i{display:block;height:10px;border-radius:var(--r-xs);background:var(--skel);width:56px} .td-sk i.w{width:46%;margin-right:auto}
-/* Narrower screens: the Owner column goes first, then the robots; a phone reads title, facts, then one line of figures. */
-@media (max-width:1100px){.td.td-ev .td-hdr,.td.td-ev .td-row{grid-template-columns:minmax(0,1fr) 80px 110px 84px 112px} .td.td-ev .td-own,.td.td-ev .td-hdr>span:nth-child(2){display:none}}
-@media (max-width:900px){.td-hdr,.td-row,.td.td-ev .td-hdr,.td.td-ev .td-row{grid-template-columns:minmax(0,1fr) 80px 90px 100px} .td-by,.td-hdr>span:nth-last-child(2){display:none}}
-.td.phone .td-row{grid-template-columns:minmax(0,1fr) auto;row-gap:2px} .td.phone .td-rbc,.td.phone .td-own,.td.phone .td-by{display:none}
+/* Narrower screens: the Owner column goes first, then the verticals; a phone reads title, facts, then one line of figures. */
+@media (max-width:1100px){.td.td-ev .td-hdr,.td.td-ev .td-row{grid-template-columns:minmax(0,1fr) 116px 96px 72px 112px} .td.td-ev .td-own,.td.td-ev .td-hdr>span:nth-child(2){display:none}}
+@media (max-width:900px){.td-hdr,.td-row,.td.td-ev .td-hdr,.td.td-ev .td-row{grid-template-columns:minmax(0,1fr) 96px 100px} .td-by,.td-vtc,.td-hdr>span:nth-last-child(2),.td-vl{display:none}}
+.td.phone .td-row{grid-template-columns:minmax(0,1fr) auto;row-gap:2px} .td.phone .td-vtc,.td.phone .td-own,.td.phone .td-by{display:none}
 .td.phone .td-amt{grid-column:2;grid-row:1} .td.phone .td-stc{grid-column:1 / -1;padding-bottom:8px} .td.phone .td-q{width:100%} .td.phone .td-rf{margin-left:0}
 .td.phone .td-head{position:static}
+.td.phone .td-title h1{display:none} .td.phone .td-title{justify-content:flex-end}
+.td.phone .td-tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;gap:16px}

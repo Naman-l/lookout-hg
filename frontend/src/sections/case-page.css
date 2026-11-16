@@ -72,7 +72,7 @@
 .cp-ck small{margin-left:auto;font-size:var(--t-caption);color:var(--ink-3)}
 @media (max-width:1100px){.cp-foot{flex-wrap:wrap} .cp-foot .pp{flex-basis:100%}}
 @media (max-width:1100px){.cp-cols{grid-template-columns:minmax(0,1fr)}}
-@media (max-width:760px){.cp-ch{flex-wrap:wrap;gap:var(--s1) var(--s3)} .cp-done .sum{display:none} .cp-og .l1{white-space:normal;flex-wrap:wrap} .cp-og .l2{flex-wrap:wrap;white-space:normal} .cp-kv{grid-template-columns:88px minmax(0,1fr)} .cp-kv dd{overflow-wrap:anywhere} .cp-t{display:block;overflow-x:auto} .cp-fg{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:760px){.cp-ch{flex-wrap:wrap;gap:var(--s1) var(--s3)} .cp-cs{white-space:normal} .cp-done .sum{display:none} .cp-og .l1{white-space:normal;flex-wrap:wrap} .cp-og .l2{flex-wrap:wrap;white-space:normal} .cp-kv{grid-template-columns:88px minmax(0,1fr)} .cp-kv dd{overflow-wrap:anywhere} .cp-t{display:block;overflow-x:auto} .cp-fg{grid-template-columns:minmax(0,1fr)}}
 .cp-done .cp-link.run{margin-left:auto} .cp-done .cp-link.run + .cp-link{margin-left:var(--s4)}
 .cp-rail .dd{grid-template-columns:52px minmax(0,1fr) auto} .cp-rail .dd small{font-size:var(--t-caption);color:var(--ink-3);text-align:right;white-space:nowrap} .cp-rail .nf,.cp-sec .nf{color:var(--ink-2);margin-top:2px}
 @media (max-width:1100px){.cp-foot .b9{white-space:normal;height:auto;min-height:var(--control);padding-top:var(--s1);padding-bottom:var(--s1);text-align:left}}
@@ -92,7 +92,7 @@
 .cp-fd b{display:block;font-size:var(--t-small);font-weight:500;color:var(--ink)} .cp-fd span{display:block;font-size:var(--t-caption);color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cp-rail .dd span{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 /* r5 (ITEM-F): a sticky header (title, one stakes line, the steps in words), one step on screen, plain headings, no boxes */
-.cp-head{position:sticky;top:var(--top);z-index:12;background:var(--surface);padding-top:var(--s1)}
+.cp-head{position:sticky;top:var(--top);z-index:12;background:var(--surface);padding-top:var(--s1);display:flow-root} /* flow-root: the step names under the track stay inside the header, on its background */
 .cp-meta .sk-r{display:inline-flex;align-items:baseline;gap:var(--s2);flex-wrap:wrap} .cp-meta .sk-r .cp-ri{align-self:center} .cp-meta .lb{color:var(--ink-2)} .cp-meta .mo{color:var(--ink-2)} .cp-meta b{color:var(--ink);font-weight:600} .cp-meta .q{font-size:var(--t-caption);color:var(--ink-3)} .cp-meta small{font-size:var(--t-caption);color:var(--ink-3)}
 .cp-steps{display:flex;align-items:center;gap:var(--s3);margin:var(--s4) 0 0;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
 .cp-steps .ln{flex:0 1 32px;min-width:12px;height:1px;background:var(--line-strong,var(--line))}

@@ -24,11 +24,20 @@ if not os.environ.get("ANTHROPIC_API_KEY") and (os.environ.get("OPENAI_API_KEY")
 
 from . import watcher  # noqa: E402  (after dotenv so LOOKOUT_EVENTS_DIR applies)
 from .api import health  # noqa: E402
-from .organism.prepare import on_startup as prepare_on_startup  # noqa: E402
 
-app = FastAPI(title="Lookout", version="0.1.0", description="A procurement workspace: a system of record and a system of action")
-app.router.add_event_handler("startup", prepare_on_startup)
-app.add_middleware(GZipMiddleware, minimum_size=1024)  # the parts and orders tables carry provenance per row; over the wire they are 10-20 KB
+from contextlib import asynccontextmanager  # noqa: E402
+
+
+@asynccontextmanager
+async def _lifespan(application: FastAPI):
+    """What the lanes ask to run at start-up (the morning run), registered on app.state.on_start by their mount()."""
+    for fn in getattr(application.state, "on_start", []):
+        await fn()
+    yield
+
+
+app = FastAPI(title="Lookout", version="0.1.0", description="A procurement workspace: a system of record and a system of action", lifespan=_lifespan)
+app.add_middleware(GZipMiddleware, minimum_size=1024)  # the records carry provenance per row; over the wire they are 10-20 KB
 
 
 @app.middleware("http")
@@ -46,62 +55,41 @@ async def request_events(request: Request, call_next):
 
 
 app.include_router(health.router, prefix="/api")
-# Lanes expose routers under backend/app/domain/<entity>/api.py and backend/app/organism/api.py; ORCH mounts them here.
-from .organism import api as organism_api  # noqa: E402
-
-app.include_router(organism_api.router, prefix="/api")
-from .organism import agents_api  # noqa: E402
-
-app.include_router(agents_api.router, prefix="/api")
-from .domain.attention.api import router as attention_router  # noqa: E402
-from .domain.orders.api import router as orders_router  # noqa: E402
-from .domain.suppliers.api import router as suppliers_router  # noqa: E402
-from .domain.parts.api import router as parts_router  # noqa: E402
-from .domain.inbox.api import router as inbox_router  # noqa: E402
-from .domain.demand.api import router as demand_router  # noqa: E402
-from .domain.imports.api import router as imports_router  # noqa: E402
-
-app.include_router(attention_router, prefix="/api")
-app.include_router(orders_router, prefix="/api")
-app.include_router(suppliers_router, prefix="/api")
-app.include_router(parts_router, prefix="/api")
-app.include_router(inbox_router, prefix="/api")
-app.include_router(demand_router, prefix="/api")
-app.include_router(imports_router, prefix="/api")
-from .domain.quotes.api import router as quotes_router  # noqa: E402
-app.include_router(quotes_router, prefix="/api")
+# Lanes expose routers under backend/app/domain/<entity>/api.py; ORCH mounts them here.
 from .domain.actions.api import router as actions_router  # noqa: E402
-app.include_router(actions_router, prefix="/api")
-from .domain.bom.api import router as bom_router  # noqa: E402
-app.include_router(bom_router, prefix="/api")
-from .domain.phases.api import router as phases_router  # noqa: E402
-app.include_router(phases_router, prefix="/api")
-from .domain.people.api import router as people_router  # noqa: E402
-app.include_router(people_router, prefix="/api")
-from .domain.consignments.api import router as consignments_router  # noqa: E402
-app.include_router(consignments_router, prefix="/api")
-from .domain.events.api import router as events_router  # noqa: E402
-app.include_router(events_router, prefix="/api")
 from .domain.annotate.api import router as annotate_router  # noqa: E402
-app.include_router(annotate_router, prefix="/api")
+from .domain.attention.api import router as attention_router  # noqa: E402
+from .domain.events.api import router as events_router  # noqa: E402
+from .domain.imports.api import router as imports_router  # noqa: E402
+from .domain.inbox.api import router as inbox_router  # noqa: E402
+from .domain.materials.api import router as materials_router  # noqa: E402
+from .domain.orders.api import router as orders_router  # noqa: E402
+from .domain.people.api import router as people_router  # noqa: E402
+from .domain.phases.api import router as ladder_router  # noqa: E402
+from .domain.projects.api import router as projects_router  # noqa: E402
+from .domain.prs.api import router as prs_router  # noqa: E402
+from .domain.quotes.api import router as quotes_router  # noqa: E402
+from .domain.requirements.api import router as requirements_router  # noqa: E402
 from .domain.search.api import router as search_router  # noqa: E402
-app.include_router(search_router, prefix="/api")
+from .domain.org.api import router as org_router  # noqa: E402
+from .domain.suppliers.api import router as vendors_router  # noqa: E402
 
-# Live counts owned by the ledger and the run store, registered with the sidebar's /api/counts.
-from . import db as _db  # noqa: E402
-from .domain.actions import ledger as _ledger  # noqa: E402
-from .domain.attention.api import COUNT_PROVIDERS  # noqa: E402
-from .organism.runs import store as _runs  # noqa: E402
+for r in (imports_router, people_router, attention_router, actions_router, inbox_router, annotate_router, search_router, vendors_router, materials_router, prs_router,
+          orders_router, quotes_router, ladder_router, projects_router, requirements_router, events_router, org_router):
+    app.include_router(r, prefix="/api")
+# lanes added after the records: insights, agents (see below)
+try:
+    from .domain.insights.api import router as insights_router  # noqa: E402
 
-COUNT_PROVIDERS["approvals_pending"] = lambda _s: len(_ledger.list_actions(_db.DB_PATH, "proposed"))
+    app.include_router(insights_router, prefix="/api")
+except ImportError:  # the Insights lane is optional while it is being built
+    pass
+try:
+    from .organism.api import mount as mount_agents  # noqa: E402
 
-
-def _runs_running(_s) -> int:
-    with _runs.connect(_db.DB_PATH) as con:
-        return con.execute("SELECT count(*) FROM runs WHERE status = 'running' AND parent_run_id IS NULL").fetchone()[0]
-
-
-COUNT_PROVIDERS["runs_running"] = _runs_running
+    mount_agents(app)
+except ImportError:
+    pass
 
 # The built UI is mounted last so it never shadows an API route; unknown /api paths answer 404, not the SPA.
 _DIST = _ROOT / "frontend" / "dist"

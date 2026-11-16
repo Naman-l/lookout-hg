@@ -1,0 +1,176 @@
+Project,Plant,Material,Material Description,Unit,Budget Rate (INR),Basis
+Tumkur,1138,11000020,Aggregate 20 mm,MT,690,Tender BOQ
+JH-13,1143,11000020,Aggregate 20 mm,MT,695,Tender BOQ
+JEC,1147,11000020,Aggregate 20 mm,MT,1131,Tender BOQ
+Ayodhya,1151,11000020,Aggregate 20 mm,MT,1508,Tender BOQ
+Narol,1152,11000020,Aggregate 20 mm,MT,955,Tender BOQ
+Tumkur,1138,11000110,Stone dust,MT,635,Tender BOQ
+JH-13,1143,11000110,Stone dust,MT,515,Tender BOQ
+JEC,1147,11000110,Stone dust,MT,699,Tender BOQ
+Tirupati,1148,11000110,Stone dust,MT,573,Tender BOQ
+Ayodhya,1151,11000110,Stone dust,MT,1444,Tender BOQ
+Narol,1152,11000110,Stone dust,MT,940,Tender BOQ
+JH-10,1142,11000120,WMM air cooled slag,MT,805,Tender BOQ
+Tumkur,1138,11000130,GSB Grade-I,MT,446,Tender BOQ
+JH-13,1143,11000130,GSB Grade-I,MT,353,Tender BOQ
+JEC,1147,11000130,GSB Grade-I,MT,468,Tender BOQ
+Tirupati,1148,11000130,GSB Grade-I,MT,563,Tender BOQ
+Ayodhya,1151,11000130,GSB Grade-I,MT,1303,Tender BOQ
+Tumkur,1138,11000210,"Sand, river (washed)",MT,847,Tender BOQ
+JH-10,1142,11000210,"Sand, river (washed)",MT,847,Tender BOQ
+JH-13,1143,11000210,"Sand, river (washed)",MT,943,Tender BOQ
+JEC,1147,11000210,"Sand, river (washed)",MT,1291,Tender BOQ
+Ayodhya,1151,11000210,"Sand, river (washed)",MT,1487,Tender BOQ
+Narol,1152,11000210,"Sand, river (washed)",MT,969,Tender BOQ
+Tumkur,1138,12000010,Cement OPC 53 grade,MT,4933,Tender BOQ
+JH-10,1142,12000010,Cement OPC 53 grade,MT,6449,Tender BOQ
+JH-13,1143,12000010,Cement OPC 53 grade,MT,4951,Tender BOQ
+JEC,1147,12000010,Cement OPC 53 grade,MT,5957,Tender BOQ
+Tirupati,1148,12000010,Cement OPC 53 grade,MT,5195,Tender BOQ
+Ayodhya,1151,12000010,Cement OPC 53 grade,MT,5751,Tender BOQ
+Narol,1152,12000010,Cement OPC 53 grade,MT,5509,Tender BOQ
+Tumkur,1138,12000110,GGBS,MT,3740,Tender BOQ
+JH-10,1142,12000110,GGBS,MT,3227,Tender BOQ
+JH-13,1143,12000110,GGBS,MT,2497,Tender BOQ
+JEC,1147,12000110,GGBS,MT,2370,Tender BOQ
+JH-10,1142,12000120,Fly ash,MT,596,Tender BOQ
+JH-13,1143,12000120,Fly ash,MT,426,Tender BOQ
+JEC,1147,12000120,Fly ash,MT,236,Tender BOQ
+Tirupati,1148,12000120,Fly ash,MT,942,Tender BOQ
+Ayodhya,1151,12000120,Fly ash,MT,1301,Tender BOQ
+Narol,1152,12000120,Fly ash,MT,1854,Tender BOQ
+Tumkur,1138,13000016,TMT bar Fe500D 16 mm,MT,54384,Tender BOQ
+Tumkur,1138,13000020,TMT bar Fe500D 20 mm,MT,50294,Tender BOQ
+JH-10,1142,13000016,TMT bar Fe500D 16 mm,MT,53497,Tender BOQ
+JH-10,1142,13000012,TMT bar Fe500D 12 mm,MT,51426,Tender BOQ
+JH-10,1142,13000020,TMT bar Fe500D 20 mm,MT,51968,Tender BOQ
+JH-13,1143,13000016,TMT bar Fe500D 16 mm,MT,53890,Tender BOQ
+JH-13,1143,13000020,TMT bar Fe500D 20 mm,MT,52972,Tender BOQ
+JEC,1147,13000016,TMT bar Fe500D 16 mm,MT,52132,Tender BOQ
+JEC,1147,13000012,TMT bar Fe500D 12 mm,MT,49655,Tender BOQ
+JEC,1147,13000020,TMT bar Fe500D 20 mm,MT,49769,Tender BOQ
+Tirupati,1148,13000016,TMT bar Fe500D 16 mm,MT,50410,Tender BOQ
+Tirupati,1148,13000012,TMT bar Fe500D 12 mm,MT,50143,Tender BOQ
+Ayodhya,1151,13000016,TMT bar Fe500D 16 mm,MT,50508,Tender BOQ
+Ayodhya,1151,13000012,TMT bar Fe500D 12 mm,MT,53552,Tender BOQ
+Ayodhya,1151,13000020,TMT bar Fe500D 20 mm,MT,51052,Tender BOQ
+Narol,1152,13000012,TMT bar Fe500D 12 mm,MT,56907,Tender BOQ
+Narol,1152,13000020,TMT bar Fe500D 20 mm,MT,53142,Tender BOQ
+Tumkur,1138,14000010,Bitumen VG-40,MT,78448,Tender BOQ
+JH-10,1142,14000010,Bitumen VG-40,MT,59802,Tender BOQ
+JH-13,1143,14000010,Bitumen VG-40,MT,84541,Tender BOQ
+JEC,1147,14000010,Bitumen VG-40,MT,36750,Tender BOQ
+Tirupati,1148,14000010,Bitumen VG-40,MT,77607,Tender BOQ
+Ayodhya,1151,14000010,Bitumen VG-40,MT,37467,Tender BOQ
+Narol,1152,14000010,Bitumen VG-40,MT,51053,Tender BOQ
+Tirupati,1148,14000030,Bitumen CRMB-55,MT,77158,Tender BOQ
+Tumkur,1138,14000110,Bitumen emulsion SS-1,MT,115878,Tender BOQ
+JH-10,1142,14000110,Bitumen emulsion SS-1,MT,69759,Tender BOQ
+JH-13,1143,14000110,Bitumen emulsion SS-1,MT,107611,Tender BOQ
+JEC,1147,14000110,Bitumen emulsion SS-1,MT,57195,Tender BOQ
+Tirupati,1148,14000110,Bitumen emulsion SS-1,MT,97647,Tender BOQ
+Ayodhya,1151,14000110,Bitumen emulsion SS-1,MT,62024,Tender BOQ
+Tumkur,1138,14000120,Bitumen emulsion RS-1,MT,59109,Tender BOQ
+JH-13,1143,14000120,Bitumen emulsion RS-1,MT,54416,Tender BOQ
+Tirupati,1148,14000120,Bitumen emulsion RS-1,MT,60128,Tender BOQ
+Ayodhya,1151,14000120,Bitumen emulsion RS-1,MT,26775,Tender BOQ
+JH-10,1142,13000110,HT strand 12.7 mm,MT,60151,Tender BOQ
+JH-13,1143,13000110,HT strand 12.7 mm,MT,61139,Tender BOQ
+JEC,1147,13000110,HT strand 12.7 mm,MT,70420,Tender BOQ
+Narol,1152,13000110,HT strand 12.7 mm,MT,71282,Tender BOQ
+JH-10,1142,12000210,Admixture PCE based,KG,71,Tender BOQ
+JEC,1147,12000210,Admixture PCE based,KG,91,Tender BOQ
+Tirupati,1148,12000210,Admixture PCE based,KG,49,Tender BOQ
+Ayodhya,1151,12000210,Admixture PCE based,KG,75,Tender BOQ
+Narol,1152,12000210,Admixture PCE based,KG,64,Tender BOQ
+JH-10,1142,15000010,HSD (high speed diesel),L,105,Tender BOQ
+Narol,1152,15000010,HSD (high speed diesel),L,94,Tender BOQ
+Tumkur,1138,15000020,LSHS / LDO,L,57,Tender BOQ
+JH-10,1142,15000020,LSHS / LDO,L,59,Tender BOQ
+Ayodhya,1151,15000020,LSHS / LDO,L,61,Tender BOQ
+JH-10,1142,41000110,RCC hume pipe NP3 600 mm,NO,610,Tender BOQ
+JH-13,1143,41000110,RCC hume pipe NP3 600 mm,NO,5005,Tender BOQ
+JEC,1147,41000110,RCC hume pipe NP3 600 mm,NO,6243,Tender BOQ
+Ayodhya,1151,41000110,RCC hume pipe NP3 600 mm,NO,6247,Tender BOQ
+JEC,1147,41000220,Geogrid biaxial,SQM,68,Tender BOQ
+Tirupati,1148,41000310,W-beam crash barrier,RM,2047,Tender BOQ
+JH-10,1142,41000010,Elastomeric bearing,CCM,0.81,Tender BOQ
+JEC,1147,41000010,Elastomeric bearing,CCM,0.83,Tender BOQ
+Narol,1152,41000010,Elastomeric bearing,CCM,1.05,Tender BOQ
+Narol,1152,41000020,POT-PTFE bearing,NO,25583,Tender BOQ
+Ayodhya,1151,13000220,Steel girder fabricated,MT,92288,Tender BOQ
+JEC,1147,41000510,Deck sheet (profiled),SQM,1045,Tender BOQ
+Narol,1152,41000510,Deck sheet (profiled),SQM,896,Tender BOQ
+JEC,1147,41000410,Drainage spout,NO,3075,Tender BOQ
+Narol,1152,41000410,Drainage spout,NO,2455,Tender BOQ
+RVNL,1902,11000010,Aggregate 10 mm,MT,1028,Revised estimate
+Kanpur,1903,11000010,Aggregate 10 mm,MT,964,Revised estimate
+Dhule,1904,11000010,Aggregate 10 mm,MT,832,Revised estimate
+Aurangabad,1905,11000010,Aggregate 10 mm,MT,780,Revised estimate
+Gaya,1906,11000010,Aggregate 10 mm,MT,1516,Revised estimate
+NDLS,1907,11000010,Aggregate 10 mm,MT,1215,Revised estimate
+Thane,2002,11000010,Aggregate 10 mm,MT,879,Revised estimate
+Anuppur,1908,11000010,Aggregate 10 mm,MT,523,Revised estimate
+RVNL,1902,11000020,Aggregate 20 mm,MT,1108,Revised estimate
+Kanpur,1903,11000020,Aggregate 20 mm,MT,1250,Revised estimate
+Dhule,1904,11000020,Aggregate 20 mm,MT,900,Revised estimate
+Aurangabad,1905,11000020,Aggregate 20 mm,MT,762,Revised estimate
+Gaya,1906,11000020,Aggregate 20 mm,MT,1893,Revised estimate
+NDLS,1907,11000020,Aggregate 20 mm,MT,1328,Revised estimate
+Thane,2002,11000020,Aggregate 20 mm,MT,823,Revised estimate
+Anuppur,1908,11000020,Aggregate 20 mm,MT,496,Revised estimate
+Dhule,1904,11000110,Stone dust,MT,952,Revised estimate
+Anuppur,1908,11000110,Stone dust,MT,1049,Revised estimate
+Gaya,1906,11000130,GSB Grade-I,MT,1412,Revised estimate
+Anuppur,1908,11000130,GSB Grade-I,MT,724,Revised estimate
+Dhule,1904,11000150,Track ballast 65 mm,MT,711,Revised estimate
+Aurangabad,1905,11000150,Track ballast 65 mm,MT,1146,Revised estimate
+Anuppur,1908,11000150,Track ballast 65 mm,MT,521,Revised estimate
+Aurangabad,1905,11000160,Blanketing material,MT,837,Revised estimate
+Gaya,1906,11000160,Blanketing material,MT,1104,Revised estimate
+Anuppur,1908,11000160,Blanketing material,MT,496,Revised estimate
+RVNL,1902,11000210,"Sand, river (washed)",MT,1247,Revised estimate
+Kanpur,1903,11000210,"Sand, river (washed)",MT,1068,Revised estimate
+Aurangabad,1905,11000210,"Sand, river (washed)",MT,1317,Revised estimate
+Gaya,1906,11000210,"Sand, river (washed)",MT,781,Revised estimate
+NDLS,1907,11000210,"Sand, river (washed)",MT,1222,Revised estimate
+Thane,2002,11000210,"Sand, river (washed)",MT,1163,Revised estimate
+RVNL,1902,12000010,Cement OPC 53 grade,MT,6130,Revised estimate
+Kanpur,1903,12000010,Cement OPC 53 grade,MT,5226,Revised estimate
+Dhule,1904,12000010,Cement OPC 53 grade,MT,5222,Revised estimate
+Aurangabad,1905,12000010,Cement OPC 53 grade,MT,5422,Revised estimate
+Gaya,1906,12000010,Cement OPC 53 grade,MT,6224,Revised estimate
+NDLS,1907,12000010,Cement OPC 53 grade,MT,5594,Revised estimate
+Thane,2002,12000010,Cement OPC 53 grade,MT,6290,Revised estimate
+Anuppur,1908,12000010,Cement OPC 53 grade,MT,5796,Revised estimate
+Thane,2002,12000110,GGBS,MT,4563,Revised estimate
+Kanpur,1903,12000120,Fly ash,MT,1081,Revised estimate
+NDLS,1907,12000120,Fly ash,MT,1699,Revised estimate
+RVNL,1902,13000016,TMT bar Fe500D 16 mm,MT,59806,Revised estimate
+RVNL,1902,13000012,TMT bar Fe500D 12 mm,MT,58158,Revised estimate
+RVNL,1902,13000020,TMT bar Fe500D 20 mm,MT,54909,Revised estimate
+Kanpur,1903,13000016,TMT bar Fe500D 16 mm,MT,55653,Revised estimate
+Kanpur,1903,13000012,TMT bar Fe500D 12 mm,MT,55966,Revised estimate
+Kanpur,1903,13000020,TMT bar Fe500D 20 mm,MT,57140,Revised estimate
+Dhule,1904,13000016,TMT bar Fe500D 16 mm,MT,53863,Revised estimate
+Dhule,1904,13000012,TMT bar Fe500D 12 mm,MT,56773,Revised estimate
+Dhule,1904,13000020,TMT bar Fe500D 20 mm,MT,52873,Revised estimate
+Aurangabad,1905,13000016,TMT bar Fe500D 16 mm,MT,55283,Revised estimate
+Aurangabad,1905,13000012,TMT bar Fe500D 12 mm,MT,58583,Revised estimate
+Aurangabad,1905,13000020,TMT bar Fe500D 20 mm,MT,52457,Revised estimate
+Gaya,1906,13000016,TMT bar Fe500D 16 mm,MT,51639,Revised estimate
+Gaya,1906,13000012,TMT bar Fe500D 12 mm,MT,49008,Revised estimate
+Gaya,1906,13000020,TMT bar Fe500D 20 mm,MT,53145,Revised estimate
+NDLS,1907,13000016,TMT bar Fe500D 16 mm,MT,55568,Revised estimate
+NDLS,1907,13000012,TMT bar Fe500D 12 mm,MT,55727,Revised estimate
+NDLS,1907,13000020,TMT bar Fe500D 20 mm,MT,54792,Revised estimate
+Thane,2002,13000016,TMT bar Fe500D 16 mm,MT,57324,Revised estimate
+Thane,2002,13000012,TMT bar Fe500D 12 mm,MT,55853,Revised estimate
+Thane,2002,13000020,TMT bar Fe500D 20 mm,MT,53389,Revised estimate
+Anuppur,1908,13000016,TMT bar Fe500D 16 mm,MT,59179,Revised estimate
+Anuppur,1908,13000020,TMT bar Fe500D 20 mm,MT,56261,Revised estimate
+DLF,1153,13000016,TMT bar Fe500D 16 mm,MT,62676,Revised estimate
+DLF,1153,13000012,TMT bar Fe500D 12 mm,MT,61175,Revised estimate
+DLF,1153,13000020,TMT bar Fe500D 20 mm,MT,65148,Revised estimate
+Tumkur,1138,11000010,Aggregate 10 mm,MT,690,Tender BOQ
+Tumkur,1138,11000040,Aggregate 40 mm,MT,690,Tender BOQ

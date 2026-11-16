@@ -1,0 +1,7 @@
+# The 220 kV GIS offer for BESS Chorniya: price per lot, a 30-day validity counted from the offer's date, and a PV formula.
+message: 2026-10-08_Offer_for_220_kV_GIS_BESS_Chorniya_Our_Ref_ASG_OFF_2026_1187
+by: transcribed
+reviewed: true
+offers:
+  - {vendor_name: "Arya Switchgear and GIS Ltd", record_id: "100702", project: "BESS Chorniya", material: "31000110", qty: 2, uom: LOT, rate: 96500000, raw: "Rs. 9,65,00,000 per lot", line: L5,
+     validity_days: 30, validity_line: L6, price_basis: PV, pv_formula: "P = P0 x (0.15 + 0.20 x Cu/Cu0 + 0.25 x Al/Al0 + 0.40 x I/I0); base month September 2026", pv_line: L8}

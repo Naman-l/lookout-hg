@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Building2, ChevronRight, FileText, Package, TrendingUp } from "lucide-react";
+import { BarChart3, Building2, ChevronRight, ClipboardList, FileText, Layers, Network, Package, ScanLine, Users } from "lucide-react";
 import type { ReactNode } from "react";
 import { api } from "../api/client";
 import { useResource } from "../api/useResource";
@@ -21,17 +21,22 @@ function Rows({ rows }: { rows: { to: string; icon: ReactNode; label: string; no
   );
 }
 
-/** More: the lookups a phone needs (a part at the shelf, the records to read). Data, agent activity and import are desktop work. */
+/** More: what a phone needs beyond Today, Approvals and Inbox: the material lookup on site, the records, the Insights pages. */
 export function More() {
-  const c = useResource(api.counts).data;
+  const c = useResource(() => api.counts()).data;
   return (
     <>
       <h1>More</h1>
       <Rows rows={[
-        { to: "/suppliers", icon: <Building2 {...ICON} />, label: "Suppliers", note: c ? String(c.suppliers) : undefined },
-        { to: "/parts", icon: <Package {...ICON} />, label: "Parts", note: c ? String(c.parts) : undefined },
-        { to: "/orders", icon: <FileText {...ICON} />, label: "Orders", note: c ? `${c.open_po_lines} open` : undefined },
-        { to: "/forecast", icon: <TrendingUp {...ICON} />, label: "Forecast and demand" },
+        { to: "/lookup", icon: <ScanLine {...ICON} />, label: "Material lookup on site" },
+        { to: "/vendors", icon: <Building2 {...ICON} />, label: "Vendors" },
+        { to: "/materials", icon: <Package {...ICON} />, label: "Materials" },
+        { to: "/prs", icon: <ClipboardList {...ICON} />, label: "PRs", note: c ? `${c.open_prs} open` : undefined },
+        { to: "/pos", icon: <FileText {...ICON} />, label: "POs", note: c ? `${c.open_po_lines} open lines` : undefined },
+        { to: "/requirements", icon: <Layers {...ICON} />, label: "Requirements" },
+        { to: "/insights/team", icon: <Users {...ICON} />, label: "Team" },
+        { to: "/org", icon: <Network {...ICON} />, label: "Organisation" },
+        { to: "/insights/projects", icon: <BarChart3 {...ICON} />, label: "Projects" },
       ]} />
     </>
   );

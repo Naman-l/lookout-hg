@@ -1,0 +1,103 @@
+Material Master (MM60) | Exported 19.10.2026 18:42:07 | User SSINGH
+Material,Material Description,Material Group,Base Unit of Measure,Alternative Unit,Alt. Units per Base Unit,Planned Deliv. Time (days),PV Index
+11000010,Aggregate 10 mm,AGGREGATE,MT,,,3,
+11000020,Aggregate 20 mm,AGGREGATE,MT,,,3,
+11000040,Aggregate 40 mm,AGGREGATE,MT,,,3,
+11000110,Stone dust,DUST,MT,,,3,
+11000120,WMM air cooled slag,WMM,MT,,,4,
+11000130,GSB Grade-I,GSB,MT,,,3,
+11000140,Boulder,BOULDER,MT,,,4,
+11000150,Track ballast 65 mm,BALLAST,MT,,,5,
+11000160,Blanketing material,BLANKET,MT,,,4,
+11000210,"Sand, river (washed)",SAND,MT,,,4,
+11000220,M-sand (manufactured sand),SAND,MT,,,4,
+12000010,Cement OPC 53 grade,CEMENT,MT,BAG,20,5,
+12000020,Cement PPC,CEMENT,MT,BAG,20,5,
+12000110,GGBS,GGBS,MT,,,7,
+12000120,Fly ash,FLYASH,MT,,,5,
+12000130,Microsilica,MICROSILICA,MT,,,10,
+12000210,Admixture PCE based,ADMIXTURE,KG,,,7,
+13000008,TMT bar Fe500D 8 mm,TMT,MT,,,7,STEEL_TMT
+13000010,TMT bar Fe500D 10 mm,TMT,MT,,,7,STEEL_TMT
+13000012,TMT bar Fe500D 12 mm,TMT,MT,,,7,STEEL_TMT
+13000016,TMT bar Fe500D 16 mm,TMT,MT,,,7,STEEL_TMT
+13000020,TMT bar Fe500D 20 mm,TMT,MT,,,7,STEEL_TMT
+13000025,TMT bar Fe500D 25 mm,TMT,MT,,,7,STEEL_TMT
+13000032,TMT bar Fe500D 32 mm,TMT,MT,,,7,STEEL_TMT
+13000110,HT strand 12.7 mm,HTSTRAND,MT,,,14,
+13000210,Structural steel (plates and sections),STRUCT,MT,,,14,STEEL_STRUCT
+13000220,Steel girder fabricated,STRUCT,MT,,,45,STEEL_STRUCT
+14000010,Bitumen VG-40,BITUMEN,MT,,,10,
+14000020,Bitumen VG-30,BITUMEN,MT,,,10,
+14000030,Bitumen CRMB-55,BITUMEN,MT,,,12,
+14000110,Bitumen emulsion SS-1,EMULSION,MT,,,10,
+14000120,Bitumen emulsion RS-1,EMULSION,MT,,,10,
+14000210,Anti-stripping agent,EMULSION,KG,,,10,
+15000010,HSD (high speed diesel),HSD,L,,,2,
+15000020,LSHS / LDO,HSD,L,,,3,
+15000030,Thermic oil,HSD,L,,,7,
+21000010,ERC Mk-V elastic rail clip,RLY-PWAY,NO,,,45,
+21000020,GRSP (grooved rubber sole plate),RLY-PWAY,NO,,,45,
+21000030,GFN liner,RLY-PWAY,NO,,,40,
+21000040,Rail screw with screw clamp,RLY-PWAY,NO,,,30,
+21000110,PSC sleeper (BG),RLY-PWAY,NO,,,60,
+21000210,OHE mast B-150 (galvanised),RLY-OHEMAST,NO,,,60,STEEL_STRUCT
+21000220,OHE mast B-250 (galvanised),RLY-OHEMAST,NO,,,60,STEEL_STRUCT
+21000230,OHE cantilever assembly,RLY-OHEMAST,SET,,,50,
+21000310,Catenary wire Cu-Cd 65 sq mm,RLY-OHEWIRE,KM,,,75,LME_CU
+21000320,Contact wire 107 sq mm,RLY-OHEWIRE,KM,,,75,LME_CU
+21000410,Insulator 9 tonne (25 kV),RLY-INSUL,NO,,,45,
+21000420,Isolator 25 kV,RLY-INSUL,NO,,,60,
+21000510,Signalling cable 6-quad armoured,RLY-SNT,KM,,,70,LME_CU
+21000520,Signalling cable 12-core armoured,RLY-SNT,KM,,,70,LME_CU
+21000610,Integrated power supply (IPS) system,RLY-SNT,SET,,,90,
+21000620,"Relay, plug-in type",RLY-SNT,NO,,,60,
+21000710,RCC cable duct,RLY-SNT,RM,,,20,
+21000720,Terminal block,RLY-SNT,NO,,,30,
+21000810,Traction transformer 30.24 MVA,ELE-TFR,NO,,,270,IEEMA_TFR
+31000010,Power transformer 180 MVA,ELE-TFR,NO,,,360,IEEMA_TFR
+31000020,Auto transformer 160 MVA,ELE-TFR,NO,,,360,IEEMA_TFR
+31000030,Shunt reactor 80 MVAr,ELE-TFR,NO,,,360,IEEMA_TFR
+31000040,Power transformer 40 MVA,ELE-TFR,NO,,,240,IEEMA_TFR
+31000050,Inverter duty transformer 12.5 MVA,ELE-TFR,NO,,,180,IEEMA_TFR
+31000110,GIS 220 kV (per bay lot),ELE-SWG,LOT,,,365,IEEMA_SWG
+31000120,Circuit breaker 220/145 kV,ELE-SWG,LOT,,,450,
+31000121,Circuit breaker 400 kV,ELE-SWG,LOT,,,365,
+31000130,CT and CVT 220/145 kV,ELE-SWG,LOT,,,365,
+31000131,CT and CVT 400 kV,ELE-SWG,LOT,,,270,
+31000140,Bus post insulator (BPI),ELE-SWG,LOT,,,365,
+31000210,Lattice transmission tower (galvanised),TL-TOWER,MT,,,240,STEEL_STRUCT
+31000310,Conductor ACSR Zebra,TL-COND,KM,,,240,IEEMA_ACSR
+31000320,Conductor AL59 Moose,TL-COND,KM,,,240,IEEMA_ACSR
+31000410,Insulator string set (composite),TL-INSUL,LOT,,,365,
+31000510,Substation extension bay works,ELE-SWG,LOT,,,365,
+31000610,BESS container 5 MWh,BESS,NO,,,150,
+31000620,Power conversion system 2.5 MW,BESS,NO,,,120,
+31000630,33 kV switchgear panel,ELE-SWG,NO,,,120,
+31000640,Energy management system,BESS,SET,,,90,
+31000710,Solar string inverter 320 kW,SOLAR,NO,,,90,
+31000720,Module mounting structure,SOLAR,MT,,,60,STEEL_STRUCT
+31000730,Solar O&M spares kit,SOLAR,SET,,,30,
+31000810,DG set 500 kVA,DG,NO,,,60,
+31000910,Earthing material,ELE-MISC,LOT,,,30,
+31000920,Control and relay panel,ELE-SWG,SET,,,120,
+31000930,FOTE equipment,ELE-MISC,LOT,,,90,
+32000010,Power cable 33 kV XLPE 3C x 300,CABLE,KM,,,60,LME_AL
+32000020,Power cable 1.1 kV 4C x 25,CABLE,KM,,,45,LME_CU
+32000030,Control cable 12C x 2.5,CABLE,KM,,,45,LME_CU
+32000040,Power cable 220 kV XLPE,CABLE,KM,,,180,LME_AL
+41000010,Elastomeric bearing,BEARING,CCM,,,30,
+41000020,POT-PTFE bearing,BEARING,NO,,,45,
+41000030,Strip seal expansion joint,EXPJOINT,RM,,,45,
+41000110,RCC hume pipe NP3 600 mm,PIPE,NO,,,15,
+41000120,RCC hume pipe NP3 900 mm,PIPE,NO,,,15,
+41000210,Geotextile non-woven,GEOSYN,SQM,,,15,
+41000220,Geogrid biaxial,GEOSYN,SQM,,,15,
+41000230,Geocell,GEOSYN,SQM,,,15,
+41000310,W-beam crash barrier,BARRIER,RM,,,20,
+41000410,Drainage spout,MISC,NO,,,15,
+41000510,Deck sheet (profiled),MISC,SQM,,,20,
+41000610,AAC block 200 mm,MISC,NO,,,10,
+41000710,Shuttering plywood 12 mm,MISC,SQM,,,10,
+41000810,Crane hire (emergency),SERVICE,DAY,,,1,
+41000820,Cable laying and termination (service),SERVICE,KM,,,15,

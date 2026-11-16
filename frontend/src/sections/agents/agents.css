@@ -107,3 +107,14 @@
   .rt-trace{min-height:0;overflow-y:auto;overscroll-behavior:contain;padding-bottom:var(--s4)}
   .rt-cols>.rt-panel{position:static;align-self:start;max-height:calc(100% - 18px)}
 }
+/* HG: Under the hood, Agent activity, How we got here */
+.uth{max-width:1100px;padding-bottom:96px} .uth h1{font-size:var(--t-h2);margin:0 0 var(--s2);font-weight:600} .uth h2{font-size:var(--t-lead);margin:var(--s5) 0 var(--s2);font-weight:600}
+.uth-mode{color:var(--ink-2);font-size:var(--t-small);margin:0 0 var(--s3)} .uth-mode.mocked{color:var(--caution)}
+.uth-steps{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:var(--s2)} .uth-steps li b{display:block} .uth-steps li span{color:var(--ink-2)}
+.uth-g{margin:0;padding-left:20px;color:var(--ink-2);display:flex;flex-direction:column;gap:4px}
+.rt-q{font-weight:500;margin:var(--s2) 0} .rt-a{border:1px solid var(--line);border-radius:var(--r-sm);padding:var(--s3) var(--s4);margin:var(--s2) 0} .rt-a p{margin:var(--s2) 0 0}
+.rt-c{font-size:var(--t-small);color:var(--ink-2)}
+.rt-steps{list-style:none;margin:var(--s3) 0 0;padding:0;display:flex;flex-direction:column;gap:var(--s3)}
+.rt-g > b{font-size:var(--t-small);color:var(--ink-2)} .rt-g ul{margin:4px 0 0;padding-left:16px;display:flex;flex-direction:column;gap:3px;font-size:var(--t-small)}
+.rt-g .tool{font-family:var(--mono,monospace);font-size:var(--t-caption);background:var(--raised);padding:0 4px;border-radius:var(--r-xs)} .rt-g small{color:var(--ink-3)}
+.rt-g.a-verifier,.rt-g.a-reviewer{color:var(--ink-2)}

@@ -1,47 +1,64 @@
-"""Supplier offers extracted from the inbox: a price for a part under conditions."""
+"""Quotes and comparative statements: every vendor's quote from the RFQ/CS tracker and from mail (each mail quote citing its line), and one
+comparative statement per CS number, built from them."""
 
 from __future__ import annotations
 
-from sqlalchemy import Float, ForeignKey, Integer, String, Text
+from sqlalchemy import Float, Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.domain.base import Base
 
 
-class Offer(Base):
-    __tablename__ = "offers"
+class Quote(Base):
+    __tablename__ = "quotes"
 
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    message_id: Mapped[str] = mapped_column(ForeignKey("messages.id"))
-    source: Mapped[str] = mapped_column(String)  # "email" | "pdf:<file>"
-    line_ref: Mapped[str | None] = mapped_column(String)  # where in the source the price sits
-    quote_no: Mapped[str | None] = mapped_column(String)
-    identity_id: Mapped[str | None] = mapped_column(ForeignKey("supplier_identities.id"))  # None: sender not in the master
-    supplier_name: Mapped[str] = mapped_column(String)
-    part_number: Mapped[str | None] = mapped_column(String)  # the company's part number; None if the quote names none
-    supplier_model: Mapped[str | None] = mapped_column(String)
-    qty_break: Mapped[int | None] = mapped_column(Integer)  # price applies from this order quantity
-    price_raw: Mapped[str] = mapped_column(String)  # as written ("389,50", "per 1,000 240.58")
-    price: Mapped[float] = mapped_column(Float)  # per price_basis unit, in `currency`
-    currency: Mapped[str] = mapped_column(String)
-    price_basis: Mapped[str] = mapped_column(String)  # each | per_1000
-    unit_price_each: Mapped[float] = mapped_column(Float)  # price per piece in `currency`
-    incoterm: Mapped[str | None] = mapped_column(String)
-    incoterm_place: Mapped[str | None] = mapped_column(String)
-    origin_claim: Mapped[str | None] = mapped_column(String)  # as the supplier states it
-    origin_iso: Mapped[str | None] = mapped_column(String)  # CN | MX | VN | ... ; None when undetermined
-    lead_time: Mapped[str | None] = mapped_column(String)  # "6 weeks"
-    lead_time_condition: Mapped[str | None] = mapped_column(String)  # "after sample approval": a value is not valid without it
-    lead_time_days: Mapped[int | None] = mapped_column(Integer)
-    validity_date: Mapped[str | None] = mapped_column(String)
-    annual_qty: Mapped[int | None] = mapped_column(Integer)  # the supplier's own estimate of a year's use, as its quote prints it
-    moq: Mapped[int | None] = mapped_column(Integer)
-    tooling_usd: Mapped[float | None] = mapped_column(Float)
-    surcharge_pct: Mapped[float | None] = mapped_column(Float)
-    surcharge_included: Mapped[int | None] = mapped_column(Integer)  # 1: the quoted price already includes the surcharge; 0 or None: it is added on top
-    payment_terms: Mapped[str | None] = mapped_column(String)
-    prepayment: Mapped[str | None] = mapped_column(String)  # what must be paid before the goods ship, as the document states it
-    available_from: Mapped[str | None] = mapped_column(String)  # ISO date this offer (an alternative origin, a new site) can start, when the document gives one
-    conditions: Mapped[str | None] = mapped_column(Text)  # costs and conditions outside the headline price
-    superseded_by: Mapped[int | None] = mapped_column(Integer)  # a later correction replaces this price
-    trust: Mapped[str] = mapped_column(String)  # the message's trust verdict; blocked offers are never compared
+    id: Mapped[str] = mapped_column(String, primary_key=True)
+    source: Mapped[str] = mapped_column(String)  # tracker | mail
+    cs_no: Mapped[str | None] = mapped_column(String)
+    project_id: Mapped[str | None] = mapped_column(String)
+    pr_no: Mapped[str | None] = mapped_column(String)
+    pr_item: Mapped[int | None] = mapped_column(Integer)
+    pr_line_id: Mapped[str | None] = mapped_column(String)
+    material: Mapped[str | None] = mapped_column(String)
+    record_id: Mapped[str | None] = mapped_column(String)
+    identity_id: Mapped[str | None] = mapped_column(String)
+    vendor_name: Mapped[str] = mapped_column(String)
+    rfq_sent: Mapped[str | None] = mapped_column(String)
+    quote_date: Mapped[str | None] = mapped_column(String)
+    qty: Mapped[float | None] = mapped_column(Float)
+    uom: Mapped[str | None] = mapped_column(String)
+    rate: Mapped[float | None] = mapped_column(Float)  # INR per unit
+    rate_raw: Mapped[str | None] = mapped_column(String)
+    validity: Mapped[str | None] = mapped_column(String)
+    price_basis: Mapped[str | None] = mapped_column(String)  # Firm | PV
+    pv_formula: Mapped[str | None] = mapped_column(Text)
+    l1: Mapped[int] = mapped_column(Integer)
+    last_po_rate_printed: Mapped[float | None] = mapped_column(Float)
+    budget_rate_printed: Mapped[float | None] = mapped_column(Float)
+    cs_status: Mapped[str | None] = mapped_column(String)
+    approved_by: Mapped[str | None] = mapped_column(String)
+    approved_on: Mapped[str | None] = mapped_column(String)
+    buyer_id: Mapped[str | None] = mapped_column(String)
+    remarks: Mapped[str | None] = mapped_column(Text)
+    message_id: Mapped[str | None] = mapped_column(String)
+    line_ref: Mapped[str | None] = mapped_column(String)
+    src_row: Mapped[int | None] = mapped_column(Integer)
+
+
+class ComparativeStatement(Base):
+    __tablename__ = "comparative_statements"
+
+    cs_no: Mapped[str] = mapped_column(String, primary_key=True)
+    kind: Mapped[str] = mapped_column(String)  # rate (a quarter's rate for bulk material) | item (a PR's items)
+    project_id: Mapped[str | None] = mapped_column(String)
+    material: Mapped[str | None] = mapped_column(String)
+    pr_line_ids: Mapped[str | None] = mapped_column(Text)  # comma list
+    rfq_sent: Mapped[str | None] = mapped_column(String)
+    first_quote: Mapped[str | None] = mapped_column(String)
+    vendors_asked: Mapped[int] = mapped_column(Integer)
+    quotes_in: Mapped[int] = mapped_column(Integer)
+    status: Mapped[str | None] = mapped_column(String)
+    approved_on: Mapped[str | None] = mapped_column(String)
+    approved_by: Mapped[str | None] = mapped_column(String)
+    l1_record: Mapped[str | None] = mapped_column(String)
+    l1_rate: Mapped[float | None] = mapped_column(Float)

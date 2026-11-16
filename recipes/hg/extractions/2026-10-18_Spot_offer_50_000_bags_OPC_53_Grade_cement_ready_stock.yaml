@@ -1,0 +1,6 @@
+# A spot offer from a sender not in the vendor master; the message is held (it carries an instruction aimed at automated systems), the price is kept as its claim.
+message: 2026-10-18_Spot_offer_50_000_bags_OPC_53_Grade_cement_ready_stock
+by: transcribed
+reviewed: true
+offers:
+  - {vendor_name: "Prime Build Cement Traders", record_id: null, project: "Narol", material: "12000010", qty: 50000, uom: BAG, rate: 298, raw: "Rs. 298 per", line: L3, price_basis: Firm}

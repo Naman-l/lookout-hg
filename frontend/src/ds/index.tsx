@@ -12,7 +12,6 @@ export { NotFound } from "./NotFound";
 export { RightPanel } from "./RightPanel";
 export { Value as ProvenanceLink } from "../domain-ui/Value";
 export { AgentMark } from "../ui/AgentMark";
-export { Ladder } from "../domain-ui/Ladder";
 
 export type State = "done" | "expected" | "late" | "disrupted" | "unknown" | "na" | "high" | "med" | "low";
 export type Tone = "critical" | "caution" | "positive" | "unknown";

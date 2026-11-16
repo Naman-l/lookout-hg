@@ -1,81 +1,81 @@
-from __future__ import annotations
+"""Vendor shapes (the screens and the API say "vendor"; the platform's model names stay `Supplier*`)."""
 
-from typing import Literal
+from __future__ import annotations
 
 from pydantic import BaseModel
 
 from app.domain.common import EntityRef, Money
+from app.domain.receipts.service import Delivery
 
 
 class Contact(BaseModel):
     name: str | None
-    email: str | None  # the only valid recipient for anything Lookout drafts
+    email: str | None  # the only valid recipient for anything Lookout drafts to the vendor
 
 
-class RiskFlag(BaseModel):
-    """One warning the records carry about a supplier (insolvency, prepayment demanded, payment terms cut, a quote far above the last PO), with the words it was read from."""
+class VendorCode(BaseModel):
+    """One SAP vendor code of the company: a renamed company keeps both codes, linked, never merged."""
 
-    kind: Literal["insolvency", "prepayment", "terms_cut", "price_jump", "late_delivery", "cash_in_advance", "undated_open", "news_risk"]
-    severity: Literal["high", "medium"]
-    text: str
+    code: str
+    name: str
+    gstin: str | None
+    msme: bool
+    udyam: str | None
+    city: str | None
+    region: str | None
+    bank_masked: str | None
+    blocked: bool
+    created_on: str | None
+    link: str  # stated (its own record) | answer (a person linked it, with evidence)
     evidence: str | None = None
-    sources: list[EntityRef] = []
 
 
-class LateStreak(BaseModel):
-    """The supplier's recent record when it is getting worse (F105: shown only then): its last receipts, all late, and this year's late share against last year's.
-    Receipts in the order they arrived; late = received after the promise, the rule of `delivery_performance`."""
-
-    late_in_row: int  # the current run of late receipts, counted back from the latest one
-    first: str  # the receipt date of the first late one in the run
-    last: str  # ... and of the latest
-    min_days_late: int
-    max_days_late: int
-    year: int  # the data date's year
-    late_this_year: int
-    n_this_year: int
-    late_pct_this_year: float
-    late_last_year: int
-    n_last_year: int
-    late_pct_last_year: float | None = None  # None with no receipt last year
-    line: str  # "Last 9 receipts late · 65% late in 2026 (12% in 2025)": the one line a screen shows in place of the all-time on-time share
+class LibraryEntry(BaseModel):
+    vertical: str
+    sub_vertical: str | None
+    category: str | None
+    approved_on: str | None
+    status: str
+    link: str  # how the library row was tied to the SAP record: sap_code | gstin | name
 
 
-class DeliveryPerformance(BaseModel):
-    """How a supplier has delivered, from its closed lines that have both a promise and a receipt date."""
-
-    n: int  # closed lines counted
-    on_time: int  # received on or before the promise
-    on_time_pct: float
-    late: int
-    avg_days_late: float | None = None  # over the late ones
-    last10_on_time: int | None = None  # on time among its latest 10 receipts (or fewer, when it has fewer)
-    last10_n: int | None = None
-    streak: LateStreak | None = None  # a run of at least STREAK_MIN late receipts; None otherwise (the screens then show the plain on-time share)
-
-
-class Supplier(BaseModel):
-    ref: EntityRef
-    short: str = ""  # the name a buyer says (the brand word, not the legal form), the one Today, the Inbox and the cases use; the legal name is ref.label
-    country: str
-    terms: str
-    incoterms: str
-    status: Literal["active", "hold", "inactive"]
+class VendorRow(BaseModel):
+    ref: EntityRef  # supplier:<identity>
+    name: str
+    codes: list[str]
+    gstin: str | None
+    msme: bool
+    city: str | None
+    region: str | None
+    verticals: list[str]  # the library verticals it is approved in (none: not in the library)
+    in_library: bool
+    open_lines: int
     open_value: Money
-    past_due_lines: int
-    records: int  # vendor records for this company (aliases kept)
-    delivery: DeliveryPerformance | None = None  # None when it has no closed line with both dates
-    risk: list[RiskFlag] = []  # warnings read from its quotes and the news: for the banner on its page
+    po_value: Money  # every PO line on file with it
+    on_time_pct: int | None
+    receipts: int
+    streak: int
+    renamed: bool  # carries two codes (a new legal entity)
+    cases: list[EntityRef] = []  # Today items that name it
 
 
-class SupplierDetail(Supplier):
-    """One company: its records, the contact on file, its open lines (stale ones counted apart) and the messages and news about it."""
+class MsmeDue(BaseModel):
+    invoice: str
+    po: str | None
+    invoice_date: str
+    due_by: str  # 45 days from the invoice (the MSMED Act's limit)
+    amount: Money
+    days_left: int
 
+
+class VendorDetail(VendorRow):
     contact: Contact
-    tier: int | None
-    record_ids: list[str]
-    open_lines: int  # open and partial lines, stale ones left out
-    open_summary: str = ""  # "10 open · 2 may not really be open": the header over the order rows, which are open + stale
-    stale_lines: int = 0  # old orders that may not really be open: shown as an unknown, not as supply or as late
+    records: list[VendorCode]
+    library: list[LibraryEntry]
+    delivery: Delivery
+    payment_terms: list[str]  # the terms on its open POs, as SAP's codes mean them
+    msme_due: list[MsmeDue]  # unpaid invoices of an MSME vendor that fall due within 45 days of the data date
+    guarantees: list[dict]  # its LCs and bank guarantees on file
+    po_lines: list[EntityRef]
+    quotes: list[EntityRef]
     messages: list[EntityRef]
-    news: list[EntityRef]

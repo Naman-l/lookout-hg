@@ -1,14 +1,16 @@
 """The Import conversation as code: questions that come from the recipe's own decisions, the person's answers, a dry run, an approval that loads.
 
-No model is needed. Each question is a decision the bootstrap recipe already takes (link ten legacy supplier ids, infer nine blank currencies, leave five
-origins unknown, drop six repeated rows, link three possible duplicate parts), grouped so one answer settles every entry it covers, with the proposed answer
-on the card. Answers wait in a pending file until the person approves; approval keeps them beside the database (`decisions.yaml`, gitignored; the recipe stays as committed), with who and when) and
-rebuilds the database. The Data steward will ask the same questions for files nobody has seen before; this is the part that needs no judgement.
+No model is needed. Each question is a decision the bootstrap recipe already takes (which names are the same project, which vendor codes are one
+company, what to do with what the data cannot say), grouped so one answer settles every entry it covers, with the proposed answer on the card. The
+questions are the recipe's (`recipes/<customer>/questions.py`, a `questions(ctx)` function over the recipe run as proposed), never written here.
+Answers wait in a pending file until the person approves; approval keeps them beside the database (`decisions.yaml`, gitignored; the recipe stays
+as committed), with who and when, and rebuilds the database. The Data steward asks the same kind of question for files nobody has seen before.
 """
 
 from __future__ import annotations
 
 import hashlib
+import importlib.util
 import json
 from datetime import datetime, timezone
 from functools import lru_cache
@@ -18,14 +20,29 @@ import yaml
 
 from app.domain.common.recipe import recipe_dir as _recipe_dir
 from app.domain.imports import build
-from app.domain.imports.gate import RECONCILED, run_gate
+from app.domain.imports.gate import reconciled, run_gate
 from app.domain.imports.schema import (ImportAnswerCounts, ImportApproval, ImportAnswers, ImportCheck, ImportDeck, ImportDryRun, ImportExample, ImportFileChange,
                                        ImportLoaded, ImportProposed, ImportQuestion)
 
 ROOT = Path(__file__).resolve().parents[4]
 RECIPE_DIR = _recipe_dir()
 DATA_DIR = ROOT / "data"
-ACCEPT_ALL = ("alias:legacy-ids", "alias:rename", "currency:blank", "origin:unknown-on-listed-codes", "duplicate-row:po", "possible-duplicate:parts", "stock:count")
+
+
+def _recipe_questions(recipe_dir: Path):
+    """The recipe's questions module, or None when the recipe asks nothing."""
+    path = recipe_dir / "questions.py"
+    if not path.exists():
+        return None
+    spec = importlib.util.spec_from_file_location(f"recipe_questions_{recipe_dir.name}", path)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def accept_all(recipe_dir: Path) -> tuple[str, ...]:
+    mod = _recipe_questions(recipe_dir)
+    return tuple(getattr(mod, "ACCEPT_ALL", ())) if mod else ()
 
 
 class AnswersChanged(Exception):
@@ -65,74 +82,16 @@ def decisions_hash(recipe_dir: Path, db: Path, data_dir: Path = DATA_DIR) -> str
 @lru_cache(maxsize=4)
 def _baseline(recipe_dir: str, data_dir: str):
     """The recipe run with every question answered as proposed: the entries each question covers."""
-    return build.run_recipe(Path(recipe_dir), Path(data_dir), {k: {"action": "accept"} for k in ACCEPT_ALL})
+    return build.run_recipe(Path(recipe_dir), Path(data_dir), {k: {"action": "accept"} for k in accept_all(Path(recipe_dir))})
 
 
 def _examples(rows) -> list[ImportExample]:
     return [ImportExample(from_=a, to=b, note=c) for a, b, c in rows[:3]]
 
 
-def _questions(ctx) -> list[ImportQuestion]:
-    t = ctx.t
-    rec = t["supplier_records"].set_index("record_id")
-    ident = t["supplier_identities"].set_index("id")
-    legacy = rec[(rec.system == "legacy") & (rec.identity_method == "inferred")]
-    po = t["po_lines"]
-    cur = po[po.currency_method == "inferred"]
-    parts = t["parts"]
-    rules = t["tariff_rules"]
-    prefixes = tuple(rules.hts_prefix)
-    blank = parts[(parts.kind == "purchased") & parts.coo.isna() & parts.hts.notna() & parts.hts.fillna("").str.startswith(prefixes)]
-    drops = [d for d in ctx.drops if d["raw_table"] == "raw_purchase_orders"]
-    raw_po = t["raw_purchase_orders"].set_index("src_row")
-    links = t["part_links"]
-    open_ok = set(po[po.status.isin(["OPEN", "PARTIAL"]) & ~po["flags"].fillna("").str.contains("stale_open")].part_number)
-    nostock = parts[(parts.kind == "purchased") & ~parts.part_number.isin(open_ok)]
-    aliases = ctx.answers.get("supplier_aliases") or []
-    sizes = rec.groupby("identity_id").size()
-    most = (ident.loc[sizes.idxmax(), "name"], int(sizes.max())) if len(sizes) else ("one company", 1)
-    ex_stock = nostock.part_number.iloc[0] if len(nostock) else "PART-1"
-    ex_origin = blank.part_number.iloc[0] if len(blank) else "PART-1"
-    qs = [
-        ImportQuestion(
-            id="alias:legacy-ids", kind="alias", file="suppliers.csv", covers=len(legacy), entries=list(legacy.index),
-            question=f"{len(legacy)} legacy supplier ids look like suppliers you already have (same contact domain). Link them as the same company?",
-            examples=_examples([(f"{r} · {rec.loc[r, 'name']}", f"{rec.loc[r, 'identity_id']} · {ident.loc[rec.loc[r, 'identity_id'], 'name']}", rec.loc[r, "identity_evidence"]) for r in legacy.index]),
-            proposed=ImportProposed(answer=f"Link all {len(legacy)}", effect=f"Spend, past-due lines and exposure are counted per company ({most[0]} has {most[1]} records). Every record and every PO stays as it is; nothing is merged.")),
-        ImportQuestion(
-            id="alias:rename", kind="alias", file="suppliers.csv", covers=len(aliases), entries=[a["record"] for a in aliases],
-            question=(f"{len(aliases)} supplier record{'s' if len(aliases) != 1 else ''} say they are a renamed company already in the master. Link "
-                      f"{'them' if len(aliases) != 1 else 'it'}?"),
-            examples=_examples([(f"{a['record']} · {rec.loc[a['record'], 'name']}", f"{a['identity']} · {ident.loc[a['identity'], 'name']}", a["evidence"]) for a in aliases]),
-            proposed=ImportProposed(answer="Link them" if len(aliases) != 1 else "Link it", effect="Quotes under the new name and orders under the old one belong to one supplier.")),
-        ImportQuestion(
-            id="currency:blank", kind="currency", file="purchase_orders.csv", covers=len(cur), entries=list(cur.id),
-            question=f"{len(cur)} order lines have no currency. Use the supplier's usual invoicing currency and mark it inferred?",
-            examples=_examples([(r.id, r.currency, f"{rec.loc[r.record_id, 'name']} usually invoices in {r.currency}") for r in cur.itertuples()]),
-            proposed=ImportProposed(answer="Use the supplier's currency, marked inferred", effect="The lines are priced and compared; each carries the label 'inferred'. None is open.")),
-        ImportQuestion(
-            id="origin:unknown-on-listed-codes", kind="origin", file="parts.csv", covers=len(blank), entries=list(blank.part_number),
-            question=f"{len(blank)} parts are on the new tariff list but have no country of origin. Leave them unknown and ask the buyer?",
-            examples=_examples([(r.part_number, "unknown", f"ask {r.buyer_id or 'the buyer'}: {r.description[:50]}") for r in blank.itertuples()]),
-            proposed=ImportProposed(answer="Leave unknown, ask the buyer", effect=f"No duty is computed for them; only the figure 'if China' is shown. To answer now, change it to PART=ISO pairs, e.g. {ex_origin}=CN.")),
-        ImportQuestion(
-            id="duplicate-row:po", kind="duplicate_row", file="purchase_orders.csv", covers=len(drops), entries=[f"{raw_po.loc[d['src_row'], 'po_number']}/{raw_po.loc[d['src_row'], 'line']}" for d in drops],
-            question=f"{len(drops)} order lines appear twice with every value identical (an export glitch). Drop the repeated copies?",
-            examples=_examples([(f"{raw_po.loc[d['src_row'], 'po_number']}/{raw_po.loc[d['src_row'], 'line']}", "dropped", d["kept_as"]) for d in drops]),
-            proposed=ImportProposed(answer="Drop the repeats", effect="Quantity and value of those lines are counted once. Each drop is recorded with the row it repeats.")),
-        ImportQuestion(
-            id="possible-duplicate:parts", kind="possible_duplicate", file="parts.csv", covers=len(links), entries=[f"{r.part_a} = {r.part_b}" for r in links.itertuples()],
-            question=f"{len(links)} pairs of part numbers share a manufacturer part number. Keep both and mark them as possible duplicates?",
-            examples=_examples([(r.part_a, r.part_b, r.evidence) for r in links.itertuples()]),
-            proposed=ImportProposed(answer="Keep both, link them", effect="Open orders and BOMs use both numbers, so neither is removed; the link shows on the part.")),
-        ImportQuestion(
-            id="stock:count", kind="stock_count", file=None, covers=len(nostock), entries=list(nostock.part_number),
-            question=f"The ERP export holds no stock levels, so {len(nostock)} bought parts with nothing on order are unknown rather than covered. Do you have a stock count to give?",
-            examples=_examples([(r.part_number, "unknown", r.description[:50]) for r in nostock.itertuples()]),
-            proposed=ImportProposed(answer="No count yet: leave them unknown",
-                                    effect=f"A part with no open order stays unknown in build readiness. To give a count, change this to PART=QTY pairs, one per line, e.g. {ex_stock}=120; each part then reads as covered by stock or short.")),
-    ]
-    return qs
+def _questions(ctx, recipe_dir: Path) -> list[ImportQuestion]:
+    mod = _recipe_questions(recipe_dir)
+    return list(mod.questions(ctx, ImportQuestion, ImportProposed, _examples)) if mod else []
 
 
 def deck(recipe_dir: Path | None = None, db: Path | None = None) -> ImportDeck:
@@ -141,7 +100,7 @@ def deck(recipe_dir: Path | None = None, db: Path | None = None) -> ImportDeck:
     recipe_dir, db = recipe_dir or RECIPE_DIR, db or DB_PATH
     base = _baseline(str(recipe_dir.resolve()), str(DATA_DIR))
     saved, pending = saved_decisions(recipe_dir, db), _read_json(_pending_path(db))
-    qs = _questions(base)
+    qs = _questions(base, recipe_dir)
     for q in qs:
         d = pending.get(q.id) or saved.get(q.id)
         if d:
@@ -178,18 +137,23 @@ def dry_run(recipe_dir: Path | None = None, db: Path | None = None) -> ImportDry
     ctx = build.run_recipe(recipe_dir.resolve(), DATA_DIR, eff, links=build.approved_links(db))
     gate = run_gate(ctx)
     files: dict[str, ImportFileChange] = {}
-    names = {"raw_suppliers": "suppliers.csv", "raw_parts": "parts.csv", "raw_bom": "bom.csv", "raw_purchase_orders": "purchase_orders.csv", "raw_demand_forecast": "demand_forecast.csv"}
-    for clean, raw in RECONCILED.items():
-        f = names[raw]
-        files[f] = ImportFileChange(file=f, rows_in=len(ctx.t[raw]), rows_out=len(ctx.t[clean]), changes=[])
+    names = dict(zip(ctx.t["_files"].raw_table, ctx.t["_files"].file)) if "_files" in ctx.t else {}
+    for clean, spec in reconciled(ctx).items():
+        raw = spec["raw"]
+        if raw not in ctx.t or clean not in ctx.t:
+            continue
+        f = names.get(raw, raw)
+        out = ctx.t[clean].query(spec["where"]) if spec.get("where") else ctx.t[clean]
+        files[f] = ImportFileChange(file=f, rows_in=len(ctx.t[raw]), rows_out=len(out), changes=[])
     for i in ctx.issues:
-        if i["file"] in files and i["handling"] in ("fix", "infer", "link", "drop", "flag"):
+        hit = next((f for f in files if f.startswith(i["file"]) or i["file"] in f), None)
+        if hit and i["handling"] in ("fix", "infer", "link", "drop", "flag"):
             verb = {"fix": "fixed", "infer": "inferred", "link": "linked", "drop": "dropped", "flag": "flagged"}[i["handling"]]
-            files[i["file"]].changes.append(f"{i['count']} {i['issue'][:70]} ({verb})")
+            files[hit].changes.append(f"{i['count']} {i['issue'][:70]} ({verb})")
     pend = _read_json(_pending_path(db))
     allq = {**saved_decisions(recipe_dir, db), **pend}
     return ImportDryRun(hash=decisions_hash(recipe_dir, db), files=list(files.values()), checks=[ImportCheck(name=n, passed=ok) for n, ok, _ in gate],
-                        answers=ImportAnswerCounts(total=len(ACCEPT_ALL), changed=sum(1 for v in allq.values() if v["action"] == "change"), skipped=sum(1 for v in allq.values() if v["action"] == "skip")),
+                        answers=ImportAnswerCounts(total=len(accept_all(recipe_dir)), changed=sum(1 for v in allq.values() if v["action"] == "change"), skipped=sum(1 for v in allq.values() if v["action"] == "skip")),
                         recipe_steps=len(list((recipe_dir / "steps").glob("[0-9][0-9]_*.py"))))
 
 

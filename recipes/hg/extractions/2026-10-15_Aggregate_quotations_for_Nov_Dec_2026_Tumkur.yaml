@@ -1,0 +1,8 @@
+# Three crusher quotes the Tumkur site collected and forwarded, transcribed from the mail; each price cites its line.
+message: 2026-10-15_Aggregate_quotations_for_Nov_Dec_2026_Tumkur
+by: transcribed
+reviewed: true
+offers:
+  - {vendor_name: "Tumakuru Stone Industries", record_id: "100104", project: "Tumkur", material: "11000020", qty: 128000, uom: MT, rate: 720, raw: "Rs. 720 per MT", line: L5, validity: "2026-10-31", validity_line: L9, price_basis: Firm}
+  - {vendor_name: "Nandi Hills Aggregates", record_id: "100105", project: "Tumkur", material: "11000020", qty: 128000, uom: MT, rate: 745, raw: "Rs. 745 per MT", line: L6, validity: "2026-10-31", validity_line: L9, price_basis: Firm}
+  - {vendor_name: "Shivaganga Crushers", record_id: null, project: "Tumkur", material: "11000020", qty: 128000, uom: MT, rate: 760, raw: "Rs. 760 per MT", line: L7, validity: "2026-10-31", validity_line: L9, price_basis: Firm}

@@ -1,0 +1,339 @@
+# Decisions a person would answer on an Import card, for H.G. Infra's SCM data. The bootstrap answers were taken from the evidence named in each
+# entry; who answered is recorded beside each. Code reads every customer fact from here or from data/, never from itself.
+kind: bootstrap
+# The data date and horizon: the day the exports were taken. LOOKOUT_AS_OF overrides it to rebuild as the data stood on an earlier day.
+as_of: "2026-10-20"
+company: "H.G. Infra Engineering Ltd."
+company_short: "HG Infra"                # how the screens and letters say the company in short
+base_currency: INR
+internal_domain: hginfra.example        # mail from this domain is internal; a look-alike of it is held like a vendor look-alike
+answered_by: "Sudeep Singh (MIS) with Satish Kumar Sharma (Head of SCM), 20 Oct 2026, from the files named in each entry"
+
+# What each kind of id looks like in these records (regular expressions, no anchors). The agent layer reads them from the build.
+id_shapes:
+  pr: '10\d{8}'
+  pr_line: '10\d{8}/\d{1,3}'
+  po: '45\d{8}'
+  po_line: '45\d{8}/\d{1,3}'
+  mat_doc: '50\d{8}'
+  vendor: '1\d{5}'
+  material: '(?:1[1-5]|2[1]|3[12]|41)\d{6}'
+
+# The files the recipe reads. stamp: header (the SAP list export's first line), name (the date in the file name), or none. A sheet is a snapshot:
+# built after the data date, it is not read at all. A tracker (cut: rows) is a running record: it is read as of the data date row by row.
+stale_after_days: 7
+sources:
+  me5a: {file: "sap/ME5A_purchase_requisitions.csv", kind: sap, stamp: header, title: "Purchase requisitions (ME5A)"}
+  me2n: {file: "sap/ME2N_purchase_orders.csv", kind: sap, stamp: header, title: "Purchase orders (ME2N)"}
+  mb51: {file: "sap/MB51_goods_receipts.csv", kind: sap, stamp: header, title: "Goods receipts (MB51)"}
+  fbl1n: {file: "sap/FBL1N_vendor_line_items.csv", kind: sap, stamp: header, title: "Vendor line items (FBL1N)"}
+  vendor_master: {file: "sap/vendor_master.csv", kind: sap, stamp: header, title: "Vendor master"}
+  material_master: {file: "sap/material_master.csv", kind: sap, stamp: header, title: "Material master"}
+  purchasing_groups: {file: "sap/purchasing_groups.csv", kind: reference, stamp: header, title: "Purchasing groups"}
+  project_directory: {file: "sheets/Project Directory.csv", kind: reference, stamp: none, title: "Project directory"}
+  roads_req: {glob: "sheets/Roads Major Material Requirement*.csv", kind: sheet, stamp: name, layout: grid, title: "Roads 3-month material requirement"}
+  railway_req: {glob: "sheets/Railway Material Quantity Summary*.csv", kind: sheet, stamp: name, layout: grid, title: "Railway 3-month material requirement"}
+  fund: {glob: "sheets/SCM Fund Requirement *.csv", kind: sheet, stamp: name, layout: grid, many: true, title: "Fund requirement"}
+  payment_projection: {glob: "sheets/Payment Projection*.csv", kind: sheet, stamp: name, skip: 2, title: "Payment projection"}
+  lookahead: {glob: "sheets/Look Ahead Long Lead Items*.csv", kind: sheet, stamp: name, skip: 1, title: "Long-lead look-ahead"}
+  vendor_library: {cut: rows, glob: "sheets/Vendor Library*.csv", kind: sheet, stamp: name, title: "Vendor library"}
+  budget_rates: {file: "sheets/budget_rates.csv", kind: reference, stamp: none, title: "Budget rates"}
+  doa: {file: "sheets/doa.csv", kind: reference, stamp: none, title: "Delegation of authority"}
+  organogram: {file: "sheets/SCM Material Organogram.csv", kind: reference, stamp: none, layout: grid, title: "SCM organogram"}
+  cs_tracker: {cut: rows, glob: "sheets/RFQ CS Tracker*.csv", kind: tracker, stamp: name, title: "RFQ and CS tracker"}
+  expediting: {cut: rows, glob: "sheets/Expediting Tracker*.csv", kind: tracker, stamp: name, title: "Expediting tracker"}
+  lc_bg: {cut: rows, glob: "sheets/LC BG Tracker*.csv", kind: tracker, stamp: name, title: "LC and BG tracker"}
+  tat_report: {glob: "sheets/PR PO TAT Report*.csv", kind: sheet, stamp: name, skip: 1, title: "PR to PO turnaround report (MIS)"}
+  commodity_index: {file: "external/commodity_index.csv", kind: external, stamp: header, skip: 1, title: "Commodity indices"}
+  inbox: {glob: "inbox/*.eml", kind: inbox, stamp: none, title: "SCM shared inbox"}
+
+# The SCM team: the organogram (sheets/SCM Material Organogram.csv) says who they are, their designation, whom they report to and what they do; these
+# answers add what it does not say: the SAP purchasing groups each member owns, the verticals they buy for, their SAP user and what they may sign
+# (DoA: signs_upto in INR, none = no limit). `name` is as the organogram writes it. `duties` are the department-wide questions a member holds: a
+# vertical's decisions (roads, railway, bess, solar, td), the vendor library, a rate spread seen across projects, the MIS sheets.
+team:
+  - {id: Satish, name: Satish Kumar Sharma, initials: SS, role: "Head of SCM, Sr. Vice President", groups: [H00], verticals: [roads, railway, bess, solar, td], sap_user: SKSHARMA, signs_upto: null, countersigns: true, sees_all: true, duties: []}
+  - {id: ShreeDutt, name: Shree Dutt Anand, initials: SA, role: "GM SCM, mechanical spares and petroleum", groups: [P00], verticals: [roads], sap_user: SDANAND, signs_upto: 50000000, countersigns: false, sees_all: false, duties: []}
+  - {id: Varun, name: Varun Joshi, initials: VJ, role: "GM SCM, aggregate, cement, shuttering, consumables and logistics", groups: [A00], verticals: [roads, railway], sap_user: VJOSHI, signs_upto: 50000000, countersigns: false, sees_all: false, duties: [roads, vendor_library, rate_spread]}
+  - {id: Sambhav, name: Sambhav Kumar, initials: SK, role: "GM SCM, solar, transformers, railway, BESS and lines", groups: [T01], verticals: [railway, bess, solar, td], sap_user: SKUMAR, signs_upto: 50000000, countersigns: false, sees_all: false, duties: [railway, bess, solar, td]}
+  - {id: Urvik, name: Urvik Patel, initials: UP, role: "AGM SCM, TMT and steel, structures and containers", groups: [U01], verticals: [roads, bess, solar], sap_user: UPATEL, signs_upto: 50000000, countersigns: false, sees_all: false, duties: []}
+  - {id: Gautam, name: Gautam Jha, initials: GJ, role: "Manager SCM, site NOA approvals of services", groups: [W01], verticals: [railway, roads], sap_user: GJHA, signs_upto: 10000000, countersigns: false, sees_all: false, duties: []}
+  - {id: Mohan, name: Mohan Bahadur, initials: MB, role: "Manager, petroleum products (bitumen)", groups: [P01], verticals: [roads], sap_user: MBAHADUR, signs_upto: 10000000, countersigns: false, sees_all: false, duties: []}
+  - {id: Sudeep, name: Sudeep Singh, initials: SS, role: "AM, MIS (fund requirement, payment tracker)", groups: [M01], verticals: [], sap_user: SSINGH, signs_upto: 0, countersigns: false, sees_all: false, duties: [mis]}
+  - {id: Harish, name: Harish Kumar, initials: HK, role: "DM, petroleum documentation and HSD retailers", groups: [P02], verticals: [roads], sap_user: HKUMAR, signs_upto: 10000000, countersigns: false, sees_all: false, duties: []}
+  - {id: Lokesh, name: Lokesh Yadav, initials: LY, role: "Supervisor, local market runner", groups: [], verticals: [], sap_user: LYADAV, signs_upto: 0, countersigns: false, sees_all: false, duties: []}
+  - {id: Jitender, name: Jitender Swami, initials: JS, role: "AM, aggregate (Dhule, Aurangabad, Gaya, Tumkur, JH-10, JH-13)", groups: [A01], verticals: [roads, railway], sap_user: JSWAMI, signs_upto: 10000000, countersigns: false, sees_all: false, duties: []}
+  - {id: Neeraj, name: Neeraj, initials: NE, role: "Sr. Exc., aggregate and scrap sale (Ganga, NDLS, Anuppur, Thane)", groups: [A02], verticals: [roads, railway], sap_user: NEERAJ, signs_upto: 2500000, countersigns: false, sees_all: false, duties: []}
+  - {id: Govind, name: Govind Gupta, initials: GG, role: "AM, cement, fly ash, GGBS and admixture", groups: [C01], verticals: [roads, railway], sap_user: GGUPTA, signs_upto: 10000000, countersigns: false, sees_all: false, duties: []}
+  - {id: Ishan, name: Ishan Derashri, initials: ID, role: "DM, bearings, expansion joints, pre-stressing, slope protection", groups: [E01], verticals: [roads], sap_user: IDERASHRI, signs_upto: 10000000, countersigns: false, sees_all: false, duties: []}
+  - {id: Ankesh, name: Ankesh Jha, initials: AJ, role: "Sr. Engg., shuttering, hume pipe and engineering items", groups: [E02], verticals: [roads, railway], sap_user: AJHA, signs_upto: 2500000, countersigns: false, sees_all: false, duties: []}
+  - {id: Jitendra, name: Jitendra Shekhawat, initials: JS, role: "Manager, IT and electrical, lab and survey, MIS-TMT", groups: [G01], verticals: [], sap_user: JSHEKHAWAT, signs_upto: 10000000, countersigns: false, sees_all: false, duties: []}
+  - {id: Kanhaiya, name: Kanhaiya Khoda, initials: KK, role: "Exc., lab, safety and general consumables", groups: [G02], verticals: [], sap_user: KKHODA, signs_upto: 2500000, countersigns: false, sees_all: false, duties: []}
+  - {id: Jagdish, name: Jagdish Vyas, initials: JV, role: "AM, logistics (machines and equipment)", groups: [X01], verticals: [railway, roads], sap_user: JVYAS, signs_upto: 10000000, countersigns: false, sees_all: false, duties: []}
+  - {id: Rajesh, name: Rajesh, initials: RA, role: "Sr. Exc., logistics (machines and equipment)", groups: [], verticals: [], sap_user: RAJESH, signs_upto: 2500000, countersigns: false, sees_all: false, duties: []}
+  - {id: Rohit, name: Rohit Jain, initials: RJ, role: "AM, railway S&T", groups: [L01], verticals: [railway], sap_user: RJAIN, signs_upto: 10000000, countersigns: false, sees_all: false, duties: []}
+  - {id: Vishnu, name: Vishnu Mudgal, initials: VM, role: "AM, OHE, BESS, solar inverters and TBCB lines", groups: [L03], verticals: [railway, bess, solar, td], sap_user: VMUDGAL, signs_upto: 10000000, countersigns: false, sees_all: false, duties: []}
+  - {id: Deepanshu, name: Deepanshu Jain, initials: DJ, role: "Sr. Engg., P-Way, cables and transformers", groups: [L02], verticals: [railway, bess, solar, td], sap_user: DJAIN, signs_upto: 2500000, countersigns: false, sees_all: false, duties: []}
+  - {id: Harigraraj, name: Harigraraj D, initials: HD, role: "MT, solar", groups: [N01], verticals: [solar], sap_user: HARIGRARAJ, signs_upto: 2500000, countersigns: false, sees_all: false, duties: []}
+  - {id: Shubham, name: Shubham Sharma, initials: SH, role: "AM, TMT and structural steel", groups: [S01], verticals: [roads, railway], sap_user: SSHARMA, signs_upto: 10000000, countersigns: false, sees_all: false, duties: []}
+  - {id: Ankit, name: Ankit Solanki, initials: AS, role: "Jr. Exc., SCM accounts, ageing and PR release", groups: [], verticals: [], sap_user: ASOLANKI, signs_upto: 0, countersigns: false, sees_all: false, duties: []}
+team_answered_by: "Satish Kumar Sharma (Head of SCM): the people and reporting lines as the SCM organogram draws them; the purchasing group of each desk as SAP's T024 export lists them on 02 Apr 2026"
+# The designations the organogram writes in short, in full (shown beside the short form).
+designations:
+  "Sr. Vice President - SCM": "Senior Vice President, Supply Chain Management"
+  GM: General Manager
+  AGM: Assistant General Manager
+  Manager: Manager
+  DM: Deputy Manager
+  AM: Assistant Manager
+  Sr. Engg.: Senior Engineer
+  Sr. Exc.: Senior Executive
+  Exc.: Executive
+  Jr. Exc.: Junior Executive
+  MT: Management Trainee
+  Supervisor: Supervisor
+
+# People outside SCM on file, by function: the recipients a note to Finance, QA or the vendor-master desk goes to. Project heads and planners are
+# in the project directory.
+functions:
+  finance_treasury: {name: Sudhir Bansal, title: "Manager, Treasury (LC and bank guarantees)", email: sudhir.bansal@hginfra.example}
+  finance_funds: {name: Kirti Mehta, title: "Manager, Fund Planning, Finance", email: kirti.mehta@hginfra.example}
+  qa: {name: Hemant Rawat, title: "Head, QA/QC and Inspection", email: hemant.rawat@hginfra.example}
+  qa_inspection: {name: Divya Pillai, title: "Inspection Engineer, QA", email: divya.pillai@hginfra.example}
+  vendor_master: {name: Ashish Goyal, title: "Vendor Master Desk, Finance", email: ashish.goyal@hginfra.example}
+  md_office: {name: "Office of the Managing Director", title: "Managing Director's Office", email: md.office@hginfra.example}
+functions_answered_by: "Satish Kumar Sharma (Head of SCM), 20 Oct 2026"
+
+# The head-office plant: PRs raised there carry no project unless a tracking number names one.
+ho_plant: {plant: "1001", name: "HO Jaipur", requisitioner_function: ho_stores}
+
+# The work fronts each kind of project has, and the material groups each consumes (how a late material becomes a stopped front).
+work_fronts:
+  roads:
+    - {name: "Earthwork and GSB", groups: [GSB, SAND, AGGREGATE, BOULDER]}
+    - {name: "WMM and base", groups: [AGGREGATE, DUST, WMM]}
+    - {name: "Bituminous courses", groups: [BITUMEN, EMULSION, AGGREGATE, DUST, HSD]}
+    - {name: "Structures", groups: [CEMENT, GGBS, FLYASH, TMT, HTSTRAND, ADMIXTURE, BEARING, EXPJOINT, SAND]}
+  railway:
+    - {name: "Track (P-Way)", groups: [BALLAST, RLY-PWAY, BLANKET]}
+    - {name: "OHE mast erection", groups: [RLY-OHEMAST, CEMENT, TMT, AGGREGATE]}
+    - {name: "OHE wiring", groups: [RLY-OHEWIRE, RLY-INSUL]}
+    - {name: "S&T", groups: [RLY-SNT, CABLE]}
+    - {name: "Traction substation", groups: [ELE-TFR, ELE-SWG]}
+    - {name: "Civil and bridges", groups: [AGGREGATE, SAND, CEMENT, TMT, BLANKET, GSB, DUST]}
+  bess:
+    - {name: "Containers and PCS", groups: [BESS]}
+    - {name: "Substation (GIS and transformers)", groups: [ELE-TFR, ELE-SWG]}
+    - {name: "Cabling", groups: [CABLE, ELE-MISC]}
+    - {name: "Civil", groups: [CEMENT, TMT, AGGREGATE]}
+  solar:
+    - {name: "Module mounting", groups: [SOLAR]}
+    - {name: "Inverters and transformers", groups: [SOLAR, ELE-TFR]}
+    - {name: "Cabling", groups: [CABLE]}
+    - {name: "O&M spares", groups: [SOLAR, ELE-SWG]}
+  td:
+    - {name: "Tower erection", groups: [TL-TOWER, CEMENT, TMT]}
+    - {name: "Stringing", groups: [TL-COND, TL-INSUL]}
+    - {name: "Substation", groups: [ELE-TFR, ELE-SWG]}
+work_fronts_answered_by: "the GMs (Varun Joshi for roads, Sambhav Kumar for railway, BESS, solar and T&D), 20 Oct 2026"
+
+# Names other sheets write for a project (projects named as the project directory prints them). Each link is a person's answer with its
+# evidence; a name with no answer stays unresolved, never matched by likeness.
+project_aliases:
+  - {alias: "Ahmedabad", source: fund, projects: ["Narol"], answered_by: "Sudeep Singh (MIS)", evidence: "the fund sheet's Ahmedabad column is the Narol - Sarkhej road; same plant 1152 on the MB51 export"}
+  - {alias: "NDRS", source: fund, projects: ["NDLS"], answered_by: "Sudeep Singh (MIS)", evidence: "New Delhi Railway Station modification: NDLS on the railway sheet, plant 1907"}
+  - {alias: "Thane Metro", source: fund, projects: ["Thane"], answered_by: "Sudeep Singh (MIS)", evidence: "the Thane metro depot job: Thane on the railway sheet, plant 2002"}
+  - {alias: "Arurangabad", source: fund, projects: ["Aurangabad"], answered_by: "Sudeep Singh (MIS)", evidence: "a typing error for Aurangabad, plant 1905"}
+  - {alias: "KD-1&2", source: fund, projects: ["KD-01", "KD-02"], answered_by: "Sudeep Singh (MIS)", evidence: "one fund column for KD-01 and KD-02 (plants 1131-1132), which the roads sheet lists apart"}
+  - {alias: "Ganga", source: fund, projects: ["GEW-05"], answered_by: "Neeraj (aggregate, Ganga)", evidence: "Ganga Expressway Pkg-5 (plant 1145) is the only Ganga package in the project directory"}
+  - {alias: "Banaskatha & Dholera", source: fund, projects: ["Banaskantha", "Dholera"], answered_by: "Sambhav Kumar (GM SCM)", evidence: "one fund column for both BESS projects; 'Banaskatha' is a typing error"}
+  - {alias: "Chouraniya", source: fund, projects: ["BESS Chorniya"], answered_by: "Sambhav Kumar (GM SCM)", evidence: "the BESS Chorniya project as Finance spells it"}
+  - {alias: "Solar", source: fund, projects: ["Bikaner", "Jodhpur"], answered_by: "Sambhav Kumar (GM SCM)", evidence: "the fund sheet carries the two solar projects in one column"}
+  - {alias: "T&D", source: fund, projects: ["TBCB Angul", "UPPTCL Mirzapur-Chunar", "Jamshedpur 400 kV"], answered_by: "Sambhav Kumar (GM SCM)", evidence: "the fund sheet carries the three T&D projects in one column"}
+  - {alias: "Chouraniya", source: payment_projection, projects: ["BESS Chorniya"], answered_by: "Sambhav Kumar (GM SCM)", evidence: "as in the fund sheet"}
+  - {alias: "Banaskantha & Dholera", source: payment_projection, projects: ["Banaskantha", "Dholera"], answered_by: "Sambhav Kumar (GM SCM)", evidence: "a payment shared by both BESS projects"}
+  - {alias: "Angul Odisha", source: payment_projection, projects: ["TBCB Angul"], answered_by: "Sambhav Kumar (GM SCM)", evidence: "the 765 kV Angul TBCB line"}
+  - {alias: "BESS Chorniya", source: lookahead, projects: ["BESS Chorniya"], answered_by: "Sambhav Kumar (GM SCM)", evidence: "the project's own name"}
+  - {alias: "UPPTCL - Mizapur/ Chunar - SS", source: lookahead, projects: ["UPPTCL Mirzapur-Chunar"], answered_by: "Sambhav Kumar (GM SCM)", evidence: "the substation scope of UPPTCL Mirzapur-Chunar; 'Mizapur' is a typing error"}
+  - {alias: "UPPTCL - Mizapur/ Chunar - TL", source: lookahead, projects: ["UPPTCL Mirzapur-Chunar"], answered_by: "Sambhav Kumar (GM SCM)", evidence: "the line scope of UPPTCL Mirzapur-Chunar"}
+  - {alias: "765 KV Angul Odisha - TL", source: lookahead, projects: ["TBCB Angul"], answered_by: "Sambhav Kumar (GM SCM)", evidence: "the TBCB Angul line"}
+  - {alias: "400 KV Jamshedpur - SS", source: lookahead, projects: ["Jamshedpur 400 kV"], answered_by: "Sambhav Kumar (GM SCM)", evidence: "the substation scope of Jamshedpur 400 kV"}
+  - {alias: "400 KV Jamshedpur - TL", source: lookahead, projects: ["Jamshedpur 400 kV"], answered_by: "Sambhav Kumar (GM SCM)", evidence: "the line scope of Jamshedpur 400 kV"}
+  - {alias: "Dhule - P-Way", source: tat_report, projects: ["Dhule"], answered_by: "Sudeep Singh (MIS)", evidence: "the P-Way scope of Dhule"}
+  - {alias: "Gaya - OHE", source: tat_report, projects: ["Gaya"], answered_by: "Sudeep Singh (MIS)", evidence: "the OHE scope of Gaya"}
+  - {alias: "TBCB - Angul", source: tat_report, projects: ["TBCB Angul"], answered_by: "Sudeep Singh (MIS)", evidence: "the TBCB Angul line"}
+  - {alias: "Bikaner O&M", source: tat_report, projects: ["Bikaner"], answered_by: "Sudeep Singh (MIS)", evidence: "the O&M scope of Bikaner"}
+  - {alias: "Jodhpur O&M", source: tat_report, projects: ["Jodhpur"], answered_by: "Sudeep Singh (MIS)", evidence: "the O&M scope of Jodhpur"}
+  - {alias: "KD-01 & KD-02", source: roads_req, projects: ["KD-01", "KD-02"], answered_by: "Varun Joshi (GM SCM)", evidence: "the roads sheet's combined column, plants 1131-1132"}
+
+# The renamed vendor: two SAP codes for one company, linked (never merged).
+vendor_aliases:
+  - {record: "100512", identity: "100231", answered_by: "Deepanshu Jain (P-Way)", evidence: "message of 02 Oct 2026: 'Sai Krupa Rail Fittings has been converted into SKR Railtech Pvt Ltd', same works and contact person; vendor code 100512 created 10 Sep 2026"}
+
+# Material groups -> the category a buyer reads.
+material_categories:
+  AGGREGATE: "Aggregates and earthwork"
+  DUST: "Aggregates and earthwork"
+  WMM: "Aggregates and earthwork"
+  GSB: "Aggregates and earthwork"
+  BOULDER: "Aggregates and earthwork"
+  BALLAST: "Aggregates and earthwork"
+  BLANKET: "Aggregates and earthwork"
+  SAND: "Aggregates and earthwork"
+  CEMENT: "Cement and binders"
+  GGBS: "Cement and binders"
+  FLYASH: "Cement and binders"
+  MICROSILICA: "Cement and binders"
+  ADMIXTURE: "Cement and binders"
+  TMT: "Steel"
+  HTSTRAND: "Steel"
+  STRUCT: "Steel"
+  BITUMEN: "Bitumen and emulsions"
+  EMULSION: "Bitumen and emulsions"
+  HSD: "Fuel and lubricants"
+  RLY-PWAY: "Railway track (P-Way)"
+  RLY-OHEMAST: "Railway OHE"
+  RLY-OHEWIRE: "Railway OHE"
+  RLY-INSUL: "Railway OHE"
+  RLY-SNT: "Railway S&T"
+  ELE-TFR: "Electrical equipment"
+  ELE-SWG: "Electrical equipment"
+  ELE-MISC: "Electrical equipment"
+  TL-TOWER: "Transmission line"
+  TL-COND: "Transmission line"
+  TL-INSUL: "Transmission line"
+  BESS: "BESS and solar"
+  SOLAR: "BESS and solar"
+  DG: "Electrical equipment"
+  CABLE: "Cables"
+  BEARING: "Bridge and road items"
+  EXPJOINT: "Bridge and road items"
+  PIPE: "Bridge and road items"
+  GEOSYN: "Bridge and road items"
+  BARRIER: "Bridge and road items"
+  MISC: "Other materials"
+  SERVICE: "Services"
+material_categories_answered_by: "Sudeep Singh (MIS), from the groups the review deck uses"
+
+cement: {bags_per_mt: 20, answered_by: "Govind Gupta (cement)", evidence: "a cement bag is 50 kg; dealers bill by the bag, plants by the tonne"}
+
+# A requirement-sheet row -> the material codes it stands for (the first is the one a PO for it usually carries).
+sheet_materials:
+  "Aggregate": ["11000020", "11000010", "11000040"]
+  "Aggregate- 10MM": ["11000010"]
+  "Aggregate- 20 MM": ["11000020"]
+  "Dust": ["11000110"]
+  "WMM (Air Cooled Slag)": ["11000120"]
+  "GSB": ["11000130"]
+  "GSB/Boulder": ["11000130", "11000140"]
+  "Ballast": ["11000150"]
+  "Blanketing Material": ["11000160"]
+  "Sand (Wash, Coarse, River, Msand)": ["11000210", "11000220"]
+  "Cement": ["12000010", "12000020"]
+  "GGBS": ["12000110"]
+  "Fly Ash": ["12000120"]
+  "Microsilica": ["12000130"]
+  "Admixture": ["12000210"]
+  "Steel (HYSD)": ["13000016", "13000012", "13000020", "13000010", "13000025", "13000008", "13000032"]
+  "HT Strand": ["13000110"]
+  "Structural Steel": ["13000210"]
+  "Steel Girder": ["13000220"]
+  "Bitumen-VG-40": ["14000010"]
+  "Bitumen-VG-30": ["14000020"]
+  "Bitumen-CRMB": ["14000030"]
+  "Emulsion-SS1": ["14000110"]
+  "Emulsion-RS1": ["14000120"]
+  "Anti-Stripping Agent": ["14000210"]
+  "HSD": ["15000010"]
+  "LSHS/LDO": ["15000020"]
+  "Thermic Oil": ["15000030"]
+  "Hume Pipe 600": ["41000110"]
+  "Hume Pipe 900": ["41000120"]
+  "Geotextile": ["41000210"]
+  "Geogrid": ["41000220"]
+  "Geocell": ["41000230"]
+  "W Beam Crash Barrier": ["41000310"]
+  "Elastomeric Bearing": ["41000010"]
+  "POT-PTFE Bearing": ["41000020"]
+  "Strip Seal Expansion Joint (With Stud & Modular)": ["41000030"]
+  "Drainage Spout": ["41000410"]
+  "Deck Sheet": ["41000510"]
+sheet_materials_answered_by: "Sudeep Singh (MIS), who builds the requirement sheets from the site submissions"
+
+# A fund-sheet head -> the requirement-sheet rows it pays for (heads with no counterpart are left out of the comparison).
+fund_heads:
+  "Aggregate, Sand, Blast, GSB": ["Aggregate", "Dust", "WMM (Air Cooled Slag)", "GSB", "Sand (Wash, Coarse, River, Msand)", "Aggregate- 10MM", "Aggregate- 20 MM", "GSB/Boulder", "Ballast", "Blanketing Material"]
+  "Cement": ["Cement"]
+  "GGBS": ["GGBS"]
+  "Petroleum Products": ["Bitumen-VG-40", "Bitumen-CRMB", "Emulsion-SS1", "Emulsion-RS1", "HSD", "LSHS/LDO"]
+  "TMT": ["Steel (HYSD)"]          # TMT_Primary + TMT_Traders + TMT_Advance together
+  "HT Strands": ["HT Strand"]
+  "Plates & Structural Steel": ["Steel Girder"]
+  "Structural Bearing, Expansion Joint & Prestressing": ["Elastomeric Bearing", "POT-PTFE Bearing", "Strip Seal Expansion Joint (With Stud & Modular)"]
+  "MBCB": ["W Beam Crash Barrier"]
+  "Other Misc. (RCC Hume Pipe, Geocell, Geotextile, Deck Sheet etc.)": ["Hume Pipe 600", "Geogrid", "Deck Sheet", "Drainage Spout"]
+fund_head_groups: {"TMT_Primary": "TMT", "TMT_Traders": "TMT", "TMT_Advance": "TMT"}
+fund_heads_answered_by: "Kirti Mehta (Finance) and Sudeep Singh (MIS), 17 Oct 2026"
+fund_check: {min_difference_inr: 2500000, min_share: 0.10}      # a project's head and month disagree when the two differ by both
+
+# SAP terms of payment -> what they mean.
+payment_terms:
+  Z015: {label: "Net 15 days", net_days: 15}
+  Z030: {label: "Net 30 days", net_days: 30}
+  Z045: {label: "Net 45 days", net_days: 45}
+  ZADV: {label: "10% advance against ABG, balance before dispatch", advance_pct: 10, against_abg: true, before_dispatch: true}
+  ZLC: {label: "100% by LC at sight", lc: true}
+  ZRTG: {label: "100% RTGS before dispatch", before_dispatch: true}
+doc_types: {ZNB: "Purchase order", ZWO: "Work order", ZIMP: "Import purchase order"}
+msme_payment_days: 45      # MSMED Act: an MSME vendor is paid within 45 days of acceptance
+
+# Turnaround targets (days from PR to PO) per vertical, which a PR is stuck past.
+turnaround_target_days: {roads: 7, railway: 21, bess: 30, solar: 30, td: 45}
+turnaround_answered_by: "Satish Kumar Sharma (Head of SCM), 20 Oct 2026"
+
+# The verticals the vendor library covers (its Vertical column), the projects' verticals they stand for, and the material categories it approves
+# vendors for in each (bulk civil material - aggregate, cement, steel - is bought on rate CSs, not from the library).
+library_verticals: {"Railway": railway, "Solar": solar, "BESS": bess, "Transmission Line": td}
+library_categories:
+  railway: ["Railway track (P-Way)", "Railway OHE", "Railway S&T", "Electrical equipment", "Cables"]
+  bess: ["BESS and solar", "Electrical equipment", "Cables"]
+  solar: ["BESS and solar", "Electrical equipment", "Cables"]
+  td: ["Transmission line", "Electrical equipment", "Cables"]
+library_answered_by: "Varun Joshi (GM SCM): the library approves technical vendors; bulk civil material is bought on quarterly rate CSs"
+
+# Look-ahead items -> the material master code each is, and the index its price varies with.
+lookahead_materials:
+  "180 MVA PTR": "31000010"
+  "220 KV GIS": "31000110"
+  "160 MVA Auto TFR": "31000020"
+  "40 MVA PTR": "31000040"
+  "220 KV & 145 KV Circuit Breakers": "31000120"
+  "220 KV & 145 KV CT & CVT": "31000130"
+  "BPI": "31000140"
+  "Towers": "31000210"
+  "Conductor - ACSR Zebra": "31000310"
+  "Insulators": "31000410"
+  "Extension Bay Work": "31000510"
+  "400 KV CB": "31000121"
+  "80 MVA Reactor": "31000030"
+  "400 KV CT CVT": "31000131"
+  "Conductor - AL59 - Moose Quad": "31000320"
+lookahead_answered_by: "Sambhav Kumar (GM SCM) and Urvik Patel (AGM SCM), 15 Oct 2026"
+
+# The variable share of the price a PV clause moves with the index, where no PO on file states one for that index (the IEEMA formulas' usual
+# weights; a PO's own clause always wins). Used to price a month's delay on a PV-linked item not yet ordered.
+pv_variable_share: {IEEMA_TFR: 0.80, IEEMA_SWG: 0.75, IEEMA_ACSR: 0.75, STEEL_STRUCT: 0.70, LME_AL: 0.75, LME_CU: 0.75, STEEL_TMT: 0.70}
+pv_answered_by: "Vishnu Mudgal (TBCB lines), from the IEEMA price-variation circulars the T&D POs cite, 20 Oct 2026"
+
+# Words a closure or strike notice uses for the material it stops, and the material groups each stands for (how a notice becomes the requirement
+# and dispatches it touches). A word not listed touches nothing: the case then says which material the notice names and asks the buyer.
+material_words:
+  "aggregate": [AGGREGATE]
+  "gsb": [GSB]
+  "stone dust": [DUST]
+  "dust": [DUST]
+  "cement": [CEMENT]
+  "sand": [SAND]
+  "cables": [CABLE]
+  "panels": [ELE-SWG, ELE-MISC]
+material_words_answered_by: "Varun Joshi and Sambhav Kumar (GM SCM), 20 Oct 2026"

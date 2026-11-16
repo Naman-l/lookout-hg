@@ -1,0 +1,10 @@
+Document,From (INR),To (INR),Approver,Countersign
+PO / WO / Commitment letter,0,"1,00,00,000",Buyer (owner of the purchasing group),
+PO / WO / Commitment letter,"1,00,00,000","5,00,00,000",Vertical lead or GM SCM,
+PO / WO / Commitment letter,"5,00,00,000",,Owner,Head SCM
+MFC (manufacturing clearance),0,"5,00,00,000",Vertical lead,
+MFC (manufacturing clearance),"5,00,00,000",,Vertical lead,Head SCM
+CS approval,0,"1,00,00,000",Vertical lead,
+CS approval,"1,00,00,000","5,00,00,000",GM SCM,
+CS approval,"5,00,00,000",,GM SCM,Head SCM
+Request or query letter (no commitment),0,,Owner,

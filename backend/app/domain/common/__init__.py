@@ -36,8 +36,9 @@ AS_OF: date = _resolve_as_of()
 this, never against the wall clock, so the numbers are the same on any day the app is run. Build and serve with the same value."""
 
 EntityType = Literal[
-    "supplier", "supplier_record", "part", "product", "bom_line", "po", "po_line",
-    "quote", "message", "news", "tariff_rule", "item", "action", "data_issue",
+    "supplier", "supplier_record", "vendor_library", "project", "plant", "workfront", "material", "pr", "pr_line", "po", "po_line", "receipt",
+    "cs", "quote", "milestone", "lc", "abg", "fund_line", "fund_check", "requirement", "budget_rate", "lookahead", "index", "invoice",
+    "person", "contact", "message", "item", "action", "data_issue", "doa_rule",
 ]
 
 Method = Literal["stated", "computed", "inferred", "flagged", "unknown", "extracted"]
@@ -71,16 +72,13 @@ class Provenance(BaseModel):
 class Money(BaseModel):
     amount: Decimal
     currency: str  # ISO 4217
-    usd: Decimal | None = None
-    rate: Decimal | None = None  # usd per unit of `currency`
-    rate_month: str | None = None  # "YYYY-MM" of the planning rate used
+    base: Decimal | None = None  # the amount in the base currency the recipe names (`base_currency`); the screens and every sum read this
     provenance: Provenance
 
 
 class Quantity(BaseModel):
     value: Decimal
-    uom: str  # as normalised: EA, M, FT, BOX, PK
-    ea: Decimal | None = None  # the quantity in each, when convertible (None for BOX and PK)
+    uom: str  # the unit as the records hold it, after the recipe's conversions (MT, KM, NO, SET, RM, ...)
     provenance: Provenance
 
 
@@ -92,7 +90,7 @@ class Conditional(BaseModel):
     provenance: Provenance
 
 
-Owner = str  # a buyer id from the data (the buyers table), "supplier", "broker", or "unassigned" (ask planning); never a name written in code
+Owner = str  # a team member id from the data (the buyers table), a contact id (project_head:<project>, finance_treasury, ...), "vendor", or "unassigned"; never a name written in code
 
 
 class Unknown(BaseModel):

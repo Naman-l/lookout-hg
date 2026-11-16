@@ -31,6 +31,11 @@ def shape(db_path, kind: str) -> str | None:
     return _read(str(db_path)).get(kind) if db_path is not None else None
 
 
+def shapes(db_path) -> dict[str, str]:
+    """Every kind of id the recipe names, with its pattern."""
+    return dict(_read(str(db_path))) if db_path is not None else {}
+
+
 def pattern(db_path, *kinds: str, whole: bool = False) -> re.Pattern:
     """One compiled pattern for any of these kinds of id, as a whole word (or the whole string); nothing matches when the recipe names none of them."""
     parts = [s for s in (shape(db_path, k) for k in kinds) if s]

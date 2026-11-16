@@ -28,10 +28,29 @@ def _read(db_path: str) -> str:
 def names(db_path=None) -> tuple[str, str]:
     """With no database path (None) there is no build to ask: the fallback, the same one a path with no build gives."""
     full = (_read(str(db_path)) if db_path is not None else "") or os.environ.get("LOOKOUT_COMPANY", "").strip() or GENERIC
-    return full, (GENERIC if full == GENERIC else full.split()[0])
+    short = _meta(str(db_path), "company_short") if db_path is not None else ""
+    return full, (GENERIC if full == GENERIC else short or full.split()[0])
 
 
 def fill(text: str, db_path=None) -> str:
     """Put the company's name into prompt text written with {company} (full) and {company_short}."""
     full, short = names(db_path)
     return text.replace("{company_short}", short).replace("{company}", full)
+
+
+@lru_cache(maxsize=16)
+def _meta(db_path: str, key: str) -> str:
+    try:
+        con = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
+        try:
+            row = con.execute("SELECT value FROM build_meta WHERE key = ?", (key,)).fetchone()
+        finally:
+            con.close()
+        return (row[0] or "").strip() if row else ""
+    except sqlite3.Error:
+        return ""
+
+
+def base_currency(db_path=None) -> str:
+    """The currency every amount is counted in (the recipe's `base_currency`), else INR's absence says nothing: 'USD' is never assumed silently."""
+    return (_meta(str(db_path), "base_currency") if db_path is not None else "") or os.environ.get("LOOKOUT_BASE_CURRENCY", "") or "INR"

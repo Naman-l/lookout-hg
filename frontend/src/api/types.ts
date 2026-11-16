@@ -1,7 +1,6 @@
-// The API types come from api/openapi.yaml via `npm run types` (src/api/schema.d.ts); everything here aliases it.
-// Decimals arrive as strings. The record schemas list no `required` fields, so the generator marks every property
-// optional; the server always sends them, so Required<> restores that here (nullable ones stay nullable).
-import type { components, paths } from "./schema";
+// The API types come from api/openapi.yaml (generated from the server's own schema) via `npm run types` (src/api/schema.d.ts); everything here aliases it.
+// Decimals arrive as strings. Optional fields stay optional; the server always sends the required ones.
+import type { components } from "./schema";
 
 type S = components["schemas"];
 export type EntityRef = S["EntityRef"];
@@ -9,116 +8,93 @@ export type Provenance = S["Provenance"];
 export type Money = S["Money"];
 export type Quantity = S["Quantity"];
 export type Unknown = S["Unknown"];
-export type Counts = S["Counts"];
-export type Health = S["Health"];
-export type ActionItem = S["ActionItem"];
-export type PartDetail = S["PartDetail"];
-export type Ladder = S["Ladder"];
-export type Rung = S["Rung"];
-export type BuildSummary = S["BuildSummary"];
-export type BuildReadiness = S["BuildReadiness"];
-export type ReadyPart = S["ReadyPart"];
-export type ActionItemDetail = S["ActionItemDetail"];
-export type Recommendation = S["Recommendation"];
-export type Run = S["Run"];
-// The contract types `payload` as an empty object; it is free-form (gate, numbers, status), shown only behind details.
-export type RunEvent = Omit<S["RunEvent"], "payload"> & { payload?: Record<string, unknown> };
-export type RunDetail = Omit<S["RunDetail"], "events"> & { events?: RunEvent[] };
-export type VerifierResult = S["VerifierResult"];
-export type Action = S["Action"];
-export type Stage = S["Stage"];
-export type FireOption = S["FireOption"];
-export type DataIssue = S["DataIssue"];
-export type BidTab = S["BidTab"];
-export type BidColumn = S["BidColumn"];
-export type LandedCost = S["LandedCost"];
-export type OfferView = S["OfferView"];
-
 export type DateValue = S["DateValue"];
 export type Value = Money | Quantity | Unknown | DateValue;
-
 export const isUnknown = (v: Value): v is Unknown => "owner" in v;
 export const isMoney = (v: Value): v is Money => "currency" in v;
-export const isQuantity = (v: Value): v is Quantity => "uom" in v;
+export const isQuantity = (v: Value): v is Quantity => "uom" in v && !("currency" in v);
 export const isDate = (v: Value): v is DateValue => "date" in v;
 
-export type PoLine = Required<S["PoLine"]>;
-export type MessageSummary = Required<S["MessageSummary"]> & { matches?: MessageMatch[] };
-/** Where a search matched in a message: the field, a snippet of it, and the matched words as [start, end) in the snippet. */
-export interface MessageMatch { field: string; snippet: string; start: number; end: number }
-export type Trust = MessageSummary["trust"];
-export type MonthBucket = Required<S["MonthBucket"]>;
-export type TimePhased = Omit<Required<S["TimePhased"]>, "buckets"> & { buckets: MonthBucket[] };
-export type ItemDetail = Omit<ActionItemDetail, "po_lines" | "messages" | "time_phased"> & {
-  po_lines?: PoLine[]; messages?: MessageSummary[]; time_phased?: TimePhased | null;
-};
-/** A reason to doubt a supplier, with what it was read from (DOMAIN's supplier risk flags). */
-export interface RiskFlag { kind: string; severity: "high" | "medium" | "low"; text: string; evidence?: string | null; sources?: EntityRef[] }
-/** How a supplier has delivered on the lines it has closed: on time is received on or before the promise. */
-/** A supplier getting worse (F105): its current run of late receipts and this year's late share against last year's; `line` is the one line a screen shows in place of the all-time on-time share. */
-export interface LateStreak { late_in_row: number; first: string; last: string; min_days_late: number; max_days_late: number; year: number; late_this_year: number; n_this_year: number; late_pct_this_year: number; late_last_year: number; n_last_year: number; late_pct_last_year?: number | null; line: string }
-export interface Delivery { n: number; on_time: number; on_time_pct: number; late: number; avg_days_late: number; last10_on_time?: number | null; last10_n?: number | null; streak?: LateStreak | null }
-export type Supplier = Required<S["Supplier"]> & { risk?: RiskFlag[]; delivery?: Delivery | null };
-export type Part = Required<S["Part"]>;
-export type ForecastRow = { product: string; months: { month: string; units: number }[] };
+export type Counts = S["Counts"];
+export type ActionItem = S["ActionItem"];
+export type ActionItemDetail = S["ActionItemDetail"];
+export type ItemDetail = ActionItemDetail;
+export type Stage = S["Stage"];
+export type SiteImpact = S["SiteImpact"];
+export type DatedRow = S["DatedRow"];
+export type Finding = S["Finding"];
+export type Deadline = S["Deadline"];
+export type VendorPanel = S["VendorPanel"];
+export type ProjectPanel = S["ProjectPanel"];
+export type HeldMessage = S["HeldMessage"];
+export type LinkedCase = S["LinkedCase"];
+export type Decision = S["Decision"];
+export type Route = S["Route"];
+export type Recipient = S["Recipient"];
+export type DoaLine = S["DoaLine"];
+export type Action = S["Action"];
+export type OutboxMessage = S["OutboxMessage"];
+export type Span = S["Span"];
 
-// pending contract: GET /api/messages/{id}, the thread as quoted data with what it changes.
-export interface MessageChange { ref: EntityRef; label: string; before?: string | null; after?: string | null; line?: string | null }
-export interface MessageDetail {
-  summary: MessageSummary;
-  subject: string;
-  to: string;
-  reply_to?: string | null;     // where a reply would go; a free-mail address here is a fraud sign
-  from_email?: string | null;   // the sender's address (pending: the API drops it today)
-  entities?: { start: number; end: number; type: string; ref?: string | { id: string; label?: string | null } | null; label?: string | null; text?: string }[]; // spans of `body` (pending: DOMAIN)
-  subject_entities?: MessageDetail["entities"]; // spans of `subject`
-  body: string;                 // quoted data, never instruction
-  highlights: string[];         // lines of the body that carry a reference or a change
-  changes: MessageChange[];     // What this changes: PO lines, parts, dates, prices
-  related_item?: string | null; // action item key to "Work this with the agent"
-  sent?: { action_id: string; subject: string; sent_on: string; recipient?: string | null }[]; // requests we sent to this sender's company since it arrived
-}
+export type MessageSummary = S["MessageSummary"] & { from?: string };
+export type MessageDetail = S["MessageDetail"];
+export type QuoteFacts = S["QuoteFacts"];
+export type LineMove = S["LineMove"];
+export type DatedFact = S["DatedFact"];
 
-// pending contract: the Import flashcard deck (diff sent to ORCH; the screen shows "Preview" until the routes answer).
-export interface ImportQuestion {
-  id: string;
-  kind: "alias" | "currency" | "origin" | "duplicate_row" | "possible_duplicate" | "stock_count" | "other";
-  question: string; covers: number; file?: string;
-  examples: { from: string; to: string; note?: string | null }[];
-  entries: string[];
-  proposed: { answer: string; effect: string };
-  state: "open" | "accepted" | "changed" | "skipped";
-  answer?: string | null;
-}
-export interface ImportDeck { import_id: string; questions: ImportQuestion[] }
-export interface ImportAnswer { question_id: string; action: "accept" | "change" | "skip"; value?: string | null }
-export interface ImportDryRun {
-  hash: string;
-  files: { file: string; rows_in: number; rows_out: number; changes: string[] }[];
-  checks: { name: string; passed: boolean }[];
-  answers: { total: number; changed: number; skipped: number };
-  recipe_steps: number;
-}
+export type VendorRow = S["VendorRow"];
+export type VendorDetail = S["VendorDetail"];
+export type Delivery = S["Delivery"];
+export type MaterialRow = S["MaterialRow"];
+export type MaterialDetail = S["MaterialDetail"];
+export type PrLine = S["PrLineView"];
+export type PoLine = S["PoLineView"];
+export type PrDetail = S["PrDetail"];
+export type PoDetail = S["PoDetail"];
+export type Ladder = S["Ladder"];
+export type Rung = S["Rung"];
+export type ProjectRow = S["ProjectRow"];
+export type RequirementRow = S["RequirementRow"];
+export type FrontStatus = S["FrontStatus"];
+export type SupplyByMonth = S["SupplyByMonth"];
+export type MonthRow = S["MonthRow"];
+export type CsView = S["CsView"];
+export type QuoteView = S["QuoteView"];
+export type VendorQuote = S["VendorQuote"];
+export type QuoteBeside = S["QuoteBeside"];
+export type LedgerItem = S["LedgerItem"];
+export type Person = S["Person"];
+export type DataIssue = S["DataIssue"];
+export type SearchHit = S["Hit"];
+export type BuildStamp = S["BuildStamp"];
+export type BuildStep = S["BuildStep"];
+export type Source = S["Source"];
+export type ImportDeck = S["ImportDeck"];
+export type ImportQuestion = S["ImportQuestion"];
+export type ImportAnswer = S["ImportAnswer"];
+export type ImportDryRun = S["ImportDryRun"];
 
-// The contract types these three responses as bare objects; the shapes below are what the server returns today
-// (proposed to ORCH as named schemas).
-export interface SupplierDetail extends Supplier {
-  contact: { name: string; email: string } | null;
-  tier: number | null; record_ids: string[]; open_lines: number; open_summary?: string;
-  messages: EntityRef[]; news: EntityRef[];
+export interface Health {
+  ok: boolean; boot: string; agent_live: boolean; as_of: string; company: string; company_short: string; base_currency: string;
+  id_patterns?: Record<string, string>; sources?: SourceStamp[];
 }
-export interface BuildStamp {
-  as_of: string; recipe: string; recipe_hash: string; built_at: string;
-  counts: Record<string, number>; gate_checks: number; gate_failed: number;
-}
-export interface BuildStep { seq: number; step: string; title: string; rows_in: number; rows_out: number; issues: number; seconds: number }
+/** One source's own export date, for the shell's data-as-of hover. */
+export interface SourceStamp { key: string; title: string; date: string | null; stale: boolean; kind: string }
 
-export type WhereUsedRow = S["WhereUsedRow"];
-export type BomTree = S["BomTree"];
-export type BomTreeRow = S["BomTreeRow"];
-export type ProductOut = S["ProductOut"];
-type Ok<P extends keyof paths> = paths[P] extends { get: { responses: { 200: { content: { "application/json": infer T } } } } } ? T : never;
-/** Under the hood: Lookout and its specialists, and the last measured eval round (GET /agents, /evals/summary). */
-export type Agents = Ok<"/api/agents">;
-export type AgentRow = Agents["agents"][number];
-export type EvalsSummary = Ok<"/api/evals/summary">;
+// The runs (the agent layer): hand-kept until the run routes are in the generated contract.
+export interface RunEvent {
+  run_id: string; parent_run_id?: string | null; seq: number; ts: string; t_ms: number; type: string; agent: string; agent_label: string;
+  tool_use_id?: string | null; summary: string; refs?: EntityRef[]; payload?: Record<string, unknown>;
+}
+export interface VerifierResult { passed: boolean; checked: number; failures: string[]; claims?: { text: string; ok: boolean; id?: string }[] }
+export interface Recommendation {
+  finding?: string; recommended?: { kind: string; reason?: string; number_ids?: string[] } | null; unknowns?: Unknown[]; number_ids?: string[];
+  answer?: string; reading?: string; tables?: unknown[]; drafted_by?: string;
+}
+export interface Run {
+  run_id: string; item_key: string; workflow: string; status: string; started_at: string; wall_ms?: number | null; asked_by?: string | null;
+  recorded?: boolean; mode?: string; model?: string | null; title?: string | null; cost_usd?: string | null; drafts?: number; checks?: string | null; grade?: number | null;
+}
+export interface RunDetail extends Run { events?: RunEvent[]; recommendation?: Recommendation | null; verifier?: VerifierResult | null; review?: { grade: number; notes: string[] } | null; question?: string | null }
+export interface Agents { agents: { name: string; label: string; does: string; tools: string[]; runs: number }[]; mode: string; recordings: number }
+export type EvalsSummary = { rounds: unknown[] };

@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 
-/** A buyer Lookout knows, from the buyers table (/api/people). */
+/** A member of the SCM team, from the team table (/api/people). */
 export type Person = { name: string; initials: string; note?: string };
 
 type Ctx = { me: string | null; setMe: (name: string) => void; clear: () => void; people: Person[]; ready: boolean; choosing: boolean; choose: (on?: boolean) => void };
@@ -13,11 +13,11 @@ const write = (v: string | null) => { try { if (v) localStorage.setItem(KEY, v);
 export const initials = (name: string) => name.split(/\s+/).map((w) => w[0]).join("").slice(0, 2).toUpperCase();
 
 async function loadPeople(): Promise<Person[]> {
-  const people = await fetch("/api/people").then((r) => (r.ok ? (r.json() as Promise<{ name: string; categories: string[]; open_lines: number }[]>) : []), () => []);
+  const people = await fetch("/api/people").then((r) => (r.ok ? (r.json() as Promise<{ name: string; role: string; purchasing_groups: string[]; open_lines: number; open_prs: number }[]>) : []), () => []);
   return people.map((p) => ({
     name: p.name,
     initials: initials(p.name),
-    note: [p.categories.slice(0, 3).join(", "), `${p.open_lines} open lines`].filter(Boolean).join(" · "),
+    note: [p.role, p.purchasing_groups.join(", "), p.open_prs || p.open_lines ? `${p.open_prs} open PRs · ${p.open_lines} open PO lines` : ""].filter(Boolean).join(" · "),
   }));
 }
 
